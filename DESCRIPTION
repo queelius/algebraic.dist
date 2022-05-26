@@ -1,0 +1,33 @@
+Package: algebraic.dist
+Title: Algebra over distribution (random elements) objects
+Version: 0.0.0.9000
+Authors@R: 
+    person("Alexander", "Towell", , "lex@metafunctor.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-6443-9897"))
+Description: Set of functions/methods for operating on, sampling from, etc. distributions.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    dplyr,
+    extraDistr,
+    matlib,
+    numDeriv,
+    readr,
+    stats,
+    tibble,
+    mvtnorm,
+    MASS,
+Depends: 
+    R (>= 2.10)
+LazyData: true
+VignetteBuilder: knitr
+URL: https://github.com/queelius/algebraic.dist,
+    https://queelius.github.io/algebraic.dist/
+BugReports: https://github.com/queelius/algebraic.dist/issues

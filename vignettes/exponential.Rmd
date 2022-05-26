@@ -1,0 +1,62 @@
+---
+title: "Exponential distribution"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exponential distribution}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+To demonstrate the R package `algebraic.dst`, we consider the relatively
+simple case of exponentially distributed random variables.
+
+First, we load the R package `algebraic.dist` with:
+
+```{r setup}
+library(algebraic.dist)
+```
+
+# Generating a sample
+
+We define the parameters of the i.i.d. random sample with:
+```{r}
+n <- 1000
+rate <- 1
+```
+
+We generate a random sample $X_i \sim \operatorname{EXP}(\lambda=`r rate`)$ for
+$i=1,\ldots,n$ with:
+```{r,message=F,warning=F}
+library(stats)
+library(tidyverse)
+
+exp.dist <- make_exp_dist(rate=1)
+x <- tibble(x=sample(exp.dist)(n))
+```
+
+We have observed a sample of size $n=`r n`$.
+We show some observations from this sample (data frame) with:
+```{r}
+print(head(x,n=4))
+```
+
+We show a histogram of the sample overlaid with a plot of the exponential
+function's pdf, with:
+```{r,message=F,warning=F}
+library(ggplot2)
+ggplot(x, aes(x=x)) + geom_histogram(aes(y=..density..),alpha=.2) +
+    xlim(0,6) + 
+    geom_function(fun=dexp)
+```
+
+```{r}
+exp.dist.add <- make_exp_dist(rate=3) + make_exp_dist(rate=2)
+```
