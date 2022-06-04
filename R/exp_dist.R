@@ -5,10 +5,11 @@
 make_exp_dist <- function(rate)
 {
     structure(list(
-        theta=unlist(rate),
-        num_comp=length(rate)),
+        theta=rate,
+        num_comp=1,
         class=c("exp_dist","dist"))
 }
+
 
 #' Method for obtaining the variance of a \code{exp_dist} object.
 #'
@@ -18,7 +19,7 @@ make_exp_dist <- function(rate)
 #' @export
 vcov.exp_dist <- function(object, ...)
 {
-    1/object$theta^2
+    1/params(x)^2
 }
 
 #' Method for obtaining the parameters of
@@ -28,7 +29,7 @@ vcov.exp_dist <- function(object, ...)
 #' @param ... Additional arguments to pass
 #' @importFrom algebraic.mle params
 #' @export
-params.exp_dist <- function(x, ...)
+params.exp_dist <- function(x,...)
 {
     x$theta
 }
@@ -39,24 +40,20 @@ params.exp_dist <- function(x, ...)
 #' @param x The \code{exp_dist} object to obtain the hazard function of
 #' @param ... Additional arguments to pass
 #' @export
-hazard.exp_dist <- function(x, ...)
+hazard.exp_dist <- function(x,...)
 {
-    theta <- params(x,...)
-    function(t)
-        ifelse(t <= 0,0,theta)
+    theta <- params(x)
+    function(t) ifelse(t <= 0,0,theta)
 }
 
 #' Method to obtain the pdf of an \code{exp_dist} object.
 #'
 #' @param x The object to obtain the pdf of
 #' @export
-pdf.exp_dist <- function(x, ...)
+pdf.exp_dist <- function(x,...)
 {
-    theta <- params(x,...)
-    function(t,...)
-    {
-        ifelse(t <= 0,0,theta)
-    }
+    theta <- params(x)
+    function(t) ifelse(t <= 0,0,theta*exp(-theta*t))
 }
 
 #' Method to sample from an \code{exp_dist} object.
@@ -66,10 +63,8 @@ pdf.exp_dist <- function(x, ...)
 #' @export
 sampler.exp_dist <- function(x,...)
 {
-    function(n=1,...)
-    {
-        stats::rexp(n,params(x),...)
-    }
+    theta <- params(x)
+    function(n=1) stats::rexp(n,theta,...)
 }
 
 
@@ -82,5 +77,5 @@ sampler.exp_dist <- function(x,...)
 #' @export
 fisher_info.exp_dist <- function(x,...)
 {
-    1/params(x)^2
+    params(x)^2
 }
