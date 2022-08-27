@@ -4,12 +4,9 @@
 #' @export
 make_exp_dist <- function(rate)
 {
-    structure(list(
-        theta=rate,
-        num_comp=1,
-        class=c("exp_dist","dist"))
+    structure(list(theta=rate),
+              class=c("exp_dist","univariate_dist","dist")))
 }
-
 
 #' Method for obtaining the variance of a \code{exp_dist} object.
 #'
@@ -19,15 +16,14 @@ make_exp_dist <- function(rate)
 #' @export
 vcov.exp_dist <- function(object, ...)
 {
-    1/params(x)^2
+    1/params.exp_dist(x)^2
 }
 
-#' Method for obtaining the parameters of
-#' a \code{exp_dist} distribution object.
+#' Method for obtaining the parameters of a \code{exp_dist} distribution object.
 #'
-#' @param x The \code{exp_dist} object to obtain the parameters of
-#' @param ... Additional arguments to pass
-#' @importFrom algebraic.mle params
+#' @param x The \code{exp_dist} object to obtain the parameters of.
+#' @param ... Additional arguments to pass.
+# #' @importFrom algebraic.mle params
 #' @export
 params.exp_dist <- function(x,...)
 {
@@ -42,7 +38,7 @@ params.exp_dist <- function(x,...)
 #' @export
 hazard.exp_dist <- function(x,...)
 {
-    theta <- params(x)
+    theta <- params.exp_dist(x)
     function(t) ifelse(t <= 0,0,theta)
 }
 
@@ -68,14 +64,10 @@ sampler.exp_dist <- function(x,...)
 }
 
 
-#' Method to obtain the fisher information of the \code{x} object that
-#' represents an \code{exp_dist} object.
 
-#' @param x \code{exp_dist} object to get the fisher information of
-#' @param ... Additional arguments to pass
-#' @importFrom algebraic.mle fisher_info
-#' @export
-fisher_info.exp_dist <- function(x,...)
+
+min.exp_dist <- function(x1,x2)
 {
-    params(x)^2
+    if (is_exp_dist(x2))
+    make_exp_dist()
 }

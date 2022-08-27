@@ -7,10 +7,22 @@ make_normal <- function(
     mu=c(0),
     sigma=diag(length(mu)))
 {
-    structure(list(
-        mu=mu,
-        sigma=sigma),
-        class=c("normal","dist"))
+    structure(.Data=c(mu=mu,sigma=sigma),class=c("normal","dist"))
+}
+
+
+print.normal <- function(x,...)
+{
+    if (x["mu"] == 0 && x["sigma"]==1)
+    {
+        cat("standard normal distribution\n")
+    }
+    else
+    {
+        cat("normal distribution\n")
+        cat("parameters:\n")
+        print.default(unclass(x),...)
+    }
 }
 
 #' Retrieve the variance-covariance matrix (or scalar)
@@ -27,26 +39,6 @@ make_normal <- function(
 vcov.normal <- function(object,...)
 {
     object$sigma
-}
-
-#' Retrieve the fisher information of a \code{normal} object for
-#' parameters \code{mu} and \code{sigma}.
-
-#' Fisher information is a way of measuring the amount of
-#' information that an observable random variable `X`
-#' carries about an unknown parameter \code{theta}
-#' upon which the probability of `X` depends.
-#'
-#' The inverse of the Fisher information matrix
-#' is the variance-covariance of the MLE for
-#' \code{theta}.
-#'
-#' @param object The \code{normal} object
-#' @export
-fisher_info.normal <- function(object,...)
-{
-    # incorrect, i think, revisit
-    matrix(1/object$sigma,1/(2*object$sigma^2))
 }
 
 #' Method for obtaining the parameters of a \code{normal} object.
