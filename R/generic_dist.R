@@ -58,6 +58,12 @@ inv_cdf <- function(x,...)
     UseMethod("inv_cdf",x)
 }
 
+#' @export
+params <- function(x)
+{
+  UseMethod("params",x)
+}
+
 #' Generic method for obtaining the expectation of \code{f} with respect to
 #' \code{x}.
 #'

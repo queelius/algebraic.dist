@@ -5,15 +5,26 @@
 #' implementations for everything *except* the \code{cdf} and the \code{sup}
 #' (support) functions.
 #'
-#' We chose the cdf since it is easy to generate:
-#'     pdf, survival, inv_cdf, hazard, and sampler
-#' The survival function would have also been an appropriate choice.
+#' We chose the cdf since it is easy to build each of the following from it:
+#'     pdf, surv, inv_cdf, hazard, and sampler
+#' The survival function (surv) would have also been an appropriate choice.
 #'
-#' Ideally, a univariate distribution object will provide custom implementations
-#' that are more efficient or accurate, but it is not required and the defaults
-#' work well enough in most cases.
+#' Ideally, a subclass of a univariate distribution object will provide custom
+#' implementations that are more efficient or accurate, but it is not required
+#' and the defaults work well enough in most cases.
+#' 
+#' However, if the support is not contiguous, then \code{expectation} and
+#' \code{inv_cdf} will need to be overridden from the default.
 #' @export
 NULL
+
+univariate_dist <- function(cdf,sup=function(x) c(-Inf,Inf))
+{
+  structure(list(
+    cdf=cdf,
+    sup=sup),
+    class="univariate_dist")
+}
 
 #' Method for obtaining the hazard function of a \code{univariate_dist} object.
 #'
@@ -22,9 +33,9 @@ NULL
 #' @export
 hazard.univariate_dist <- function(x, ...)
 {
-    pdfx <- pdf(x,...)
-    survx <- surv(x,...)
-    function(t) pdfx(t)/survx(t)
+  fx <- pdf(x,...)
+  sx <- surv(x,...)
+  function(t) fx(t)/sx(t)
 }
 
 #' Method for obtaining the pdf of a \code{univariate_dist} object.
@@ -35,8 +46,8 @@ hazard.univariate_dist <- function(x, ...)
 #' @export
 pdf.univariate_dist <- function(x,...)
 {
-    cdfx <- cdf(x,...)
-    function(t) grad(cdfx,t)
+  Fx <- cdf(x,...)
+  function(t) grad(Fx,t)
 }
 
 #' Method for obtaining the survival function a \code{univariate_dist} object.
@@ -46,8 +57,8 @@ pdf.univariate_dist <- function(x,...)
 #' @export
 surv.univariate_dist <- function(x,...)
 {
-    cdfx <- cdf(x,...)
-    function(t) 1-cdfx(t)
+  Fx <- cdf(x,...)
+  function(t) 1-Fx(t)
 }
 
 #' Method for obtaining the sampler for a \code{univariate_dist} object.
@@ -66,31 +77,40 @@ sampler.univariate_dist <- function(x,...)
 
 #' Method for obtaining the inverse cdf for a \code{univariate_dist} object.
 #'
-#' We use Newton's method to solve for the root of cdf(x)(t) - p.
+#' We use Newton's method to solve for the root of \code{cdf(x)(t) - p}.
 #'
 #' @param x The object to obtain the inverse cdf of.
 #' @param ... Additional arguments to pass.
 #' @export
 inv_cdf.univariate_dist <- function(x,t0=NULL,eps=1e-3,...)
 {
-    if (is.null(t0))
-        t0 <- sampler(x)(1)
-    stopifnot(sup(x)(t0))
-    cdfx <- cdf(x,...)
-    pdfx <- pdf(x,...)
-    function(p)
+  # we assume that sup(x) is a contiguous interval
+  if (is.null(t0))
+      t0 <- sampler(x)(1)
+  sx <- sup(x)
+  stopifnot(t0 %in% sx)
+  Fx <- cdf(x,...)
+  fx <- pdf(x,...)
+  function(p)
+  {
+    stopifnot(p >= 0 && p <= 1)
+    t1 <- NULL
+    repeat
     {
-        stopifnot(p >= 0 && p <= 1)
-        t1 <- NULL
-        repeat
-        {
-            t1 <- t0 - (cdfx(t0)-p)/pdfx(t0)
-            if (abs(t1-t0) < eps)
-                break
-            t0 <- t1
-        }
-        t1
+      alpha <- 1
+      repeat
+      {
+        t1 <- t0 - alpha * (Fx(t0)-p)/fx(t0)
+        if (t1 %in% sx)
+          break
+        alpha <- alpha / 2
+      }
+      if (abs(t1-t0) < eps)
+        break
+      t0 <- t1
     }
+    t1
+  }
 }
 
 #' Method for obtaining the expectation of \code{f} with respect to a
@@ -103,10 +123,9 @@ inv_cdf.univariate_dist <- function(x,t0=NULL,eps=1e-3,...)
 #' @export
 expectation.univariate_dist <- function(x,g,...)
 {
-    # we assume the support is a contiguous interval, represented by
-    # a vector where s[1] and s[2] are respectively the lower and upper bounds
-    s <- sup(x)
-    integrate(f=g,lower=s[1],upper=s[2],...)
+    # we assume the support is a contiguous interval that has operations
+    # for retrieving the lower and upper bounds.
+    integrate(f=g,lower=lower_bound(sup(x)),upper=upper_bound(sup(x)),...)
 }
 
 #' Method for obtaining the mean of \code{univariate_dist} object \code{x}.
