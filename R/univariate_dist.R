@@ -12,8 +12,6 @@
 #' Ideally, a univariate distribution object will provide custom implementations
 #' that are more efficient or accurate, but it is not required and the defaults
 #' work well enough in most cases.
-#' @export
-NULL
 
 #' Method for obtaining the hazard function of a \code{univariate_dist} object.
 #'

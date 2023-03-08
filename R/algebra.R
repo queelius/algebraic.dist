@@ -10,7 +10,7 @@ marginal.joint_dist <- function(x,indices)
 {
     ifelse(length(indices) == 1,
            x[[indices[1]]],
-           make_joint(x[indices])
+           make_joint(x[indices]))
 }
 
 conditional.dist <- function(x,cond,n,...)

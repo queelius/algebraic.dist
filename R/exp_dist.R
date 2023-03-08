@@ -5,7 +5,7 @@
 make_exp_dist <- function(rate)
 {
     structure(list(theta=rate),
-              class=c("exp_dist","univariate_dist","dist")))
+              class=c("exp_dist","univariate_dist","dist"))
 }
 
 #' Method for obtaining the variance of a \code{exp_dist} object.
