@@ -1,3 +1,29 @@
+join <- function(x,y) make_joint(list(unlist(x),unlist(y)))
+
+make_joint <- function(x)
+{
+    if (!is.list(x)) x <- list(x)
+    structure(x,class=list("joint_dist","dist"))
+}
+
+marginal.joint_dist <- function(x,indices)
+{
+    ifelse(length(indices) == 1,
+           x[[indices[1]]],
+           make_joint(x[indices]))
+}
+
+conditional.dist <- function(x,cond,n,...)
+{
+    make_conditional_dist(x,cond,...)
+}
+
+
+pdf.joint_dist <- function(x,...)
+{
+
+}
+
 make_conditional_dist <- function(x,cond,n,...)
 {
   structure(list(
@@ -51,9 +77,17 @@ minimum <- function(x1,x2)
 {
   if (is_exp_dist(x1) && is_exp_dist(x2))
     exp_dist(rate(x1)+rate(x2))
+  else
+    dispatch(x1,x2,min)
 }
 
-add <- function(x1,x2)
+%+%.dist <- function(x1,x2)
+{
+  if (is_exp_dist(x1) && is_exp_dist(x2))
+    exp_dist(rate(x1)+rate(x2))
+  else
+    dispatch(x1,x2,add)
+}
 {
   if (is_normal_dist(x1) && is_normal_dist(x2))
     normal_dist(mean(x1)+mean(x2),

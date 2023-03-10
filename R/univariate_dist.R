@@ -9,6 +9,7 @@
 #'     pdf, surv, inv_cdf, hazard, and sampler
 #' The survival function (surv) would have also been an appropriate choice.
 #'
+<<<<<<< HEAD
 #' Ideally, a subclass of a univariate distribution object will provide custom
 #' implementations that are more efficient or accurate, but it is not required
 #' and the defaults work well enough in most cases.
@@ -17,6 +18,11 @@
 #' \code{inv_cdf} will need to be overridden from the default.
 #' @export
 NULL
+=======
+#' Ideally, a univariate distribution object will provide custom implementations
+#' that are more efficient or accurate, but it is not required and the defaults
+#' work well enough in most cases.
+>>>>>>> 41ec6c0becd8d66c11ce6debf01210871ccacb97
 
 univariate_dist <- function(cdf,sup=function(x) c(-Inf,Inf))
 {

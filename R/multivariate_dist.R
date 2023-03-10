@@ -1,7 +1,5 @@
 #' \code{multivariate_dist} models the concept of a continuous multivariate
 #' distribution.
-#' @export
-NULL
 
 #' Method for obtaining the pdf of a \code{univariate_dist} object.
 #'

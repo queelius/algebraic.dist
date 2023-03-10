@@ -39,7 +39,7 @@ library(stats)
 library(tidyverse)
 
 exp.dist <- make_exp_dist(rate=1)
-x <- tibble(x=sample(exp.dist)(n))
+#x <- tibble(x=sample(exp.dist)(n))
 ```
 
 We have observed a sample of size $n=`r n`$.
