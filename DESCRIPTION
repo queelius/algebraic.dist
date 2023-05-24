@@ -8,22 +8,17 @@ Description: Set of functions/methods for operating on, sampling from, etc. dist
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 Suggests: 
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    dplyr,
-    extraDistr,
     matlib,
     numDeriv,
-    readr,
     stats,
-    tibble,
-    mvtnorm,
-    MASS,
+    mvtnorm
 Depends: 
     R (>= 2.10)
 LazyData: true
