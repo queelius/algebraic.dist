@@ -61,14 +61,24 @@ is_mvn <- function(x) {
 #'
 #' @param x The `mvn` object to sample from
 #' @return A function that samples from the multivariate normal distribution.
-#'         As input, it accepts a sample size `n`, a parameter vector `mu`, and
-#'         a variance-covariance matrix `sigma`. By default, `mu` and `sigma`
-#'         are the mean and variance-covariance matrix of object `x`.
+#'         As input, it accepts a sample size `n`, a parameter vector `mu`, 
+#'         a variance-covariance matrix `sigma`, and a probability region `p`.
+#'         By default, `mu` and `sigma` are the mean and variance-covariance 
+#'         matrix of object `x`, `p` = 1 (sample from entire distribution).
+#'         If `p` < 1, then the function returns a function that samples
+#'         from the multivariate normal distribution truncated to the
+#'         probability region `p`, which is just the conditional distribution
+#'         of the multivariate normal distribution given that the random
+#'         vector is in the probability region `p`.
 #' @importFrom mvtnorm rmvnorm
 #' @export
 sampler.mvn <- function(x) {
-    function(n = 1, mu = x$mu, sigma = x$sigma) {
-        rmvnorm(n, mu, sigma)
+    function(n = 1, mu = x$mu, sigma = x$sigma, p = 1) {
+        if (p >= 1) {
+
+        } else {
+            rmvnorm(n, mu, sigma)
+        }
     }
 }
 
@@ -111,4 +121,34 @@ marginal.mvn <- function(x, indices) {
     mu <- x$mu[indices]
     sigma <- x$sigma[indices, indices]
     mvn(mu, sigma)
+}
+
+#' Function for obtaining sample points for an `mvn` object that is within
+#' the `p`-probability region.
+#'
+#' @param n the sample size
+#' @param x the `mle` object
+#' @param p the probability region
+#'
+#' @importFrom stats qchisq mahalanobis
+#' @export
+sample_mvn_region <- function(n, x, p = .95) {
+    stopifnot(p > 0.0 && p <= 1.0, n > 0, is_mle(x))
+    k <- nparams(x)
+    crit <- qchisq(p, k)
+    nfo <- fim(x)
+    mu <- point(x)
+
+    i <- 0L
+    samp <- sampler(x)
+    data <- matrix(nrow = n, ncol = k)
+    while (i < n) {
+        x <- samp(1)
+        d <- mahalanobis(x, center = mu, cov = nfo, inverted = T)
+        if (d <= crit) {
+            i <- i + 1L
+            data[i, ] <- x
+        }
+    }
+    data
 }
