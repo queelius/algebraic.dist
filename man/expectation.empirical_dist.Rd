@@ -12,7 +12,7 @@ under function \code{g}.}
 
 \item{g}{The function to take the expectation of.}
 
-\item{...}{Additional arguments to pass (to function \code{g}).}
+\item{...}{Additional arguments to pass itno function \code{g}.}
 }
 \description{
 Method for obtaining the expectation of \code{empirical_dist} object \code{x}

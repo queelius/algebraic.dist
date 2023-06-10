@@ -4,7 +4,7 @@
 \alias{params.exp_dist}
 \title{Method for obtaining the parameters of an \code{exp_dist} object.}
 \usage{
-\method{params}{exp_dist}(x)
+\method{params}{exp_dist}(x, rate = NULL)
 }
 \arguments{
 \item{x}{The object to obtain the parameters of}

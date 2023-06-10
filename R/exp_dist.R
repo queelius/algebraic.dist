@@ -13,8 +13,11 @@ exp_dist <- function(rate) {
 #' @param x The object to obtain the parameters of
 #' @return A named vector of parameters
 #' @export
-params.exp_dist <- function(x) {
-  c("rate" = x$rate)
+params.exp_dist <- function(x, rate = NULL) {
+  if (is.null(rate)) {
+    rate <- x$rate
+  }
+  c("rate" = rate)
 }
 
 #' Function to determine whether an object `x` is an `exp_dist` object.
@@ -34,9 +37,7 @@ is_exp_dist <- function(x) {
 #' @importFrom stats vcov
 #' @export
 vcov.exp_dist <- function(object, rate = NULL) {
-  if (is.null(rate)) {
-    rate <- object$rate
-  }
+  rate <- params(object, rate)
   1 / rate^2
 }
 
@@ -54,9 +55,9 @@ hazard.exp_dist <- function(x) {
     stopifnot(rate > 0)
 
     if (log) {
-      ifelse(t <= 0, NA, rate)
+      ifelse(t <= 0, -Inf, log(rate))
     } else {
-      ifelse(t <= 0, NA, log(rate))
+      ifelse(t <= 0, 0, rate)
     }
   }
 }
@@ -73,12 +74,7 @@ hazard.exp_dist <- function(x) {
 pdf.exp_dist <- function(x) {
   function(t, rate = x$rate, log = FALSE) {
     stopifnot(rate > 0)
-
-    if (log) {
-      ifelse(t <= 0, -Inf, log(rate) - rate * t)
-    } else {
-      ifelse(t <= 0, 0, rate * exp(-rate * t))
-    }
+    dexp(t, rate, log)
   }
 }
 
@@ -124,55 +120,27 @@ mean.exp_dist <- function(x, rate = NULL) {
 #'         or log-probability. By default, `rate` is the failure rate
 #'         of object `x`.
 #' @export
-inv_cdf.exp_dist <- function(x) {
-  function(p, rate = x$rate, log.p = FALSE) {
+qunatile.exp_dist <- function(x, rate = NULL, ...) {
+  function(p, rate = x$rate, lower.tail = TRUE, log.p = FALSE) {
       stopifnot(rate > 0)
-      if (log.p) {
-        ifelse(p < 0, NA, -log(1-exp(p)) / rate)
-      } else {
-        ifelse(p < 0 | p > 1, NA, -log(1-p) / rate)
-      }
+      qexp(p = p, rate = rate, lower.tail = lower.tail, log.p = log.p)
   }
 }
 
 #' Method to obtain the cdf of an `exp_dist` object.
 #'
 #' @param x The object to obtain the pdf of
+#' @param ... Additional arguments (not used)
 #' @return A function that computes the cdf of the exponential. Accepts as
 #'         input a vector `t` at which to compute the cdf, an input `rate`
 #'         denoting the failure rate of the exponential distribution, and a
 #'         logical `log` indicating whether to compute the log of the cdf.
 #'         By default, `rate` is the failure rate of object `x`.
 #' @export
-cdf.exp_dist <- function(x) {
-  function(t, rate = x$rate, log = FALSE) {
+cdf.exp_dist <- function(x, ...) {
+  function(t, rate = x$rate, lower.tail = TRUE, log.p = FALSE) {
     stopifnot(rate > 0)
-    if (log) {
-      ifelse(t <= 0, -Inf, log(1 - exp(-rate * t)))
-    } else {
-      ifelse(t <= 0, 0, 1 - exp(-rate * t))
-    }
-  }
-}
-
-#' Method to obtain the survival function of an `exp_dist` object.
-#'
-#' @param x The object to obtain the pdf of
-#' @return A function that computes the survival function of the exponential,
-#'         Accepts as input a vector `t` at which to compute the survival
-#'         function, an input `rate` denoting the failure rate of the 
-#'         exponential distribution, and a logical `log` indicating whether
-#'         to compute the log of the survival function. By default, `rate`
-#'         is the failure rate of object `x`.
-#' @export
-surv.exp_dist <- function(x) {
-  function(t, rate = x$rate, log = FALSE) {
-    stopifnot(rate > 0)
-    if (log) {
-      ifelse(t <= 0, 0, -rate * t)
-    } else {
-      ifelse(t <= 0, 1, exp(-rate * t))
-    }
+    pexp(q = t, rate = rate, lower.tail = lower.tail, log.p = log.p)
   }
 }
 
@@ -182,4 +150,45 @@ surv.exp_dist <- function(x) {
 #' @export
 sup.exp_dist <- function(x) {
   interval$new(lower = 0, lower_closed = FALSE)
+}
+
+#' Method to obtain the cdf of an `exp_dist` object.
+#'
+#' @param x The object to obtain the pdf of
+#' @param ... Additional arguments (not used)
+#' @return A function that computes the cdf of the exponential. Accepts as
+#'         input a vector `t` at which to compute the cdf, an input `rate`
+#'         denoting the failure rate of the exponential distribution, and a
+#'         logical `log` indicating whether to compute the log of the cdf.
+#'         By default, `rate` is the failure rate of object `x`.
+#' @export
+surv.exp_dist <- function(x, ...) {
+  function(t, rate = x$rate, log.p = FALSE) {
+    stopifnot(rate > 0)
+    pexp(q = t, rate = rate, log.p = log.p)
+  }
+}
+
+#' This is the expectation of a function `g` with respect to an
+#' exponential distribution `x` of type `exp_dist`.
+#'
+#' @param x The disrtibution object.
+#' @param g The function to take the expectation of.
+#' @param ... Additional arguments to pass.
+#' @export
+expectation.exp_dist <- function(x, g, rate = NULL, ...) {
+
+  rate <- params(x, rate)
+  stopifnot(is.function(g), rate > 0)
+  f <- pdf(x)
+  integrate(function(t) g(t) * f(t, ...), 0, Inf)
+}
+
+
+#' Print method for `exp_dist` objects.
+#' @param x The `exp_dist` object to print.
+#' @param ... Additional arguments (not used)
+#' @export
+print.exp_dist <- function(x, ...) {
+  cat("Exponential distribution with failure rate", x$rate, "\n")
 }

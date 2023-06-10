@@ -4,10 +4,12 @@
 \alias{cdf.exp_dist}
 \title{Method to obtain the cdf of an \code{exp_dist} object.}
 \usage{
-\method{cdf}{exp_dist}(x)
+\method{cdf}{exp_dist}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the pdf of}
+
+\item{...}{Additional arguments (not used)}
 }
 \value{
 A function that computes the cdf of the exponential. Accepts as

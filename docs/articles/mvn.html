@@ -42,7 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/empirical_dist.html">Empirical distribution</a>
-    <a class="dropdown-item" href="../articles/exponential.html">Exponential distribution</a>
+    <a class="dropdown-item" href="../articles/failure_rate.html">Failure rate distributions</a>
     <a class="dropdown-item" href="../articles/mvn.html">Multivariate normal distribution</a>
   </div>
 </li>
@@ -86,6 +86,9 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/queelius/algebraic.dist" class="external-link">algebraic.dist</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'algebraic.dist'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     quantile</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:grDevices':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     pdf</span></span></code></pre></div>
@@ -95,48 +98,48 @@
 </h2>
 <p>We define the parameters of the MVN with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mvn.html">mvn</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,</span>
-<span>         sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0.5</span>,<span class="fl">0.5</span>,</span>
-<span>                          <span class="fl">0.5</span>,<span class="fl">1</span>,<span class="fl">0.5</span>,</span>
-<span>                          <span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">1</span><span class="op">)</span>,</span>
-<span>                        nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,    <span class="fl">0.5</span>,  <span class="fl">0.5</span>,</span>
+<span>    <span class="fl">0.5</span>,  <span class="fl">1</span>,    <span class="fl">0.5</span>,</span>
+<span>    <span class="fl">0.5</span>,  <span class="fl">0.5</span>,  <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mvn.html">mvn</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, sigma <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span></code></pre></div>
 <p>We observe a sample of size 100 with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             [,1]      [,2]     [,3]</span></span>
-<span><span class="co">#&gt; [1,] -1.62464473 1.1969000 1.693928</span></span>
-<span><span class="co">#&gt; [2,]  0.56582157 1.2275760 1.170459</span></span>
-<span><span class="co">#&gt; [3,] -0.22326782 0.6988296 2.545295</span></span>
-<span><span class="co">#&gt; [4,]  1.14300304 0.5905328 2.821068</span></span>
-<span><span class="co">#&gt; [5,] -1.19033947 0.6612848 1.827059</span></span>
-<span><span class="co">#&gt; [6,]  0.02207053 2.0501376 1.267967</span></span>
-<span><span class="co">#&gt; [7,]  1.09190905 1.8195959 3.256572</span></span>
-<span><span class="co">#&gt; [8,] -0.90082556 1.2717078 1.555612</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">my_sampler</span> <span class="op">&lt;-</span> <span class="fu">algebraic.dist</span><span class="fu">::</span><span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="co">#print(my_sampler)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">support</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sup.html">sup</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
-<span><span class="fu">infinum</span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -Inf -Inf -Inf</span></span>
-<span><span class="fu">supremum</span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] Inf Inf Inf</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">my_sampler</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="co">#data &lt;- mvtnorm::rmvnorm(n, c(1,2,3))</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="co">#&gt;            [,1]      [,2]      [,3]</span></span>
+<span><span class="co">#&gt; [1,]  0.1995425 1.3084268 1.4166042</span></span>
+<span><span class="co">#&gt; [2,] -0.7935092 1.1678027 1.8648409</span></span>
+<span><span class="co">#&gt; [3,] -1.3008160 1.1739765 1.7839669</span></span>
+<span><span class="co">#&gt; [4,]  0.3473320 1.5508035 2.2679657</span></span>
+<span><span class="co">#&gt; [5,]  0.6217829 1.2531637 1.6548079</span></span>
+<span><span class="co">#&gt; [6,] -2.2745028 0.6535253 0.2546574</span></span>
+<span><span class="co">#&gt; [7,] -0.7246502 0.5834365 1.5983338</span></span>
+<span><span class="co">#&gt; [8,] -0.2567525 0.2820101 1.8921800</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">support</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sup.html">sup</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="fu">infimum</span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
+<span><span class="fu">supremum</span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/marginal.html">marginal</a></span><span class="op">(</span><span class="va">M</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">F1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cdf.html">cdf</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu">F1</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, from <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, to <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mvn_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">X1X2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/marginal.html">marginal</a></span><span class="op">(</span><span class="va">M</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">rv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">X1X2</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#X1X2 &lt;- marginal(M, c(1,2))</span></span>
+<span><span class="co">#rv &lt;- sampler(X1X2)</span></span>
 <span></span>
 <span><span class="co"># sample some data; could just use data directly</span></span>
-<span><span class="va">data.X1X2</span> <span class="op">&lt;-</span> <span class="fu">rv</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#data.X1X2 &lt;- rv(1000)</span></span>
 <span></span>
 <span><span class="co"># scatter plot a 2d sample</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data.X1X2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">data.X1X2</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, pch <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mvn_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<span><span class="co">#plot(data.X1X2[,1], data.X1X2[,2], pch = 20, col = "blue")</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

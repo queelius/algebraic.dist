@@ -1,6 +1,6 @@
 #' Construct (multivariate or univariate) normal distribution object.
 #'
-#' @param mu mean
+#' @param mu mean vector
 #' @param sigma variance-covariance matrix
 #' @export
 mvn <- function(
@@ -13,7 +13,7 @@ mvn <- function(
               nrow(sigma) == length(mu))
 
     structure(list(mu = mu, sigma = sigma),
-              class = c("mvn", "multivariate_dist", "dist"))
+              class = c("mvn"))
 }
 
 #' Retrieve the variance-covariance matrix (or scalar)
@@ -60,24 +60,15 @@ is_mvn <- function(x) {
 #' Method for sampling from a `mvn` (multivariate normal) object.
 #'
 #' @param x The `mvn` object to sample from
-#' @return A function that samples from the multivariate normal distribution.
-#'         As input, it accepts a sample size `n`, a parameter vector `mu`, 
-#'         a variance-covariance matrix `sigma`, and a probability region `p`.
-#'         By default, `mu` and `sigma` are the mean and variance-covariance 
-#'         matrix of object `x`, `p` = 1 (sample from entire distribution).
-#'         If `p` < 1, then the function returns a function that samples
-#'         from the multivariate normal distribution truncated to the
-#'         probability region `p`, which is just the conditional distribution
-#'         of the multivariate normal distribution given that the random
-#'         vector is in the probability region `p`.
+#' @param `...` Additional arguments to pass to `rmvnorm` or `sample_mvn_region`
 #' @importFrom mvtnorm rmvnorm
 #' @export
-sampler.mvn <- function(x) {
+sampler.mvn <- function(x, ...) {
     function(n = 1, mu = x$mu, sigma = x$sigma, p = 1) {
-        if (p >= 1) {
-
+        if (p < 1) {
+            sample_mvn_region(n, mu, sigma, p, ...)
         } else {
-            rmvnorm(n, mu, sigma)
+            rmvnorm(n, mu, sigma, ...)
         }
     }
 }
@@ -106,7 +97,10 @@ pdf.mvn <- function(x) {
 #'         `interval` object for each component. 
 #' @export
 sup.mvn <- function(x) {
-    box_support(length(x$mu))
+    interval$new(lower = rep(-Inf, length(x$mu)),
+                 upper = rep(Inf, length(x$mu)),
+                 lower_closed = rep(FALSE, length(x$mu)),
+                 upper_closed = rep(FALSE, length(x$mu)))
 }
 
 #' Generic method for obtaining the marginal distribution of an `mvn` object
@@ -127,28 +121,39 @@ marginal.mvn <- function(x, indices) {
 #' the `p`-probability region.
 #'
 #' @param n the sample size
-#' @param x the `mle` object
+#' @param mu mean vector
+#' @param sigma variance-covariance matrix
 #' @param p the probability region
-#'
+#' @param ... additional arguments to pass into `mahalanobis`
 #' @importFrom stats qchisq mahalanobis
 #' @export
-sample_mvn_region <- function(n, x, p = .95) {
-    stopifnot(p > 0.0 && p <= 1.0, n > 0, is_mle(x))
-    k <- nparams(x)
-    crit <- qchisq(p, k)
-    nfo <- fim(x)
-    mu <- point(x)
+sample_mvn_region <- function(n, mu, sigma, p = .95, ...) {
 
+    stopifnot(p >= 0 && p <= 1, n > 0)
+
+    k <- length(mu)
+    crit <- qchisq(p, k)
     i <- 0L
     samp <- sampler(x)
     data <- matrix(nrow = n, ncol = k)
     while (i < n) {
         x <- samp(1)
-        d <- mahalanobis(x, center = mu, cov = nfo, inverted = T)
+        d <- mahalanobis(x, center = mu, cov = sigma, ...)
         if (d <= crit) {
             i <- i + 1L
             data[i, ] <- x
         }
     }
     data
+}
+
+
+#' Method for printing an `mvn` object.
+#' @param x The object to print
+#' @export
+print.mvn <- function(x, ...) {
+    cat("Multivariate normal distribution with mean:\n")
+    print(x$mu)
+    cat("and variance-covariance matrix:\n")
+    print(x$sigma)
 }

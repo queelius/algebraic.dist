@@ -1,0 +1,302 @@
+---
+title: "Failure rate distributions"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Failure rate distributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+We load the R package `algebraic.dist` which contains all of the
+relevant material in this section with:
+
+```{r setup, message = FALSE}
+if (!require(algebraic.dist)) {
+  devtools::install_github("queelius/algebraic.dist")
+}
+library(algebraic.dist)
+```
+
+## Introduction
+
+One of the most important quantities in reliability theory and
+survival analysis is the failure rate, often denoted by $\lambda$.
+For a system with a random lifetime $T$, its failure rate over some
+interval $(t, t + \Delta t)$ is the ratio of the probability of
+failure in that interval $(t, t + \Delta t)$ given that the
+system survived up to the time $t$ divided by the length
+of the interval $\Delta t$.
+That is,
+$$
+  \lambda = \frac{\Pr(T \leq t + \Delta t | T > t)}{\Delta t}.
+$$
+
+For instance, if we have a system with a failure rate of $\lambda$
+over the interval $(t, t + \Delta t)$, then the probability of failure
+over this interval, given that it has survived up to time $t$, is
+$\lambda \Delta t$.
+Of course, for most systems, the failure rate changes over time. For
+instance, a system may be more likely to fail when it is new, or when
+it is old.
+
+At the limit, as $\Delta t \to 0$, we have what is known as the
+instaneous failure rate, or the hazard function,
+
+$$
+h(t) = \lim_{\Delta t \to 0}
+  \frac{\Pr\{T \leq t + \Delta t | T > t\}}{\Delta t}.
+$$
+
+We can rewrite the above expression as
+$$
+\begin{align}
+h(t)
+  &= \lim_{\Delta t \to 0}
+    \frac{\Pr\{t < T \leq t + \Delta t\}}{ \Pr\{T > t\} \Delta t}\\
+  &= \lim_{\Delta t \to 0} \left(\frac{F(t + \Delta t) - F(t)}{\Delta t}\right)
+      \frac{1}{ 1 - F(t) }\\
+  &= \frac{f(t)}{S(t)},
+\end{align}
+$$
+where $f$ is the pdf, $F$ is the cdf, and $S$ is the survival function of $T$.
+
+The concept of the failure rate or hazard function is the basis of
+many important lifetime models in survival analysis and reliability theory.
+In what follows, we consider the simple case of exponentially distributed
+random lifetimes commonly used in reliability theory. We begin by
+considering  the classic exponential distribution with a constant
+failure rate ($h(t)$ is constant), and then broaden the scope to a
+dynamic failure rate which can be a function of both time and any other
+predictors or covariates, i.e., $h(t, x)$ may change with respect to both
+$t$ and the covariate vector $x$.
+
+## Exponential distribution
+
+A random variable $T$ is said to have an Exponential
+distribution with parameter $\lambda$ if its probability density
+function is given by $f(t|\lambda) = \lambda e^{-\lambda t} 1_{t \geq 0}$,
+where $1_{\text{predicate}} = 1$ if the *predicate* condition is true,
+otherwise it maps to $0$. The cdf and survival function are respectively
+given by $F(t|\lambda) = 1_{t > 0} (1 - e^{-\lambda t})$ and
+$S(t|\lambda) = 1 - F(t|\lambda) = 1_{t \leq 0} + 1_{t > 0} e^{-\lambda t}$.
+
+It's hazard function $h(t)$ is given by
+$$
+h(t|\lambda) = \frac{f(t|\lambda)}{S(t|\lambda)} = 1_{t > 0} \, \lambda,
+$$
+i.e., it has a constant failure rate $\lambda$ over its entire lifetime.
+This is known as memoryless property,
+$$
+  \Pr\{T > t + \Delta t | T > t\} = \Pr\{T > \Delta t\}
+$$
+for all $t, \Delta t > 0$.
+
+This is often a reasonable assumption for many systems, such as
+electronic components, where the failure rate is essentially constant for
+a significant portion of the component's lifetime.
+
+We define the parameters of the i.i.d. random sample with:
+```{r init_params}
+n <- 1000
+rate <- .5
+```
+
+We generate a random sample $X_i \sim \operatorname{EXP}(\lambda=`r rate`)$ for
+$i=1,\ldots,n$ with:
+```{r load_dist, message=F, warning=F}
+exp.dist <- exp_dist(rate = rate)
+data <- sampler(exp.dist)(n)
+```
+
+We have observed a sample of size $n=`r n`$.
+We show some observations from this sample with:
+```{r print_data}
+head(data)
+```
+
+We show a histogram of the sample overlaid with a plot of the exponential
+function's pdf with:
+```{r plotter, fig.width=6, fig.height=4, fig.align="center"}
+curve(pdf(exp.dist)(x), col = "red", xlim=c(0 , 10))
+hist(data, add = TRUE, freq = FALSE, breaks = 40)
+```
+
+We construct a data frame showing mean, variance, and $E(sin(T))$,
+the expected value of the sin of $T$. We show how to do it using
+the `expectation` API, and then show the sample stimates.
+
+```{r}
+df <- data.frame(
+  "true value" = c(mean(exp.dist),
+                   vcov(exp.dist),
+                   (expectation(exp.dist, sin)$value)),
+  "sample estimate" = c(mean(data), var(data), mean(sin(data))))
+row.names(df) <- c("mean", "variance", "E(sin(T))")
+print(df)
+```
+
+We provide a general API that allows a number of different operations on
+`dist` objects like `exp_dist`, e.g., to obtain the infimum, write:
+```{r}
+infimum(sup(exp.dist))
+```
+
+See the documentation for more details.
+
+## Dynamic failure rate (DFR) distribution
+
+Now, we consider the case where the failure rate is not constant. In fact,
+we generalize it to be a function of both time and any other predictors, say
+$t$ and $x$ where $x$ is a vector of covariates $(x_1,\ldots,x_p)$. We denote this function
+hazard function by $h(t, x)$.
+
+First, we define the cumulative hazard function. It is defined as
+$$
+H(t, x) = \int_0^t h(u, x) \, du,
+$$
+which is the expected number of failures up to time $t$. This is useful
+in its own right, but it is also useful in defining the survival function.
+The survival function, $\Pr\{T > t\}$, is given by
+$$
+S(t|x) = \exp\left(-\int_0^t h(s, x) \, ds\right).
+$$
+
+There is a well-known relationship between the survival function, the
+harzard function, and the pdf,
+$$
+  h(t, x) \frac{f(t|x)}{S(t|x)}.
+$$
+We may rewrite the above expression to define the pdf in terms of the
+hazard and survival functions,
+$$
+f(t|x) = h(t, x) S(t|x).
+$$
+
+#### Common failure rate distributions
+
+In what follows, we show how two well-known distributions, the exponential
+and the Weibull, are defined in this framework.
+
+1. Exponential distribution: $h(t, x) = h(t) = \lambda$. We explored this
+   distribution above.
+
+2. Weibull distribution:
+   $$
+    h(t, x) = h(t) =
+    \left(\frac{k}{\lambda}\right)\left(\frac{t}{\lambda}\right)^{k-1}.
+   $$
+
+### Generating a sample
+
+### Likelihood function and maximum likelihood estimation
+
+The likelihoon function is a sufficient statistic for the parameters of
+the distribution. The likelihood function for an observation of an exact
+failure time is given by
+$$
+\ell_i(\theta|t_i,x_i) = f(t_i|x_i,\theta),
+$$
+where $\theta$ is the vector of parameters of the distribution, $t_i$ 
+is the exact failure time, and $x_i$ is the vector of predictors 
+for the $i$th observation in the sample. We denote $l_i$ as a shorthand
+for $\ell_i(\theta|t_i,x_i)$, and we call this a likelihood contribution.
+
+If we have a sample in which $n$ are exact failure times, the total
+likelihood function over these observations is given by
+$$
+\ell(\theta|t,X) = \prod_{i=1}^n \ell_i(\theta|t_i,X_{i:}),
+$$
+where $t$ is the vector of failure times, $X$ is an $n \times p$ matrix
+of predictors, and $X_{i:}$ is the $i$-th row of $X$, a $1 \times p$
+vector of predictors for the $i$th row of $X$ corresponding to the $i$th
+observation in the exact failure time sample.
+
+It is more convenient to work with the log-likelihood function normally,
+so we define the log-likelihood contribution as
+$$
+L_i(\theta|t_i,x_i) = \log \ell_i.
+$$
+A particularly nice feature of the log-likelihood function is that it
+is additive, so the total log-likelihood function is given by
+$$
+L(\theta|t,X) = \sum_{i=1}^n L_i,
+$$
+and thus by the CLT, the log-likelihood function is asymptotically
+normally distributed. This comes in handy for the MLE, which is
+asymptotically normally distributed with a mean equal to the true
+parameter value $\theta$ and a variance equal to the inverse of the Fisher
+information matrix, assuming the regularity conditions hold:
+
+(1) The support of the distribution does not depend on the parameter
+    $\theta$.
+(2) The parameter space is open.
+(3) The pdf or pmf is differentiable with respect to $\theta$.
+(4) The derivative of the pdf or pmf with respect to $\theta$ is
+    continuous with respect to $\theta$.
+(5) The derivative of the log-likelihood function with respect to
+    $\theta$ exists and is continuous with respect to $\theta$.
+(6) The expectation of the derivative of the log-likelihood function
+    with respect to $\theta$ is zero.
+
+For our DFR (dynamic failure rate) model, this may be rewritten as
+\begin{align}
+\ell_i(\theta|t_i,x_i)
+  &= h(t_i, x_i) S(t_i|x_i)\\
+  &= h(t_i, x_i) \exp\left(-H(t_i, x_i)\right)\\
+  &= h(t_i, x_i) \exp\left(-\int_0^{t_i} h(s, x_i) \, ds\right),
+\end{align}
+where $h$ is the hazard function, $S$ is the survival function, and $H$
+is the cumulative hazard function.
+
+The log-likelihood function is given by
+$$
+\begin{align}
+\ell_i(\theta|t_i,x_i)
+  &= \log \ell_i\\
+  &= \log h(t_i, x_i) - H(t_i|x_i).
+\end{align}
+$$
+
+#### Score of the likelihood function
+
+The score of an obserevation in which theion where the exact failure time is known
+$$
+\begin{align}
+  s(\theta|t,x) = \nabla_{\theta} sum_{i=1}^n f(t_i|x_i)\\
+\end{align}
+
+
+
+
+We construct a data frame showing mean and variance for each
+way three ways of it, using `mean` and `vcov`, using `expectation` (defined
+for all `dist` objects using Monte Carlo integration), and using the
+analytical formulae for the mean and variance of the exponential
+and the definitions of each, and using the sample mean and sample variance.
+
+```{r eval=F}
+n <- 100000
+(mu.hat <- expectation(dfr.dist,
+  function(x) x, n = n)$value)
+(var.hat <- expectation(dfr.dist,
+  function(x) (x - mu.hat)^2, n = n)$value)
+
+df <- data.frame(
+  analytical = c(mean(dfr.dist),
+                 vcov(dfr.dist)),
+  sample = c(mean(data), var(data))
+)
+row.names(df) <- c("mean", "variance")
+print(df)
+```

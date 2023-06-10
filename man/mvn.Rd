@@ -7,7 +7,7 @@
 mvn(mu = 0, sigma = diag(length(mu)))
 }
 \arguments{
-\item{mu}{mean}
+\item{mu}{mean vector}
 
 \item{sigma}{variance-covariance matrix}
 }

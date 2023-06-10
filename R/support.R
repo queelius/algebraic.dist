@@ -4,8 +4,8 @@ contains <- function(support, x) {
 }
 
 #' @export
-infinum <- function(support) {
-    UseMethod("infinum", support)
+infimum <- function(support) {
+    UseMethod("infimum", support)
 }
 
 #' @export
@@ -22,30 +22,39 @@ interval <- R6::R6Class(
         upper_closed = TRUE,
         initialize = function(lower = -Inf, upper = Inf,
                               lower_closed = TRUE, upper_closed = TRUE) {
+            # replicate lower or upper if necessary so that they are the same length
+            if (length(lower) < length(upper)) {
+                lower <- rep(lower, length(upper), length.out=length(upper))
+            } else if (length(upper) < length(lower)) {
+                upper <- rep(upper, length.out=length(lower))
+            }
+            # replicate lower_closed and upper_closed if necessary so that they
+            # are the same length as `lower`
+            if (length(lower_closed) != length(lower)) {
+                lower_closed <- rep(lower_closed, length.out=length(lower))
+            }
+            if (length(upper_closed) != length(lower)) {
+                upper_closed <- rep(upper_closed, length.out=length(lower))
+            }
+
             self$lower <- lower
             self$upper <- upper
             self$lower_closed <- lower_closed
             self$upper_closed <- upper_closed
         },
         contains = function(x) {
-            if (self$lower_closed && self$upper_closed) {
-                return(self$lower <= x & x <= self$upper)
-            } else if (self$lower_closed) {
-                return(self$lower <= x & x < self$upper)
-            } else if (self$upper_closed) {
-                return(self$lower < x & x <= self$upper)
-            } else {
-                return(self$lower < x & x < self$upper)
-            }
+            lower <- ifelse(self$lower_closed, x >= self$lower, x > self$lower)
+            upper <- ifelse(self$upper_closed, x <= self$upper, x < self$upper)
+            lower & upper
         },
-        infinum = function() {
+        infimum = function() {
             self$lower
         },
         supremum = function() {
             self$upper
         },
         dim = function() {
-            1
+            length(self$lower)
         }
     )
 )
@@ -56,8 +65,8 @@ contains.interval <- function(support, x) {
 }
 
 #' @export
-infinum.interval <- function(support) {
-    support$infinum()
+infimum.interval <- function(support) {
+    support$infimum()
 }
 
 #' @export
@@ -68,6 +77,18 @@ supremum.interval <- function(support) {
 #' @export
 dim.interval <- function(support) {
     support$dim()
+}
+
+#' @export
+print.interval <- function(x, ...) {
+    for (i in 1:length(x$lower)) {
+        if (x$lower_closed[i]) cat("[", sep = "")
+        else cat("(", sep = "")
+        cat(x$lower[i], ", ", x$upper[i], sep = "")
+        if (x$upper_closed[i]) cat("]", sep = "")
+        else cat(")", sep = "")
+        cat("\n")
+    }
 }
 
 finite_set <- R6::R6Class(
@@ -87,7 +108,7 @@ finite_set <- R6::R6Class(
                 return(x %in% self$values)
             }
         },
-        infinum = function() {
+        infimum = function() {
              # if values is a matrix, find the min of each column
             if (is.matrix(self$values)) {
                 sapply(seq_len(ncol(self$values)), function(i) {
@@ -123,8 +144,8 @@ contains.finite_set <- function(support, x) {
 }
 
 #' @export
-infinum.finite_set <- function(support) {
-    support$infinum()
+infimum.finite_set <- function(support) {
+    support$infimum()
 }
 
 #' @export
@@ -135,31 +156,5 @@ supremum.finite_set <- function(support) {
 #' @export
 dim.finite_set <- function(support) {
     support$dim()
-}
-
-#' @export
-box_support <- function(dim = 1, lower = -Inf, upper = Inf) {
-    structure(list(lower = lower, upper = upper, dim = dim),
-             class = c("box_support", "set"))
-}
-
-#' @export
-contains.box_support <- function(support, x) {
-    all(x >= support$lower & x <= support$upper)
-}
-
-#' @export
-infinum.box_support <- function(support) {
-    rep(support$lower, support$dim)
-}
-
-#' @export
-supremum.box_support <- function(support) {
-    rep(support$upper, support$dim)
-}
-
-#' @export
-dim.box_support <- function(support) {
-    support$dim
 }
 

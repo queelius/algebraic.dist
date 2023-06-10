@@ -2,21 +2,22 @@
 % Please edit documentation in R/exp_dist.R
 \name{surv.exp_dist}
 \alias{surv.exp_dist}
-\title{Method to obtain the survival function of an \code{exp_dist} object.}
+\title{Method to obtain the cdf of an \code{exp_dist} object.}
 \usage{
-\method{surv}{exp_dist}(x)
+\method{surv}{exp_dist}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the pdf of}
+
+\item{...}{Additional arguments (not used)}
 }
 \value{
-A function that computes the survival function of the exponential,
-Accepts as input a vector \code{t} at which to compute the survival
-function, an input \code{rate} denoting the failure rate of the
-exponential distribution, and a logical \code{log} indicating whether
-to compute the log of the survival function. By default, \code{rate}
-is the failure rate of object \code{x}.
+A function that computes the cdf of the exponential. Accepts as
+input a vector \code{t} at which to compute the cdf, an input \code{rate}
+denoting the failure rate of the exponential distribution, and a
+logical \code{log} indicating whether to compute the log of the cdf.
+By default, \code{rate} is the failure rate of object \code{x}.
 }
 \description{
-Method to obtain the survival function of an \code{exp_dist} object.
+Method to obtain the cdf of an \code{exp_dist} object.
 }

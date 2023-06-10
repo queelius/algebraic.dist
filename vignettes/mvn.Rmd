@@ -26,44 +26,52 @@ library(algebraic.dist)
 # Generating a sample
 
 We define the parameters of the MVN with:
-```{r}
-M <- mvn(mu = c(0,1,2),
-         sigma = matrix(c(1,0.5,0.5,
-                          0.5,1,0.5,
-                          0.5,0.5,1),
-                        nrow = 3))
+```{r model}
+sigma <- matrix(
+  c(1,    0.5,  0.5,
+    0.5,  1,    0.5,
+    0.5,  0.5,  1), nrow = 3)
+
+M <- mvn(mu = c(0,1,2), sigma = sigma)
 ```
 
 We observe a sample of size 100 with:
-```{r}
+```{r sampler}
+my_sampler <- algebraic.dist::sampler(M)
+#print(my_sampler)
+```
+
+
+```{r data}
 n <- 100
-data <- sampler(M)(n)
+data <- my_sampler(n)
+#data <- mvtnorm::rmvnorm(n, c(1,2,3))
 head(data, n = 8)
 ```
 
 
-```{r}
+```{r sup-M, eval=F}
 support <- sup(M)
-infinum(support)
+infimum(support)
 supremum(support)
 dim(support)
 ```
 
 
-```{r}
+```{r x1-plot, eval=F}
 X1 <- marginal(M, 1)
 F1 <- cdf(X1)
 curve(F1(x), from = -5, to = 5)
 ```
 
-```{r}
-X1X2 <- marginal(M, c(1,2))
-rv <- sampler(X1X2)
+```{r x12-plot, eval=F}
+#X1X2 <- marginal(M, c(1,2))
+#rv <- sampler(X1X2)
 
 # sample some data; could just use data directly
-data.X1X2 <- rv(1000)
+#data.X1X2 <- rv(1000)
 
 # scatter plot a 2d sample
-plot(data.X1X2[,1], data.X1X2[,2], pch = 20, col = "blue")
+#plot(data.X1X2[,1], data.X1X2[,2], pch = 20, col = "blue")
 ```
 

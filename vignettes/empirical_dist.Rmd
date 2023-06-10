@@ -59,7 +59,7 @@ mean(emp)
 vcov(emp)
 
 support <- sup(emp)
-infinum(support)
+infimum(support)
 supremum(support)
 dim(support)
 ```
@@ -68,12 +68,12 @@ dim(support)
 ```{r}
 X1 <- marginal(emp, 1)
 F1 <- cdf(X1)
-curve(F1(x), from = infinum(sup(X1)), to = supremum(sup(X1)))
+curve(F1(x), from = infimum(sup(X1)), to = supremum(sup(X1)))
 
 
 X3 <- marginal(emp, 3)
 F3 <- cdf(X3)
-curve(F3(x), from = infinum(sup(X3)), to = supremum(sup(X3)))
+curve(F3(x), from = infimum(sup(X3)), to = supremum(sup(X3)))
 
 X2X4 <- marginal(emp, c(2, 4))
 rv <- sampler(X2X4)

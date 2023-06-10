@@ -3,15 +3,17 @@
 #' @param mu mean
 #' @param var variance
 #' @export
-normal <- function(
-    mu = 0,
-    var = 1) {
-
-    stopifnot(is.numeric(mu),
-              is.numeric(var))
-
+normal <- function(mu = 0, var = 1) {
+    stopifnot(is.numeric(mu), is.numeric(var))
     structure(list(mu = mu, var = var),
               class = c("normal", "univariate_dist", "dist"))
+}
+
+#' Method for printing a `normal` object.
+#' @param x The object to print
+#' @export
+print.normal <- function(x, ...) {
+    cat("Normal distribution with mean", x$mu, "and variance", x$var, "\n")
 }
 
 #' Retrieve the variance-covariance matrix (or scalar)
@@ -95,23 +97,9 @@ pdf.normal <- function(x) {
 #' @importFrom stats pnorm
 #' @export
 cdf.normal <- function(x) {
-    function(q, mu = x$mu, var = x$var, log = FALSE) {
-        pnorm(q = q, mean = mu, sd = sqrt(var), log = log)
-    }
-}
-
-#' Method for obtaining the survival function of an `normal` object.
-#' @param x The object to obtain the survival function of
-#' @return A function that computes the survival of the normal distribution.
-#'         It accepts as input a parameter vector `x`, a mean vector `mu`,
-#'         a variance-covariance matrix `sigma`, and a `log` argument
-#'         determining whether to compute the log of the cdf. By default,
-#'         `mu` and `sigma` are the mean and variance of object `x`.
-#' @importFrom stats pnorm
-#' @export
-surv.normal <- function(x) {
-    function(x, mu = x$mu, var = x$var, log = FALSE) {
-        pnorm(x = x, mean = mu, sd = sqrt(var), log = log, lower.tail = FALSE)
+    function(q, mu = x$mu, var = x$var, lower.tail = FALSE, log.p = FALSE) {
+        pnorm(q = q, mean = mu, sd = sqrt(var),
+                lower.tail = lower.tail, log.p = log.p)
     }
 }
 

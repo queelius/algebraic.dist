@@ -10,7 +10,7 @@
     <loc>https://queelius.github.io/algebraic.dist/articles/empirical_dist.html</loc>
   </url>
   <url>
-    <loc>https://queelius.github.io/algebraic.dist/articles/exponential.html</loc>
+    <loc>https://queelius.github.io/algebraic.dist/articles/failure_rate.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/articles/index.html</loc>
@@ -23,6 +23,9 @@
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/index.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/cdf.dfr_dist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/cdf.empirical_dist.html</loc>
@@ -43,7 +46,16 @@
     <loc>https://queelius.github.io/algebraic.dist/reference/conditional.html</loc>
   </url>
   <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/cum_haz.dfr_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/dfr_dist.html</loc>
+  </url>
+  <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/dim.empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/edist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/empirical_dist.html</loc>
@@ -58,7 +70,13 @@
     <loc>https://queelius.github.io/algebraic.dist/reference/expectation.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/expectation.exp_dist.html</loc>
+  </url>
+  <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/expectation.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/hazard.dfr_dist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/hazard.exp_dist.html</loc>
@@ -70,13 +88,13 @@
     <loc>https://queelius.github.io/algebraic.dist/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://queelius.github.io/algebraic.dist/reference/inv_cdf.exp_dist.html</loc>
-  </url>
-  <url>
-    <loc>https://queelius.github.io/algebraic.dist/reference/inv_cdf.html</loc>
+    <loc>https://queelius.github.io/algebraic.dist/reference/is_dfr_dist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/is_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/is_edist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/is_empirical_dist.html</loc>
@@ -89,6 +107,9 @@
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/is_normal.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/loglik.dfr_dist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/marginal.empirical_dist.html</loc>
@@ -124,13 +145,22 @@
     <loc>https://queelius.github.io/algebraic.dist/reference/obs.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/params.dfr_dist.html</loc>
+  </url>
+  <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/params.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/params.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/params.mvn.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/params.normal.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/pdf.dfr_dist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/pdf.empirical_dist.html</loc>
@@ -148,10 +178,40 @@
     <loc>https://queelius.github.io/algebraic.dist/reference/pdf.normal.html</loc>
   </url>
   <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/print.dfr_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/print.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/print.mvn.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/print.normal.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/quantile.dfr_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/quantile.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/qunatile.exp_dist.html</loc>
+  </url>
+  <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/rmap.empirical_dist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/rmap.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/sample_mvn_region.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/sampler.dfr_dist.html</loc>
+  </url>
+  <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/sampler.edist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/sampler.empirical_dist.html</loc>
@@ -169,6 +229,9 @@
     <loc>https://queelius.github.io/algebraic.dist/reference/sampler.normal.html</loc>
   </url>
   <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/sup.dfr_dist.html</loc>
+  </url>
+  <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/sup.exp_dist.html</loc>
   </url>
   <url>
@@ -181,13 +244,13 @@
     <loc>https://queelius.github.io/algebraic.dist/reference/sup.normal.html</loc>
   </url>
   <url>
+    <loc>https://queelius.github.io/algebraic.dist/reference/surv.dfr_dist.html</loc>
+  </url>
+  <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/surv.exp_dist.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/surv.html</loc>
-  </url>
-  <url>
-    <loc>https://queelius.github.io/algebraic.dist/reference/surv.normal.html</loc>
   </url>
   <url>
     <loc>https://queelius.github.io/algebraic.dist/reference/vcov.empirical_dist.html</loc>

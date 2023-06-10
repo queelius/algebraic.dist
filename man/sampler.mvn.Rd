@@ -4,16 +4,12 @@
 \alias{sampler.mvn}
 \title{Method for sampling from a \code{mvn} (multivariate normal) object.}
 \usage{
-\method{sampler}{mvn}(x)
+\method{sampler}{mvn}(x, ...)
 }
 \arguments{
 \item{x}{The \code{mvn} object to sample from}
-}
-\value{
-A function that samples from the multivariate normal distribution.
-As input, it accepts a sample size \code{n}, a parameter vector \code{mu}, and
-a variance-covariance matrix \code{sigma}. By default, \code{mu} and \code{sigma}
-are the mean and variance-covariance matrix of object \code{x}.
+
+\item{`...`}{Additional arguments to pass to \code{rmvnorm} or \code{sample_mvn_region}}
 }
 \description{
 Method for sampling from a \code{mvn} (multivariate normal) object.

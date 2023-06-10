@@ -2,7 +2,7 @@
 % Please edit documentation in R/generic_dist.R
 \name{cdf}
 \alias{cdf}
-\title{Generic method for obtaining the survival function of an object.}
+\title{Generic method for obtaining the cdf of an object.}
 \usage{
 cdf(x, ...)
 }
@@ -12,5 +12,5 @@ cdf(x, ...)
 \item{...}{Additional arguments to pass.}
 }
 \description{
-Generic method for obtaining the survival function of an object.
+Generic method for obtaining the cdf of an object.
 }

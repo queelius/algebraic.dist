@@ -72,8 +72,8 @@ pdf.empirical_dist <- function(x) {
 #' @export
 sampler.empirical_dist <- function(x) {
   N <- nrow(x$data)
-  function (n = 1) {
-    x$data[sample(1:N, size = n, replace = TRUE), ]
+  function (n = 1, ...) {
+    x$data[sample(1:N, size = n, replace = TRUE, ...), ]
   }
 }
 
@@ -82,7 +82,7 @@ sampler.empirical_dist <- function(x) {
 #'
 #' @param x The distribution object.
 #' @param g The function to take the expectation of.
-#' @param ... Additional arguments to pass (to function `g`).
+#' @param ... Additional arguments to pass itno function `g`.
 #' @export
 expectation.empirical_dist <- function(x, g, ...) {
   # apply g to each row of x
