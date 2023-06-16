@@ -10,7 +10,7 @@
 \arguments{
 \item{x}{The empirical distribution object.}
 
-\item{i}{The indices of the marginal distribution to obtain.}
+\item{indices}{The indices of the marginal distribution to obtain.}
 }
 \description{
 Method for obtaining the marginal distribution of \code{empirical_dist} object

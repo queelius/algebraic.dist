@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{The object to print}
+
+\item{...}{Additional arguments to pass to \code{print}}
 }
 \description{
 Method for printing an \code{mvn} object.

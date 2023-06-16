@@ -4,10 +4,12 @@
 \alias{sampler.normal}
 \title{Method for sampling from a \code{normal} object.}
 \usage{
-\method{sampler}{normal}(x)
+\method{sampler}{normal}(x, ...)
 }
 \arguments{
 \item{x}{The \code{normal} object to sample from}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A function that samples from the normal distribution. As input,

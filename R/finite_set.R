@@ -21,7 +21,7 @@ finite_set <- R6::R6Class(
         #' Determine if a value is contained in the finite set.
         #' 
         #' @param x A vector of values.
-        contains = function(x) {
+        has = function(x) {
             if (is.matrix(self$values)) {
                 # check if x is the same as any row in values matrix
                 return(any(apply(self$values, 1, function(row) {
@@ -80,8 +80,8 @@ finite_set <- R6::R6Class(
 #' @param object A finite set.
 #' @param x A vector of values.
 #' @export
-contains.finite_set <- function(object, x) {
-    object$contains(x)
+has.finite_set <- function(object, x) {
+    object$has(x)
 }
 
 #' Return the infimum of the finite set.
@@ -99,10 +99,9 @@ supremum.finite_set <- function(object) {
 }
 
 #' Return the dimension of the finite set.
-#' @param object A finite set.
-#' 
+#' @param x A finite set. 
 #' @export
-dim.finite_set <- function(object) {
-    object$dim()
+dim.finite_set <- function(x) {
+    x$dim()
 }
 

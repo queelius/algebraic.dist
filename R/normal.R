@@ -11,6 +11,7 @@ normal <- function(mu = 0, var = 1) {
 
 #' Method for printing a `normal` object.
 #' @param x The object to print
+#' @param ... Additional arguments to pass (not used)
 #' @export
 print.normal <- function(x, ...) {
     cat("Normal distribution with mean", x$mu, "and variance", x$var, "\n")
@@ -26,27 +27,30 @@ print.normal <- function(x, ...) {
 #'
 #' @param object The `normal` object to retrieve
 #'               the variance-covariance matrix from
+#' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `normal` object
 #' @importFrom stats vcov
 #' @export
-vcov.normal <- function(object) {
+vcov.normal <- function(object, ...) {
     object$var
 }
 
 #' Retrieve the mean of a `normal` object.
-#' @param object The `normal` object to retrieve the mean from
+#' @param x The `normal` object to retrieve the mean from
+#' @param ... Additional arguments to pass (not used)
 #' @return The mean of the `normal` object
 #' @export
-mean.normal <- function(object) {
-    object$mu
+mean.normal <- function(x, ...) {
+    x$mu
 }
 
 #' Method for obtaining the parameters of a `normal` object.
 #'
 #' @param x The object to obtain the parameters of
+#' @param ... Additional arguments to pass (not used)
 #' @return A named vector of parameters
 #' @export
-params.normal <- function(x) {
+params.normal <- function(x, ...) {
     c("mu" = x$mu, "var" = x$var)
 }
 
@@ -60,20 +64,22 @@ is_normal <- function(x) {
 #' Method for sampling from a `normal` object.
 #'
 #' @param x The `normal` object to sample from
+#' @param ... Additional arguments to pass (not used)
 #' @return A function that samples from the normal distribution. As input,
 #'         it accepts a sample size `n`, a numeric `mu`, and a variance
 #'         numeric `var`. By default, `mu` and `var` are the mean and
 #'         variance of object `x`.
 #' @importFrom stats rnorm
 #' @export
-sampler.normal <- function(x) {
-    function(n = 1, mu = x$mu, var = x$var) {
-        rnorm(n, mu, var)
+sampler.normal <- function(x, ...) {
+    function(n = 1, mu = x$mu, var = x$var, ...) {
+        rnorm(n, mu, var, ...)
     }
 }
 
 #' Method for obtaining the pdf of an `normal` object.
 #' @param x The object to obtain the pdf of
+#' @param ... Additional arguments to pass (not used)
 #' @return A function that computes the pdf of the normal distribution.
 #'         It accepts as input a parameter vector `x`, a mean vector `mu`,
 #'         a variance-covariance matrix `var`, and a `log` argument
@@ -81,14 +87,15 @@ sampler.normal <- function(x) {
 #'         `mu` and `var` are the mean and variance of object `x`.
 #' @importFrom stats dnorm
 #' @export
-pdf.normal <- function(x) {
-    function(x, mu = x$mu, var = x$var, log = FALSE) {
-        dnorm(x = x, mean = mu, sd = sqrt(var), log = log)
+pdf.normal <- function(x, ...) {
+    function(x, mu = x$mu, var = x$var, log = FALSE, ...) {
+        dnorm(x = x, mean = mu, sd = sqrt(var), log = log, ...)
     }
 }
 
 #' Method for obtaining the cdf of an `normal` object.
 #' @param x The object to obtain the cdf of
+#' @param ... Additional arguments to pass (not used)
 #' @return A function that computes the cdf of the normal distribution.
 #'         It accepts as input a parameter vector `x`, a mean vector `mu`,
 #'         a variance-covariance matrix `var`, and a `log` argument
@@ -96,8 +103,8 @@ pdf.normal <- function(x) {
 #'         `mu` and `var` are the mean and variance of object `x`.
 #' @importFrom stats pnorm
 #' @export
-cdf.normal <- function(x) {
-    function(q, mu = x$mu, var = x$var, lower.tail = FALSE, log.p = FALSE) {
+cdf.normal <- function(x, ...) {
+    function(q, mu = x$mu, var = x$var, lower.tail = FALSE, log.p = FALSE, ...) {
         pnorm(q = q, mean = mu, sd = sqrt(var),
                 lower.tail = lower.tail, log.p = log.p)
     }
@@ -107,9 +114,31 @@ cdf.normal <- function(x) {
 #' is defined as values that have non-zero probability density.
 #' 
 #' @param x The `normal` object to obtain the support of
+#' @param ... Additional arguments to pass (not used)
 #' @return A support-type object (see `support.R`), in this case an
 #'         `interval` object for each component. 
 #' @export
-sup.normal <- function(x) {
+sup.normal <- function(x, ...) {
     interval$new()
+}
+
+#' Method for obtaining the dimension of a `normal` object.
+#' @param x The `normal` object to obtain the dimension of
+#' @return The dimension of the `normal` object
+#' @export
+dim.normal <- function(x) {
+    1
+}
+
+
+#' Method for obtaining the inverse cdf of an `normal` object.
+#' @param x The object to obtain the inverse cdf of
+#' @param ... Additional arguments to pass (not used)
+#' @return A function that computes the inverse cdf of the normal distribution.
+#' @importFrom stats qnorm
+#' @export
+inv_cdf.normal <- function(x, ...) {
+    function(p, mu = x$mu, var = x$var, log.p = FALSE, ...) {
+        qnorm(p, mu, sqrt(var), ...)
+    }
 }

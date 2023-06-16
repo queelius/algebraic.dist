@@ -5,10 +5,12 @@
 \title{Method for obtaining the support of a \code{normal} object, where the support
 is defined as values that have non-zero probability density.}
 \usage{
-\method{sup}{normal}(x)
+\method{sup}{normal}(x, ...)
 }
 \arguments{
 \item{x}{The \code{normal} object to obtain the support of}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A support-type object (see \code{support.R}), in this case an

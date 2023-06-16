@@ -4,10 +4,12 @@
 \alias{pdf.mvn}
 \title{Method for obtaining the pdf of an \code{mvn} object.}
 \usage{
-\method{pdf}{mvn}(x)
+\method{pdf}{mvn}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the pdf of}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A function that computes the pdf of the mvn distribution.

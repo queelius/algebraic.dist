@@ -8,6 +8,8 @@
 }
 \arguments{
 \item{x}{The object to print}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \description{
 Method for printing a \code{normal} object.

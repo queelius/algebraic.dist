@@ -26,7 +26,7 @@ closed.}
 \itemize{
 \item \href{#method-interval-new}{\code{interval$new()}}
 \item \href{#method-interval-is_empty}{\code{interval$is_empty()}}
-\item \href{#method-interval-contains}{\code{interval$contains()}}
+\item \href{#method-interval-has}{\code{interval$has()}}
 \item \href{#method-interval-infimum}{\code{interval$infimum()}}
 \item \href{#method-interval-supremum}{\code{interval$supremum()}}
 \item \href{#method-interval-dim}{\code{interval$dim()}}
@@ -77,12 +77,12 @@ A logical vector indicating whether the interval is empty.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-interval-contains"></a>}}
-\if{latex}{\out{\hypertarget{method-interval-contains}{}}}
-\subsection{Method \code{contains()}}{
+\if{html}{\out{<a id="method-interval-has"></a>}}
+\if{latex}{\out{\hypertarget{method-interval-has}{}}}
+\subsection{Method \code{has()}}{
 Determine if a value is contained in the interval.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{interval$contains(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{interval$has(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

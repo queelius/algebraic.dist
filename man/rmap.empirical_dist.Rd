@@ -5,12 +5,14 @@
 \title{Method for obtaining the empirical distribution of a function of the
 observations of \code{empirical_dist} object \code{x}.}
 \usage{
-\method{rmap}{empirical_dist}(x, g)
+\method{rmap}{empirical_dist}(x, g, ...)
 }
 \arguments{
 \item{x}{The empirical distribution object.}
 
 \item{g}{The function to apply to each observation.}
+
+\item{...}{Additional arguments to pass into function \code{g}.}
 }
 \description{
 Method for obtaining the empirical distribution of a function of the

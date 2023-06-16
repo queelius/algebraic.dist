@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{The \code{mvn} object to sample from}
 
-\item{`...`}{Additional arguments to pass to \code{rmvnorm} or \code{sample_mvn_region}}
+\item{...}{Additional arguments to pass to \code{rmvnorm} or \code{sample_mvn_region}}
 }
 \description{
 Method for sampling from a \code{mvn} (multivariate normal) object.

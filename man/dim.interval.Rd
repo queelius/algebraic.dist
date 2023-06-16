@@ -4,10 +4,10 @@
 \alias{dim.interval}
 \title{Return the dimension of the interval.}
 \usage{
-\method{dim}{interval}(object)
+\method{dim}{interval}(x)
 }
 \arguments{
-\item{object}{An interval object.}
+\item{x}{An interval object.}
 }
 \description{
 Return the dimension of the interval.

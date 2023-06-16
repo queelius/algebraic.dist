@@ -6,6 +6,9 @@
 \usage{
 is_empirical_dist(x)
 }
+\arguments{
+\item{x}{The object to test}
+}
 \description{
 Function to determine whether an object \code{x} is an \code{empirical_dist} object.
 }

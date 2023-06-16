@@ -7,7 +7,7 @@
 infimum(object)
 }
 \arguments{
-\item{support}{A support object.}
+\item{object}{A support object.}
 }
 \description{
 Get the infimum of the support.

@@ -4,10 +4,12 @@
 \alias{mean.mvn}
 \title{Retrieve the mean of a \code{mvn} object.}
 \usage{
-\method{mean}{mvn}(object)
+\method{mean}{mvn}(x, ...)
 }
 \arguments{
-\item{object}{The \code{mvn} object to retrieve the mean from}
+\item{x}{The \code{mvn} object to retrieve the mean from}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 The mean of the \code{mvn} object

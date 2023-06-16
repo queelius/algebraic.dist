@@ -7,7 +7,7 @@
 supremum(object)
 }
 \arguments{
-\item{support}{A support object.}
+\item{object}{A support object.}
 }
 \description{
 Get the supremum of the support.

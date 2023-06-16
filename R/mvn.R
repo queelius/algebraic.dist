@@ -26,27 +26,30 @@ mvn <- function(
 #'
 #' @param object The `mvn` object to retrieve
 #'               the variance-covariance matrix from
+#' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `mvn` object
 #' @importFrom stats vcov
 #' @export
-vcov.mvn <- function(object) {
+vcov.mvn <- function(object, ...) {
     object$sigma
 }
 
 #' Retrieve the mean of a `mvn` object.
-#' @param object The `mvn` object to retrieve the mean from
+#' @param x The `mvn` object to retrieve the mean from
+#' @param ... Additional arguments to pass (not used)
 #' @return The mean of the `mvn` object
 #' @export
-mean.mvn <- function(object) {
-    object$mu
+mean.mvn <- function(x, ...) {
+    x$mu
 }
 
 #' Method for obtaining the parameters of a `mvn` object.
 #'
 #' @param x The object to obtain the parameters of
+#' @param ... Additional arguments to pass (not used)
 #' @return A named vector of parameters
 #' @export
-params.mvn <- function(x) {
+params.mvn <- function(x, ...) {
     c("mu" = x$mu, "sigma" = x$sigma)
 }
 
@@ -60,7 +63,7 @@ is_mvn <- function(x) {
 #' Method for sampling from a `mvn` (multivariate normal) object.
 #'
 #' @param x The `mvn` object to sample from
-#' @param `...` Additional arguments to pass to `rmvnorm` or `sample_mvn_region`
+#' @param ... Additional arguments to pass to `rmvnorm` or `sample_mvn_region`
 #' @importFrom mvtnorm rmvnorm
 #' @export
 sampler.mvn <- function(x, ...) {
@@ -75,6 +78,7 @@ sampler.mvn <- function(x, ...) {
 
 #' Method for obtaining the pdf of an `mvn` object.
 #' @param x The object to obtain the pdf of
+#' @param ... Additional arguments to pass (not used)
 #' @return A function that computes the pdf of the mvn distribution.
 #'         It accepts as input a parameter vector `x`, a mean vector `mu`,
 #'         a variance-covariance matrix `sigma`, and a `log` argument
@@ -83,9 +87,9 @@ sampler.mvn <- function(x, ...) {
 #'         of object `x`.
 #' @importFrom mvtnorm dmvnorm
 #' @export
-pdf.mvn <- function(x) {
-    function(x, mu = x$mu, sigma = x$sigma, log = FALSE) {
-        dmvnorm(x = x, mean = mu, sigma = sigma, log = log)
+pdf.mvn <- function(x, ...) {
+    function(x, mu = x$mu, sigma = x$sigma, log = FALSE, ...) {
+        dmvnorm(x = x, mean = mu, sigma = sigma, log = log, ...)
     }
 }
 
@@ -93,10 +97,11 @@ pdf.mvn <- function(x) {
 #' is defined as values that have non-zero probability density.
 #' 
 #' @param x The `mvn` object to obtain the support of
+#' @param ... Additional arguments to pass (not used)
 #' @return A support-type object (see `support.R`), in this case an
 #'         `interval` object for each component. 
 #' @export
-sup.mvn <- function(x) {
+sup.mvn <- function(x, ...) {
     interval$new(lower = rep(-Inf, length(x$mu)),
                  upper = rep(Inf, length(x$mu)),
                  lower_closed = rep(FALSE, length(x$mu)),
@@ -150,10 +155,20 @@ sample_mvn_region <- function(n, mu, sigma, p = .95, ...) {
 
 #' Method for printing an `mvn` object.
 #' @param x The object to print
+#' @param ... Additional arguments to pass to `print`
 #' @export
 print.mvn <- function(x, ...) {
     cat("Multivariate normal distribution with mean:\n")
     print(x$mu)
     cat("and variance-covariance matrix:\n")
     print(x$sigma)
+}
+
+
+#' Method for obtaining the dimension of an `mvn` object.
+#' @param x The object to obtain the dimension of
+#' @return The dimension of the `mvn` object
+#' @export
+dim.mvn <- function(x) {
+    length(x$mu)
 }

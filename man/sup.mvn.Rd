@@ -5,10 +5,12 @@
 \title{Method for obtaining the support of a \code{mvn} object, where the support
 is defined as values that have non-zero probability density.}
 \usage{
-\method{sup}{mvn}(x)
+\method{sup}{mvn}(x, ...)
 }
 \arguments{
 \item{x}{The \code{mvn} object to obtain the support of}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A support-type object (see \code{support.R}), in this case an

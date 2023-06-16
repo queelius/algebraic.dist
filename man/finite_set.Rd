@@ -17,7 +17,7 @@ A finite set. It also satisfies the concept of a support.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-finite_set-new}{\code{finite_set$new()}}
-\item \href{#method-finite_set-contains}{\code{finite_set$contains()}}
+\item \href{#method-finite_set-has}{\code{finite_set$has()}}
 \item \href{#method-finite_set-infimum}{\code{finite_set$infimum()}}
 \item \href{#method-finite_set-supremum}{\code{finite_set$supremum()}}
 \item \href{#method-finite_set-dim}{\code{finite_set$dim()}}
@@ -42,12 +42,12 @@ Initialize a finite set.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-finite_set-contains"></a>}}
-\if{latex}{\out{\hypertarget{method-finite_set-contains}{}}}
-\subsection{Method \code{contains()}}{
+\if{html}{\out{<a id="method-finite_set-has"></a>}}
+\if{latex}{\out{\hypertarget{method-finite_set-has}{}}}
+\subsection{Method \code{has()}}{
 Determine if a value is contained in the finite set.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{finite_set$contains(x)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{finite_set$has(x)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

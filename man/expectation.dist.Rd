@@ -5,16 +5,24 @@
 \title{Expectation operator applied to \code{object} of type \code{dist}
 with respect to a function \code{g}. That is, \code{E(g(object))}.}
 \usage{
-\method{expectation}{dist}(object, g = function(t) t, n = 10000, alpha = 0.05)
+\method{expectation}{dist}(x, g = function(t) t, ..., n = 10000L, alpha = 0.05)
 }
 \arguments{
-\item{object}{\code{dist} object}
+\item{x}{\code{dist} object}
 
 \item{g}{characteristic function of interest, defaults to identity}
+
+\item{...}{additional arguments to pass to \code{g}}
 
 \item{n}{number of sample points, larger samples reduce variance}
 
 \item{alpha}{significance level for the confidence interval}
+}
+\value{
+A list with the following components:
+value - The estimate of the expectation
+ci    - The confidence interval
+n     - The number of samples
 }
 \description{
 We use the CLT to construct a CI(\code{alpha}) for the estimate of the

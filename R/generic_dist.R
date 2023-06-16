@@ -39,8 +39,8 @@ surv <- function(x, ...) {
 #' @param x The object to obtain the quantile of.
 #' @param ... Additional arguments to pass.
 #' @export
-quantile <- function(x, ...) {
-    UseMethod("quantile", x)
+inv_cdf <- function(x, ...) {
+    UseMethod("inv_cdf", x)
 }
 
 
@@ -119,4 +119,21 @@ rmap <- function(x, g, ...) {
 #' @export
 sup <- function(x, ...) {
     UseMethod("sup", x)
+}
+
+
+
+#' Generic method for obtaining the observations of an object.
+#' 
+#' Note that the method `nobs` handles the number of observations,
+#' and since `obs` may be NULL, then `nobs` should be used instead if you
+#' want to know the number of observations. Also, `nobs` is a generic method
+#' defined in `stats`.
+#'
+#' @param x The object to obtain the observations of.
+#' @param ... Additional arguments to pass.
+#' @return A matrix of observations.
+#' @export
+obs <- function(x, ...) {
+    UseMethod("obs", x)
 }

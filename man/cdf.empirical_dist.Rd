@@ -4,10 +4,12 @@
 \alias{cdf.empirical_dist}
 \title{Method for obtaining the cdf of \code{empirical_dist} object \code{x}.}
 \usage{
-\method{cdf}{empirical_dist}(x)
+\method{cdf}{empirical_dist}(x, ...)
 }
 \arguments{
 \item{x}{The empirical distribution object.}
+
+\item{...}{Additional arguments to pass (not used))}
 }
 \value{
 A function that takes a numeric vector \code{t} and returns the

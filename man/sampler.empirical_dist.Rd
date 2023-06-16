@@ -4,10 +4,12 @@
 \alias{sampler.empirical_dist}
 \title{Method for obtaining the sampler for a \code{empirical_dist} object.}
 \usage{
-\method{sampler}{empirical_dist}(x)
+\method{sampler}{empirical_dist}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the sampler of.}
+
+\item{...}{Additional arguments to pass (not used).}
 }
 \description{
 Method for obtaining the sampler for a \code{empirical_dist} object.

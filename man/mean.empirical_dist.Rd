@@ -4,10 +4,12 @@
 \alias{mean.empirical_dist}
 \title{Method for obtaining the mean of \code{empirical_dist} object \code{x}.}
 \usage{
-\method{mean}{empirical_dist}(x)
+\method{mean}{empirical_dist}(x, ...)
 }
 \arguments{
 \item{x}{The distribution object.}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \description{
 Method for obtaining the mean of \code{empirical_dist} object \code{x}.

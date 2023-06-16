@@ -4,10 +4,12 @@
 \alias{params.normal}
 \title{Method for obtaining the parameters of a \code{normal} object.}
 \usage{
-\method{params}{normal}(x)
+\method{params}{normal}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the parameters of}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A named vector of parameters

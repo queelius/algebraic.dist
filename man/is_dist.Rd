@@ -6,6 +6,9 @@
 \usage{
 is_dist(x)
 }
+\arguments{
+\item{x}{The object to test}
+}
 \description{
 Function to determine whether an object \code{x} is a \code{dist} object.
 }

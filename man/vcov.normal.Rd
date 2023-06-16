@@ -9,11 +9,13 @@ giving the covariance between each pair of elements
 of a given random vector. Importantly, its diagonal
 contains variances of the elements}
 \usage{
-\method{vcov}{normal}(object)
+\method{vcov}{normal}(object, ...)
 }
 \arguments{
 \item{object}{The \code{normal} object to retrieve
 the variance-covariance matrix from}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 The variance-covariance matrix of the \code{normal} object

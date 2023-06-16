@@ -10,12 +10,14 @@ empirical_dist <- function(data) {
   cls_names <- if (is.matrix(data)) {
     c("empirical_dist", "multivariate_dist", "dist")
   } else {
+    data = as.matrix(data)
     c("empirical_dist", "univariate_dist", "dist")
   }
-  structure(list(data = as.matrix(data)), class = cls_names)
+  structure(list(data = data), class = cls_names)
 }
 
 #' Function to determine whether an object `x` is an `empirical_dist` object.
+#' @param x The object to test
 #' @export
 is_empirical_dist <- function(x) {
   inherits(x, "empirical_dist")
@@ -23,10 +25,13 @@ is_empirical_dist <- function(x) {
 
 #' Method for obtaining the number of observations in a `empirical_dist`
 #' object.
-#' @param x The object to obtain the number of observations of.
+#' @param object The object to obtain the number of observations of.
+#' @param ... Additional arguments to pass (not used).
+#' @return The number of observations in `x`.
+#' @importFrom stats nobs
 #' @export
-nobs.empirical_dist <- function(x) {
-  nrow(x$data)
+nobs.empirical_dist <- function(object, ...) {
+  nrow(object$data)
 }
 
 
@@ -38,19 +43,22 @@ dim.empirical_dist <- function(x) {
 }
 
 #' Method for obtaining the data of a `empirical_dist` object.
+#' 
 #' @param x The object to obtain the data of.
+#' @param ... Additional arguments to pass (not used).
 #' @export
-obs.empirical_dist <- function(x) {
+obs.empirical_dist <- function(x, ...) {
   x$data
 }
 
 #' Method for obtaining the pdf of a `empirical_dist` object.
 #'
 #' @param x The object to obtain the pdf of.
+#' @param ... Additional arguments to pass into the pdf function.
 #' @note sort tibble lexographically and do a binary search to find upper
 #'       and lower bound in `log(nobs(x))` time.
 #' @export
-pdf.empirical_dist <- function(x) {
+pdf.empirical_dist <- function(x, ...) {
   n <- nrow(x$data)
   p <- ncol(x$data)
   function(t, log = FALSE) {
@@ -69,8 +77,9 @@ pdf.empirical_dist <- function(x) {
 #' Method for obtaining the sampler for a `empirical_dist` object.
 #'
 #' @param x The object to obtain the sampler of.
+#' @param ... Additional arguments to pass (not used).
 #' @export
-sampler.empirical_dist <- function(x) {
+sampler.empirical_dist <- function(x, ...) {
   N <- nrow(x$data)
   function (n = 1, ...) {
     x$data[sample(1:N, size = n, replace = TRUE, ...), ]
@@ -93,23 +102,25 @@ expectation.empirical_dist <- function(x, g, ...) {
 #' Method for obtaining the mean of `empirical_dist` object `x`.
 #'
 #' @param x The distribution object.
+#' @param ... Additional arguments to pass (not used)
 #' @export
-mean.empirical_dist <- function(x) {
+mean.empirical_dist <- function(x, ...) {
   colMeans(x$data)
 }
 
 #' Method for obtaining the variance of `empirical_dist` object `x`.
 #'
-#' @param x The empirical distribution object.
+#' @param object The empirical distribution object.
+#' @param ... Additional arguments to pass (not used)
 #' @export
-vcov.empirical_dist <- function(x) {
-  cov(x$data)
+vcov.empirical_dist <- function(object, ...) {
+  cov(object$data)
 }
 
 #' Method for obtaining the marginal distribution of `empirical_dist` object
 #' `x`.
 #' @param x The empirical distribution object.
-#' @param i The indices of the marginal distribution to obtain.
+#' @param indices The indices of the marginal distribution to obtain.
 #' @export
 marginal.empirical_dist <- function(x, indices) {
   empirical_dist(x$data[, indices])
@@ -145,9 +156,10 @@ conditional.empirical_dist <- function(x, P) {
 #' 
 #' @param x The empirical distribution object.
 #' @param g The function to apply to each observation.
+#' @param ... Additional arguments to pass into function `g`.
 #' @export
-rmap.empirical_dist <- function(x, g) {
-  x$data <- apply(x$data, 1, g)
+rmap.empirical_dist <- function(x, g, ...) {
+  x$data <- apply(x$data, 1, g, ...)
   x
 }
 
@@ -156,17 +168,27 @@ rmap.empirical_dist <- function(x, g) {
 #' If `x` is a multivariate empirical distribution, this function will
 #' throw an error. It's only defined for univariate empirical distributions.
 #' @param x The empirical distribution object.
+#' @param ... Additional arguments to pass (not used))
 #' @return A function that takes a numeric vector `t` and returns the
 #'         empirical cdf of `x` evaluated at `t`.
+#' @importFrom stats ecdf
 #' @export
-cdf.empirical_dist <- function(x) {
+cdf.empirical_dist <- function(x, ...) {
   if (dim(x) > 1) {
     stop("cdf not defined for multivariate empirical distribution")
   }
   ecdf(x$data)
 }
 
+
+#' Method for obtaining the support of `empirical_dist` object `x`.
+#' @param x The empirical distribution object.
+#' @param ... Additional arguments to pass into the initializer of the
+#'       `finite_set` object.
+#' @return A `finite_set` object containing the support of `x`.
 #' @export
-sup.empirical_dist <- function(x) {
-  finite_set$new(x$data)
+sup.empirical_dist <- function(x, ...) {
+  finite_set$new(x$data, ...)
 }
+
+

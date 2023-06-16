@@ -1,5 +1,5 @@
 #' @title Support
-#' @description Support is a class that represents the support of a random
+#' @description support is a class that represents the support of a random
 #' variable or distribution, i.e. the set of values that the random variable
 #' can take on (non-zero probability or density).
 #' 
@@ -7,7 +7,7 @@
 #' implemented for different types of support. To satisfy the concept of
 #' a support, the following methods must be implemented:
 #' 
-#' 1. contains: a function that returns a logical vector indicating
+#' 1. has: a function that returns a logical vector indicating
 #' whether each value in a vector is contained in the support
 #' 2. infimum: a function that returns the infimum of the support
 #' 3. supremum: a function that returns the supremum of the support
@@ -25,31 +25,23 @@
 #' 2. `infinite_set`: a support that is a finite set of values
 
 #' Determine if a value is contained in the support.
-#' @param support A support object.
+#' @param object A support object.
 #' @param x A vector of values.
 #' @export
-contains <- function(object, x) {
-    UseMethod("contains", object)
+has <- function(object, x) {
+    UseMethod("has", object)
 }
 
 #' Get the infimum of the support.
-#' @param support A support object.
+#' @param object A support object.
 #' @export
 infimum <- function(object) {
     UseMethod("infimum", object)
 }
 
 #' Get the supremum of the support.
-#' @param support A support object.
+#' @param object A support object.
 #' @export
 supremum <- function(object) {
     UseMethod("supremum", object)
-}
-
-
-#' Get the dimension of the support.
-#' @param support A support object.
-#' @export
-dim <- function(object) {
-    UseMethod("dim", object)
 }

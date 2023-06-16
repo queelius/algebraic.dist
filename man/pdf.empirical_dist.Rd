@@ -4,10 +4,12 @@
 \alias{pdf.empirical_dist}
 \title{Method for obtaining the pdf of a \code{empirical_dist} object.}
 \usage{
-\method{pdf}{empirical_dist}(x)
+\method{pdf}{empirical_dist}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the pdf of.}
+
+\item{...}{Additional arguments to pass into the pdf function.}
 }
 \description{
 Method for obtaining the pdf of a \code{empirical_dist} object.

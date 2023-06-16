@@ -4,10 +4,12 @@
 \alias{pdf.normal}
 \title{Method for obtaining the pdf of an \code{normal} object.}
 \usage{
-\method{pdf}{normal}(x)
+\method{pdf}{normal}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the pdf of}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A function that computes the pdf of the normal distribution.

@@ -4,10 +4,10 @@
 \alias{dim.finite_set}
 \title{Return the dimension of the finite set.}
 \usage{
-\method{dim}{finite_set}(object)
+\method{dim}{finite_set}(x)
 }
 \arguments{
-\item{object}{A finite set.}
+\item{x}{A finite set.}
 }
 \description{
 Return the dimension of the finite set.

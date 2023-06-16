@@ -64,7 +64,7 @@ interval <- R6::R6Class(
         #' 
         #' @param x A numeric vector of values.
         #' @return A logical vector indicating whether each value is contained
-        contains = function(x) {
+        has = function(x) {
             lower <- ifelse(self$lower_closed, x >= self$lower, x > self$lower)
             upper <- ifelse(self$upper_closed, x <= self$upper, x < self$upper)
             lower & upper
@@ -100,8 +100,8 @@ interval <- R6::R6Class(
 #' @param object An interval object.
 #' @param x A vector of values.
 #' @export
-contains.interval <- function(object, x) {
-    object$contains(x)
+has.interval <- function(object, x) {
+    object$has(x)
 }
 
 #' Return the (vector of) infimum of the interval.
@@ -119,10 +119,10 @@ supremum.interval <- function(object) {
 }
 
 #' Return the dimension of the interval.
-#' @param object An interval object.
+#' @param x An interval object.
 #' @export
-dim.interval <- function(object) {
-    object$dim()
+dim.interval <- function(x) {
+    x$dim()
 }
 
 #' Print the interval.

@@ -4,10 +4,12 @@
 \alias{mean.normal}
 \title{Retrieve the mean of a \code{normal} object.}
 \usage{
-\method{mean}{normal}(object)
+\method{mean}{normal}(x, ...)
 }
 \arguments{
-\item{object}{The \code{normal} object to retrieve the mean from}
+\item{x}{The \code{normal} object to retrieve the mean from}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 The mean of the \code{normal} object

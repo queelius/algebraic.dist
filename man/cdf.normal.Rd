@@ -4,10 +4,12 @@
 \alias{cdf.normal}
 \title{Method for obtaining the cdf of an \code{normal} object.}
 \usage{
-\method{cdf}{normal}(x)
+\method{cdf}{normal}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the cdf of}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A function that computes the cdf of the normal distribution.

@@ -4,10 +4,12 @@
 \alias{obs.empirical_dist}
 \title{Method for obtaining the data of a \code{empirical_dist} object.}
 \usage{
-obs.empirical_dist(x)
+\method{obs}{empirical_dist}(x, ...)
 }
 \arguments{
 \item{x}{The object to obtain the data of.}
+
+\item{...}{Additional arguments to pass (not used).}
 }
 \description{
 Method for obtaining the data of a \code{empirical_dist} object.

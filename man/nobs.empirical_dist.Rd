@@ -5,10 +5,15 @@
 \title{Method for obtaining the number of observations in a \code{empirical_dist}
 object.}
 \usage{
-\method{nobs}{empirical_dist}(x)
+\method{nobs}{empirical_dist}(object, ...)
 }
 \arguments{
-\item{x}{The object to obtain the number of observations of.}
+\item{object}{The object to obtain the number of observations of.}
+
+\item{...}{Additional arguments to pass (not used).}
+}
+\value{
+The number of observations in \code{x}.
 }
 \description{
 Method for obtaining the number of observations in a \code{empirical_dist}
