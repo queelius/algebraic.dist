@@ -1,160 +1,55 @@
+#' @title Support
+#' @description Support is a class that represents the support of a random
+#' variable or distribution, i.e. the set of values that the random variable
+#' can take on (non-zero probability or density).
+#' 
+#' It's a conceptual class, which a set of generic methods that can be
+#' implemented for different types of support. To satisfy the concept of
+#' a support, the following methods must be implemented:
+#' 
+#' 1. contains: a function that returns a logical vector indicating
+#' whether each value in a vector is contained in the support
+#' 2. infimum: a function that returns the infimum of the support
+#' 3. supremum: a function that returns the supremum of the support
+#' 4. dim: a function that returns the dimension of the support
+#' 
+#' The following methods are also useful:
+#' 
+#' 1. print: a function that prints the support
+#' 2. plot: a function that plots the support
+#' 3. c: a function that combines two supports
+#' 
+#'We provide two implementations that satisfy the concept:
+#' 
+#' 1. `interval`: a support that is a finite union of intervals
+#' 2. `infinite_set`: a support that is a finite set of values
+
+#' Determine if a value is contained in the support.
+#' @param support A support object.
+#' @param x A vector of values.
 #' @export
-contains <- function(support, x) {
-    UseMethod("contains", support)
+contains <- function(object, x) {
+    UseMethod("contains", object)
 }
 
+#' Get the infimum of the support.
+#' @param support A support object.
 #' @export
-infimum <- function(support) {
-    UseMethod("infimum", support)
+infimum <- function(object) {
+    UseMethod("infimum", object)
 }
 
+#' Get the supremum of the support.
+#' @param support A support object.
 #' @export
-supremum <- function(support) {
-    UseMethod("supremum", support)
+supremum <- function(object) {
+    UseMethod("supremum", object)
 }
 
-interval <- R6::R6Class(
-    classname = c("interval", "set"),
-    public = list(
-        lower = NULL,
-        upper = NULL,
-        lower_closed = TRUE,
-        upper_closed = TRUE,
-        initialize = function(lower = -Inf, upper = Inf,
-                              lower_closed = TRUE, upper_closed = TRUE) {
-            # replicate lower or upper if necessary so that they are the same length
-            if (length(lower) < length(upper)) {
-                lower <- rep(lower, length(upper), length.out=length(upper))
-            } else if (length(upper) < length(lower)) {
-                upper <- rep(upper, length.out=length(lower))
-            }
-            # replicate lower_closed and upper_closed if necessary so that they
-            # are the same length as `lower`
-            if (length(lower_closed) != length(lower)) {
-                lower_closed <- rep(lower_closed, length.out=length(lower))
-            }
-            if (length(upper_closed) != length(lower)) {
-                upper_closed <- rep(upper_closed, length.out=length(lower))
-            }
 
-            self$lower <- lower
-            self$upper <- upper
-            self$lower_closed <- lower_closed
-            self$upper_closed <- upper_closed
-        },
-        contains = function(x) {
-            lower <- ifelse(self$lower_closed, x >= self$lower, x > self$lower)
-            upper <- ifelse(self$upper_closed, x <= self$upper, x < self$upper)
-            lower & upper
-        },
-        infimum = function() {
-            self$lower
-        },
-        supremum = function() {
-            self$upper
-        },
-        dim = function() {
-            length(self$lower)
-        }
-    )
-)
-
+#' Get the dimension of the support.
+#' @param support A support object.
 #' @export
-contains.interval <- function(support, x) {
-    support$contains(x)
+dim <- function(object) {
+    UseMethod("dim", object)
 }
-
-#' @export
-infimum.interval <- function(support) {
-    support$infimum()
-}
-
-#' @export
-supremum.interval <- function(support) {
-    support$supremum()
-}
-
-#' @export
-dim.interval <- function(support) {
-    support$dim()
-}
-
-#' @export
-print.interval <- function(x, ...) {
-    for (i in 1:length(x$lower)) {
-        if (x$lower_closed[i]) cat("[", sep = "")
-        else cat("(", sep = "")
-        cat(x$lower[i], ", ", x$upper[i], sep = "")
-        if (x$upper_closed[i]) cat("]", sep = "")
-        else cat(")", sep = "")
-        cat("\n")
-    }
-}
-
-finite_set <- R6::R6Class(
-    classname = c("finite_set", "set"),
-    public = list(
-        values = NULL,
-        initialize = function(values) {
-            self$values <- unique(values)
-        },
-        contains = function(x) {
-            if (is.matrix(self$values)) {
-                # check if x is the same as any row in values matrix
-                return(any(apply(self$values, 1, function(row) {
-                    all(row == x)
-                })))
-            } else {
-                return(x %in% self$values)
-            }
-        },
-        infimum = function() {
-             # if values is a matrix, find the min of each column
-            if (is.matrix(self$values)) {
-                sapply(seq_len(ncol(self$values)), function(i) {
-                    min(self$values[, i])
-                })
-            } else {
-                min(self$values)
-            }
-        },
-        supremum = function() {
-            # if values is a matrix, find the max of each column
-            if (is.matrix(self$values)) {
-                sapply(seq_len(ncol(self$values)), function(i) {
-                    max(self$values[, i])
-                })
-            } else {
-                max(self$values)
-            }
-        },
-        dim = function() {
-            if (is.matrix(self$values)) {
-                ncol(self$values)
-            } else {
-                1
-            }
-        }
-    )
-)
-
-#' @export
-contains.finite_set <- function(support, x) {
-    support$contains(x)
-}
-
-#' @export
-infimum.finite_set <- function(support) {
-    support$infimum()
-}
-
-#' @export
-supremum.finite_set <- function(support) {
-    support$supremum()
-}
-
-#' @export
-dim.finite_set <- function(support) {
-    support$dim()
-}
-
