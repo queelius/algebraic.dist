@@ -25,7 +25,6 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/empirical_dist.html">Empirical distribution</a>
-    <a class="dropdown-item" href="../articles/failure_rate.html">Failure rate distributions</a>
     <a class="dropdown-item" href="../articles/mvn.html">Multivariate normal distribution</a>
   </div>
 </li>
@@ -66,11 +65,6 @@
         <dd>Generic method for obtaining the cdf of an object.</dd>
       </dl><dl><dt>
           
-          <code><a href="cdf.dfr_dist.html">cdf(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Method for obtaining the cdf of a <code>dfr_dist</code> object.</dd>
-      </dl><dl><dt>
-          
           <code><a href="cdf.empirical_dist.html">cdf(<i>&lt;empirical_dist&gt;</i>)</a></code> 
         </dt>
         <dd>Method for obtaining the cdf of <code>empirical_dist</code> object <code>x</code>.</dd>
@@ -96,16 +90,6 @@ object <code>x</code> given condition <code>P</code>.</dd>
         </dt>
         <dd>Method for obtaining the condition distribution, x | P(x), of
 <code>empirical_dist</code> object <code>x</code>.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="cum_haz.dfr_dist.html">cum_haz.dfr_dist()</a></code> 
-        </dt>
-        <dd>Method for obtaining the hazard function of a <code>dfr_dist</code> object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="dfr_dist.html">dfr_dist()</a></code> 
-        </dt>
-        <dd>Concstructor for <code>dfr_dist</code> objects</dd>
       </dl><dl><dt>
           
           <code><a href="dim.empirical_dist.html">dim(<i>&lt;empirical_dist&gt;</i>)</a></code> 
@@ -158,19 +142,9 @@ exponential distribution <code>x</code> of type <code>exp_dist</code>.</dd>
         <dd>Generic method for obtaining the hazard function of an object.</dd>
       </dl><dl><dt>
           
-          <code><a href="hazard.dfr_dist.html">hazard(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Method for obtaining the hazard function of a <code>dfr_dist</code> object.</dd>
-      </dl><dl><dt>
-          
           <code><a href="hazard.exp_dist.html">hazard(<i>&lt;exp_dist&gt;</i>)</a></code> 
         </dt>
         <dd>Method to obtain the hazard function of an <code>exp_dist</code> object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="is_dfr_dist.html">is_dfr_dist()</a></code> 
-        </dt>
-        <dd>Function for determining whether an object is a <code>dfr_dist</code> object.</dd>
       </dl><dl><dt>
           
           <code><a href="is_dist.html">is_dist()</a></code> 
@@ -201,11 +175,6 @@ exponential distribution <code>x</code> of type <code>exp_dist</code>.</dd>
           <code><a href="is_normal.html">is_normal()</a></code> 
         </dt>
         <dd>Function to determine whether an object <code>x</code> is an <code>normal</code> object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="loglik.dfr_dist.html">loglik.dfr_dist()</a></code> 
-        </dt>
-        <dd>Log-likelihood contribution of a <code>dfr_dist</code> object.</dd>
       </dl><dl><dt>
           
           <code><a href="marginal.html">marginal()</a></code> 
@@ -272,13 +241,6 @@ object.</dd>
         <dd>Generic method for obtaining the parameters of an object.</dd>
       </dl><dl><dt>
           
-          <code><a href="params.dfr_dist.html">params(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>checks to see if any of the parameters are <code>NA</code> or <code>NULL</code>
-and if so, replaces them with the default values
-in <code>x</code> (<code>x$par</code>)</dd>
-      </dl><dl><dt>
-          
           <code><a href="params.exp_dist.html">params(<i>&lt;exp_dist&gt;</i>)</a></code> 
         </dt>
         <dd>Method for obtaining the parameters of an <code>exp_dist</code> object.</dd>
@@ -297,11 +259,6 @@ in <code>x</code> (<code>x$par</code>)</dd>
           <code><a href="pdf.html">pdf()</a></code> 
         </dt>
         <dd>Generic method for obtaining the pdf function of an object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="pdf.dfr_dist.html">pdf(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Method for obtaining the pdf of a <code>dfr_dist</code> object.</dd>
       </dl><dl><dt>
           
           <code><a href="pdf.empirical_dist.html">pdf(<i>&lt;empirical_dist&gt;</i>)</a></code> 
@@ -324,11 +281,6 @@ in <code>x</code> (<code>x$par</code>)</dd>
         <dd>Method for obtaining the pdf of an <code>normal</code> object.</dd>
       </dl><dl><dt>
           
-          <code><a href="print.dfr_dist.html">print(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Print method for <code>dfr_dist</code> objects.</dd>
-      </dl><dl><dt>
-          
           <code><a href="print.exp_dist.html">print(<i>&lt;exp_dist&gt;</i>)</a></code> 
         </dt>
         <dd>Print method for <code>exp_dist</code> objects.</dd>
@@ -347,11 +299,6 @@ in <code>x</code> (<code>x$par</code>)</dd>
           <code><a href="quantile.html">quantile()</a></code> 
         </dt>
         <dd>Generic method for obtaining the quantile (inverse cdf) of an object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="quantile.dfr_dist.html">quantile(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Method for obtaining the quantile (inverse cdf) of an object.</dd>
       </dl><dl><dt>
           
           <code><a href="qunatile.exp_dist.html">qunatile.exp_dist()</a></code> 
@@ -379,11 +326,6 @@ the <code>p</code>-probability region.</dd>
           <code><a href="sampler.html">sampler()</a></code> 
         </dt>
         <dd>Generic method for obtaining the sampler of an object</dd>
-      </dl><dl><dt>
-          
-          <code><a href="sampler.dfr_dist.html">sampler(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Sampling function for <code>dfr_dist</code> objects.</dd>
       </dl><dl><dt>
           
           <code><a href="sampler.edist.html">sampler(<i>&lt;edist&gt;</i>)</a></code> 
@@ -416,11 +358,6 @@ the <code>p</code>-probability region.</dd>
         <dd>Generic method for retrieving the support of an object <code>x</code>.</dd>
       </dl><dl><dt>
           
-          <code><a href="sup.dfr_dist.html">sup(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Method for retrieving the support of an object <code>x</code>.</dd>
-      </dl><dl><dt>
-          
           <code><a href="sup.exp_dist.html">sup(<i>&lt;exp_dist&gt;</i>)</a></code> 
         </dt>
         <dd>Support for exponential distribution, the positive real numbers, (0, Inf).</dd>
@@ -441,11 +378,6 @@ is defined as values that have non-zero probability density.</dd>
           <code><a href="surv.html">surv()</a></code> 
         </dt>
         <dd>Generic method for obtaining the survival function of an object.</dd>
-      </dl><dl><dt>
-          
-          <code><a href="surv.dfr_dist.html">surv(<i>&lt;dfr_dist&gt;</i>)</a></code> 
-        </dt>
-        <dd>Method for obtaining the survival function of a <code>dfr_dist</code> object.</dd>
       </dl><dl><dt>
           
           <code><a href="surv.exp_dist.html">surv(<i>&lt;exp_dist&gt;</i>)</a></code> 

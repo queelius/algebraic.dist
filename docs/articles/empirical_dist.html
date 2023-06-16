@@ -42,7 +42,6 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/empirical_dist.html">Empirical distribution</a>
-    <a class="dropdown-item" href="../articles/failure_rate.html">Failure rate distributions</a>
     <a class="dropdown-item" href="../articles/mvn.html">Multivariate normal distribution</a>
   </div>
 </li>
@@ -113,45 +112,45 @@
 <p>We have observed a sample of size <span class="math inline">\(n=100\)</span>. We show some observations from this sample with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              x1         x2         x3          x4          x5</span></span>
-<span><span class="co">#&gt; [1,]   0.167026   1.897198   2.897198   0.1366873   2.7023614</span></span>
-<span><span class="co">#&gt; [2,]   2.070670   2.307090   5.307090   4.6619638   5.8785260</span></span>
-<span><span class="co">#&gt; [3,]  -6.321716  -6.293296  -6.293296  -8.6355951  -4.0273779</span></span>
-<span><span class="co">#&gt; [4,] -17.525348 -17.230129 -16.230129 -23.2022136 -19.5084333</span></span>
-<span><span class="co">#&gt; [5,]  -5.038304  -2.447735  -2.447735  -8.1433809  -7.1333408</span></span>
-<span><span class="co">#&gt; [6,]  -2.059672  -1.668071  -1.668071   0.6574809   3.2211277</span></span>
-<span><span class="co">#&gt; [7,]   1.360651   1.781744   1.781744  -5.4889614  -0.5222987</span></span>
-<span><span class="co">#&gt; [8,]   3.325874   3.613776   3.613776  -5.5867962  -2.7198178</span></span></code></pre></div>
+<span><span class="co">#&gt;                x1           x2          x3          x4         x5</span></span>
+<span><span class="co">#&gt; [1,]  16.20854994  17.32179492  18.3217949  14.3382808  19.939497</span></span>
+<span><span class="co">#&gt; [2,]   1.24478437   1.83269228   2.8326923  -2.3305926   3.258402</span></span>
+<span><span class="co">#&gt; [3,] -22.91954501 -22.91677535 -21.9167754 -20.1864249 -22.152224</span></span>
+<span><span class="co">#&gt; [4,]  -4.76744472  -4.73320601  -3.7332060  -9.0022051  -8.599295</span></span>
+<span><span class="co">#&gt; [5,]  -0.09026817   0.08030867   2.0803087   1.2410482   1.344824</span></span>
+<span><span class="co">#&gt; [6,]  -1.25797562   0.33921105   0.3392111  -0.4397887  -1.704921</span></span>
+<span><span class="co">#&gt; [7,]   5.43654302   6.15759316   6.1575932   5.1394950   4.311119</span></span>
+<span><span class="co">#&gt; [8,]  -0.81796212  -0.33809967  -0.3380997  -0.1346721   0.443212</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/empirical_dist.html">empirical_dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          x1       x2       x3       x4       x5</span></span>
-<span><span class="co">#&gt; x1 76.41928 77.22105 76.32631 76.65921 77.24642</span></span>
-<span><span class="co">#&gt; x2 77.22105 78.76481 77.84491 77.85793 79.18410</span></span>
-<span><span class="co">#&gt; x3 76.32631 77.84491 77.84167 77.08024 79.29437</span></span>
-<span><span class="co">#&gt; x4 76.65921 77.85793 77.08024 85.77305 80.24866</span></span>
-<span><span class="co">#&gt; x5 77.24642 79.18410 79.29437 80.24866 91.59095</span></span>
+<span><span class="co">#&gt; x1 108.8458 107.6214 108.4722 105.7609 107.4922</span></span>
+<span><span class="co">#&gt; x2 107.6214 107.4780 108.3508 105.0994 107.5318</span></span>
+<span><span class="co">#&gt; x3 108.4722 108.3508 109.8644 105.5452 108.9550</span></span>
+<span><span class="co">#&gt; x4 105.7609 105.0994 105.5452 112.0553 103.6094</span></span>
+<span><span class="co">#&gt; x5 107.4922 107.5318 108.9550 103.6094 117.5265</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       x1       x2       x3       x4       x5 </span></span>
-<span><span class="co">#&gt; 1.950352 2.764124 3.614124 1.683118 4.035027</span></span>
+<span><span class="co">#&gt;         x1         x2         x3         x4         x5 </span></span>
+<span><span class="co">#&gt; 0.03495992 1.06453714 1.90453714 0.13108458 2.18768152</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       x1       x2       x3       x4       x5 </span></span>
-<span><span class="co">#&gt; 1.950352 2.764124 3.614124 1.683118 4.035027</span></span>
+<span><span class="co">#&gt;         x1         x2         x3         x4         x5 </span></span>
+<span><span class="co">#&gt; 0.03495992 1.06453714 1.90453714 0.13108458 2.18768152</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
 <span><span class="co">#&gt;          x1       x2       x3       x4       x5</span></span>
-<span><span class="co">#&gt; x1 76.41928 77.22105 76.32631 76.65921 77.24642</span></span>
-<span><span class="co">#&gt; x2 77.22105 78.76481 77.84491 77.85793 79.18410</span></span>
-<span><span class="co">#&gt; x3 76.32631 77.84491 77.84167 77.08024 79.29437</span></span>
-<span><span class="co">#&gt; x4 76.65921 77.85793 77.08024 85.77305 80.24866</span></span>
-<span><span class="co">#&gt; x5 77.24642 79.18410 79.29437 80.24866 91.59095</span></span>
+<span><span class="co">#&gt; x1 108.8458 107.6214 108.4722 105.7609 107.4922</span></span>
+<span><span class="co">#&gt; x2 107.6214 107.4780 108.3508 105.0994 107.5318</span></span>
+<span><span class="co">#&gt; x3 108.4722 108.3508 109.8644 105.5452 108.9550</span></span>
+<span><span class="co">#&gt; x4 105.7609 105.0994 105.5452 112.0553 103.6094</span></span>
+<span><span class="co">#&gt; x5 107.4922 107.5318 108.9550 103.6094 117.5265</span></span>
 <span></span>
 <span><span class="va">support</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sup.html">sup</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
 <span><span class="fu">infimum</span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -21.08865 -19.77851 -17.77851 -24.00120 -19.50843</span></span>
+<span><span class="co">#&gt; [1] -22.93070 -22.91678 -21.91678 -24.96772 -22.15222</span></span>
 <span><span class="fu">supremum</span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 29.65706 29.96982 29.96982 29.03925 30.54871</span></span>
+<span><span class="co">#&gt; [1] 31.63395 32.29731 33.29731 32.84110 36.77663</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 5</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">

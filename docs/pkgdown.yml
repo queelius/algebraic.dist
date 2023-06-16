@@ -3,9 +3,8 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   empirical_dist: empirical_dist.html
-  failure_rate: failure_rate.html
   mvn: mvn.html
-last_built: 2023-06-10T11:29Z
+last_built: 2023-06-16T10:55Z
 urls:
   reference: https://queelius.github.io/algebraic.dist/reference
   article: https://queelius.github.io/algebraic.dist/articles

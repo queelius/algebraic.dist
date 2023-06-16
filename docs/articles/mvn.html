@@ -42,7 +42,6 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/empirical_dist.html">Empirical distribution</a>
-    <a class="dropdown-item" href="../articles/failure_rate.html">Failure rate distributions</a>
     <a class="dropdown-item" href="../articles/mvn.html">Multivariate normal distribution</a>
   </div>
 </li>
@@ -113,15 +112,15 @@
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">my_sampler</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
 <span><span class="co">#data &lt;- mvtnorm::rmvnorm(n, c(1,2,3))</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            [,1]      [,2]      [,3]</span></span>
-<span><span class="co">#&gt; [1,]  0.1995425 1.3084268 1.4166042</span></span>
-<span><span class="co">#&gt; [2,] -0.7935092 1.1678027 1.8648409</span></span>
-<span><span class="co">#&gt; [3,] -1.3008160 1.1739765 1.7839669</span></span>
-<span><span class="co">#&gt; [4,]  0.3473320 1.5508035 2.2679657</span></span>
-<span><span class="co">#&gt; [5,]  0.6217829 1.2531637 1.6548079</span></span>
-<span><span class="co">#&gt; [6,] -2.2745028 0.6535253 0.2546574</span></span>
-<span><span class="co">#&gt; [7,] -0.7246502 0.5834365 1.5983338</span></span>
-<span><span class="co">#&gt; [8,] -0.2567525 0.2820101 1.8921800</span></span></code></pre></div>
+<span><span class="co">#&gt;            [,1]       [,2]     [,3]</span></span>
+<span><span class="co">#&gt; [1,]  1.4268756  2.4396863 2.311316</span></span>
+<span><span class="co">#&gt; [2,] -0.6173842  0.5087903 2.443449</span></span>
+<span><span class="co">#&gt; [3,] -0.0148620  0.6610517 2.443693</span></span>
+<span><span class="co">#&gt; [4,] -0.9748756  2.1341603 3.499634</span></span>
+<span><span class="co">#&gt; [5,] -0.7804894  0.4267545 2.517696</span></span>
+<span><span class="co">#&gt; [6,]  1.3480768  1.3570945 3.917299</span></span>
+<span><span class="co">#&gt; [7,] -0.9045877 -0.2092592 1.517801</span></span>
+<span><span class="co">#&gt; [8,]  1.3095870  0.8827747 1.862307</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">support</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sup.html">sup</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="fu">infimum</span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
