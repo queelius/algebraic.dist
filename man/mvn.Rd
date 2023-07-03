@@ -2,15 +2,27 @@
 % Please edit documentation in R/mvn.R
 \name{mvn}
 \alias{mvn}
-\title{Construct (multivariate or univariate) normal distribution object.}
+\title{Construct a multivariate or univariate normal distribution object.}
 \usage{
-mvn(mu = 0, sigma = diag(length(mu)))
+mvn(mu, sigma = diag(length(mu)))
 }
 \arguments{
-\item{mu}{mean vector}
+\item{mu}{A numeric vector specifying the means of the distribution.
+If \code{mu} has length 1, a univariate normal distribution is created.
+If \code{mu} has length > 1, a multivariate normal distribution is created.}
 
-\item{sigma}{variance-covariance matrix}
+\item{sigma}{A numeric matrix specifying the variance-covariance matrix of the
+distribution. It must be a square matrix with the same number of
+rows and columns as the length of \code{mu}. Default is the identity
+matrix of size equal to the length of \code{mu}.}
+}
+\value{
+If \code{mu} has length 1, it returns a \code{normal} object. If \code{mu} has length
+> 1, it returns an \code{mvn} object. Both types of objects contain \code{mu}
+and \code{sigma} as their properties.
 }
 \description{
-Construct (multivariate or univariate) normal distribution object.
+This function constructs an object representing a normal distribution.
+If the length of the mean vector \code{mu} is 1, it creates a univariate
+normal distribution. Otherwise, it creates a multivariate normal distribution.
 }

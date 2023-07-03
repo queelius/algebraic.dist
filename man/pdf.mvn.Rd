@@ -2,23 +2,31 @@
 % Please edit documentation in R/mvn.R
 \name{pdf.mvn}
 \alias{pdf.mvn}
-\title{Method for obtaining the pdf of an \code{mvn} object.}
+\title{Function generator for obtaining the pdf of an \code{mvn} object (multivariate
+normal).}
 \usage{
 \method{pdf}{mvn}(x, ...)
 }
 \arguments{
-\item{x}{The object to obtain the pdf of}
+\item{x}{The \code{mvn} (S3) object to obtain the pdf of}
 
-\item{...}{Additional arguments to pass (not used)}
+\item{...}{Additional arguments to pass into the generated function.}
 }
 \value{
-A function that computes the pdf of the mvn distribution.
-It accepts as input a parameter vector \code{x}, a mean vector \code{mu},
-a variance-covariance matrix \code{sigma}, and a \code{log} argument
-determining whether to compute the log of the pdf. By default,
-\code{mu} and \code{sigma} are the mean and variance-covariance matrix
-of object \code{x}.
+A function that computes the pdf of the \code{mvn} distribution.
+It accepts as input:
+- \code{obs}: vector or matrix of quantiles. when x is a matrix, each row
+is taken to be a quantile and columns correspond to the number of
+dimensions, p.
+- \code{mu}: a a vector denoting the population mean. Defaults to the
+mean of \code{x} (an \code{mvn} object)
+- \code{sigma}: a matrix denoting the variance-covariance of
+observations. Defaults to the variance-covariance of \code{x}.
+- \code{log}: logical, determines whether to compute the log of the pdf.
+Defaults to \code{FALSE}.
+- \code{...}: any additional parameters to pass to \code{dmvnorm}.
 }
 \description{
-Method for obtaining the pdf of an \code{mvn} object.
+Function generator for obtaining the pdf of an \code{mvn} object (multivariate
+normal).
 }

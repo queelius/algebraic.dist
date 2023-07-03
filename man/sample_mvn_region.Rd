@@ -3,7 +3,11 @@
 \name{sample_mvn_region}
 \alias{sample_mvn_region}
 \title{Function for obtaining sample points for an \code{mvn} object that is within
-the \code{p}-probability region.}
+the \code{p}-probability region. That is, it samples from the smallest region of
+the distribution that contains \code{p} probability mass. This is done by first
+sampling from the entire distribution, then rejecting samples that are not
+in the probability region (using the statistical distance \code{mahalanobis}
+from \code{mu}).}
 \usage{
 sample_mvn_region(n, mu, sigma, p = 0.95, ...)
 }
@@ -20,5 +24,9 @@ sample_mvn_region(n, mu, sigma, p = 0.95, ...)
 }
 \description{
 Function for obtaining sample points for an \code{mvn} object that is within
-the \code{p}-probability region.
+the \code{p}-probability region. That is, it samples from the smallest region of
+the distribution that contains \code{p} probability mass. This is done by first
+sampling from the entire distribution, then rejecting samples that are not
+in the probability region (using the statistical distance \code{mahalanobis}
+from \code{mu}).
 }

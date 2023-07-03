@@ -88,8 +88,8 @@ sampler.normal <- function(x, ...) {
 #' @importFrom stats dnorm
 #' @export
 pdf.normal <- function(x, ...) {
-    function(x, mu = x$mu, var = x$var, log = FALSE, ...) {
-        dnorm(x = x, mean = mu, sd = sqrt(var), log = log, ...)
+    function(t, mu = x$mu, var = x$var, log = FALSE, ...) {
+        dnorm(x = t, mean = mu, sd = sqrt(var), log = log, ...)
     }
 }
 
@@ -104,7 +104,8 @@ pdf.normal <- function(x, ...) {
 #' @importFrom stats pnorm
 #' @export
 cdf.normal <- function(x, ...) {
-    function(q, mu = x$mu, var = x$var, lower.tail = FALSE, log.p = FALSE, ...) {
+    function(q, mu = x$mu, var = x$var, lower.tail = TRUE,
+             log.p = FALSE, ...) {
         pnorm(q = q, mean = mu, sd = sqrt(var),
                 lower.tail = lower.tail, log.p = log.p)
     }

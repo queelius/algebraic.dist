@@ -23,18 +23,6 @@ is_empirical_dist <- function(x) {
   inherits(x, "empirical_dist")
 }
 
-#' Method for obtaining the number of observations in a `empirical_dist`
-#' object.
-#' @param object The object to obtain the number of observations of.
-#' @param ... Additional arguments to pass (not used).
-#' @return The number of observations in `x`.
-#' @importFrom stats nobs
-#' @export
-nobs.empirical_dist <- function(object, ...) {
-  nrow(object$data)
-}
-
-
 #' Method for obtaining the dimension of a `empirical_dist` object.
 #' @param x The object to obtain the dimension of.
 #' @export
@@ -42,14 +30,6 @@ dim.empirical_dist <- function(x) {
   ncol(x$data)
 }
 
-#' Method for obtaining the data of a `empirical_dist` object.
-#' 
-#' @param x The object to obtain the data of.
-#' @param ... Additional arguments to pass (not used).
-#' @export
-obs.empirical_dist <- function(x, ...) {
-  x$data
-}
 
 #' Method for obtaining the pdf of a `empirical_dist` object.
 #'
@@ -110,11 +90,11 @@ mean.empirical_dist <- function(x, ...) {
 
 #' Method for obtaining the variance of `empirical_dist` object `x`.
 #'
-#' @param object The empirical distribution object.
+#' @param x The empirical distribution object.
 #' @param ... Additional arguments to pass (not used)
 #' @export
-vcov.empirical_dist <- function(object, ...) {
-  cov(object$data)
+vcov.empirical_dist <- function(x, ...) {
+  cov(x$data)
 }
 
 #' Method for obtaining the marginal distribution of `empirical_dist` object
@@ -190,5 +170,3 @@ cdf.empirical_dist <- function(x, ...) {
 sup.empirical_dist <- function(x, ...) {
   finite_set$new(x$data, ...)
 }
-
-

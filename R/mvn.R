@@ -1,10 +1,22 @@
-#' Construct (multivariate or univariate) normal distribution object.
+#' Construct a multivariate or univariate normal distribution object.
 #'
-#' @param mu mean vector
-#' @param sigma variance-covariance matrix
+#' This function constructs an object representing a normal distribution.
+#' If the length of the mean vector `mu` is 1, it creates a univariate 
+#' normal distribution. Otherwise, it creates a multivariate normal distribution.
+#'
+#' @param mu A numeric vector specifying the means of the distribution. 
+#'           If `mu` has length 1, a univariate normal distribution is created. 
+#'           If `mu` has length > 1, a multivariate normal distribution is created.
+#' @param sigma A numeric matrix specifying the variance-covariance matrix of the 
+#'              distribution. It must be a square matrix with the same number of 
+#'              rows and columns as the length of `mu`. Default is the identity 
+#'              matrix of size equal to the length of `mu`.
+#' @return If `mu` has length 1, it returns a `normal` object. If `mu` has length 
+#'         > 1, it returns an `mvn` object. Both types of objects contain `mu` 
+#'         and `sigma` as their properties.
 #' @export
 mvn <- function(
-    mu = 0,
+    mu,
     sigma = diag(length(mu))) {
 
     stopifnot(is.numeric(mu),
@@ -12,8 +24,12 @@ mvn <- function(
               nrow(sigma) == ncol(sigma),
               nrow(sigma) == length(mu))
 
-    structure(list(mu = mu, sigma = sigma),
-              class = c("mvn"))
+    if (length(mu) == 1) {
+        return(normal(mu, sigma))
+    } else {
+        structure(list(mu = mu, sigma = sigma),
+            class = c("mvn", "multivariate_dist", "dist"))
+    }
 }
 
 #' Retrieve the variance-covariance matrix (or scalar)
@@ -49,7 +65,16 @@ mean.mvn <- function(x, ...) {
 #' @param ... Additional arguments to pass (not used)
 #' @return A named vector of parameters
 #' @export
-params.mvn <- function(x, ...) {
+params.mvn <- function(x, par = NULL, ...) {
+
+    if (is.null(par)) {
+        stopifnot(!is.null(x$par))
+        return(x$par)
+    }
+
+    # do component-wise replacement of `par` with `x$par`
+    # whenever `par` is `NA`
+    par[is.na(par)] <- x$par[is.na(par)]
     c("mu" = x$mu, "sigma" = x$sigma)
 }
 
@@ -60,36 +85,63 @@ is_mvn <- function(x) {
     inherits(x, "mvn")
 }
 
-#' Method for sampling from a `mvn` (multivariate normal) object.
+#' Function generator for sampling from a `mvn` (multivariate normal) object.
 #'
 #' @param x The `mvn` object to sample from
-#' @param ... Additional arguments to pass to `rmvnorm` or `sample_mvn_region`
+#' @param ... Additional arguments to pass to the generated function that will
+#' be fixed during all calls.
+#' @return A function that samples from the `mvn` distribution. It accepts as
+#'         input:
+#'          - `n`: number of samples to generate. Defaults to 1.
+#'          - `mu`: a vector denoting the population mean. Defaults to the mean 
+#'            of `x` (an `mvn` object)
+#'          - `sigma`: a matrix denoting the covariance of observations. 
+#'            Defaults to the variance-covariance of `x`.
+#'          - `p`: probability region to sample from. Defaults to 1, which
+#'            corresponds to the entire distribution.
+#'            `sample_mvn_region` method. It's used when `p` is less than 1.
+#'          - `...`: any additional parameters to pass to `rmvnorm` or 
+#'            `sample_mvn_region` which can be different during each call.
 #' @importFrom mvtnorm rmvnorm
 #' @export
 sampler.mvn <- function(x, ...) {
-    function(n = 1, mu = x$mu, sigma = x$sigma, p = 1) {
+    fixed_args <- list(...)
+    function(n = 1, mu = x$mu, sigma = x$sigma, p = 1, ...) {
         if (p < 1) {
-            sample_mvn_region(n, mu, sigma, p, ...)
+            do.call(sample_mvn_region, c(list(n = n, mean = mu, sigma = sigma,
+                p = p), fixed_args, list(...)))
         } else {
-            rmvnorm(n, mu, sigma, ...)
+            do.call(rmvnorm, c(list(n = n, mean = mu, sigma = sigma),
+                fixed_args, list(...)))
         }
     }
 }
-
-#' Method for obtaining the pdf of an `mvn` object.
-#' @param x The object to obtain the pdf of
-#' @param ... Additional arguments to pass (not used)
-#' @return A function that computes the pdf of the mvn distribution.
-#'         It accepts as input a parameter vector `x`, a mean vector `mu`,
-#'         a variance-covariance matrix `sigma`, and a `log` argument
-#'         determining whether to compute the log of the pdf. By default,
-#'         `mu` and `sigma` are the mean and variance-covariance matrix
-#'         of object `x`.
+#' Function generator for obtaining the pdf of an `mvn` object (multivariate
+#' normal).
+#' 
+#' @param x The `mvn` (S3) object to obtain the pdf of
+#' @param ... Additional arguments to pass into the generated function.
+#' @return A function that computes the pdf of the `mvn` distribution.
+#'         It accepts as input:
+#'          - `obs`: vector or matrix of quantiles. when x is a matrix, each row
+#'            is taken to be a quantile and columns correspond to the number of
+#'            dimensions, p.
+#'          - `mu`: a a vector denoting the population mean. Defaults to the
+#'            mean of `x` (an `mvn` object)
+#'          - `sigma`: a matrix denoting the variance-covariance of
+#'            observations. Defaults to the variance-covariance of `x`.
+#'          - `log`: logical, determines whether to compute the log of the pdf.
+#'            Defaults to `FALSE`.
+#'          - `...`: any additional parameters to pass to `dmvnorm`.
 #' @importFrom mvtnorm dmvnorm
 #' @export
 pdf.mvn <- function(x, ...) {
-    function(x, mu = x$mu, sigma = x$sigma, log = FALSE, ...) {
-        dmvnorm(x = x, mean = mu, sigma = sigma, log = log, ...)
+    function(obs, mu = x$mu, sigma = x$sigma, ...) {
+        fixed_args <- list(...)
+        function(obs, mu = object$mu, sigma = object$sigma, log = FALSE, ...) {
+            do.call(dmvnorm, c(list(x = obs, mean = mu, sigma = sigma),
+                fixed_args, list(...)))
+        }
     }
 }
 
@@ -117,13 +169,20 @@ marginal.mvn <- function(x, indices) {
     if (length(indices) == 1) {
         return(normal(x$mu[indices], x$sigma[indices,indices]))
     }
+    if (any(indices < 0 | indices > dim(x))) {
+        stop("indices must be in [1, dim(x)]")
+    }
     mu <- x$mu[indices]
     sigma <- x$sigma[indices, indices]
     mvn(mu, sigma)
 }
 
 #' Function for obtaining sample points for an `mvn` object that is within
-#' the `p`-probability region.
+#' the `p`-probability region. That is, it samples from the smallest region of
+#' the distribution that contains `p` probability mass. This is done by first
+#' sampling from the entire distribution, then rejecting samples that are not
+#' in the probability region (using the statistical distance `mahalanobis`
+#' from `mu`).
 #'
 #' @param n the sample size
 #' @param mu mean vector

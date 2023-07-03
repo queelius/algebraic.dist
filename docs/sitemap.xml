@@ -64,6 +64,9 @@
     <loc>/reference/expectation.html</loc>
   </url>
   <url>
+    <loc>/reference/expectation.univariate_dist.html</loc>
+  </url>
+  <url>
     <loc>/reference/finite_set.html</loc>
   </url>
   <url>
@@ -130,6 +133,9 @@
     <loc>/reference/mean.normal.html</loc>
   </url>
   <url>
+    <loc>/reference/mean.univariate_dist.html</loc>
+  </url>
+  <url>
     <loc>/reference/mvn.html</loc>
   </url>
   <url>
@@ -137,6 +143,9 @@
   </url>
   <url>
     <loc>/reference/normal.html</loc>
+  </url>
+  <url>
+    <loc>/reference/nparams.html</loc>
   </url>
   <url>
     <loc>/reference/obs.empirical_dist.html</loc>
@@ -202,6 +211,9 @@
     <loc>/reference/sampler.normal.html</loc>
   </url>
   <url>
+    <loc>/reference/sd.univariate_dist.html</loc>
+  </url>
+  <url>
     <loc>/reference/summary_dist.html</loc>
   </url>
   <url>
@@ -227,6 +239,9 @@
   </url>
   <url>
     <loc>/reference/surv.html</loc>
+  </url>
+  <url>
+    <loc>/reference/var.univariate_dist.html</loc>
   </url>
   <url>
     <loc>/reference/vcov.empirical_dist.html</loc>

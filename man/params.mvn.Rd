@@ -4,7 +4,7 @@
 \alias{params.mvn}
 \title{Method for obtaining the parameters of a \code{mvn} object.}
 \usage{
-\method{params}{mvn}(x, ...)
+\method{params}{mvn}(x, par = NULL, ...)
 }
 \arguments{
 \item{x}{The object to obtain the parameters of}

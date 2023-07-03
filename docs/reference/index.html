@@ -122,6 +122,11 @@ with respect to a function <code>g</code>. That is, <code>E(g(object))</code>.</
         <td><p>Method for obtaining the expectation of <code>empirical_dist</code> object <code>x</code>
 under function <code>g</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="expectation.univariate_dist.html">expectation(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the expectation of <code>f</code> with respect to a
+<code>univariate_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
           <p><code><a href="finite_set.html">finite_set</a></code> </p>
         </td>
         <td><p>Finite set</p></td>
@@ -162,7 +167,7 @@ under function <code>g</code>.</p></td>
         </td>
         <td><p>Generic method for obtaining the quantile (inverse cdf) of an object.</p></td>
       </tr><tr><td>
-          <p><code><a href="inv_cdf.normal.html">inv_cdf(<i>&lt;normal&gt;</i>)</a></code> </p>
+          <p><code><a href="inv_cdf.normal.html">inv_cdf(<i>&lt;normal&gt;</i>)</a></code> <code><a href="inv_cdf.normal.html">inv_cdf(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the inverse cdf of an <code>normal</code> object.</p></td>
       </tr><tr><td>
@@ -209,26 +214,22 @@ object <code>x</code> over components <code>indices</code>.</p></td>
         </td>
         <td><p>Retrieve the mean of a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="mean.univariate_dist.html">mean(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the mean of <code>univariate_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
           <p><code><a href="mvn.html">mvn()</a></code> </p>
         </td>
-        <td><p>Construct (multivariate or univariate) normal distribution object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="nobs.empirical_dist.html">nobs(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Method for obtaining the number of observations in a <code>empirical_dist</code>
-object.</p></td>
+        <td><p>Construct a multivariate or univariate normal distribution object.</p></td>
       </tr><tr><td>
           <p><code><a href="normal.html">normal()</a></code> </p>
         </td>
         <td><p>Construct univariate normal distribution object.</p></td>
       </tr><tr><td>
-          <p><code><a href="obs.html">obs()</a></code> </p>
+          <p><code><a href="nparams.html">nparams()</a></code> </p>
         </td>
-        <td><p>Generic method for obtaining the observations of an object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="obs.empirical_dist.html">obs(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Method for obtaining the data of a <code>empirical_dist</code> object.</p></td>
+        <td><p>Generic method for obtaining the number of parameters of
+distribution-like object <code>x</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="params.html">params()</a></code> </p>
         </td>
@@ -252,7 +253,8 @@ object.</p></td>
       </tr><tr><td>
           <p><code><a href="pdf.mvn.html">pdf(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for obtaining the pdf of an <code>mvn</code> object.</p></td>
+        <td><p>Function generator for obtaining the pdf of an <code>mvn</code> object (multivariate
+normal).</p></td>
       </tr><tr><td>
           <p><code><a href="pdf.normal.html">pdf(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
@@ -286,11 +288,15 @@ observations of <code>empirical_dist</code> object <code>x</code>.</p></td>
           <p><code><a href="sample_mvn_region.html">sample_mvn_region()</a></code> </p>
         </td>
         <td><p>Function for obtaining sample points for an <code>mvn</code> object that is within
-the <code>p</code>-probability region.</p></td>
+the <code>p</code>-probability region. That is, it samples from the smallest region of
+the distribution that contains <code>p</code> probability mass. This is done by first
+sampling from the entire distribution, then rejecting samples that are not
+in the probability region (using the statistical distance <code>mahalanobis</code>
+from <code>mu</code>).</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.html">sampler()</a></code> </p>
         </td>
-        <td><p>Generic method for obtaining the sampler of an object</p></td>
+        <td><p>Generic method for sampling from distribution-like objects.</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.empirical_dist.html">sampler(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -298,11 +304,15 @@ the <code>p</code>-probability region.</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.mvn.html">sampler(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for sampling from a <code>mvn</code> (multivariate normal) object.</p></td>
+        <td><p>Function generator for sampling from a <code>mvn</code> (multivariate normal) object.</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.normal.html">sampler(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for sampling from a <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sd.univariate_dist.html">sd.univariate_dist()</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the standard deviation of <code>univariate_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="summary_dist.html">summary_dist()</a></code> </p>
         </td>
@@ -341,6 +351,10 @@ is defined as values that have non-zero probability density.</p></td>
           <p><code><a href="surv.html">surv()</a></code> </p>
         </td>
         <td><p>Generic method for obtaining the survival function of an object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="var.univariate_dist.html">var.univariate_dist()</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the variance of <code>univariate_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.empirical_dist.html">vcov(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>

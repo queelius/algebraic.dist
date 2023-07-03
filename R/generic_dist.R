@@ -43,11 +43,15 @@ inv_cdf <- function(x, ...) {
     UseMethod("inv_cdf", x)
 }
 
-
-#' Generic method for obtaining the sampler of an object
+#' Generic method for sampling from distribution-like objects.
 #'
-#' @param x The object to obtain the sampler of.
-#' @param ... Additional arguments to pass.
+#' It creates a sampler for the `x` object. It returns a function
+#' that accepts a parameter `n` denoting the number of samples
+#' to draw from the `x` object and also any additional parameters
+#' `...` are passed to the generated function.
+#'
+#' @param x the `x` object to create a sampler for
+#' @param ... additional arguments to pass
 #' @export
 sampler <- function(x, ...) {
     UseMethod("sampler", x)
@@ -60,6 +64,15 @@ sampler <- function(x, ...) {
 #' @export
 params <- function(x, ...) {
     UseMethod("params", x)
+}
+
+#' Generic method for obtaining the number of parameters of 
+#' distribution-like object `x`.
+#'
+#' @param x the object to obtain the number of parameters for
+#' @export
+nparams <- function(x) {
+    UseMethod("nparams", x)
 }
 
 #' Generic method for obtaining the expectation of `f` with respect to
@@ -92,7 +105,6 @@ conditional <- function(x, P) {
     UseMethod("conditional", x)
 }
 
-
 #' Generic method for applying a map `f` to distribution object `x`.
 #' @param x The distribution object.
 #' @param g The function to apply.
@@ -101,7 +113,6 @@ conditional <- function(x, P) {
 rmap <- function(x, g, ...) {
     UseMethod("rmap", x)
 }
-
 
 #' Generic method for retrieving the support of an object `x`.
 #' 
@@ -121,19 +132,3 @@ sup <- function(x, ...) {
     UseMethod("sup", x)
 }
 
-
-
-#' Generic method for obtaining the observations of an object.
-#' 
-#' Note that the method `nobs` handles the number of observations,
-#' and since `obs` may be NULL, then `nobs` should be used instead if you
-#' want to know the number of observations. Also, `nobs` is a generic method
-#' defined in `stats`.
-#'
-#' @param x The object to obtain the observations of.
-#' @param ... Additional arguments to pass.
-#' @return A matrix of observations.
-#' @export
-obs <- function(x, ...) {
-    UseMethod("obs", x)
-}

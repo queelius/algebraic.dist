@@ -49,7 +49,7 @@ head(data, n = 8)
 ```
 
 
-```{r}
+```{r emp-test}
 emp <- empirical_dist(data)
 
 cov(data)
@@ -65,7 +65,7 @@ dim(support)
 ```
 
 
-```{r}
+```{r marginal-test}
 X1 <- marginal(emp, 1)
 F1 <- cdf(X1)
 curve(F1(x), from = infimum(sup(X1)), to = supremum(sup(X1)))

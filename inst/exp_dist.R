@@ -122,7 +122,7 @@ mean.exp_dist <- function(x, par = NULL) {
 #'         or log-probability. By default, `rate` is the failure rate
 #'         of object `x`.
 #' @export
-qunatile.exp_dist <- function(x, rate = NULL, ...) {
+inv_cdf.exp_dist <- function(x, rate = NULL, ...) {
   function(p, rate = x$rate, lower.tail = TRUE, log.p = FALSE) {
       stopifnot(rate > 0)
       qexp(p = p, rate = rate, lower.tail = lower.tail, log.p = log.p)

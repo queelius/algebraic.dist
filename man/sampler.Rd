@@ -2,15 +2,18 @@
 % Please edit documentation in R/generic_dist.R
 \name{sampler}
 \alias{sampler}
-\title{Generic method for obtaining the sampler of an object}
+\title{Generic method for sampling from distribution-like objects.}
 \usage{
 sampler(x, ...)
 }
 \arguments{
-\item{x}{The object to obtain the sampler of.}
+\item{x}{the \code{x} object to create a sampler for}
 
-\item{...}{Additional arguments to pass.}
+\item{...}{additional arguments to pass}
 }
 \description{
-Generic method for obtaining the sampler of an object
+It creates a sampler for the \code{x} object. It returns a function
+that accepts a parameter \code{n} denoting the number of samples
+to draw from the \code{x} object and also any additional parameters
+\code{...} are passed to the generated function.
 }
