@@ -28,26 +28,18 @@ mvn <- function(
         return(normal(mu, sigma))
     } else {
         structure(list(mu = mu, sigma = sigma),
-            class = c("mvn", "multivariate_dist", "dist"))
+            class = c("mvn", "multivariate_dist",
+                      "continuous_dist", "dist"))
     }
 }
 
-#' Retrieve the variance-covariance matrix (or scalar)
-#' of a `mvn` object.
-
-#' A variance-covariance matrix is a square matrix
-#' giving the covariance between each pair of elements
-#' of a given random vector. Importantly, its diagonal
-#' contains variances of the elements
-#'
-#' @param object The `mvn` object to retrieve
-#'               the variance-covariance matrix from
+#' Retrieve the variance-covariance matrix of an `mvn` object.
+#' @param x The `mvn` object to retrieve the variance-covariance matrix of
 #' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `mvn` object
-#' @importFrom stats vcov
 #' @export
-vcov.mvn <- function(object, ...) {
-    object$sigma
+vcov.mvn <- function(x, ...) {
+    x$sigma
 }
 
 #' Retrieve the mean of a `mvn` object.
@@ -62,19 +54,9 @@ mean.mvn <- function(x, ...) {
 #' Method for obtaining the parameters of a `mvn` object.
 #'
 #' @param x The object to obtain the parameters of
-#' @param ... Additional arguments to pass (not used)
 #' @return A named vector of parameters
 #' @export
-params.mvn <- function(x, par = NULL, ...) {
-
-    if (is.null(par)) {
-        stopifnot(!is.null(x$par))
-        return(x$par)
-    }
-
-    # do component-wise replacement of `par` with `x$par`
-    # whenever `par` is `NA`
-    par[is.na(par)] <- x$par[is.na(par)]
+params.mvn <- function(x) {
     c("mu" = x$mu, "sigma" = x$sigma)
 }
 
@@ -116,6 +98,7 @@ sampler.mvn <- function(x, ...) {
         }
     }
 }
+
 #' Function generator for obtaining the pdf of an `mvn` object (multivariate
 #' normal).
 #' 
@@ -136,14 +119,13 @@ sampler.mvn <- function(x, ...) {
 #' @importFrom mvtnorm dmvnorm
 #' @export
 pdf.mvn <- function(x, ...) {
-    function(obs, mu = x$mu, sigma = x$sigma, ...) {
-        fixed_args <- list(...)
-        function(obs, mu = object$mu, sigma = object$sigma, log = FALSE, ...) {
-            do.call(dmvnorm, c(list(x = obs, mean = mu, sigma = sigma),
-                fixed_args, list(...)))
-        }
+    fixed_args <- list(...)
+    function(obs, mu = x$mu, sigma = x$sigma, log = FALSE, ...) {
+        do.call(dmvnorm, c(list(x = obs, mean = mu, sigma = sigma, log = log),
+            fixed_args, list(...)))
     }
 }
+
 
 #' Method for obtaining the support of a `mvn` object, where the support
 #' is defined as values that have non-zero probability density.
@@ -166,10 +148,13 @@ sup.mvn <- function(x, ...) {
 #' @param indices The indices of the marginal distribution to obtain.
 #' @export
 marginal.mvn <- function(x, indices) {
-    if (length(indices) == 1) {
+    if (length(indices) == 0) {
+        stop("indices must be non-empty")
+    }
+    else if (length(indices) == 1) {
         return(normal(x$mu[indices], x$sigma[indices,indices]))
     }
-    if (any(indices < 0 | indices > dim(x))) {
+    else if (any(indices < 0) || any(indices > dim(x))) {
         stop("indices must be in [1, dim(x)]")
     }
     mu <- x$mu[indices]
@@ -230,4 +215,56 @@ print.mvn <- function(x, ...) {
 #' @export
 dim.mvn <- function(x) {
     length(x$mu)
+}
+
+#' Method for obtaining the CDF of a `mvn` object.
+#' @param x The object to obtain the CDF of
+#' @param ... Additional arguments to pass (not used)
+#' @importFrom mvtnorm pmvnorm
+#' @export
+cdf.mvn <- function(x, ...) {
+    function(q, mu = x$mu, sigma = x$sigma, lower.tail = TRUE,
+             log.p = FALSE, ...) {
+        p <- pmvnorm(mean = mu, sigma = sigma, upper = q, ...)
+        # check to see if `p` numeric has an attr `error` set to non-zero
+        if (attr(p, "error") != 0) {
+            warning(paste0("error (", attr(p, "error"),"): ", attr(p, "msg")))
+        }
+        attr(p, "error") <- NULL
+        attr(p, "msg") <- NULL
+        if (log.p) {
+            return(log(p))
+        } else {
+            return(p)
+        }
+    }
+}
+
+
+#' Computes the distribution of `g(x)` where `x` is an `mvn` object.
+#'
+#' By the invariance property, if `x` is an `mvn` object,
+#' then under the right conditions, asymptotically, `g(x)` is an MVN
+#' distributed,
+#'     g(x) ~ normal(g(mean(x)), sigma)
+#' where `sigma` is the variance-covariance of `g(x)`
+#'
+#' We provide two different methods for estimating the
+#' variance-covariance of `g(x)`:
+#'     method = "delta" -> delta method
+#'     method = "mc" -> monte carlo method
+#' 
+#' Finally, we provide an all-purpose `empirical` method, where we just sample
+#' from the MVN and place the sample in an `empirical_dist` object, and then
+#' apply the `rmap` with `g` to that.
+#' 
+#' @inheritParams rmap
+#' @param n number of samples to take to estimate distribution of `g(x)` if
+#'         `method` is `mc` or `empirical`. Defaults to 10000.
+#' @param ... additional arguments to pass into the `g` function.
+#' @export
+rmap.mvn <- function(x, g, n = 10000L, ...)
+{
+    D <- rmap(empirical_dist(sampler(x)(n)), g, ...)
+    mvn(mu = mean(D), sigma = vcov(D))
 }

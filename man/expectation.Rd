@@ -12,7 +12,7 @@ expectation(x, g, ...)
 
 \item{g}{The function to take the expectation of.}
 
-\item{...}{Additional arguments to pass.}
+\item{...}{Additional arguments to pass into \code{g}.}
 }
 \description{
 Generic method for obtaining the expectation of \code{f} with respect to

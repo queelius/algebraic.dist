@@ -4,12 +4,10 @@
 \alias{params.mvn}
 \title{Method for obtaining the parameters of a \code{mvn} object.}
 \usage{
-\method{params}{mvn}(x, par = NULL, ...)
+\method{params}{mvn}(x)
 }
 \arguments{
 \item{x}{The object to obtain the parameters of}
-
-\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 A named vector of parameters

@@ -1,0 +1,190 @@
+---
+title: "algebraic.dist: Examples"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{algebraic.dist: Examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+options(digits = 3)
+```
+
+## Introduction
+To demonstrate the R package `algebraic.dist`, we consider 
+the multivariate normal distribution (MVN) and its empirical
+approximation.
+
+We start by loading the package:
+```{r setup, message = FALSE, warning = FALSE }
+library(algebraic.dist)
+```
+
+## Defining the data generating process
+We define the parameters of the data generating process (DGP)
+with:
+```{r data-gen}
+# we define the parameters of the MVN
+M <- mvn(mu    = 1:5, sigma = diag(1:5))
+print(M)
+```
+
+Each observation is an i.i.d. vector from the MVN.
+We sample from the MVN with:
+```{r data-gen2}
+# we generate a sample of size n
+n <- 100000
+
+# we sample from the MVN
+data <- sampler(M)(n)
+```
+
+We have a sample of size $n=`r n`$ from the DGP.
+We show some observations from this sample with:
+```{r}
+head(data, n=6)
+```
+
+Now, we also construct a empirical distribution from the sample with:
+```{r emp-construction}
+emp <- empirical_dist(data)
+print(emp)
+```
+
+Let's show the supports of the empirical distribution and the MVN:
+```{r support}
+# generate a data frame with the dimension, supremum,
+# and infimum of the MVN and empirical distribution
+df <- data.frame(supremum.mvn = supremum(sup(M)),
+                 supremum.emp = supremum(sup(emp)),
+                 infimum.mvn = infimum(sup(M)),
+                 infimum.emp = infimum(sup(emp)))
+row.names(df) <- paste0("param",1:dim(sup(M)))
+print(df)
+```
+
+Let's compare the mean and covariance-variance matrices of both the MVN and the
+empirical distribution of the MVN. First, let's look at the means.
+```{r compare-basic-stats}
+mean(M)
+mean(emp)
+```
+As expected, pretty close. Now let's look at the variance-covariance:
+```{r compare-basic-stats2}
+vcov(M)
+vcov(emp)
+```
+
+The true variances of the population defined by the MVN $M$ is the diagonal of the
+variance-covariance matrix:
+```{r}
+diag(vcov(M))
+```
+
+Let's compute the variances using the general expectation method:
+```{r}
+mu.emp <- mean(emp)
+expectation(emp, function(x) (x - mu.emp)^2)
+expectation(M, function(x) (x - mean(M))^2, control = list(n = n))
+```
+
+We see that these are pretty good estimates, as the expectation is actually a
+Monte Carlo approximation. We can see the CI's with:
+```{r}
+expectation(emp, function(x) (x - mu.emp)^2, control = list(compute_stats = TRUE))
+expectation(M, function(x) (x - mean(M))^2, control = list(n = n, compute_stats = TRUE))
+```
+
+Next, we use the `rmap` function on the MVN and the empirical distribution to compute
+the distribution of $(X - E(X))^2$. If we take the mean of this, we should get the
+variance as shown above:
+```{r rmap}
+mu.emp <- mean(emp)
+mean(rmap(emp, function(x) (x - mu.emp)^2))
+mean(rmap(M, function(x) (x - mean(M))^2, n = n))
+```
+These are both reasonable estimates of the variance.
+
+
+
+The PDF of the empirical is not very useful -- it gets $1/n$ for each observation:
+```{r}
+x <- sampler(emp)(1)
+y <- sampler(M)(1)
+data.frame(
+  ob = c("empirical(x)", "MVN(y)"),
+  pdf.emp = c(pdf(emp)(x), pdf(emp)(y)),
+  pdf.mvn = c(pdf(M)(x), pdf(M)(y)))
+```
+
+Let's plot the CDF of marginal distribution of $X_1$:
+```{r marginal-test, fig.height = 4, fig.width = 6}
+X1.emp <- marginal(emp, 1)
+F1.emp <- cdf(X1.emp)
+curve(F1.emp(x), from = infimum(sup(X1.emp)), to = supremum(sup(X1.emp)), col = "blue", lty = 1)
+X1 <- marginal(M, 1)
+F1 <- cdf(X1)
+curve(F1(x), from = infimum(sup(X1.emp)), to = supremum(sup(X1.emp)), add = TRUE, col = "red", lty = 2)
+legend("topleft", legend = c("empirical", "MVN"), col = c("blue", "red"), lty = c(1, 2))
+```
+
+Given the sample size, the empirical distribution's CDF is essentially the same
+as the MVN's CDF (they're right on top of each other). Let's zoom in much closer
+so we can ee that the empirical CDF is a step function:
+```{r marginal-test-zoom, fig.height = 4, fig.width = 6}
+curve(F1.emp(x), from = 1, to = 1.0005, col = "blue", lty = 1, type = "s")
+```
+
+
+Let's compute some expectations of $X_1$:
+```{r expectation-test}
+cat("E(X1) = ", expectation(X1, \(x) x), "( expected ", mean(X1), ")\n",
+"Var(X1) = ", expectation(X1, \(x)
+  (x - expectation(X1, \(x) x))^2), "( expected ", vcov(X1), ")\n",
+"Skewness(X1) = ", expectation(X1, function(x)
+  (x - expectation(X1, \(x) x))^3) / expectation(X1, \(x) x)^3, "( expected 0 )\n",
+"E(X^2) = ", expectation(X1, \(x) x^2), "( expected ", vcov(X1) + mean(X1)^2, ")")
+```
+
+Let's show a scatter plot of the joint distribution of $X_2$ and $X_4$:
+```{r joint-marginal-test, fig.height = 4, fig.width = 6}
+dataX2X4.emp <- sampler(marginal(emp, c(2, 4)))(10000)
+dataX2X4.mvn <- sampler(marginal(M, c(2, 4)))(10000)
+
+# scatter plot a 2d sample. use xlab and ylab to label the axes
+plot(dataX2X4.emp[,1], dataX2X4.emp[,2], pch = 20, col = "blue", xlab = "X2", ylab = "X4")
+# overlay in green the MVN data
+points(dataX2X4.mvn[,1], dataX2X4.mvn[,2], pch = 20, col = "green")
+legend("topright", legend = c("empirical", "MVN"), col = c("blue", "green"), pch = c(20, 20))
+title("Scatter plot of X2 and X4")
+```
+
+Let's look at the MVN's multivariate CDF:
+```{r multivariate-cdf}
+cdf(M)(c(1,2,3,4,0))
+```
+
+
+
+
+Now we show the mean of the conditional distribution, $X | X_1 + X_2 < 0$:
+```{r conditional-test}
+mean(conditional(emp, function(x) x[1] + x[2] < 0))
+mean(conditional(M, function(x) x[1] + x[2] < 0))
+```
+I didn't do the analysis of what this distribution's mean should theoretically be,
+if it's even practical to derive, but it doesn't look unreasonble. We see that the
+mean of the first two components are negative, which makes sense: the sum of the
+first two components is negative, so the mean of the first two components should
+be negative.
+
+
+
+```{r}
+
+```

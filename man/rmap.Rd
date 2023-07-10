@@ -11,7 +11,7 @@ rmap(x, g, ...)
 
 \item{g}{The function to apply.}
 
-\item{...}{Additional arguments to pass.}
+\item{...}{Additional arguments to pass into \code{g}.}
 }
 \description{
 Generic method for applying a map \code{f} to distribution object \code{x}.

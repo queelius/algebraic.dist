@@ -4,13 +4,10 @@
 \alias{sup.empirical_dist}
 \title{Method for obtaining the support of \code{empirical_dist} object \code{x}.}
 \usage{
-\method{sup}{empirical_dist}(x, ...)
+\method{sup}{empirical_dist}(x)
 }
 \arguments{
 \item{x}{The empirical distribution object.}
-
-\item{...}{Additional arguments to pass into the initializer of the
-\code{finite_set} object.}
 }
 \value{
 A \code{finite_set} object containing the support of \code{x}.

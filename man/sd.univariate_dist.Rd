@@ -4,12 +4,10 @@
 \alias{sd.univariate_dist}
 \title{Method for obtaining the standard deviation of \code{univariate_dist} object \code{x}.}
 \usage{
-sd.univariate_dist(x, ...)
+\method{sd}{univariate_dist}(x)
 }
 \arguments{
 \item{x}{The distribution object.}
-
-\item{...}{Additional arguments to pass.}
 }
 \description{
 Method for obtaining the standard deviation of \code{univariate_dist} object \code{x}.

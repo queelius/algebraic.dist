@@ -5,18 +5,19 @@
 \title{Method for obtaining the expectation of \code{f} with respect to a
 \code{univariate_dist} object \code{x}.}
 \usage{
-\method{expectation}{univariate_dist}(x, ..., control = list())
+\method{expectation}{univariate_dist}(x, g, ..., control = list())
 }
 \arguments{
 \item{x}{The distribution object.}
 
-\item{...}{Additional arguments to pass into \code{pdf} and \code{sup}.}
-
-\item{control}{An (optional) list of control parameters for \code{integrate}.}
-
 \item{g}{The function to take the expectation of.}
+
+\item{...}{Additional arguments to pass into \code{g}.}
+
+\item{control}{An (optional) list of control parameters for \code{integrate} or
+\code{expectation_data} (if \code{x} is not continuous)}
 }
 \description{
-Method for obtaining the expectation of \code{f} with respect to a
-\code{univariate_dist} object \code{x}.
+Assumes the support is a contiguous interval that has operations
+for retrieving the lower and upper bounds.
 }

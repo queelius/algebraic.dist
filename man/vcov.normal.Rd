@@ -3,19 +3,13 @@
 \name{vcov.normal}
 \alias{vcov.normal}
 \title{Retrieve the variance-covariance matrix (or scalar)
-of a \code{normal} object.
-A variance-covariance matrix is a square matrix
-giving the covariance between each pair of elements
-of a given random vector. Importantly, its diagonal
-contains variances of the elements}
+of a \code{normal} object.}
 \usage{
-\method{vcov}{normal}(object, ...)
+\method{vcov}{normal}(x)
 }
 \arguments{
-\item{object}{The \code{normal} object to retrieve
+\item{x}{The \code{normal} object to retrieve
 the variance-covariance matrix from}
-
-\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 The variance-covariance matrix of the \code{normal} object
@@ -23,8 +17,4 @@ The variance-covariance matrix of the \code{normal} object
 \description{
 Retrieve the variance-covariance matrix (or scalar)
 of a \code{normal} object.
-A variance-covariance matrix is a square matrix
-giving the covariance between each pair of elements
-of a given random vector. Importantly, its diagonal
-contains variances of the elements
 }

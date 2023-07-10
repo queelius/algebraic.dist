@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{The distribution object.}
 
-\item{...}{Additional arguments to pass.}
+\item{...}{Additional arguments to pass into \code{expectation}.}
 }
 \description{
 Method for obtaining the mean of \code{univariate_dist} object \code{x}.

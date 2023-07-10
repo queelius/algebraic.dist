@@ -2,18 +2,12 @@
 % Please edit documentation in R/mvn.R
 \name{vcov.mvn}
 \alias{vcov.mvn}
-\title{Retrieve the variance-covariance matrix (or scalar)
-of a \code{mvn} object.
-A variance-covariance matrix is a square matrix
-giving the covariance between each pair of elements
-of a given random vector. Importantly, its diagonal
-contains variances of the elements}
+\title{Retrieve the variance-covariance matrix of an \code{mvn} object.}
 \usage{
-\method{vcov}{mvn}(object, ...)
+\method{vcov}{mvn}(x, ...)
 }
 \arguments{
-\item{object}{The \code{mvn} object to retrieve
-the variance-covariance matrix from}
+\item{x}{The \code{mvn} object to retrieve the variance-covariance matrix of}
 
 \item{...}{Additional arguments to pass (not used)}
 }
@@ -21,10 +15,5 @@ the variance-covariance matrix from}
 The variance-covariance matrix of the \code{mvn} object
 }
 \description{
-Retrieve the variance-covariance matrix (or scalar)
-of a \code{mvn} object.
-A variance-covariance matrix is a square matrix
-giving the covariance between each pair of elements
-of a given random vector. Importantly, its diagonal
-contains variances of the elements
+Retrieve the variance-covariance matrix of an \code{mvn} object.
 }

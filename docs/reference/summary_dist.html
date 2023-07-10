@@ -32,10 +32,7 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/empirical_dist.html">Empirical distribution</a>
-    </li>
-    <li>
-      <a href="../articles/mvn.html">Multivariate normal distribution</a>
+      <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
@@ -63,7 +60,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summary_dist</span><span class="op">(</span><span class="va">name</span>, <span class="va">mean</span>, <span class="va">vcov</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summary_dist</span><span class="op">(</span><span class="va">name</span>, <span class="va">mean</span>, <span class="va">vcov</span>, nobs <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -80,8 +77,9 @@
 <dd><p>The variance of the distribution</p></dd>
 
 
-<dt>...</dt>
-<dd><p>Additional arguments</p></dd>
+<dt>nobs</dt>
+<dd><p>The number of observations used to construct the distribution,
+if applicable.</p></dd>
 
 </dl></div>
     <div id="value">

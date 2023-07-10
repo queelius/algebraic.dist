@@ -60,9 +60,8 @@ sampler <- function(x, ...) {
 #' Generic method for obtaining the parameters of an object.
 #' 
 #' @param x The object to obtain the parameters of.
-#' @param ... Additional arguments to pass.
 #' @export
-params <- function(x, ...) {
+params <- function(x) {
     UseMethod("params", x)
 }
 
@@ -80,7 +79,7 @@ nparams <- function(x) {
 #'
 #' @param x The disrtibution object.
 #' @param g The function to take the expectation of.
-#' @param ... Additional arguments to pass.
+#' @param ... Additional arguments to pass into `g`.
 #' @export
 expectation <- function(x, g, ...) {
     UseMethod("expectation", x)
@@ -99,16 +98,17 @@ marginal <- function(x, indices) {
 #' Generic method for obtaining the conditional distribution of a distribution
 #' object `x` given condition `P`.
 #' @param x The empirical distribution object.
-#' @param P the predicate to condition on.
+#' @param P The predicate function to condition `x` on
+#' @param ... additional arguments to pass into `P`
 #' @export
-conditional <- function(x, P) {
+conditional <- function(x, P, ...) {
     UseMethod("conditional", x)
 }
 
 #' Generic method for applying a map `f` to distribution object `x`.
 #' @param x The distribution object.
 #' @param g The function to apply.
-#' @param ... Additional arguments to pass.
+#' @param ... Additional arguments to pass into `g`.
 #' @export
 rmap <- function(x, g, ...) {
     UseMethod("rmap", x)
@@ -125,10 +125,47 @@ rmap <- function(x, g, ...) {
 #'    the returned value is not guaranateed to be in the support. You may need
 #'    to call `call` to check.
 #' @param x The object to obtain the support of.
-#' @param ... Additional arguments to pass.
 #' @return A support object for `x`.
 #' @export
-sup <- function(x, ...) {
+sup <- function(x) {
     UseMethod("sup", x)
+}
+
+#' Computes the variance-covariance matrix of a distribution-like object.
+#'
+#' @param x the distribution-like object to compute the variance-covariance
+#' @export
+vcov <- function(x) {
+    UseMethod("vcov", x)
+}
+
+#' Computes the stadnard deviation of a distribution-like object.
+#'
+#' @param x the distribution-like object to compute the sd of
+#' @export
+sd <- function(x) {
+    UseMethod("sd", x)
+}
+
+
+#' Retrieve the observations used to construct a distribution-like object. This is
+#' useful for obtaining the data used to construct an empirical distribution, but
+#' it is also useful for, say, retrieving the sample that was used by a fitted
+#' object, like an maximum likelihood estimate.
+#'
+#' @param x the object to retrieve the observations from
+#' @export
+obs <- function(x) {
+    UseMethod("obs", x)
+}
+
+#' This is related to `obs`, but in many cases the observations are not stored,
+#' and instead the number of observations is stored. This function retrieves
+#' the number of observations used.
+#'
+#' @param x the object to retrieve the number of observations from
+#' @export
+nobs <- function(x) {
+    UseMethod("nobs", x)
 }
 

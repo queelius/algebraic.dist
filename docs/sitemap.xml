@@ -10,6 +10,12 @@
     <loc>/articles/empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/articles/empirical_dist_mvn.html</loc>
+  </url>
+  <url>
+    <loc>/articles/example.html</loc>
+  </url>
+  <url>
     <loc>/articles/index.html</loc>
   </url>
   <url>
@@ -25,10 +31,22 @@
     <loc>/reference/cdf.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/reference/cdf.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/cdf.exponential.html</loc>
+  </url>
+  <url>
     <loc>/reference/cdf.html</loc>
   </url>
   <url>
+    <loc>/reference/cdf.mvn.html</loc>
+  </url>
+  <url>
     <loc>/reference/cdf.normal.html</loc>
+  </url>
+  <url>
+    <loc>/reference/conditional.dist.html</loc>
   </url>
   <url>
     <loc>/reference/conditional.empirical_dist.html</loc>
@@ -38,6 +56,9 @@
   </url>
   <url>
     <loc>/reference/dim.empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dim.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/dim.finite_set.html</loc>
@@ -55,16 +76,34 @@
     <loc>/reference/empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/reference/exp_dist.html</loc>
+  </url>
+  <url>
     <loc>/reference/expectation.dist.html</loc>
   </url>
   <url>
     <loc>/reference/expectation.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/reference/expectation.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/expectation.exponential.html</loc>
+  </url>
+  <url>
     <loc>/reference/expectation.html</loc>
   </url>
   <url>
+    <loc>/reference/expectation.normal.html</loc>
+  </url>
+  <url>
     <loc>/reference/expectation.univariate_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/expectation_data.html</loc>
+  </url>
+  <url>
+    <loc>/reference/exponential.html</loc>
   </url>
   <url>
     <loc>/reference/finite_set.html</loc>
@@ -77,6 +116,12 @@
   </url>
   <url>
     <loc>/reference/has.interval.html</loc>
+  </url>
+  <url>
+    <loc>/reference/hazard.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/hazard.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/hazard.html</loc>
@@ -97,7 +142,16 @@
     <loc>/reference/interval.html</loc>
   </url>
   <url>
+    <loc>/reference/inv_cdf.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/inv_cdf.exponential.html</loc>
+  </url>
+  <url>
     <loc>/reference/inv_cdf.html</loc>
+  </url>
+  <url>
+    <loc>/reference/inv_cdf.mvn.html</loc>
   </url>
   <url>
     <loc>/reference/inv_cdf.normal.html</loc>
@@ -107,6 +161,12 @@
   </url>
   <url>
     <loc>/reference/is_empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is_exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is_exponential.html</loc>
   </url>
   <url>
     <loc>/reference/is_mvn.html</loc>
@@ -127,6 +187,15 @@
     <loc>/reference/mean.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/reference/mean.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mean.exponential.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mean.html</loc>
+  </url>
+  <url>
     <loc>/reference/mean.mvn.html</loc>
   </url>
   <url>
@@ -142,7 +211,13 @@
     <loc>/reference/nobs.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/reference/nobs.html</loc>
+  </url>
+  <url>
     <loc>/reference/normal.html</loc>
+  </url>
+  <url>
+    <loc>/reference/nparams.empirical_dist.html</loc>
   </url>
   <url>
     <loc>/reference/nparams.html</loc>
@@ -152,6 +227,15 @@
   </url>
   <url>
     <loc>/reference/obs.html</loc>
+  </url>
+  <url>
+    <loc>/reference/params.empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/params.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/params.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/params.html</loc>
@@ -166,6 +250,12 @@
     <loc>/reference/pdf.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/reference/pdf.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pdf.exponential.html</loc>
+  </url>
+  <url>
     <loc>/reference/pdf.html</loc>
   </url>
   <url>
@@ -173,6 +263,18 @@
   </url>
   <url>
     <loc>/reference/pdf.normal.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/print.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/print.interval.html</loc>
@@ -190,16 +292,28 @@
     <loc>/reference/quantile.html</loc>
   </url>
   <url>
+    <loc>/reference/rmap.dist.html</loc>
+  </url>
+  <url>
     <loc>/reference/rmap.empirical_dist.html</loc>
   </url>
   <url>
     <loc>/reference/rmap.html</loc>
   </url>
   <url>
+    <loc>/reference/rmap.mvn.html</loc>
+  </url>
+  <url>
     <loc>/reference/sample_mvn_region.html</loc>
   </url>
   <url>
     <loc>/reference/sampler.empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sampler.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sampler.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/sampler.html</loc>
@@ -211,13 +325,25 @@
     <loc>/reference/sampler.normal.html</loc>
   </url>
   <url>
+    <loc>/reference/sd.html</loc>
+  </url>
+  <url>
     <loc>/reference/sd.univariate_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/summary.dist.html</loc>
   </url>
   <url>
     <loc>/reference/summary_dist.html</loc>
   </url>
   <url>
     <loc>/reference/sup.empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sup.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sup.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/sup.html</loc>
@@ -238,6 +364,12 @@
     <loc>/reference/supremum.interval.html</loc>
   </url>
   <url>
+    <loc>/reference/surv.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/surv.exponential.html</loc>
+  </url>
+  <url>
     <loc>/reference/surv.html</loc>
   </url>
   <url>
@@ -247,9 +379,21 @@
     <loc>/reference/vcov.empirical_dist.html</loc>
   </url>
   <url>
+    <loc>/reference/vcov.exp_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/vcov.exponential.html</loc>
+  </url>
+  <url>
+    <loc>/reference/vcov.html</loc>
+  </url>
+  <url>
     <loc>/reference/vcov.mvn.html</loc>
   </url>
   <url>
     <loc>/reference/vcov.normal.html</loc>
+  </url>
+  <url>
+    <loc>/reference/vcov.univariate_dist.html</loc>
   </url>
 </urlset>

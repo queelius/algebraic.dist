@@ -5,7 +5,7 @@
 \title{Method for obtaining the expectation of \code{empirical_dist} object \code{x}
 under function \code{g}.}
 \usage{
-\method{expectation}{empirical_dist}(x, g, ...)
+\method{expectation}{empirical_dist}(x, g = function(t) t, ..., control = list())
 }
 \arguments{
 \item{x}{The distribution object.}
@@ -13,6 +13,21 @@ under function \code{g}.}
 \item{g}{The function to take the expectation of.}
 
 \item{...}{Additional arguments to pass itno function \code{g}.}
+
+\item{control}{a list of control parameters:
+compute_stats - Whether to compute CIs for the expectations, defaults
+to FALSE
+n             - The number of samples to use for the MC estimate,
+defaults to 10000
+alpha         - The significance level for the confidence interval,
+defaults to 0.05}
+}
+\value{
+If \code{compute_stats} is FALSE, then the estimate of the expectation,
+otherwise a list with the following components:
+value - The estimate of the expectation
+ci    - The confidence intervals for each component of the expectation
+n     - The number of samples
 }
 \description{
 Method for obtaining the expectation of \code{empirical_dist} object \code{x}

@@ -4,12 +4,10 @@
 \alias{vcov.empirical_dist}
 \title{Method for obtaining the variance of \code{empirical_dist} object \code{x}.}
 \usage{
-\method{vcov}{empirical_dist}(x, ...)
+\method{vcov}{empirical_dist}(x)
 }
 \arguments{
 \item{x}{The empirical distribution object.}
-
-\item{...}{Additional arguments to pass (not used)}
 }
 \description{
 Method for obtaining the variance of \code{empirical_dist} object \code{x}.

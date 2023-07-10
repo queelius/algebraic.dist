@@ -4,12 +4,10 @@
 \alias{params}
 \title{Generic method for obtaining the parameters of an object.}
 \usage{
-params(x, ...)
+params(x)
 }
 \arguments{
 \item{x}{The object to obtain the parameters of.}
-
-\item{...}{Additional arguments to pass.}
 }
 \description{
 Generic method for obtaining the parameters of an object.

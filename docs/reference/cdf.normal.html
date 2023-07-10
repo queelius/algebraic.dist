@@ -32,10 +32,7 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/empirical_dist.html">Empirical distribution</a>
-    </li>
-    <li>
-      <a href="../articles/mvn.html">Multivariate normal distribution</a>
+      <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
@@ -82,10 +79,14 @@
     
 
 <p>A function that computes the cdf of the normal distribution.
-It accepts as input a parameter vector <code>x</code>, a mean vector <code>mu</code>,
-a variance-covariance matrix <code>var</code>, and a <code>log</code> argument
+It accepts as input a parameter vector <code>q</code>, a mean vector <code>mu</code>,
+a variance <code>var</code>, and a <code>log</code> argument
 determining whether to compute the log of the cdf. By default,
-<code>mu</code> and <code>var</code> are the mean and variance of object <code>x</code>.</p>
+<code>mu</code> and <code>var</code> are the mean and variance of object <code>x</code> and <code>log</code></p>
+
+
+<p>is <code>FALSE</code>. Finally, it accepts additional arguments <code>...</code> to
+pass to the <code>pnorm</code> function.</p>
     </div>
 
   </div>

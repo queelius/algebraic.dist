@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{The distribution object.}
 
-\item{...}{Additional arguments to pass (not used)}
+\item{...}{Additional arguments to pass (not used).}
 }
 \description{
 Method for obtaining the mean of \code{empirical_dist} object \code{x}.

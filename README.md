@@ -23,6 +23,10 @@ You can install the development version of `algebraic.dist` from
 devtools::install_github("queelius/algebraic.dist")
 ```
 
+See the vignette [algebraic.dist:
+Example](http://queelius.github.io/algebraic.dist/docs/articles/example.html)
+for a quick introduction to the package.
+
 ## TODO
 
 1.  Flesh out the vignettes to show how to use the package.

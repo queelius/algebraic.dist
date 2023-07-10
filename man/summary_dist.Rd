@@ -4,7 +4,7 @@
 \alias{summary_dist}
 \title{Method for constructing a \code{summary_dist} object.}
 \usage{
-summary_dist(name, mean, vcov, ...)
+summary_dist(name, mean, vcov, nobs = NULL)
 }
 \arguments{
 \item{name}{The name of the distribution}
@@ -13,7 +13,8 @@ summary_dist(name, mean, vcov, ...)
 
 \item{vcov}{The variance of the distribution}
 
-\item{...}{Additional arguments}
+\item{nobs}{The number of observations used to construct the distribution,
+if applicable.}
 }
 \value{
 A \code{summary_dist} object

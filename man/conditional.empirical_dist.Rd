@@ -2,18 +2,20 @@
 % Please edit documentation in R/empirical_dist.R
 \name{conditional.empirical_dist}
 \alias{conditional.empirical_dist}
-\title{Method for obtaining the condition distribution, x | P(x), of
+\title{Method for obtaining the condition distribution, \code{x | P(x)}, of
 \code{empirical_dist} object \code{x}.}
 \usage{
-\method{conditional}{empirical_dist}(x, P)
+\method{conditional}{empirical_dist}(x, P, ...)
 }
 \arguments{
 \item{x}{The empirical distribution object.}
 
-\item{P}{the predicate function we condition the data on.}
+\item{P}{The predicate function to condition the data on.}
+
+\item{...}{additional arguments to pass into \code{P}.}
 }
 \description{
-In other words, we condition the data on the predicate function \code{P}.
+In other words, we condition the data on the predicate function.
 In order to do so, we simply remove all rows from the data that do not
 satisfy the predicate P. For instance, if we have a 2-dimensional
 distribution, and we want to condition on the first dimension being

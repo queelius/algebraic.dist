@@ -32,10 +32,7 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/empirical_dist.html">Empirical distribution</a>
-    </li>
-    <li>
-      <a href="../articles/mvn.html">Multivariate normal distribution</a>
+      <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
@@ -69,6 +66,14 @@
         </td>
         <td><p>Method for obtaining the cdf of <code>empirical_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="cdf.exponential.html">cdf(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to obtain the cdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.mvn.html">cdf(<i>&lt;mvn&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the CDF of a <code>mvn</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="cdf.normal.html">cdf(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the cdf of an <code>normal</code> object.</p></td>
@@ -78,14 +83,23 @@
         <td><p>Generic method for obtaining the conditional distribution of a distribution
 object <code>x</code> given condition <code>P</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="conditional.dist.html">conditional(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the condition distribution, <code>x | P(x)</code>, of
+<code>dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
           <p><code><a href="conditional.empirical_dist.html">conditional(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for obtaining the condition distribution, x | P(x), of
+        <td><p>Method for obtaining the condition distribution, <code>x | P(x)</code>, of
 <code>empirical_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="dim.empirical_dist.html">dim(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the dimension of a <code>empirical_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.exponential.html">dim(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to obtain the dimension of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="dim.finite_set.html">dim(<i>&lt;finite_set&gt;</i>)</a></code> </p>
         </td>
@@ -114,8 +128,8 @@ object <code>x</code> given condition <code>P</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="expectation.dist.html">expectation(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Expectation operator applied to <code>object</code> of type <code>dist</code>
-with respect to a function <code>g</code>. That is, <code>E(g(object))</code>.</p></td>
+        <td><p>Expectation operator applied to <code>x</code> of type <code>dist</code>
+with respect to a function <code>g</code>. That is, <code>E(g(x))</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="expectation.empirical_dist.html">expectation(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -126,6 +140,19 @@ under function <code>g</code>.</p></td>
         </td>
         <td><p>Method for obtaining the expectation of <code>f</code> with respect to a
 <code>univariate_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="expectation_data.html">expectation_data()</a></code> </p>
+        </td>
+        <td><p>Function used for computing expectations given data (e.g., from an MC
+simulation or bootstrap). it expects a matrix, or something that can be
+coerced to a matrix (e.g., a data frame). it also expects a function <code>g</code> to
+apply to each row of the data, and returns the expectation of <code>g</code> under the
+empirical distribution of the data. it also returns a confidence interval for
+the expectation, and the number of samples used to compute the expectation.</p></td>
+      </tr><tr><td>
+          <p><code><a href="exponential.html">exponential()</a></code> </p>
+        </td>
+        <td><p>Construct exponential distribution object.</p></td>
       </tr><tr><td>
           <p><code><a href="finite_set.html">finite_set</a></code> </p>
         </td>
@@ -147,6 +174,10 @@ under function <code>g</code>.</p></td>
         </td>
         <td><p>Generic method for obtaining the hazard function of an object.</p></td>
       </tr><tr><td>
+          <p><code><a href="hazard.exponential.html">hazard(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to obtain the hazard function of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="infimum.html">infimum()</a></code> </p>
         </td>
         <td><p>Get the infimum of the support.</p></td>
@@ -167,7 +198,11 @@ under function <code>g</code>.</p></td>
         </td>
         <td><p>Generic method for obtaining the quantile (inverse cdf) of an object.</p></td>
       </tr><tr><td>
-          <p><code><a href="inv_cdf.normal.html">inv_cdf(<i>&lt;normal&gt;</i>)</a></code> <code><a href="inv_cdf.normal.html">inv_cdf(<i>&lt;normal&gt;</i>)</a></code> </p>
+          <p><code><a href="inv_cdf.exponential.html">inv_cdf(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to obtain the inverse cdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.normal.html">inv_cdf(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the inverse cdf of an <code>normal</code> object.</p></td>
       </tr><tr><td>
@@ -178,6 +213,10 @@ under function <code>g</code>.</p></td>
           <p><code><a href="is_empirical_dist.html">is_empirical_dist()</a></code> </p>
         </td>
         <td><p>Function to determine whether an object <code>x</code> is an <code>empirical_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_exponential.html">is_exponential()</a></code> </p>
+        </td>
+        <td><p>Function to determine whether an object <code>x</code> is an <code>exponential</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="is_mvn.html">is_mvn()</a></code> </p>
         </td>
@@ -206,6 +245,10 @@ object <code>x</code> over components <code>indices</code>.</p></td>
         </td>
         <td><p>Method for obtaining the mean of <code>empirical_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="mean.exponential.html">mean(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to obtain the mean of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="mean.mvn.html">mean(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Retrieve the mean of a <code>mvn</code> object.</p></td>
@@ -222,6 +265,17 @@ object <code>x</code> over components <code>indices</code>.</p></td>
         </td>
         <td><p>Construct a multivariate or univariate normal distribution object.</p></td>
       </tr><tr><td>
+          <p><code><a href="nobs.html">nobs()</a></code> </p>
+        </td>
+        <td><p>This is related to <code>obs</code>, but in many cases the observations are not stored,
+and instead the number of observations is stored. This function retrieves
+the number of observations used.</p></td>
+      </tr><tr><td>
+          <p><code><a href="nobs.empirical_dist.html">nobs(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the number of observations used to construct a
+<code>empirical_dist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="normal.html">normal()</a></code> </p>
         </td>
         <td><p>Construct univariate normal distribution object.</p></td>
@@ -231,9 +285,34 @@ object <code>x</code> over components <code>indices</code>.</p></td>
         <td><p>Generic method for obtaining the number of parameters of
 distribution-like object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="nparams.empirical_dist.html">nparams(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the name of a <code>empirical_dist</code> object. Since the
+empirical distribution is parameter-free, this function returns 0.</p></td>
+      </tr><tr><td>
+          <p><code><a href="obs.html">obs()</a></code> </p>
+        </td>
+        <td><p>Retrieve the observations used to construct a distribution-like object. This is
+useful for obtaining the data used to construct an empirical distribution, but
+it is also useful for, say, retrieving the sample that was used by a fitted
+object, like an maximum likelihood estimate.</p></td>
+      </tr><tr><td>
+          <p><code><a href="obs.empirical_dist.html">obs(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the observations used to construct a
+<code>empirical_dist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="params.html">params()</a></code> </p>
         </td>
         <td><p>Generic method for obtaining the parameters of an object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="params.empirical_dist.html">params(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p><code>empirical_dist</code> objects have no parameters, so this function returns NULL.</p></td>
+      </tr><tr><td>
+          <p><code><a href="params.exponential.html">params(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the parameters of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="params.mvn.html">params(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
@@ -251,6 +330,10 @@ distribution-like object <code>x</code>.</p></td>
         </td>
         <td><p>Method for obtaining the pdf of a <code>empirical_dist</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="pdf.exponential.html">pdf(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to obtain the pdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="pdf.mvn.html">pdf(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Function generator for obtaining the pdf of an <code>mvn</code> object (multivariate
@@ -259,6 +342,18 @@ normal).</p></td>
           <p><code><a href="pdf.normal.html">pdf(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the pdf of an <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.dist.html">print(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for printing a <code>dist</code> object</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.empirical_dist.html">print(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for printing a <code>dist</code> object</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.exponential.html">print(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print method for <code>exponential</code> objects.</p></td>
       </tr><tr><td>
           <p><code><a href="print.interval.html">print(<i>&lt;interval&gt;</i>)</a></code> </p>
         </td>
@@ -280,10 +375,18 @@ normal).</p></td>
         </td>
         <td><p>Generic method for applying a map <code>f</code> to distribution object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="rmap.dist.html">rmap(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining g(x)) where x is a <code>dist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="rmap.empirical_dist.html">rmap(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the empirical distribution of a function of the
 observations of <code>empirical_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="rmap.mvn.html">rmap(<i>&lt;mvn&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Computes the distribution of <code>g(x)</code> where <code>x</code> is an <code>mvn</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="sample_mvn_region.html">sample_mvn_region()</a></code> </p>
         </td>
@@ -302,6 +405,10 @@ from <code>mu</code>).</p></td>
         </td>
         <td><p>Method for obtaining the sampler for a <code>empirical_dist</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="sampler.exponential.html">sampler(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to sample from an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="sampler.mvn.html">sampler(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Function generator for sampling from a <code>mvn</code> (multivariate normal) object.</p></td>
@@ -310,9 +417,17 @@ from <code>mu</code>).</p></td>
         </td>
         <td><p>Method for sampling from a <code>normal</code> object.</p></td>
       </tr><tr><td>
-          <p><code><a href="sd.univariate_dist.html">sd.univariate_dist()</a></code> </p>
+          <p><code><a href="sd.html">sd()</a></code> </p>
+        </td>
+        <td><p>Computes the stadnard deviation of a distribution-like object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sd.univariate_dist.html">sd(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the standard deviation of <code>univariate_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="summary.dist.html">summary(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining a summary of a <code>dist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="summary_dist.html">summary_dist()</a></code> </p>
         </td>
@@ -325,6 +440,10 @@ from <code>mu</code>).</p></td>
           <p><code><a href="sup.empirical_dist.html">sup(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the support of <code>empirical_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.exponential.html">sup(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support for exponential distribution, the positive real numbers, (0, Inf).</p></td>
       </tr><tr><td>
           <p><code><a href="sup.mvn.html">sup(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
@@ -352,31 +471,34 @@ is defined as values that have non-zero probability density.</p></td>
         </td>
         <td><p>Generic method for obtaining the survival function of an object.</p></td>
       </tr><tr><td>
-          <p><code><a href="var.univariate_dist.html">var.univariate_dist()</a></code> </p>
+          <p><code><a href="surv.exponential.html">surv(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for obtaining the variance of <code>univariate_dist</code> object <code>x</code>.</p></td>
+        <td><p>Method to obtain the cdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.html">vcov()</a></code> </p>
+        </td>
+        <td><p>Computes the variance-covariance matrix of a distribution-like object.</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.empirical_dist.html">vcov(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the variance of <code>empirical_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="vcov.exponential.html">vcov(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the variance of a <code>exponential</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="vcov.mvn.html">vcov(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Retrieve the variance-covariance matrix (or scalar)
-of a <code>mvn</code> object.
-A variance-covariance matrix is a square matrix
-giving the covariance between each pair of elements
-of a given random vector. Importantly, its diagonal
-contains variances of the elements</p></td>
+        <td><p>Retrieve the variance-covariance matrix of an <code>mvn</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.normal.html">vcov(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Retrieve the variance-covariance matrix (or scalar)
-of a <code>normal</code> object.
-A variance-covariance matrix is a square matrix
-giving the covariance between each pair of elements
-of a given random vector. Importantly, its diagonal
-contains variances of the elements</p></td>
+of a <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.univariate_dist.html">vcov(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the variance of <code>univariate_dist</code> object <code>x</code>.</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

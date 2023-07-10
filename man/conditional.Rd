@@ -5,12 +5,14 @@
 \title{Generic method for obtaining the conditional distribution of a distribution
 object \code{x} given condition \code{P}.}
 \usage{
-conditional(x, P)
+conditional(x, P, ...)
 }
 \arguments{
 \item{x}{The empirical distribution object.}
 
-\item{P}{the predicate to condition on.}
+\item{P}{The predicate function to condition \code{x} on}
+
+\item{...}{additional arguments to pass into \code{P}}
 }
 \description{
 Generic method for obtaining the conditional distribution of a distribution

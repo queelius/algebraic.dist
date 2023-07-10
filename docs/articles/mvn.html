@@ -53,6 +53,9 @@
       <a href="../articles/empirical_dist.html">Empirical distribution</a>
     </li>
     <li>
+      <a href="../articles/empirical_dist_mvn.html">Empirical distribution -- MVN</a>
+    </li>
+    <li>
       <a href="../articles/mvn.html">Multivariate normal distribution</a>
     </li>
   </ul>
@@ -94,8 +97,14 @@
 <p>To demonstrate the R package <code>algebraic.dist</code>, we consider the relatively simple case of an observed sample of, we assume, i.i.d. random variables <span class="math inline">\(X_1,\ldots,X_n\)</span> with multivariate normal distribution.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/queelius/algebraic.dist" class="external-link">algebraic.dist</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Registered S3 method overwritten by 'algebraic.dist':</span></span>
+<span><span class="co">#&gt;   method     from </span></span>
+<span><span class="co">#&gt;   print.dist stats</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Attaching package: 'algebraic.dist'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     nobs, vcov</span></span>
 <span><span class="co">#&gt; The following object is masked from 'package:grDevices':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     pdf</span></span></code></pre></div>
@@ -110,25 +119,25 @@
 <span>    <span class="fl">0.5</span>,  <span class="fl">1</span>,    <span class="fl">0.5</span>,</span>
 <span>    <span class="fl">0.5</span>,  <span class="fl">0.5</span>,  <span class="fl">1</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mvn.html">mvn</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, sigma <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mvn.html">mvn</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">100</span><span class="op">)</span>, sigma <span class="op">=</span> <span class="va">sigma</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">E</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">M</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <p>We observe a sample of size 100 with:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">my_sampler</span> <span class="op">&lt;-</span> <span class="fu">algebraic.dist</span><span class="fu">::</span><span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
-<span><span class="co">#print(my_sampler)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mvn_samp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">my_sampler</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
-<span><span class="co">#data &lt;- mvtnorm::rmvnorm(n, c(1,2,3))</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">mvn_samp</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span>, n <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            [,1]      [,2]     [,3]</span></span>
-<span><span class="co">#&gt; [1,]  1.9349713 1.4220062 3.482455</span></span>
-<span><span class="co">#&gt; [2,]  0.4736419 0.7470738 2.302752</span></span>
-<span><span class="co">#&gt; [3,] -0.6890827 0.1309462 1.481238</span></span>
-<span><span class="co">#&gt; [4,]  1.8899572 4.2003196 4.447844</span></span>
-<span><span class="co">#&gt; [5,] -0.4094674 1.1943371 1.965876</span></span>
-<span><span class="co">#&gt; [6,]  0.7392793 1.7804766 3.877121</span></span>
-<span><span class="co">#&gt; [7,]  0.5301368 2.2459945 1.879430</span></span>
-<span><span class="co">#&gt; [8,]  0.2239188 2.4003764 1.866621</span></span></code></pre></div>
+<span><span class="co">#&gt;             [,1]      [,2]      [,3]</span></span>
+<span><span class="co">#&gt; [1,]  0.77840093 13.004862 100.79206</span></span>
+<span><span class="co">#&gt; [2,] -0.35465735  9.113992  98.73257</span></span>
+<span><span class="co">#&gt; [3,]  0.92463916 10.946532 101.80212</span></span>
+<span><span class="co">#&gt; [4,] -0.20109822 10.240445 100.74510</span></span>
+<span><span class="co">#&gt; [5,]  0.04116556  8.528271 100.13216</span></span>
+<span><span class="co">#&gt; [6,]  1.20068645 10.388615 101.19264</span></span>
+<span><span class="co">#&gt; [7,] -1.96932738  8.771632  98.81268</span></span>
+<span><span class="co">#&gt; [8,]  0.83301863 10.359535 100.81405</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">support</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sup.html">sup</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/infimum.html">infimum</a></span><span class="op">(</span><span class="va">support</span><span class="op">)</span></span>
@@ -147,11 +156,36 @@
 <span><span class="va">rv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">X1X2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># sample some data; could just use data directly</span></span>
-<span><span class="va">data.X1X2</span> <span class="op">&lt;-</span> <span class="fu">rv</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="va">data.X1X2</span> <span class="op">&lt;-</span> <span class="fu">rv</span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># scatter plot a 2d sample</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data.X1X2</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, <span class="va">data.X1X2</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, pch <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mvn_files/figure-html/x12-plot-1.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">X1X2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">mu</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  0 10</span></span>
+<span><span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1X2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $value</span></span>
+<span><span class="co">#&gt; [1]  0.0161409 10.0129108</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ci</span></span>
+<span><span class="co">#&gt;              [,1]        [,2]</span></span>
+<span><span class="co">#&gt; [1,] -0.003710986  0.03599278</span></span>
+<span><span class="co">#&gt; [2,]  9.993126311 10.03269529</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $n</span></span>
+<span><span class="co">#&gt; [1] 10000</span></span>
+<span><span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1X2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">}</span>, n<span class="op">=</span><span class="fl">1000</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $value</span></span>
+<span><span class="co">#&gt; [1] 0.05778261</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $ci</span></span>
+<span><span class="co">#&gt; [1] -0.00344008  0.11900530</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $n</span></span>
+<span><span class="co">#&gt; [1] 1000</span></span></code></pre></div>
 </div>
   </div>
 

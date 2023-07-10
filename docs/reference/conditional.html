@@ -35,10 +35,7 @@ object x given condition P."><!-- mathjax --><script src="https://cdnjs.cloudfla
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/empirical_dist.html">Empirical distribution</a>
-    </li>
-    <li>
-      <a href="../articles/mvn.html">Multivariate normal distribution</a>
+      <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
   </ul></li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
@@ -68,7 +65,7 @@ object <code>x</code> given condition <code>P</code>.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conditional</span><span class="op">(</span><span class="va">x</span>, <span class="va">P</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conditional</span><span class="op">(</span><span class="va">x</span>, <span class="va">P</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,7 +75,11 @@ object <code>x</code> given condition <code>P</code>.</p>
 
 
 <dt>P</dt>
-<dd><p>the predicate to condition on.</p></dd>
+<dd><p>The predicate function to condition <code>x</code> on</p></dd>
+
+
+<dt>...</dt>
+<dd><p>additional arguments to pass into <code>P</code></p></dd>
 
 </dl></div>
 

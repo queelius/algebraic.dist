@@ -4,12 +4,10 @@
 \alias{sup}
 \title{Generic method for retrieving the support of an object \code{x}.}
 \usage{
-sup(x, ...)
+sup(x)
 }
 \arguments{
 \item{x}{The object to obtain the support of.}
-
-\item{...}{Additional arguments to pass.}
 }
 \value{
 A support object for \code{x}.

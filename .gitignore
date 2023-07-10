@@ -6,3 +6,6 @@
 inst/doc
 /Meta/
 /doc/
+
+# ignore all hidden files
+.*
