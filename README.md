@@ -24,7 +24,7 @@ devtools::install_github("queelius/algebraic.dist")
 ```
 
 See the vignette [algebraic.dist:
-Example](http://queelius.github.io/algebraic.dist/docs/articles/example.html)
+Example](http://queelius.github.io/algebraic.dist/articles/example.html)
 for a quick introduction to the package.
 
 ## TODO
