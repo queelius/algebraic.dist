@@ -4,10 +4,12 @@
 \alias{vcov.exponential}
 \title{Retrieve the variance of a \code{exponential} object.}
 \usage{
-\method{vcov}{exponential}(x)
+\method{vcov}{exponential}(object, ...)
 }
 \arguments{
-\item{x}{The \code{exponential} object to retrieve the variance for}
+\item{object}{The \code{exponential} object to retrieve the variance for}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 The variance-covariance matrix of the \code{normal} object

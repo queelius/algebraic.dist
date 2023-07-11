@@ -55,6 +55,18 @@
     <loc>/reference/conditional.html</loc>
   </url>
   <url>
+    <loc>/reference/density.empirical_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/density.exponential.html</loc>
+  </url>
+  <url>
+    <loc>/reference/density.mvn.html</loc>
+  </url>
+  <url>
+    <loc>/reference/density.normal.html</loc>
+  </url>
+  <url>
     <loc>/reference/dim.empirical_dist.html</loc>
   </url>
   <url>

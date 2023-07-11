@@ -93,6 +93,23 @@ object <code>x</code> given condition <code>P</code>.</p></td>
         <td><p>Method for obtaining the condition distribution, <code>x | P(x)</code>, of
 <code>empirical_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="density.empirical_dist.html">density(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the pdf of a <code>empirical_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.exponential.html">density(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method to obtain the pdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.mvn.html">density(<i>&lt;mvn&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Function generator for obtaining the pdf of an <code>mvn</code> object (multivariate
+normal).</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.normal.html">density(<i>&lt;normal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the pdf of an <code>normal</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="dim.empirical_dist.html">dim(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the dimension of a <code>empirical_dist</code> object.</p></td>
@@ -265,12 +282,6 @@ object <code>x</code> over components <code>indices</code>.</p></td>
         </td>
         <td><p>Construct a multivariate or univariate normal distribution object.</p></td>
       </tr><tr><td>
-          <p><code><a href="nobs.html">nobs()</a></code> </p>
-        </td>
-        <td><p>This is related to <code>obs</code>, but in many cases the observations are not stored,
-and instead the number of observations is stored. This function retrieves
-the number of observations used.</p></td>
-      </tr><tr><td>
           <p><code><a href="nobs.empirical_dist.html">nobs(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the number of observations used to construct a
@@ -321,27 +332,6 @@ object, like an maximum likelihood estimate.</p></td>
           <p><code><a href="params.normal.html">params(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the parameters of a <code>normal</code> object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="pdf.html">pdf()</a></code> </p>
-        </td>
-        <td><p>Generic method for obtaining the pdf function of an object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="pdf.empirical_dist.html">pdf(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Method for obtaining the pdf of a <code>empirical_dist</code> object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="pdf.exponential.html">pdf(<i>&lt;exponential&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Method to obtain the pdf of an <code>exponential</code> object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="pdf.mvn.html">pdf(<i>&lt;mvn&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Function generator for obtaining the pdf of an <code>mvn</code> object (multivariate
-normal).</p></td>
-      </tr><tr><td>
-          <p><code><a href="pdf.normal.html">pdf(<i>&lt;normal&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Method for obtaining the pdf of an <code>normal</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="print.dist.html">print(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
@@ -417,14 +407,6 @@ from <code>mu</code>).</p></td>
         </td>
         <td><p>Method for sampling from a <code>normal</code> object.</p></td>
       </tr><tr><td>
-          <p><code><a href="sd.html">sd()</a></code> </p>
-        </td>
-        <td><p>Computes the stadnard deviation of a distribution-like object.</p></td>
-      </tr><tr><td>
-          <p><code><a href="sd.univariate_dist.html">sd(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Method for obtaining the standard deviation of <code>univariate_dist</code> object <code>x</code>.</p></td>
-      </tr><tr><td>
           <p><code><a href="summary.dist.html">summary(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining a summary of a <code>dist</code> object.</p></td>
@@ -475,10 +457,6 @@ is defined as values that have non-zero probability density.</p></td>
         </td>
         <td><p>Method to obtain the cdf of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
-          <p><code><a href="vcov.html">vcov()</a></code> </p>
-        </td>
-        <td><p>Computes the variance-covariance matrix of a distribution-like object.</p></td>
-      </tr><tr><td>
           <p><code><a href="vcov.empirical_dist.html">vcov(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the variance of <code>empirical_dist</code> object <code>x</code>.</p></td>
@@ -498,7 +476,7 @@ of a <code>normal</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.univariate_dist.html">vcov(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for obtaining the variance of <code>univariate_dist</code> object <code>x</code>.</p></td>
+        <td><p>Method for obtaining the variance of <code>univariate_dist</code> object.</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -9,7 +9,7 @@
 #' @param ... Additional arguments to pass into `g`.
 #' @param control An (optional) list of control parameters for `integrate` or
 #'               `expectation_data` (if `x` is not continuous)
-#' @importFrom stats integrate
+#' @importFrom stats integrate density
 #' @importFrom utils modifyList
 #' @export
 expectation.univariate_dist <- function(x, g, ..., control = list()) {
@@ -19,7 +19,7 @@ expectation.univariate_dist <- function(x, g, ..., control = list()) {
     }
 
     S <- sup(x)
-    f <- pdf(x)
+    f <- density(x)
     defaults <- formals(integrate)
     defaults$compute_stats <- FALSE
     defaults$rel.tol <- 1e-4
@@ -51,21 +51,12 @@ mean.univariate_dist <- function(x, ...) {
     expectation(x, function(t) t, ...)
 }
 
-#' Method for obtaining the variance of `univariate_dist` object `x`.
+#' Method for obtaining the variance of `univariate_dist` object.
 #'
-#' @param x The distribution object.
+#' @param object The distribution object.
+#' @param ... Additional arguments to pass into `expectation`.
 #' @export
-vcov.univariate_dist <- function(x) {
-    mu <- mean(x)
-    expectation(x, function(t) (t - mu)^2)
+vcov.univariate_dist <- function(object, ...) {
+    mu <- mean(object)
+    expectation(object, function(t) (t - mu)^2, ...)
 }
-
-#' Method for obtaining the standard deviation of `univariate_dist` object `x`.
-#'
-#' @param x The distribution object.
-#' @export
-sd.univariate_dist <- function(x) {
-    sqrt(vcov(x))
-}
-
-

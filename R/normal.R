@@ -21,12 +21,12 @@ print.normal <- function(x, ...) {
 #' Retrieve the variance-covariance matrix (or scalar)
 #' of a `normal` object.
 #'
-#' @param x The `normal` object to retrieve
-#'               the variance-covariance matrix from
+#' @param object The `normal` object to retrieve the variance-covariance matrix from
+#' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `normal` object
 #' @export
-vcov.normal <- function(x) {
-    x$var
+vcov.normal <- function(object, ...) {
+    object$var
 }
 
 #' Retrieve the mean of a `normal` object.
@@ -80,7 +80,7 @@ sampler.normal <- function(x, ...) {
 #'         `mu` and `var` are the mean and variance of object `x`.
 #' @importFrom stats dnorm
 #' @export
-pdf.normal <- function(x, ...) {
+density.normal <- function(x, ...) {
     function(t, mu = x$mu, var = x$var, log = FALSE, ...) {
         dnorm(x = t, mean = mu, sd = sqrt(var), log = log, ...)
     }
@@ -122,7 +122,6 @@ sup.normal <- function(x) {
 dim.normal <- function(x) {
     1
 }
-
 
 #' Method for obtaining the inverse cdf of an `normal` object.
 #' @param x The object to obtain the inverse cdf of

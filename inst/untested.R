@@ -18,7 +18,7 @@ inv_cdf.univariate_dist <- function(x, t0 = NULL, eps = 1e-3, ...) {
     par <- params(x, par)
     Sx <- sup(x, par, ...)
     Fx <- cdf(x, par, ...)
-    fx <- pdf(x, par, ...)
+    fx <- density(x, par, ...)
 
     t1 <- NULL
     repeat {
@@ -114,6 +114,41 @@ ggplot(grid, aes(x = x, y = y, color = dist <= q)) +
 expectation.normal <- function(x, g, ...) {
 
   stopifnot(is.function(g))
-  f <- pdf(x)
+  f <- density(x)
   integrate(function(t) g(t, ...) * f(t), -Inf, Inf)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' Computes the variance-covariance matrix of a distribution-like object.
+#'
+#' @param x the distribution-like object to compute the variance-covariance
+#' @export
+vcov <- function(x) {
+    UseMethod("vcov", x)
+}
+
+#' Computes the stadnard deviation of a distribution-like object.
+#'
+#' @param x the distribution-like object to compute the sd of
+#' @export
+sd <- function(x) {
+    UseMethod("sd", x)
 }

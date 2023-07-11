@@ -75,11 +75,11 @@ where <code>sigma</code> is the variance-covariance of <code>g(x)</code></p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>The distribution object.</p></dd>
+<dd><p>The <code>mvn</code> object to apply <code>g</code> to</p></dd>
 
 
 <dt>g</dt>
-<dd><p>The function to apply.</p></dd>
+<dd><p>The function to apply to <code>x</code></p></dd>
 
 
 <dt>n</dt>
@@ -91,16 +91,6 @@ where <code>sigma</code> is the variance-covariance of <code>g(x)</code></p>
 <dd><p>additional arguments to pass into the <code>g</code> function.</p></dd>
 
 </dl></div>
-    <div id="details">
-    <h2>Details</h2>
-    <p>We provide two different methods for estimating the
-variance-covariance of <code>g(x)</code>:
-method = "delta" -&gt; delta method
-method = "mc" -&gt; monte carlo method</p>
-<p>Finally, we provide an all-purpose <code>empirical</code> method, where we just sample
-from the MVN and place the sample in an <code>empirical_dist</code> object, and then
-apply the <code>rmap</code> with <code>g</code> to that.</p>
-    </div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

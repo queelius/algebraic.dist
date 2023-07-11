@@ -99,7 +99,7 @@
 <p>We define the parameters of the data generating process (DGP) with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># we define the parameters of the MVN</span></span>
-<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mvn.html">mvn</a></span><span class="op">(</span>mu    <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mvn.html">mvn</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Multivariate normal distribution with mean:</span></span>
 <span><span class="co">#&gt; [1] 1 2 3 4 5</span></span>
@@ -117,30 +117,30 @@
 <span></span>
 <span><span class="co"># we sample from the MVN</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></code></pre></div>
-<p>We have a sample of size <span class="math inline">\(n=10^{5}\)</span> from the DGP. We show some observations from this sample with:</p>
+<p>We have a sample of size <span class="math inline">\(n=100000\)</span> from the DGP. We show some observations from this sample with:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span>, n<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        [,1] [,2] [,3]   [,4] [,5]</span></span>
-<span><span class="co">#&gt; [1,]  3.584 1.68 5.00 -1.174 3.99</span></span>
-<span><span class="co">#&gt; [2,]  1.743 4.59 2.14  2.055 5.00</span></span>
-<span><span class="co">#&gt; [3,]  1.795 1.72 4.43  0.871 8.01</span></span>
-<span><span class="co">#&gt; [4,]  1.618 2.98 1.24  4.480 7.21</span></span>
-<span><span class="co">#&gt; [5,]  1.664 2.34 1.87  4.344 1.11</span></span>
-<span><span class="co">#&gt; [6,] -0.507 3.11 3.84  1.139 3.32</span></span></code></pre></div>
+<span><span class="co">#&gt;        [,1] [,2]  [,3] [,4] [,5]</span></span>
+<span><span class="co">#&gt; [1,]  2.256 2.57 2.068 1.81 3.70</span></span>
+<span><span class="co">#&gt; [2,]  0.853 2.92 4.711 1.35 1.22</span></span>
+<span><span class="co">#&gt; [3,] -0.705 1.33 4.403 1.24 6.30</span></span>
+<span><span class="co">#&gt; [4,] -0.617 2.05 3.727 3.37 8.37</span></span>
+<span><span class="co">#&gt; [5,]  0.342 4.42 6.249 3.63 5.00</span></span>
+<span><span class="co">#&gt; [6,]  1.963 2.82 0.915 5.03 5.11</span></span></code></pre></div>
 <p>Now, we also construct a empirical distribution from the sample with:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/empirical_dist.html">empirical_dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Empirical Distribution </span></span>
 <span><span class="co">#&gt; Mean:</span></span>
-<span><span class="co">#&gt; [1] 1.00 2.00 3.00 3.99 4.99</span></span>
+<span><span class="co">#&gt; [1] 0.998 2.002 3.003 3.992 5.000</span></span>
 <span><span class="co">#&gt; Covariance:</span></span>
-<span><span class="co">#&gt;          [,1]     [,2]     [,3]     [,4]     [,5]</span></span>
-<span><span class="co">#&gt; [1,]  1.00769  0.00265 -0.00550  0.00658 -0.00596</span></span>
-<span><span class="co">#&gt; [2,]  0.00265  2.00625  0.00383 -0.00768 -0.00202</span></span>
-<span><span class="co">#&gt; [3,] -0.00550  0.00383  3.00216  0.02091  0.00887</span></span>
-<span><span class="co">#&gt; [4,]  0.00658 -0.00768  0.02091  3.99605  0.01096</span></span>
-<span><span class="co">#&gt; [5,] -0.00596 -0.00202  0.00887  0.01096  4.99152</span></span>
+<span><span class="co">#&gt;          [,1]      [,2]    [,3]     [,4]     [,5]</span></span>
+<span><span class="co">#&gt; [1,] 1.003791  0.000921  0.0054  0.00438  0.00544</span></span>
+<span><span class="co">#&gt; [2,] 0.000921  2.014020 -0.0112 -0.00966  0.00147</span></span>
+<span><span class="co">#&gt; [3,] 0.005401 -0.011247  2.9843 -0.01059 -0.01153</span></span>
+<span><span class="co">#&gt; [4,] 0.004376 -0.009665 -0.0106  4.00844 -0.02593</span></span>
+<span><span class="co">#&gt; [5,] 0.005439  0.001471 -0.0115 -0.02593  5.01241</span></span>
 <span><span class="co">#&gt; Number of observations: 100000</span></span></code></pre></div>
 <p>Let’s show the supports of the empirical distribution and the MVN:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -153,71 +153,71 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"param"</span>,<span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="fu"><a href="../reference/sup.html">sup</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt;        supremum.mvn supremum.emp infimum.mvn infimum.emp</span></span>
-<span><span class="co">#&gt; param1          Inf         5.08        -Inf       -3.21</span></span>
-<span><span class="co">#&gt; param2          Inf         8.25        -Inf       -4.38</span></span>
-<span><span class="co">#&gt; param3          Inf        10.66        -Inf       -4.51</span></span>
-<span><span class="co">#&gt; param4          Inf        12.95        -Inf       -4.49</span></span>
-<span><span class="co">#&gt; param5          Inf        15.61        -Inf       -5.40</span></span></code></pre></div>
+<span><span class="co">#&gt; param1          Inf          5.5        -Inf       -3.35</span></span>
+<span><span class="co">#&gt; param2          Inf          8.3        -Inf       -3.86</span></span>
+<span><span class="co">#&gt; param3          Inf         10.4        -Inf       -4.66</span></span>
+<span><span class="co">#&gt; param4          Inf         11.8        -Inf       -4.29</span></span>
+<span><span class="co">#&gt; param5          Inf         15.0        -Inf       -4.34</span></span></code></pre></div>
 <p>Let’s compare the mean and covariance-variance matrices of both the MVN and the empirical distribution of the MVN. First, let’s look at the means.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1 2 3 4 5</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.00 2.00 3.00 3.99 4.99</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.998 2.002 3.003 3.992 5.000</span></span></code></pre></div>
 <p>As expected, pretty close. Now let’s look at the variance-covariance:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/vcov.html">vcov</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5]</span></span>
 <span><span class="co">#&gt; [1,]    1    0    0    0    0</span></span>
 <span><span class="co">#&gt; [2,]    0    2    0    0    0</span></span>
 <span><span class="co">#&gt; [3,]    0    0    3    0    0</span></span>
 <span><span class="co">#&gt; [4,]    0    0    0    4    0</span></span>
 <span><span class="co">#&gt; [5,]    0    0    0    0    5</span></span>
-<span><span class="fu"><a href="../reference/vcov.html">vcov</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;          [,1]     [,2]     [,3]     [,4]     [,5]</span></span>
-<span><span class="co">#&gt; [1,]  1.00769  0.00265 -0.00550  0.00658 -0.00596</span></span>
-<span><span class="co">#&gt; [2,]  0.00265  2.00625  0.00383 -0.00768 -0.00202</span></span>
-<span><span class="co">#&gt; [3,] -0.00550  0.00383  3.00216  0.02091  0.00887</span></span>
-<span><span class="co">#&gt; [4,]  0.00658 -0.00768  0.02091  3.99605  0.01096</span></span>
-<span><span class="co">#&gt; [5,] -0.00596 -0.00202  0.00887  0.01096  4.99152</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;          [,1]      [,2]    [,3]     [,4]     [,5]</span></span>
+<span><span class="co">#&gt; [1,] 1.003791  0.000921  0.0054  0.00438  0.00544</span></span>
+<span><span class="co">#&gt; [2,] 0.000921  2.014020 -0.0112 -0.00966  0.00147</span></span>
+<span><span class="co">#&gt; [3,] 0.005401 -0.011247  2.9843 -0.01059 -0.01153</span></span>
+<span><span class="co">#&gt; [4,] 0.004376 -0.009665 -0.0106  4.00844 -0.02593</span></span>
+<span><span class="co">#&gt; [5,] 0.005439  0.001471 -0.0115 -0.02593  5.01241</span></span></code></pre></div>
 <p>The true variances of the population defined by the MVN <span class="math inline">\(M\)</span> is the diagonal of the variance-covariance matrix:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="../reference/vcov.html">vcov</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1 2 3 4 5</span></span></code></pre></div>
 <p>Let’s compute the variances using the general expectation method:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu.emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">emp</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">mu.emp</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.01 2.01 3.00 4.00 4.99</span></span>
+<span><span class="co">#&gt; [1] 1.00 2.01 2.98 4.01 5.01</span></span>
 <span><span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">M</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.00 2.00 3.00 3.99 4.97</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.999 1.987 3.005 4.000 5.020</span></span></code></pre></div>
 <p>We see that these are pretty good estimates, as the expectation is actually a Monte Carlo approximation. We can see the CI’s with:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">emp</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">mu.emp</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>compute_stats <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $value</span></span>
-<span><span class="co">#&gt; [1] 1.01 2.01 3.00 4.00 4.99</span></span>
+<span><span class="co">#&gt; [1] 1.00 2.01 2.98 4.01 5.01</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ci</span></span>
 <span><span class="co">#&gt;       [,1] [,2]</span></span>
-<span><span class="co">#&gt; [1,] 0.999 1.02</span></span>
-<span><span class="co">#&gt; [2,] 1.989 2.02</span></span>
-<span><span class="co">#&gt; [3,] 2.976 3.03</span></span>
-<span><span class="co">#&gt; [4,] 3.961 4.03</span></span>
-<span><span class="co">#&gt; [5,] 4.948 5.04</span></span>
+<span><span class="co">#&gt; [1,] 0.995 1.01</span></span>
+<span><span class="co">#&gt; [2,] 1.996 2.03</span></span>
+<span><span class="co">#&gt; [3,] 2.958 3.01</span></span>
+<span><span class="co">#&gt; [4,] 3.973 4.04</span></span>
+<span><span class="co">#&gt; [5,] 4.969 5.06</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $n</span></span>
 <span><span class="co">#&gt; [1] 100000</span></span>
 <span><span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">M</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">n</span>, compute_stats <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $value</span></span>
-<span><span class="co">#&gt; [1] 0.999 2.008 2.992 4.017 5.059</span></span>
+<span><span class="co">#&gt; [1] 1.01 1.99 2.97 3.98 5.01</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $ci</span></span>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
-<span><span class="co">#&gt; [1,] 0.99 1.01</span></span>
-<span><span class="co">#&gt; [2,] 1.99 2.03</span></span>
-<span><span class="co">#&gt; [3,] 2.97 3.02</span></span>
-<span><span class="co">#&gt; [4,] 3.98 4.05</span></span>
-<span><span class="co">#&gt; [5,] 5.01 5.10</span></span>
+<span><span class="co">#&gt; [1,] 1.00 1.02</span></span>
+<span><span class="co">#&gt; [2,] 1.97 2.01</span></span>
+<span><span class="co">#&gt; [3,] 2.94 3.00</span></span>
+<span><span class="co">#&gt; [4,] 3.94 4.01</span></span>
+<span><span class="co">#&gt; [5,] 4.96 5.05</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $n</span></span>
 <span><span class="co">#&gt; [1] 100000</span></span></code></pre></div>
@@ -225,9 +225,9 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu.emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/rmap.html">rmap</a></span><span class="op">(</span><span class="va">emp</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">mu.emp</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.01 2.01 3.00 4.00 4.99</span></span>
+<span><span class="co">#&gt; [1] 1.00 2.01 2.98 4.01 5.01</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/rmap.html">rmap</a></span><span class="op">(</span><span class="va">M</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.991 1.996 2.978 3.993 4.987</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 1.00 2.02 3.01 3.98 5.01</span></span></code></pre></div>
 <p>These are both reasonable estimates of the variance.</p>
 <p>The PDF of the empirical is not very useful – it gets <span class="math inline">\(1/n\)</span> for each observation:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -235,11 +235,11 @@
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  ob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"empirical(x)"</span>, <span class="st">"MVN(y)"</span><span class="op">)</span>,</span>
-<span>  pdf.emp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/pdf.html">pdf</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="../reference/pdf.html">pdf</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  pdf.mvn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/pdf.html">pdf</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="../reference/pdf.html">pdf</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;             ob pdf.emp  pdf.mvn</span></span>
-<span><span class="co">#&gt; 1 empirical(x)   1e-05 2.94e-04</span></span>
-<span><span class="co">#&gt; 2       MVN(y)   0e+00 2.90e-07</span></span></code></pre></div>
+<span>  pdf.emp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  pdf.mvn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;             ob pdf.emp   pdf.mvn</span></span>
+<span><span class="co">#&gt; 1 empirical(x) 0.00001 0.0000507</span></span>
+<span><span class="co">#&gt; 2       MVN(y) 0.00000 0.0002272</span></span></code></pre></div>
 <p>Let’s plot the CDF of marginal distribution of <span class="math inline">\(X_1\)</span>:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">X1.emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/marginal.html">marginal</a></span><span class="op">(</span><span class="va">emp</span>, <span class="fl">1</span><span class="op">)</span></span>
@@ -258,13 +258,13 @@
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"E(X1) = "</span>, <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span>, <span class="st">"( expected "</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span>, <span class="st">")\n"</span>,</span>
 <span><span class="st">"Var(X1) = "</span>, <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="st">"( expected "</span>, <span class="fu"><a href="../reference/vcov.html">vcov</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span>, <span class="st">")\n"</span>,</span>
+<span>  <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="st">"( expected "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span>, <span class="st">")\n"</span>,</span>
 <span><span class="st">"Skewness(X1) = "</span>, <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="fl">3</span>, <span class="st">"( expected 0 )\n"</span>,</span>
-<span><span class="st">"E(X^2) = "</span>, <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="st">"( expected "</span>, <span class="fu"><a href="../reference/vcov.html">vcov</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, <span class="st">")"</span><span class="op">)</span></span>
+<span><span class="st">"E(X^2) = "</span>, <span class="fu"><a href="../reference/expectation.html">expectation</a></span><span class="op">(</span><span class="va">X1</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, <span class="st">"( expected "</span>, <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">X1</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span>, <span class="st">")"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; E(X1) =  1 ( expected  1 )</span></span>
 <span><span class="co">#&gt;  Var(X1) =  1 ( expected  1 )</span></span>
-<span><span class="co">#&gt;  Skewness(X1) =  -3.41e-13 ( expected 0 )</span></span>
+<span><span class="co">#&gt;  Skewness(X1) =  -0.000000000000341 ( expected 0 )</span></span>
 <span><span class="co">#&gt;  E(X^2) =  2 ( expected  2 )</span></span></code></pre></div>
 <p>Let’s show a scatter plot of the joint distribution of <span class="math inline">\(X_2\)</span> and <span class="math inline">\(X_4\)</span>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -285,9 +285,9 @@
 <p>Now we show the mean of the conditional distribution, <span class="math inline">\(X | X_1 + X_2 &lt; 0\)</span>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/conditional.html">conditional</a></span><span class="op">(</span><span class="va">emp</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -0.228 -0.465  2.977  3.976  5.012</span></span>
+<span><span class="co">#&gt; [1] -0.241 -0.474  2.985  3.957  4.953</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="../reference/conditional.html">conditional</a></span><span class="op">(</span><span class="va">M</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">x</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] -0.195 -0.494  2.933  4.035  4.885</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -0.288 -0.381  2.963  4.061  4.980</span></span></code></pre></div>
 <p>I didn’t do the analysis of what this distribution’s mean should theoretically be, if it’s even practical to derive, but it doesn’t look unreasonble. We see that the mean of the first two components are negative, which makes sense: the sum of the first two components is negative, so the mean of the first two components should be negative.</p>
 </div>
   </div>

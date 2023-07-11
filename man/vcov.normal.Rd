@@ -5,11 +5,12 @@
 \title{Retrieve the variance-covariance matrix (or scalar)
 of a \code{normal} object.}
 \usage{
-\method{vcov}{normal}(x)
+\method{vcov}{normal}(object, ...)
 }
 \arguments{
-\item{x}{The \code{normal} object to retrieve
-the variance-covariance matrix from}
+\item{object}{The \code{normal} object to retrieve the variance-covariance matrix from}
+
+\item{...}{Additional arguments to pass (not used)}
 }
 \value{
 The variance-covariance matrix of the \code{normal} object

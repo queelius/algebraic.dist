@@ -5,10 +5,12 @@
 \title{Method for obtaining the number of observations used to construct a
 \code{empirical_dist} object.}
 \usage{
-\method{nobs}{empirical_dist}(x)
+\method{nobs}{empirical_dist}(object, ...)
 }
 \arguments{
-\item{x}{The empirical distribution object.}
+\item{object}{The empirical distribution object.}
+
+\item{...}{Additional arguments to pass (not used).}
 }
 \description{
 Method for obtaining the number of observations used to construct a

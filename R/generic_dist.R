@@ -7,15 +7,6 @@ hazard <- function(x, ...) {
     UseMethod("hazard", x)
 }
 
-#' Generic method for obtaining the pdf function of an object.
-#'
-#' @param x The object to obtain the pdf of.
-#' @param ... Additional arguments to pass.
-#' @export
-pdf <- function(x, ...) {
-    UseMethod("pdf", x)
-}
-
 #' Generic method for obtaining the cdf of an object.
 #'
 #' @param x The object to obtain the cdf of.
@@ -131,23 +122,6 @@ sup <- function(x) {
     UseMethod("sup", x)
 }
 
-#' Computes the variance-covariance matrix of a distribution-like object.
-#'
-#' @param x the distribution-like object to compute the variance-covariance
-#' @export
-vcov <- function(x) {
-    UseMethod("vcov", x)
-}
-
-#' Computes the stadnard deviation of a distribution-like object.
-#'
-#' @param x the distribution-like object to compute the sd of
-#' @export
-sd <- function(x) {
-    UseMethod("sd", x)
-}
-
-
 #' Retrieve the observations used to construct a distribution-like object. This is
 #' useful for obtaining the data used to construct an empirical distribution, but
 #' it is also useful for, say, retrieving the sample that was used by a fitted
@@ -158,14 +132,3 @@ sd <- function(x) {
 obs <- function(x) {
     UseMethod("obs", x)
 }
-
-#' This is related to `obs`, but in many cases the observations are not stored,
-#' and instead the number of observations is stored. This function retrieves
-#' the number of observations used.
-#'
-#' @param x the object to retrieve the number of observations from
-#' @export
-nobs <- function(x) {
-    UseMethod("nobs", x)
-}
-

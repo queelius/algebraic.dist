@@ -2,13 +2,15 @@
 % Please edit documentation in R/univariate_dist.R
 \name{vcov.univariate_dist}
 \alias{vcov.univariate_dist}
-\title{Method for obtaining the variance of \code{univariate_dist} object \code{x}.}
+\title{Method for obtaining the variance of \code{univariate_dist} object.}
 \usage{
-\method{vcov}{univariate_dist}(x)
+\method{vcov}{univariate_dist}(object, ...)
 }
 \arguments{
-\item{x}{The distribution object.}
+\item{object}{The distribution object.}
+
+\item{...}{Additional arguments to pass into \code{expectation}.}
 }
 \description{
-Method for obtaining the variance of \code{univariate_dist} object \code{x}.
+Method for obtaining the variance of \code{univariate_dist} object.
 }

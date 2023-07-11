@@ -7,9 +7,9 @@
 \method{rmap}{mvn}(x, g, n = 10000L, ...)
 }
 \arguments{
-\item{x}{The distribution object.}
+\item{x}{The \code{mvn} object to apply \code{g} to}
 
-\item{g}{The function to apply.}
+\item{g}{The function to apply to \code{x}}
 
 \item{n}{number of samples to take to estimate distribution of \code{g(x)} if
 \code{method} is \code{mc} or \code{empirical}. Defaults to 10000.}
@@ -22,14 +22,4 @@ then under the right conditions, asymptotically, \code{g(x)} is an MVN
 distributed,
 g(x) ~ normal(g(mean(x)), sigma)
 where \code{sigma} is the variance-covariance of \code{g(x)}
-}
-\details{
-We provide two different methods for estimating the
-variance-covariance of \code{g(x)}:
-method = "delta" -> delta method
-method = "mc" -> monte carlo method
-
-Finally, we provide an all-purpose \code{empirical} method, where we just sample
-from the MVN and place the sample in an \code{empirical_dist} object, and then
-apply the \code{rmap} with \code{g} to that.
 }

@@ -34,12 +34,12 @@ mvn <- function(
 }
 
 #' Retrieve the variance-covariance matrix of an `mvn` object.
-#' @param x The `mvn` object to retrieve the variance-covariance matrix of
+#' @param object The `mvn` object to retrieve the variance-covariance matrix of
 #' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `mvn` object
 #' @export
-vcov.mvn <- function(x, ...) {
-    x$sigma
+vcov.mvn <- function(object, ...) {
+    object$sigma
 }
 
 #' Retrieve the mean of a `mvn` object.
@@ -102,7 +102,7 @@ sampler.mvn <- function(x, ...) {
 #' Function generator for obtaining the pdf of an `mvn` object (multivariate
 #' normal).
 #' 
-#' @param x The `mvn` (S3) object to obtain the pdf of
+#' @param x The `mvn` (S3) object to obtain the pdf (density) of
 #' @param ... Additional arguments to pass into the generated function.
 #' @return A function that computes the pdf of the `mvn` distribution.
 #'         It accepts as input:
@@ -118,7 +118,7 @@ sampler.mvn <- function(x, ...) {
 #'          - `...`: any additional parameters to pass to `dmvnorm`.
 #' @importFrom mvtnorm dmvnorm
 #' @export
-pdf.mvn <- function(x, ...) {
+density.mvn <- function(x, ...) {
     fixed_args <- list(...)
     function(obs, mu = x$mu, sigma = x$sigma, log = FALSE, ...) {
         do.call(dmvnorm, c(list(x = obs, mean = mu, sigma = sigma, log = log),
@@ -240,7 +240,6 @@ cdf.mvn <- function(x, ...) {
     }
 }
 
-
 #' Computes the distribution of `g(x)` where `x` is an `mvn` object.
 #'
 #' By the invariance property, if `x` is an `mvn` object,
@@ -249,22 +248,14 @@ cdf.mvn <- function(x, ...) {
 #'     g(x) ~ normal(g(mean(x)), sigma)
 #' where `sigma` is the variance-covariance of `g(x)`
 #'
-#' We provide two different methods for estimating the
-#' variance-covariance of `g(x)`:
-#'     method = "delta" -> delta method
-#'     method = "mc" -> monte carlo method
-#' 
-#' Finally, we provide an all-purpose `empirical` method, where we just sample
-#' from the MVN and place the sample in an `empirical_dist` object, and then
-#' apply the `rmap` with `g` to that.
-#' 
-#' @inheritParams rmap
+#' @param x The `mvn` object to apply `g` to
+#' @param g The function to apply to `x`
 #' @param n number of samples to take to estimate distribution of `g(x)` if
 #'         `method` is `mc` or `empirical`. Defaults to 10000.
 #' @param ... additional arguments to pass into the `g` function.
+#' @importFrom stats vcov
 #' @export
-rmap.mvn <- function(x, g, n = 10000L, ...)
-{
+rmap.mvn <- function(x, g, n = 10000L, ...) {
     D <- rmap(empirical_dist(sampler(x)(n)), g, ...)
     mvn(mu = mean(D), sigma = vcov(D))
 }

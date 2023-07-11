@@ -57,7 +57,7 @@ hazard.exponential <- function(x, ...) {
 #'         whether to compute the log of the pdf.
 #' @importFrom stats dexp
 #' @export
-pdf.exponential <- function(x, ...) {
+density.exponential <- function(x, ...) {
   function(t, rate = x$rate, log = FALSE, ...) {
     stopifnot(is.numeric(rate), rate > 0)
     dexp(x = t, rate = rate, log = log, ...)
@@ -129,11 +129,12 @@ cdf.exponential <- function(x, ...) {
 
 #' Retrieve the variance of a `exponential` object.
 #'
-#' @param x The `exponential` object to retrieve the variance for
+#' @param object The `exponential` object to retrieve the variance for
+#' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `normal` object
 #' @export
-vcov.exponential <- function(x) {
-    x$rate
+vcov.exponential <- function(object, ...) {
+    object$rate
 }
 
 #' Support for exponential distribution, the positive real numbers, (0, Inf).

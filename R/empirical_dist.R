@@ -34,7 +34,6 @@ dim.empirical_dist <- function(x) {
   ncol(x$data)
 }
 
-
 #' Method for obtaining the pdf of a `empirical_dist` object.
 #'
 #' @param x The object to obtain the pdf of.
@@ -42,7 +41,7 @@ dim.empirical_dist <- function(x) {
 #' @note sort tibble lexographically and do a binary search to find upper
 #'       and lower bound in `log(nobs(x))` time.
 #' @export
-pdf.empirical_dist <- function(x, ...) {
+density.empirical_dist <- function(x, ...) {
   n <- nobs(x)
   xobs <- obs(x)
   p <- dim(x)
@@ -52,7 +51,6 @@ pdf.empirical_dist <- function(x, ...) {
     # compute number of elements (or rows) in obs(x) equal to t
     if (is.matrix(t)) {
       stopifnot(ncol(t) == p)
-
       counts <- apply(t, 1, function(t_ob) { sum(apply(xobs, 1, function(xob) {
         all(xob == t_ob)
       })) })
@@ -74,6 +72,7 @@ pdf.empirical_dist <- function(x, ...) {
 #'
 #' @param x The object to obtain the sampler of.
 #' @param ... Additional arguments to pass (not used).
+#' @importFrom stats nobs
 #' @export
 sampler.empirical_dist <- function(x, ...) {
   R <- nobs(x, ...)
@@ -135,10 +134,12 @@ mean.empirical_dist <- function(x, ...) {
 
 #' Method for obtaining the variance of `empirical_dist` object `x`.
 #'
-#' @param x The empirical distribution object.
+#' @param object The empirical distribution object.
+#' @param ... Additional arguments to pass (not used).
+#' @importFrom stats cov
 #' @export
-vcov.empirical_dist <- function(x) {
-  cov(x$data)
+vcov.empirical_dist <- function(object, ...) {
+  cov(object$data)
 }
 
 #' Method for obtaining the marginal distribution of `empirical_dist` object
@@ -221,10 +222,11 @@ sup.empirical_dist <- function(x) {
 
 #' Method for obtaining the number of observations used to construct a
 #' `empirical_dist` object.
-#' @param x The empirical distribution object.
+#' @param object The empirical distribution object.
+#' @param ... Additional arguments to pass (not used).
 #' @export
-nobs.empirical_dist <- function(x) {
-  nrow(x$data)
+nobs.empirical_dist <- function(object, ...) {
+  nrow(object$data)
 }
 
 #' Method for obtaining the observations used to construct a

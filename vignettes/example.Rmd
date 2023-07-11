@@ -13,6 +13,8 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 options(digits = 3)
+options(scipen = 999)  # to prevent scientific notation
+print_num <- function(x) print(sprintf("%.3f", x))
 ```
 
 ## Introduction
@@ -30,7 +32,7 @@ We define the parameters of the data generating process (DGP)
 with:
 ```{r data-gen}
 # we define the parameters of the MVN
-M <- mvn(mu    = 1:5, sigma = diag(1:5))
+M <- mvn(mu = 1:5, sigma = diag(1:5))
 print(M)
 ```
 
@@ -118,8 +120,8 @@ x <- sampler(emp)(1)
 y <- sampler(M)(1)
 data.frame(
   ob = c("empirical(x)", "MVN(y)"),
-  pdf.emp = c(pdf(emp)(x), pdf(emp)(y)),
-  pdf.mvn = c(pdf(M)(x), pdf(M)(y)))
+  pdf.emp = c(density(emp)(x), density(emp)(y)),
+  pdf.mvn = c(density(M)(x), density(M)(y)))
 ```
 
 Let's plot the CDF of marginal distribution of $X_1$:

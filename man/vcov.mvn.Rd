@@ -4,10 +4,10 @@
 \alias{vcov.mvn}
 \title{Retrieve the variance-covariance matrix of an \code{mvn} object.}
 \usage{
-\method{vcov}{mvn}(x, ...)
+\method{vcov}{mvn}(object, ...)
 }
 \arguments{
-\item{x}{The \code{mvn} object to retrieve the variance-covariance matrix of}
+\item{object}{The \code{mvn} object to retrieve the variance-covariance matrix of}
 
 \item{...}{Additional arguments to pass (not used)}
 }
