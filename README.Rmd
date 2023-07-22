@@ -2,7 +2,6 @@
 output:
   github_document:
     toc: true
-#always_allow_html: true
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -12,13 +11,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
-)
+  out.width = "100%")
 ```
 
 # R package: `algebraic.dist`
 
 <!-- badges: start -->
+[![GPL-3 License](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
 An algebra over distributions (random elements).

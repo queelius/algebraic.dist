@@ -84,7 +84,7 @@ expectation.dist <- function(
       ...,
       compute_stats = control$compute_stats,
       alpha = control$alpha)
-  }
+}
 
 #' Method for obtaining a summary of a `dist` object.
 #' @param object The object to obtain the summary of

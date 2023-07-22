@@ -112,8 +112,6 @@ mean(rmap(M, function(x) (x - mean(M))^2, n = n))
 ```
 These are both reasonable estimates of the variance.
 
-
-
 The PDF of the empirical is not very useful -- it gets $1/n$ for each observation:
 ```{r}
 x <- sampler(emp)(1)
@@ -141,7 +139,6 @@ so we can ee that the empirical CDF is a step function:
 ```{r marginal-test-zoom, fig.height = 4, fig.width = 6}
 curve(F1.emp(x), from = 1, to = 1.0005, col = "blue", lty = 1, type = "s")
 ```
-
 
 Let's compute some expectations of $X_1$:
 ```{r expectation-test}
@@ -171,9 +168,6 @@ Let's look at the MVN's multivariate CDF:
 cdf(M)(c(1,2,3,4,0))
 ```
 
-
-
-
 Now we show the mean of the conditional distribution, $X | X_1 + X_2 < 0$:
 ```{r conditional-test}
 mean(conditional(emp, function(x) x[1] + x[2] < 0))
@@ -184,9 +178,3 @@ if it's even practical to derive, but it doesn't look unreasonble. We see that t
 mean of the first two components are negative, which makes sense: the sum of the
 first two components is negative, so the mean of the first two components should
 be negative.
-
-
-
-```{r}
-
-```
