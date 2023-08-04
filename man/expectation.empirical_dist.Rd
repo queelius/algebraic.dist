@@ -12,7 +12,7 @@ under function \code{g}.}
 
 \item{g}{The function to take the expectation of.}
 
-\item{...}{Additional arguments to pass itno function \code{g}.}
+\item{...}{Additional arguments to pass into function \code{g}.}
 
 \item{control}{a list of control parameters:
 compute_stats - Whether to compute CIs for the expectations, defaults

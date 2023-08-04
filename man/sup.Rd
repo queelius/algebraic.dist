@@ -20,7 +20,7 @@ The returned value should have the following operations:
 \item \code{call}: a predicate function, which returns TRUE if the value is in
 the support, and FALSE otherwise.
 \item \code{sample}: a function, which returns a sample from the support. Note that
-the returned value is not guaranateed to be in the support. You may need
+the returned value is not guaranteed to be in the support. You may need
 to call \code{call} to check.
 }
 }

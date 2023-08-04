@@ -2,6 +2,7 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^doc$
+^docs$
 ^Meta$
 ^_pkgdown\.yml$
 ^docs$
@@ -11,3 +12,4 @@
 ^\.vscode$
 ^\.lintr$
 ^algebraic\.dist\.Rproj$
+^fixing$

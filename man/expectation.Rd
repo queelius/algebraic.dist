@@ -8,7 +8,7 @@
 expectation(x, g, ...)
 }
 \arguments{
-\item{x}{The disrtibution object.}
+\item{x}{The distribution object.}
 
 \item{g}{The function to take the expectation of.}
 

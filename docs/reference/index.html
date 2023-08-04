@@ -134,6 +134,12 @@ normal).</p></td>
         </td>
         <td><p>Method for obtaining the dimension of a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="edist.html">edist()</a></code> </p>
+        </td>
+        <td><p>Takes an expression <code>e</code> and a list <code>vars</code> and returns a
+lazy <code>edist</code> (expression distribution object), that is a subclass
+of <code>dist</code> that can be used in place of a <code>dist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="empirical_dist.html">empirical_dist()</a></code> </p>
         </td>
         <td><p>Construct empirical distribution object.</p></td>
@@ -226,6 +232,10 @@ the expectation, and the number of samples used to compute the expectation.</p><
           <p><code><a href="is_dist.html">is_dist()</a></code> </p>
         </td>
         <td><p>Function to determine whether an object <code>x</code> is a <code>dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_edist.html">is_edist()</a></code> </p>
+        </td>
+        <td><p>Function to determine whether an object <code>x</code> is an <code>expr_dist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="is_empirical_dist.html">is_empirical_dist()</a></code> </p>
         </td>
@@ -390,6 +400,10 @@ from <code>mu</code>).</p></td>
           <p><code><a href="sampler.html">sampler()</a></code> </p>
         </td>
         <td><p>Generic method for sampling from distribution-like objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sampler.edist.html">sampler(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the sampler of an <code>expr_dist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.empirical_dist.html">sampler(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>

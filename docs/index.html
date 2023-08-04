@@ -85,7 +85,8 @@
 <div class="page-header"><h1 id="r-package-algebraicdist">R package: <code>algebraic.dist</code>
 <a class="anchor" aria-label="anchor" href="#r-package-algebraicdist"></a>
 </h1></div>
-<!-- badges: start --><!-- badges: end --><p>An algebra over distributions (random elements).</p>
+<!-- badges: start -->
+<p>An algebra over distributions (random elements).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -100,7 +101,7 @@
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>Flesh out the vignettes to show how to use the package.</p></li>
-<li><p>Reincorporate the <code>edist</code> (expresion distribution), which is just a an R expression combined with an environment that has a dictionary for each of the variables in the expression where if a variable is a <code>dist</code>-type object, then we treat that variable like a random variable. When we, say, sample from the <code>edist</code> object, we’ll sample from the <code>dist</code>-type objects in the environment and then evaluate the expression with the sampled values.</p></li>
+<li><p>Reincorporate the <code>edist</code> (expression distribution), which is just a an R expression combined with an environment that has a dictionary for each of the variables in the expression where if a variable is a <code>dist</code>-type object, then we treat that variable like a random variable. When we, say, sample from the <code>edist</code> object, we’ll sample from the <code>dist</code>-type objects in the environment and then evaluate the expression with the sampled values.</p></li>
 <li><p>For taking the PDF, CDF, expectation, and so on, for now we just use the sampler and then put it into a <code>empirical_dist</code> object, which permits those kinds of operations, but there are clearly a lot of interesting things we can do, e.g., <code>min(x1, x2)</code> when <code>x1</code> and <code>x2</code> are exponential distributions is also an exponential distribution with a failure rate <code>lambda1 + lambda2</code>. There are a host of relations between various named distributions, and there are even more cases where the distribution, no matter how complex, has an asymptotically normal distribution.</p></li>
 </ol>
 </div>
@@ -140,7 +141,12 @@
 </ul>
 </div>
 
-
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://www.gnu.org/licenses/gpl-3.0" class="external-link"><img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="GPL-3 License"></a></li>
+</ul>
+</div>
 
   </div>
 </div>

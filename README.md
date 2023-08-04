@@ -9,6 +9,8 @@
 
 <!-- badges: start -->
 
+[![GPL-3
+License](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
 An algebra over distributions (random elements).
@@ -31,7 +33,7 @@ for a quick introduction to the package.
 
 1.  Flesh out the vignettes to show how to use the package.
 
-2.  Reincorporate the `edist` (expresion distribution), which is just a
+2.  Reincorporate the `edist` (expression distribution), which is just a
     an R expression combined with an environment that has a dictionary
     for each of the variables in the expression where if a variable is a
     `dist`-type object, then we treat that variable like a random

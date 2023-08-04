@@ -174,7 +174,7 @@ mean(conditional(emp, function(x) x[1] + x[2] < 0))
 mean(conditional(M, function(x) x[1] + x[2] < 0))
 ```
 I didn't do the analysis of what this distribution's mean should theoretically be,
-if it's even practical to derive, but it doesn't look unreasonble. We see that the
+if it's even practical to derive, but it doesn't look unreasonable. We see that the
 mean of the first two components are negative, which makes sense: the sum of the
 first two components is negative, so the mean of the first two components should
 be negative.

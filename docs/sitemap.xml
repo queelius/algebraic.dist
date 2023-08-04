@@ -85,6 +85,9 @@
     <loc>/reference/dim.normal.html</loc>
   </url>
   <url>
+    <loc>/reference/edist.html</loc>
+  </url>
+  <url>
     <loc>/reference/empirical_dist.html</loc>
   </url>
   <url>
@@ -170,6 +173,9 @@
   </url>
   <url>
     <loc>/reference/is_dist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/is_edist.html</loc>
   </url>
   <url>
     <loc>/reference/is_empirical_dist.html</loc>
@@ -317,6 +323,9 @@
   </url>
   <url>
     <loc>/reference/sample_mvn_region.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sampler.edist.html</loc>
   </url>
   <url>
     <loc>/reference/sampler.empirical_dist.html</loc>

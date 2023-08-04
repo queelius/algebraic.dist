@@ -68,7 +68,7 @@ nparams <- function(x) {
 #' Generic method for obtaining the expectation of `f` with respect to
 #' `x`.
 #'
-#' @param x The disrtibution object.
+#' @param x The distribution object.
 #' @param g The function to take the expectation of.
 #' @param ... Additional arguments to pass into `g`.
 #' @export
@@ -113,7 +113,7 @@ rmap <- function(x, g, ...) {
 #'  - `call`: a predicate function, which returns TRUE if the value is in
 #'    the support, and FALSE otherwise.
 #'  - `sample`: a function, which returns a sample from the support. Note that
-#'    the returned value is not guaranateed to be in the support. You may need
+#'    the returned value is not guaranteed to be in the support. You may need
 #'    to call `call` to check.
 #' @param x The object to obtain the support of.
 #' @return A support object for `x`.

@@ -38,7 +38,7 @@ dim.empirical_dist <- function(x) {
 #'
 #' @param x The object to obtain the pdf of.
 #' @param ... Additional arguments to pass into the pdf function.
-#' @note sort tibble lexographically and do a binary search to find upper
+#' @note sort tibble lexicographically and do a binary search to find upper
 #'       and lower bound in `log(nobs(x))` time.
 #' @export
 density.empirical_dist <- function(x, ...) {
@@ -88,7 +88,7 @@ sampler.empirical_dist <- function(x, ...) {
 #'
 #' @param x The distribution object.
 #' @param g The function to take the expectation of.
-#' @param ... Additional arguments to pass itno function `g`.
+#' @param ... Additional arguments to pass into function `g`.
 #' @param control a list of control parameters:
 #'  compute_stats - Whether to compute CIs for the expectations, defaults
 #'                  to FALSE

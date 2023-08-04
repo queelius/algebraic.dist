@@ -15,6 +15,6 @@
 Method for obtaining the pdf of a \code{empirical_dist} object.
 }
 \note{
-sort tibble lexographically and do a binary search to find upper
+sort tibble lexicographically and do a binary search to find upper
 and lower bound in \code{log(nobs(x))} time.
 }
