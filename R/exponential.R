@@ -55,7 +55,7 @@ hazard.exponential <- function(x, ...) {
 #'         determines the failure rate of the exponential distribution (defaults
 #'         to the failure rate of object `x`) and a `log` argument that determines
 #'         whether to compute the log of the pdf.
-#' @importFrom stats dexp
+#' @importFrom stats dexp density
 #' @export
 density.exponential <- function(x, ...) {
   function(t, rate = x$rate, log = FALSE, ...) {

@@ -78,7 +78,7 @@ sampler.normal <- function(x, ...) {
 #'         a variance-covariance matrix `var`, and a `log` argument
 #'         determining whether to compute the log of the pdf. By default,
 #'         `mu` and `var` are the mean and variance of object `x`.
-#' @importFrom stats dnorm
+#' @importFrom stats dnorm density
 #' @export
 density.normal <- function(x, ...) {
     function(t, mu = x$mu, var = x$var, log = FALSE, ...) {
