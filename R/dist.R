@@ -1,36 +1,3 @@
-#' Print method for `summary_dist` objects.
-#' @param x The object to print
-#' @param ... Additional arguments
-#' @export
-print.summary_dist <- function(x, ...) {
-  cat(x$name, "\n")
-  cat("Mean:\n")
-  print(x$mean)
-  cat("Covariance:\n")
-  print(x$vcov)
-  if (!is.null(x$nobs)) {
-    cat("Number of observations:", x$nobs, "\n")
-  }
-}
-
-
-#' Method for constructing a `summary_dist` object.
-#' @param name The name of the distribution
-#' @param mean The mean of the distribution
-#' @param vcov The variance of the distribution
-#' @param nobs The number of observations used to construct the distribution,
-#'             if applicable.
-#' @return A `summary_dist` object
-#' @export
-summary_dist <- function(name, mean, vcov, nobs = NULL) {
-  structure(list(
-    name = name,
-    mean = mean,
-    vcov = vcov,
-    nobs = nobs),
-    class = "summary_dist")
-}
-
 #' Function to determine whether an object `x` is a `dist` object.
 #' @param x The object to test
 #' @export
@@ -137,4 +104,37 @@ conditional.dist <- function(x, P, n = 10000L, ...) {
 #' @export
 rmap.dist <- function(x, g, n = 10000L, ...) {
   rmap(empirical_dist(sampler(x)(n)), g, ...)
+}
+
+
+#' Print method for `summary_dist` objects.
+#' @param x The object to print
+#' @param ... Additional arguments
+#' @export
+print.summary_dist <- function(x, ...) {
+  cat(x$name, "\n")
+  cat("Mean:\n")
+  print(x$mean)
+  cat("Covariance:\n")
+  print(x$vcov)
+  if (!is.null(x$nobs)) {
+    cat("Number of observations:", x$nobs, "\n")
+  }
+}
+
+#' Method for constructing a `summary_dist` object.
+#' @param name The name of the distribution
+#' @param mean The mean of the distribution
+#' @param vcov The variance of the distribution
+#' @param nobs The number of observations used to construct the distribution,
+#'             if applicable.
+#' @return A `summary_dist` object
+#' @export
+summary_dist <- function(name, mean, vcov, nobs = NULL) {
+  structure(list(
+    name = name,
+    mean = mean,
+    vcov = vcov,
+    nobs = nobs),
+    class = "summary_dist")
 }

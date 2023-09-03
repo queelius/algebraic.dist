@@ -1,10 +1,8 @@
 #' @title Support
 #' @description support is a class that represents the support of a random
-#' variable or distribution, i.e. the set of values that the random variable
-#' can take on (non-zero probability or density).
+#' element or distribution, i.e. the set of values that it realize.
 #' 
-#' It's a conceptual class, which a set of generic methods that can be
-#' implemented for different types of support. To satisfy the concept of
+#' It's a conceptual class. To satisfy the concept of
 #' a support, the following methods must be implemented:
 #' 
 #' 1. has: a function that returns a logical vector indicating
@@ -13,16 +11,10 @@
 #' 3. supremum: a function that returns the supremum of the support
 #' 4. dim: a function that returns the dimension of the support
 #' 
-#' The following methods are also useful:
-#' 
-#' 1. print: a function that prints the support
-#' 2. plot: a function that plots the support
-#' 3. c: a function that combines two supports
-#' 
 #'We provide two implementations that satisfy the concept:
 #' 
-#' 1. `interval`: a support that is a finite union of intervals
-#' 2. `infinite_set`: a support that is a finite set of values
+#' - `interval`: a support that is an infiite set of contiguous numeric values
+#' - `finite_set`: a support that is a finite set of values
 
 #' Determine if a value is contained in the support.
 #' @param object A support object.

@@ -105,7 +105,7 @@ rmap <- function(x, g, ...) {
     UseMethod("rmap", x)
 }
 
-#' Generic method for retrieving the support of an object `x`.
+#' Generic method for retrieving the support of a (dist) object `x`.
 #' 
 #' The returned value should have the following operations:
 #'  - `min`: a vector, the minimum value of the support for each component.
@@ -113,7 +113,7 @@ rmap <- function(x, g, ...) {
 #'  - `call`: a predicate function, which returns TRUE if the value is in
 #'    the support, and FALSE otherwise.
 #'  - `sample`: a function, which returns a sample from the support. Note that
-#'    the returned value is not guaranteed to be in the support. You may need
+#'    the returned value is not guaranteed to be in the support of `x`. You may need
 #'    to call `call` to check.
 #' @param x The object to obtain the support of.
 #' @return A support object for `x`.
