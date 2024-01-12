@@ -142,12 +142,22 @@ curve(F1.emp(x), from = 1, to = 1.0005, col = "blue", lty = 1, type = "s")
 
 Let's compute some expectations of $X_1$:
 ```{r expectation-test}
-cat("E(X1) = ", expectation(X1, \(x) x), "( expected ", mean(X1), ")\n",
-"Var(X1) = ", expectation(X1, \(x)
-  (x - expectation(X1, \(x) x))^2), "( expected ", vcov(X1), ")\n",
-"Skewness(X1) = ", expectation(X1, function(x)
-  (x - expectation(X1, \(x) x))^3) / expectation(X1, \(x) x)^3, "( expected 0 )\n",
-"E(X^2) = ", expectation(X1, \(x) x^2), "( expected ", vcov(X1) + mean(X1)^2, ")")
+cat("E(X1) = ", expectation(X1, function(x) x), "( expected ", mean(X1), ")\n",
+    "Var(X1) = ", expectation(X1,
+                              function(x) {
+                                  (x - expectation(X1,
+                                                   function(x) x)
+                                  )^2 
+                              }),
+    "( expected ", vcov(X1), ")\n",
+    "Skewness(X1) = ", expectation(X1,
+                                   function(x) {
+                                       (x - expectation(X1, function(x) x))^3 / 
+                                       expectation(X1, function(x) x)^3 
+                                   }),
+    "( expected 0 )\n",
+    "E(X^2) = ", expectation(X1, function(x) x^2),
+    "( expected ", vcov(X1) + mean(X1)^2, ")")
 ```
 
 Let's show a scatter plot of the joint distribution of $X_2$ and $X_4$:
@@ -178,3 +188,59 @@ if it's even practical to derive, but it doesn't look unreasonable. We see that 
 mean of the first two components are negative, which makes sense: the sum of the
 first two components is negative, so the mean of the first two components should
 be negative.
+
+
+
+
+## Working with `edist` Objects
+
+The `edist` object is a key component of the `algebraic.dist` package. It represents a distribution that is an algebraic expression of other distributions.
+
+### Creating `edist` Objects
+
+You can create an `edist` object using the `edist` function. Here's an example:
+
+```{r}
+e <- edist(expression(x + y),
+           list("x" = normal(mu = 0, var = 1),
+                "y" = exponential(rate = 1)))
+```
+
+This creates an `edist` object representing the distribution of the sum of a normal
+random variable and an exponential random variable.
+
+### Printing `edist` Objects
+You can print an `edist` object to see its expression and the distributions of its
+variables:
+
+```{r}
+print(e)
+```
+
+### Mean and Variance of `edist` Objects
+
+You can compute the mean and variance of an `edist` object using the
+`mean` and `vcov` functions:
+
+```{r}
+mean(e)
+vcov(e)
+```
+
+### Sampling from `edist` Objects
+
+You can generate a sample from an edist object using the sampler method:
+```{r}
+s <- sampler(e)
+samp <- s(10)  # Generate a sample of size 10
+print(samp)
+```
+
+This concludes our overview of the `edist` object. It's a powerful tool
+for working with algebraic expressions of distributions, and we hope
+you find it useful in your statistical analyses.
+
+### Computing the PDF of `edist` Objects
+
+You can compute the PDF of an `edist` object using the `density` function:
+

@@ -13,11 +13,9 @@ has(object, x)
 }
 \description{
 support is a class that represents the support of a random
-variable or distribution, i.e. the set of values that the random variable
-can take on (non-zero probability or density).
+element or distribution, i.e. the set of values that it realize.
 
-It's a conceptual class, which a set of generic methods that can be
-implemented for different types of support. To satisfy the concept of
+It's a conceptual class. To satisfy the concept of
 a support, the following methods must be implemented:
 \enumerate{
 \item has: a function that returns a logical vector indicating
@@ -27,17 +25,10 @@ whether each value in a vector is contained in the support
 \item dim: a function that returns the dimension of the support
 }
 
-The following methods are also useful:
-\enumerate{
-\item print: a function that prints the support
-\item plot: a function that plots the support
-\item c: a function that combines two supports
-}
-
 We provide two implementations that satisfy the concept:
-\enumerate{
-\item \code{interval}: a support that is a finite union of intervals
-\item \code{infinite_set}: a support that is a finite set of values
+\itemize{
+\item \code{interval}: a support that is an infiite set of contiguous numeric values
+\item \code{finite_set}: a support that is a finite set of values
 Determine if a value is contained in the support.
 }
 }

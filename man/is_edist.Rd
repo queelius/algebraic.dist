@@ -2,7 +2,7 @@
 % Please edit documentation in R/edist.R
 \name{is_edist}
 \alias{is_edist}
-\title{Function to determine whether an object \code{x} is an \code{expr_dist} object.}
+\title{Function to determine whether an object \code{x} is an \code{edist} object.}
 \usage{
 is_edist(x)
 }
@@ -10,5 +10,5 @@ is_edist(x)
 \item{x}{The object to test}
 }
 \description{
-Function to determine whether an object \code{x} is an \code{expr_dist} object.
+Function to determine whether an object \code{x} is an \code{edist} object.
 }

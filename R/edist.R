@@ -7,13 +7,71 @@
 #'             to evaluate the expression `e` against.
 #' @examples
 #' edist(expression(x + y),
-#'       list("x" = normal(mu = 0, var = 1),
-#'            "y" = exponential(rate = 1)))
+#'       list(x = normal(mu = 0, var = 1),
+#'            y = exponential(rate = 1)))
 #' @return An `edist` object.
 #' @export
 edist <- function(e, vars) {
+  # retrieve the class of each of the distributions
+  # to include that in the class of the edist object
+  # we are creating
+  classes <- sapply(vars, class)
   structure(list(e = e, vars = vars),
-            class = c(paste0("edist_", e, "_", names(vars)), "edist", "dist"))
+            class = c(paste0("edist_", e, "_", classes, "edist", "dist")))
+}
+
+#' Generic method for simplifying distributions.
+#' 
+#' @param x The distribution to simplify
+#' @return The simplified distribution
+#' @export
+simplify <- function(x) UseMethod("simplify")
+
+
+#' Default Method for simplifming a `dist` object.
+#' @param x The `dist` object to simplify
+#' @return The `dist` object
+#' @export
+simplify.dist <- function(x) {
+  x
+}
+
+#' Method for simplifying an `edist` object.
+#' 
+#' This is a complicated function that walks the expression tree
+#' and tries to simplify it. Since sometimes a simplification
+#' made at some level of the expression tree can lead to a
+#' simplification at a higher level of the expression tree,
+#' we need to walk the expression tree from the bottom up.
+#' 
+#' Also, since some simplifications can lead to a change in
+#' the class of the distribution, we need to be careful to
+#' update the class of the distribution as we simplify it.
+#' 
+#' Finally, the simplifications we initially choose to do can
+#' prevent us from doing other simplifications that may ultimately
+#' be more beneficial. So, we need to try all valid simplifications,
+#' creating new `edist` objects for each simplification, and then
+#' choose the one that is the most simplified.
+#' 
+#' @param x The `edist` object to simplify
+#' @return The simplified object
+#' @export
+#' @examples
+#' e <- edist(expression(x + y),
+#'            list(x = exponential(rate = 2),
+#'                 y = exponential(rate = 1)))
+#' print(e)
+#' #> Distribution x + y
+#' #>   x ~ exponential(rate = 2)
+#' #>   y ~ exponential(rate = 1)
+#' e.simp <- simplify(e)
+#' print(e.simp)
+#' #> Exponential distribution with rate 3
+simplify.edist <- function(x) {
+
+  
+
 }
 
 #' Function to determine whether an object `x` is an `edist` object.
@@ -41,20 +99,30 @@ params.edist <- function(x) {
 #' Method for obtaining the variance-covariance matrix (or scalar)
 #' 
 #' @param x The `edist` object to retrieve the variance-covariance matrix from
+#' @param n The number of samples to take (default: 1000)
 #' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `edist` object
 #' @export
-vcov.edist <- function(x) {
-  cov(sampler(x)(1000))
+vcov.edist <- function(x, n = 1000, ...) {
+  samp <- sampler(x)(n)
+  # if we have a matrix, we want the covariance matrix
+  if (is.matrix(samp)) cov(samp)
+  # otherwise, we just want the variance
+  else var(samp)
 }
 
 #' Method for obtaining the mean of an `edist` object.
 #' @param x The `edist` object to retrieve the mean from
+#' @param n The number of samples to take (default: 1000)
 #' @param ... Additional arguments to pass (not used)
 #' @return The mean of the `edist` object
 #' @export
-mean.edist <- function(x) {
-  colMeans(sampler(x)(1000))
+mean.edist <- function(x, n = 1000, ...) {
+  samp <- sampler(x)(n)
+  # if we have a matrix, we want the column means
+  if (is.matrix(samp)) colMeans(samp)
+  # otherwise, we just want the mean
+  else mean(samp)
 }
 
 #' Method for printing an `edist` object.
@@ -70,22 +138,13 @@ mean.edist <- function(x) {
 #' #>   x ~ normal(mu = 0, var = 1)
 #' #>   y ~ exponential(rate = 1)
 print.edist <- function(x, ...) {
-  cat("Distribution", x$e, "\n")
-    for (i in 1:length(x$vars)) {
-        cat("  ", names(x$vars)[i], "~", x$vars[[i]], "\n")
-    }
-}
-
-#' Method for obtaining the distribution objects of an `edist` object.
-#' @param x The `edist` object to obtain the distribution objects of
-#' @export
-dists <- function(x) {
-  if (is_edist(x)) {
-    x$vars
-  } else {
-    stop("x is not an edist object")
+  cat("Distribution", deparse(x$e), "\n")
+  for (i in 1:length(x$vars)) {
+    cat("  ", names(x$vars)[i], " ~ ")
+    print(x$vars[[i]])
+    cat("\n")
   }
-} 
+}
 
 #' Method for obtaining the sampler of an `edist` object.
 #' @param x The `edist` object to obtain the sampler of.
@@ -116,13 +175,19 @@ sampler.edist <- function(x, ...) {
     # we sample from each `dist` object
     samples <- sapply(samplers, function(sampler) sampler(n, ...))
     colnames(samples) <- cnames
-
-    # we evaluate the expression `x$e` using `eval` in environment
-    # x$vars against the sampled values
     esamples <- list()
-    for (i in 1:ncol(samples)) {
-      es <- eval(x$e, envir = samples[[i]])
+    for (i in 1:nrow(samples)) {
+      es <- eval(x$e, envir = as.list(samples[i,]))
       esamples[[i]] <- es
+    }
+
+
+    # convert esamples to vector or matrix, depending on
+    # dimensionality of the first element in the list
+    if (is.matrix(esamples[[1]])) {
+      esamples <- do.call(rbind, esamples)
+    } else {
+      esamples <- unlist(esamples)
     }
     esamples
   }

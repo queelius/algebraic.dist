@@ -2,7 +2,7 @@
 % Please edit documentation in R/generic_dist.R
 \name{sup}
 \alias{sup}
-\title{Generic method for retrieving the support of an object \code{x}.}
+\title{Generic method for retrieving the support of a (dist) object \code{x}.}
 \usage{
 sup(x)
 }
@@ -20,7 +20,7 @@ The returned value should have the following operations:
 \item \code{call}: a predicate function, which returns TRUE if the value is in
 the support, and FALSE otherwise.
 \item \code{sample}: a function, which returns a sample from the support. Note that
-the returned value is not guaranteed to be in the support. You may need
+the returned value is not guaranteed to be in the support of \code{x}. You may need
 to call \code{call} to check.
 }
 }

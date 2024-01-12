@@ -2,7 +2,7 @@
 % Please edit documentation in R/edist.R
 \name{sampler.edist}
 \alias{sampler.edist}
-\title{Method for obtaining the sampler of an \code{expr_dist} object.}
+\title{Method for obtaining the sampler of an \code{edist} object.}
 \usage{
 \method{sampler}{edist}(x, ...)
 }
@@ -19,5 +19,5 @@ the result of applying the expression \code{x$e} to the
 sampled values.
 }
 \description{
-Method for obtaining the sampler of an \code{expr_dist} object.
+Method for obtaining the sampler of an \code{edist} object.
 }

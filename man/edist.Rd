@@ -14,8 +14,16 @@ edist(e, vars)
 \item{vars}{the list of distributions (with variable names)
 to evaluate the expression \code{e} against.}
 }
+\value{
+An \code{edist} object.
+}
 \description{
 Takes an expression \code{e} and a list \code{vars} and returns a
 lazy \code{edist} (expression distribution object), that is a subclass
 of \code{dist} that can be used in place of a \code{dist} object.
+}
+\examples{
+edist(expression(x + y),
+      list("x" = normal(mu = 0, var = 1),
+           "y" = exponential(rate = 1)))
 }
