@@ -8,7 +8,7 @@ Description: Set of functions/methods for operating on, sampling from, etc. dist
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: 
     knitr,
     rmarkdown

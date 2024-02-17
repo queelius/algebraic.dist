@@ -15,11 +15,3 @@ A named vector of parameters
 \description{
 Method for obtaining the parameters of an \code{edist} object.
 }
-\examples{
-edist(expression(x + y),
-     list("x" = normal(mu = 0, var = 1),
-         "y" = exponential(rate = 1)))
-params(x)
-#> x.mu x.var y.rate
-#>     0     1      1
-}

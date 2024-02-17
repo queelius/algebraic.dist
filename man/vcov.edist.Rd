@@ -4,10 +4,10 @@
 \alias{vcov.edist}
 \title{Method for obtaining the variance-covariance matrix (or scalar)}
 \usage{
-\method{vcov}{edist}(x, n = 1000, ...)
+\method{vcov}{edist}(object, n = 10000, ...)
 }
 \arguments{
-\item{x}{The \code{edist} object to retrieve the variance-covariance matrix from}
+\item{object}{The \code{edist} object to retrieve the variance-covariance matrix from}
 
 \item{n}{The number of samples to take (default: 1000)}
 

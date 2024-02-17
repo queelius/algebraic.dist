@@ -7,19 +7,10 @@
     <loc>/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/articles/empirical_dist.html</loc>
-  </url>
-  <url>
-    <loc>/articles/empirical_dist_mvn.html</loc>
-  </url>
-  <url>
     <loc>/articles/example.html</loc>
   </url>
   <url>
     <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/mvn.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
@@ -29,9 +20,6 @@
   </url>
   <url>
     <loc>/reference/cdf.empirical_dist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cdf.exp_dist.html</loc>
   </url>
   <url>
     <loc>/reference/cdf.exponential.html</loc>
@@ -91,25 +79,13 @@
     <loc>/reference/empirical_dist.html</loc>
   </url>
   <url>
-    <loc>/reference/exp_dist.html</loc>
-  </url>
-  <url>
     <loc>/reference/expectation.dist.html</loc>
   </url>
   <url>
     <loc>/reference/expectation.empirical_dist.html</loc>
   </url>
   <url>
-    <loc>/reference/expectation.exp_dist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/expectation.exponential.html</loc>
-  </url>
-  <url>
     <loc>/reference/expectation.html</loc>
-  </url>
-  <url>
-    <loc>/reference/expectation.normal.html</loc>
   </url>
   <url>
     <loc>/reference/expectation.univariate_dist.html</loc>
@@ -133,9 +109,6 @@
     <loc>/reference/has.interval.html</loc>
   </url>
   <url>
-    <loc>/reference/hazard.exp_dist.html</loc>
-  </url>
-  <url>
     <loc>/reference/hazard.exponential.html</loc>
   </url>
   <url>
@@ -157,16 +130,10 @@
     <loc>/reference/interval.html</loc>
   </url>
   <url>
-    <loc>/reference/inv_cdf.exp_dist.html</loc>
-  </url>
-  <url>
     <loc>/reference/inv_cdf.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/inv_cdf.html</loc>
-  </url>
-  <url>
-    <loc>/reference/inv_cdf.mvn.html</loc>
   </url>
   <url>
     <loc>/reference/inv_cdf.normal.html</loc>
@@ -179,9 +146,6 @@
   </url>
   <url>
     <loc>/reference/is_empirical_dist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/is_exp_dist.html</loc>
   </url>
   <url>
     <loc>/reference/is_exponential.html</loc>
@@ -202,16 +166,13 @@
     <loc>/reference/marginal.mvn.html</loc>
   </url>
   <url>
+    <loc>/reference/mean.edist.html</loc>
+  </url>
+  <url>
     <loc>/reference/mean.empirical_dist.html</loc>
   </url>
   <url>
-    <loc>/reference/mean.exp_dist.html</loc>
-  </url>
-  <url>
     <loc>/reference/mean.exponential.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mean.html</loc>
   </url>
   <url>
     <loc>/reference/mean.mvn.html</loc>
@@ -229,9 +190,6 @@
     <loc>/reference/nobs.empirical_dist.html</loc>
   </url>
   <url>
-    <loc>/reference/nobs.html</loc>
-  </url>
-  <url>
     <loc>/reference/normal.html</loc>
   </url>
   <url>
@@ -247,10 +205,10 @@
     <loc>/reference/obs.html</loc>
   </url>
   <url>
-    <loc>/reference/params.empirical_dist.html</loc>
+    <loc>/reference/params.edist.html</loc>
   </url>
   <url>
-    <loc>/reference/params.exp_dist.html</loc>
+    <loc>/reference/params.empirical_dist.html</loc>
   </url>
   <url>
     <loc>/reference/params.exponential.html</loc>
@@ -265,31 +223,13 @@
     <loc>/reference/params.normal.html</loc>
   </url>
   <url>
-    <loc>/reference/pdf.empirical_dist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pdf.exp_dist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pdf.exponential.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pdf.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pdf.mvn.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pdf.normal.html</loc>
-  </url>
-  <url>
     <loc>/reference/print.dist.html</loc>
   </url>
   <url>
-    <loc>/reference/print.empirical_dist.html</loc>
+    <loc>/reference/print.edist.html</loc>
   </url>
   <url>
-    <loc>/reference/print.exp_dist.html</loc>
+    <loc>/reference/print.empirical_dist.html</loc>
   </url>
   <url>
     <loc>/reference/print.exponential.html</loc>
@@ -305,9 +245,6 @@
   </url>
   <url>
     <loc>/reference/print.summary_dist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/quantile.html</loc>
   </url>
   <url>
     <loc>/reference/rmap.dist.html</loc>
@@ -331,9 +268,6 @@
     <loc>/reference/sampler.empirical_dist.html</loc>
   </url>
   <url>
-    <loc>/reference/sampler.exp_dist.html</loc>
-  </url>
-  <url>
     <loc>/reference/sampler.exponential.html</loc>
   </url>
   <url>
@@ -346,10 +280,13 @@
     <loc>/reference/sampler.normal.html</loc>
   </url>
   <url>
-    <loc>/reference/sd.html</loc>
+    <loc>/reference/simplify.dist.html</loc>
   </url>
   <url>
-    <loc>/reference/sd.univariate_dist.html</loc>
+    <loc>/reference/simplify.edist.html</loc>
+  </url>
+  <url>
+    <loc>/reference/simplify.html</loc>
   </url>
   <url>
     <loc>/reference/summary.dist.html</loc>
@@ -359,9 +296,6 @@
   </url>
   <url>
     <loc>/reference/sup.empirical_dist.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sup.exp_dist.html</loc>
   </url>
   <url>
     <loc>/reference/sup.exponential.html</loc>
@@ -385,28 +319,19 @@
     <loc>/reference/supremum.interval.html</loc>
   </url>
   <url>
-    <loc>/reference/surv.exp_dist.html</loc>
-  </url>
-  <url>
     <loc>/reference/surv.exponential.html</loc>
   </url>
   <url>
     <loc>/reference/surv.html</loc>
   </url>
   <url>
-    <loc>/reference/var.univariate_dist.html</loc>
+    <loc>/reference/vcov.edist.html</loc>
   </url>
   <url>
     <loc>/reference/vcov.empirical_dist.html</loc>
   </url>
   <url>
-    <loc>/reference/vcov.exp_dist.html</loc>
-  </url>
-  <url>
     <loc>/reference/vcov.exponential.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vcov.html</loc>
   </url>
   <url>
     <loc>/reference/vcov.mvn.html</loc>

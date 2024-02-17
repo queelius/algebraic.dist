@@ -36,12 +36,19 @@ M <- mvn(mu = 1:5, sigma = diag(1:5))
 print(M)
 ```
 
+
+When we print out the parameters, we get a large vector that includes
+both the elements of the mean vector ($\mu$) and the elements of the
+variance-covariance matrix ($\Sigma$).
+```{r}
+params(M)
+```
+
 Each observation is an i.i.d. vector from the MVN.
 We sample from the MVN with:
 ```{r data-gen2}
 # we generate a sample of size n
-n <- 100000
-
+n <- 10000
 # we sample from the MVN
 data <- sampler(M)(n)
 ```
@@ -56,6 +63,11 @@ Now, we also construct a empirical distribution from the sample with:
 ```{r emp-construction}
 emp <- empirical_dist(data)
 print(emp)
+```
+
+Since this is the empirical distribution, it is parameter-free:
+```{r}
+params(emp)
 ```
 
 Let's show the supports of the empirical distribution and the MVN:
@@ -73,19 +85,17 @@ print(df)
 Let's compare the mean and covariance-variance matrices of both the MVN and the
 empirical distribution of the MVN. First, let's look at the means.
 ```{r compare-basic-stats}
-mean(M)
-mean(emp)
+mean(M); mean(emp)
 ```
 As expected, pretty close. Now let's look at the variance-covariance:
 ```{r compare-basic-stats2}
-vcov(M)
-vcov(emp)
+vcov(M); vcov(emp)
 ```
 
 The true variances of the population defined by the MVN $M$ is the diagonal of the
 variance-covariance matrix:
 ```{r}
-diag(vcov(M))
+diag(vcov(M)); diag(vcov(emp))
 ```
 
 Let's compute the variances using the general expectation method:
@@ -189,12 +199,10 @@ mean of the first two components are negative, which makes sense: the sum of the
 first two components is negative, so the mean of the first two components should
 be negative.
 
-
-
-
 ## Working with `edist` Objects
 
-The `edist` object is a key component of the `algebraic.dist` package. It represents a distribution that is an algebraic expression of other distributions.
+The `edist` object is a key component of the `algebraic.dist` package. It
+represents a distribution that is an algebraic expression of other distributions.
 
 ### Creating `edist` Objects
 
@@ -227,6 +235,12 @@ mean(e)
 vcov(e)
 ```
 
+
+Let's have a look at the parameters of the `edist` object:
+```{r}
+params(e)
+```
+
 ### Sampling from `edist` Objects
 
 You can generate a sample from an edist object using the sampler method:
@@ -239,8 +253,4 @@ print(samp)
 This concludes our overview of the `edist` object. It's a powerful tool
 for working with algebraic expressions of distributions, and we hope
 you find it useful in your statistical analyses.
-
-### Computing the PDF of `edist` Objects
-
-You can compute the PDF of an `edist` object using the `density` function:
 

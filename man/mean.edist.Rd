@@ -4,7 +4,7 @@
 \alias{mean.edist}
 \title{Method for obtaining the mean of an \code{edist} object.}
 \usage{
-\method{mean}{edist}(x, n = 1000, ...)
+\method{mean}{edist}(x, n = 10000, ...)
 }
 \arguments{
 \item{x}{The \code{edist} object to retrieve the mean from}

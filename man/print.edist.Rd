@@ -14,11 +14,3 @@
 \description{
 Method for printing an \code{edist} object.
 }
-\examples{
-edist(expression(x + y),
-     list("x" = normal(mu = 0, var = 1),
-          "y" = exponential(rate = 1)))
-#> Distribution x + y
-#>   x ~ normal(mu = 0, var = 1)
-#>   y ~ exponential(rate = 1)
-}

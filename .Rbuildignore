@@ -11,5 +11,7 @@
 ^\.gitignore$
 ^\.vscode$
 ^\.lintr$
+^\.Rhistory$
+^\.envrc
 ^algebraic\.dist\.Rproj$
 ^fixing$

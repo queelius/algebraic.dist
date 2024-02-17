@@ -235,7 +235,7 @@ the expectation, and the number of samples used to compute the expectation.</p><
       </tr><tr><td>
           <p><code><a href="is_edist.html">is_edist()</a></code> </p>
         </td>
-        <td><p>Function to determine whether an object <code>x</code> is an <code>expr_dist</code> object.</p></td>
+        <td><p>Function to determine whether an object <code>x</code> is an <code>edist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="is_empirical_dist.html">is_empirical_dist()</a></code> </p>
         </td>
@@ -267,6 +267,10 @@ object <code>x</code> over components <code>indices</code>.</p></td>
         </td>
         <td><p>Generic method for obtaining the marginal distribution of an <code>mvn</code> object
 <code>x</code> over components <code>indices</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mean.edist.html">mean(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the mean of an <code>edist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="mean.empirical_dist.html">mean(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -327,6 +331,10 @@ object, like an maximum likelihood estimate.</p></td>
         </td>
         <td><p>Generic method for obtaining the parameters of an object.</p></td>
       </tr><tr><td>
+          <p><code><a href="params.edist.html">params(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the parameters of an <code>edist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="params.empirical_dist.html">params(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p><code>empirical_dist</code> objects have no parameters, so this function returns NULL.</p></td>
@@ -346,6 +354,10 @@ object, like an maximum likelihood estimate.</p></td>
           <p><code><a href="print.dist.html">print(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for printing a <code>dist</code> object</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.edist.html">print(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for printing an <code>edist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="print.empirical_dist.html">print(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -403,7 +415,7 @@ from <code>mu</code>).</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.edist.html">sampler(<i>&lt;edist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for obtaining the sampler of an <code>expr_dist</code> object.</p></td>
+        <td><p>Method for obtaining the sampler of an <code>edist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.empirical_dist.html">sampler(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -421,6 +433,18 @@ from <code>mu</code>).</p></td>
         </td>
         <td><p>Method for sampling from a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="simplify.html">simplify()</a></code> </p>
+        </td>
+        <td><p>Generic method for simplifying distributions.</p></td>
+      </tr><tr><td>
+          <p><code><a href="simplify.dist.html">simplify(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Default Method for simplifming a <code>dist</code> object. Just returns the object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="simplify.edist.html">simplify(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for simplifying an <code>edist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="summary.dist.html">summary(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining a summary of a <code>dist</code> object.</p></td>
@@ -431,7 +455,7 @@ from <code>mu</code>).</p></td>
       </tr><tr><td>
           <p><code><a href="sup.html">sup()</a></code> </p>
         </td>
-        <td><p>Generic method for retrieving the support of an object <code>x</code>.</p></td>
+        <td><p>Generic method for retrieving the support of a (dist) object <code>x</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="sup.empirical_dist.html">sup(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -470,6 +494,10 @@ is defined as values that have non-zero probability density.</p></td>
           <p><code><a href="surv.exponential.html">surv(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method to obtain the cdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.edist.html">vcov(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the variance-covariance matrix (or scalar)</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.empirical_dist.html">vcov(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
