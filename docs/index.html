@@ -99,11 +99,7 @@
 <div class="section level2">
 <h2 id="todo">TODO<a class="anchor" aria-label="anchor" href="#todo"></a>
 </h2>
-<ol style="list-style-type: decimal">
-<li><p>Flesh out the vignettes to show how to use the package.</p></li>
-<li><p>Reincorporate the <code>edist</code> (expression distribution), which is just a an R expression combined with an environment that has a dictionary for each of the variables in the expression where if a variable is a <code>dist</code>-type object, then we treat that variable like a random variable. When we, say, sample from the <code>edist</code> object, we’ll sample from the <code>dist</code>-type objects in the environment and then evaluate the expression with the sampled values.</p></li>
-<li><p>For taking the PDF, CDF, expectation, and so on, for now we just use the sampler and then put it into a <code>empirical_dist</code> object, which permits those kinds of operations, but there are clearly a lot of interesting things we can do, e.g., <code>min(x1, x2)</code> when <code>x1</code> and <code>x2</code> are exponential distributions is also an exponential distribution with a failure rate <code>lambda1 + lambda2</code>. There are a host of relations between various named distributions, and there are even more cases where the distribution, no matter how complex, has an asymptotically normal distribution.</p></li>
-</ol>
+<ul><li>Flesh out the <code>algebra</code> logic for things like simplification.</li></ul>
 </div>
 </div>
 
