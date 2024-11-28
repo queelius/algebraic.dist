@@ -1,8 +1,4 @@
 
-  - [R package: `algebraic.dist`](#r-package-algebraicdist)
-      - [Installation](#installation)
-      - [TODO](#todo)
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # R package: `algebraic.dist`
@@ -13,7 +9,13 @@
 License](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
-An algebra over distributions (random elements).
+Summary: An algebra over distributions (random elements).
+
+**Table Of Contents**
+
+- [R package: `algebraic.dist`](#r-package-algebraicdist)
+   - [Installation](#installation)
+   - [About](#about)
 
 ## Installation
 
