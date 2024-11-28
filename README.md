@@ -17,6 +17,13 @@ Summary: An algebra over distributions (random elements).
    - [Installation](#installation)
    - [About](#about)
 
+## GitHub Pages Documentation
+
+The GitHub documentation can be viewed [here](https://queelius.github.io/algebraic.dist/).
+
+See the vignette [algebraic.dist: Example](https://queelius.github.io/algebraic.dist/articles/example.html)
+for a quick introduction to the package.
+
 ## Installation
 
 You can install the development version of `algebraic.dist` from
@@ -71,11 +78,3 @@ implement some of the more interesting compositions in C++ and expose them to R
 via Rcpp, but I'm not sure yet. I use a lot of templates and metaprogramming in
 C++, and I'm not sure how well that will translate to Rcpp.
 
-
-See the vignette [algebraic.dist:
-Example](http://queelius.github.io/algebraic.dist/articles/example.html)
-for a quick introduction to the package.
-
-## TODO
-
-  - Flesh out the `algebra` logic for things like simplification.
