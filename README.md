@@ -13,18 +13,9 @@ License](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.
 An algebra over distributions (random elements).
 <!-- summary-end -->
 
-Tags:
+**Tags**:
 <!-- tags-start -->
-- multivariate distributions
-- multivariate normal distribution
-- multivariate empirical distribution
-- data generating process
-- R
-- data-science
-- statistics
-- inference
-- likelihood-models
-- probability-theory
+multivariate distributions, multivariate normal distribution, multivariate empirical distribution, data generating process, R, data-science, statistics, inference, likelihood-models, probability-theory
 <!-- tags-end -->
 
 **Table Of Contents**
