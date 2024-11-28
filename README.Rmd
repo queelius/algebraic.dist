@@ -20,7 +20,9 @@ knitr::opts_chunk$set(
 [![GPL-3 License](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 <!-- badges: end -->
 
-Summary: An algebra over distributions (random elements).
+<!-- summary-start -->
+An algebra over distributions (random elements).
+<!-- summary-end -->
 
 ## GitHub Pages Documentation
 
