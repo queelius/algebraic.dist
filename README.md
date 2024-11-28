@@ -55,7 +55,7 @@ operations over them.
 
 - With these R expressions that represent distributions, we can define more
 operations, like taking the limiting distribution of a sequence of
-distributions, say $\lim n \to \infty \frac{1}{n} \sum_{i=1}^n X_i$, which is
+distributions, say $\lim_{n \to \infty} \frac{1}{n} \sum_{i=1}^n X_i$, which is
 of normal by the central limit theorem.
 
 - Deduce various properties of these distributions, such as their moments,
