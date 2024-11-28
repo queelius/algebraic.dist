@@ -24,6 +24,10 @@ knitr::opts_chunk$set(
 An algebra over distributions (random elements).
 <!-- summary-end -->
 
+<!-- tags-start -->
+**Tags**: multivariate distributions, multivariate normal distribution, multivariate empirical distribution, data generating process, R, data-science, statistics, inference, likelihood-models, probability-theory
+<!-- tags-end -->
+
 ## GitHub Pages Documentation
 
 The GitHub documentation can be viewed [here](https://queelius.github.io/algebraic.dist/).
