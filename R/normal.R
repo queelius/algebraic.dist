@@ -135,4 +135,14 @@ inv_cdf.normal <- function(x, ...) {
     }
 }
 
+#' Operator to take the negative of a `normal` object.
+#' 
+#' @param e The `normal` object to take the negative of
+#' @return A new `normal` object with mean equal to the negative of the mean
+#'         of the input object and variance equal to the variance of the input
+#'         object.
+#' @export
+`-.normal` <- function(e) {
+    normal(mu = -mean(e), var = vcov(e))
+}
 

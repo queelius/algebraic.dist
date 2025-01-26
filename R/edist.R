@@ -117,3 +117,31 @@ sampler.edist <- function(x, ...) {
     esamples
   }
 }
+
+
+
+#' Method for adding `dist` objects.
+#' 
+#' We place the `dist` objects in an expression and then wrap it inside of
+#' an `edist` object.
+#' 
+#' @param x The first `dist` object to add
+#' @param y The second `dist` object to add
+#' @return An `edist` object
+#' @export
+`+.dist` <- function(x, y) {
+  edist(x + y, list(x, y))
+}
+
+#' Method for subtracting `dist` objects.
+#'  
+#' We place the `dist` objects in an expression and then wrap it inside of
+#' an `edist` object.
+#' 
+#' @param x The first `dist` object to subtract
+#' @param y The second `dist` object to subtract
+#' @return An `edist` object
+#' @export
+`-.dist` <- function(x, y) {
+  edist(x - y, list(x, y))
+}

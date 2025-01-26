@@ -1,28 +1,26 @@
 #' Function to determine whether an object `x` is a `dist` object.
 #' @param x The object to test
+#' @return Logical indicating whether `x` is a `dist` object.
 #' @export
 is_dist <- function(x) {
   inherits(x, "dist")
 }
 
-#' Expectation operator applied to `x` of type `dist`
-#' with respect to a function `g`. That is, `E(g(x))`.
-#' 
-#' Optionally, we use the CLT to construct a CI(`alpha`) for the
-#' estimate of the expectation. That is, we estimate `E(g(x))` with
-#' the sample mean and Var(g(x)) with the sigma^2/n, where sigma^2
-#' is the sample variance of g(x) and n is the number of samples.
-#' From these, we construct the CI.
+#' Expectation of a Function Applied to a `dist` Object
 #'
-#' @param x `dist` object
-#' @param g characteristic function of interest, defaults to identity
-#' @param ... additional arguments to pass to `g`
-#' @param control a list of control parameters:
-#'  compute_stats - Whether to compute CIs for the expectations, defaults
+#' Expectation operator applied to `x` of type `dist`
+#' with respect to a function `g`. Optionally, constructs a confidence interval
+#' for the expectation estimate using the Central Limit Theorem.
+#'
+#' @param x A `dist` object.
+#' @param g Characteristic function of interest, defaults to identity. 
+#' @param ... Additional arguments to pass to `g`.
+#' @param control A list of control parameters:
+#'  compute_stats - Logical, whether to compute CIs for the expectations, defaults
 #'                  to FALSE
-#'  n             - The number of samples to use for the MC estimate,
-#'                  defaults to 10000
-#'  alpha         - The significance level for the confidence interval,
+#'  n             - Integer, the number of samples to use for the MC estimate,
+#'                  defaults to 10000L
+#'  alpha         - Real, the significance level for the confidence interval,
 #'                  defaults to 0.05
 #' @return If `compute_stats` is FALSE, then the estimate of the expectation,
 #'        otherwise a list with the following components:
@@ -137,4 +135,37 @@ summary_dist <- function(name, mean, vcov, nobs = NULL) {
     vcov = vcov,
     nobs = nobs),
     class = "summary_dist")
+}
+
+
+
+
+
+#' Sampler for non-dist objects (degenerate distributions).
+#' 
+#' @param x The object to sample from
+#' @param n The number of samples to take
+#' @param ... Additional arguments to pass
+#' @return A function that samples from the degenerate distribution
+#' @export
+sampler.default <- function(x, ...) {
+  function(n) {
+    rep(x, n)
+  }
+}
+
+#' Method for obtaining the parameters of a non-dist object.
+#' @param x The object to obtain the parameters of
+#' @return A named vector of parameters
+#' @export
+vcov.default <- function(object, ...) {
+  0
+}
+
+#' Method for obtaining the mean of a non-dist object.
+#' @param x The object to retrieve the mean from
+#' @param ... Additional arguments to pass (not used)
+#' @return The mean of the object
+mean.default <- function(x, ...) {
+  x
 }

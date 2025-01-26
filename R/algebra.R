@@ -47,3 +47,19 @@ simplify.edist <- function(x, ...) {
    # for now, we just return the object
    x
 }
+
+
+
+#' We have an edist object, which is a subclass of dist, and now we're placing
+#' it inside of a limit expression, where the limit is understood to be with
+#' respect to sample size. We need to define a method for this.
+#' 
+#' @param x The edist object to take the limit of
+#' @param ... Additional arguments to pass (not used)
+#' @return The limit of the edist object
+limit.edist <- function(x) {
+  # we just wrap the edist object in a limit object, and the simplify method
+  # can be used to simplify the limit object if necessary
+
+  expression(limit(x$e))
+}
