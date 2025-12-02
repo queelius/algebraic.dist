@@ -142,11 +142,10 @@ summary_dist <- function(name, mean, vcov, nobs = NULL) {
 
 
 #' Sampler for non-dist objects (degenerate distributions).
-#' 
+#'
 #' @param x The object to sample from
-#' @param n The number of samples to take
 #' @param ... Additional arguments to pass
-#' @return A function that samples from the degenerate distribution
+#' @return A function that takes n and returns n copies of x
 #' @export
 sampler.default <- function(x, ...) {
   function(n) {
@@ -154,9 +153,11 @@ sampler.default <- function(x, ...) {
   }
 }
 
-#' Method for obtaining the parameters of a non-dist object.
-#' @param x The object to obtain the parameters of
-#' @return A named vector of parameters
+#' Variance-covariance for non-dist objects (degenerate distributions).
+#'
+#' @param object The object (returns 0 for constants)
+#' @param ... Additional arguments to pass (not used)
+#' @return 0 (degenerate distributions have no variance)
 #' @export
 vcov.default <- function(object, ...) {
   0

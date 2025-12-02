@@ -9,6 +9,9 @@ is_dist(x)
 \arguments{
 \item{x}{The object to test}
 }
+\value{
+Logical indicating whether \code{x} is a \code{dist} object.
+}
 \description{
 Function to determine whether an object \code{x} is a \code{dist} object.
 }

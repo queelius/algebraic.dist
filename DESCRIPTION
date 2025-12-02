@@ -1,26 +1,31 @@
 Package: algebraic.dist
-Title: Algebra over distribution (random elements) objects
-Version: 0.0.0.9000
-Authors@R: 
+Title: Algebra over Probability Distributions
+Version: 0.1.0
+Authors@R:
     person("Alexander", "Towell", , "lex@metafunctor.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6443-9897"))
-Description: Set of functions/methods for operating on, sampling from, etc. distributions.
+Description: Provides an algebra over probability distributions enabling
+    composition, sampling, and automatic simplification to closed forms.
+    Supports normal, exponential, multivariate normal, and empirical
+    distributions with operations like addition and subtraction that
+    automatically simplify when mathematical identities apply (e.g., the
+    sum of independent normal distributions is normal). Uses S3 classes for
+    distributions and R6 for support objects.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
-Suggests: 
+RoxygenNote: 7.3.3
+Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Imports: 
+Imports:
     stats,
     mvtnorm,
     R6
-Depends: 
-    R (>= 2.10)
-LazyData: true
+Depends:
+    R (>= 3.5.0)
 VignetteBuilder: knitr
 URL: https://github.com/queelius/algebraic.dist,
     https://queelius.github.io/algebraic.dist/

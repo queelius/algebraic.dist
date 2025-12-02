@@ -2,24 +2,23 @@
 % Please edit documentation in R/dist.R
 \name{expectation.dist}
 \alias{expectation.dist}
-\title{Expectation operator applied to \code{x} of type \code{dist}
-with respect to a function \code{g}. That is, \code{E(g(x))}.}
+\title{Expectation of a Function Applied to a \code{dist} Object}
 \usage{
 \method{expectation}{dist}(x, g = function(t) t, ..., control = list())
 }
 \arguments{
-\item{x}{\code{dist} object}
+\item{x}{A \code{dist} object.}
 
-\item{g}{characteristic function of interest, defaults to identity}
+\item{g}{Characteristic function of interest, defaults to identity.}
 
-\item{...}{additional arguments to pass to \code{g}}
+\item{...}{Additional arguments to pass to \code{g}.}
 
-\item{control}{a list of control parameters:
-compute_stats - Whether to compute CIs for the expectations, defaults
+\item{control}{A list of control parameters:
+compute_stats - Logical, whether to compute CIs for the expectations, defaults
 to FALSE
-n             - The number of samples to use for the MC estimate,
-defaults to 10000
-alpha         - The significance level for the confidence interval,
+n             - Integer, the number of samples to use for the MC estimate,
+defaults to 10000L
+alpha         - Real, the significance level for the confidence interval,
 defaults to 0.05}
 }
 \value{
@@ -30,9 +29,7 @@ ci    - The confidence intervals for each component of the expectation
 n     - The number of samples
 }
 \description{
-Optionally, we use the CLT to construct a CI(\code{alpha}) for the
-estimate of the expectation. That is, we estimate \code{E(g(x))} with
-the sample mean and Var(g(x)) with the sigma^2/n, where sigma^2
-is the sample variance of g(x) and n is the number of samples.
-From these, we construct the CI.
+Expectation operator applied to \code{x} of type \code{dist}
+with respect to a function \code{g}. Optionally, constructs a confidence interval
+for the expectation estimate using the Central Limit Theorem.
 }
