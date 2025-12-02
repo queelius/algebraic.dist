@@ -24,6 +24,7 @@
 <url><loc>/reference/dim.interval.html</loc></url>
 <url><loc>/reference/dim.mvn.html</loc></url>
 <url><loc>/reference/dim.normal.html</loc></url>
+<url><loc>/reference/dot-dist.html</loc></url>
 <url><loc>/reference/edist.html</loc></url>
 <url><loc>/reference/empirical_dist.html</loc></url>
 <url><loc>/reference/expectation.dist.html</loc></url>
@@ -52,6 +53,7 @@
 <url><loc>/reference/is_exponential.html</loc></url>
 <url><loc>/reference/is_mvn.html</loc></url>
 <url><loc>/reference/is_normal.html</loc></url>
+<url><loc>/reference/limit.edist.html</loc></url>
 <url><loc>/reference/marginal.empirical_dist.html</loc></url>
 <url><loc>/reference/marginal.html</loc></url>
 <url><loc>/reference/marginal.mvn.html</loc></url>
@@ -74,6 +76,7 @@
 <url><loc>/reference/params.html</loc></url>
 <url><loc>/reference/params.mvn.html</loc></url>
 <url><loc>/reference/params.normal.html</loc></url>
+<url><loc>/reference/plus-.dist.html</loc></url>
 <url><loc>/reference/print.dist.html</loc></url>
 <url><loc>/reference/print.edist.html</loc></url>
 <url><loc>/reference/print.empirical_dist.html</loc></url>
@@ -87,6 +90,7 @@
 <url><loc>/reference/rmap.html</loc></url>
 <url><loc>/reference/rmap.mvn.html</loc></url>
 <url><loc>/reference/sample_mvn_region.html</loc></url>
+<url><loc>/reference/sampler.default.html</loc></url>
 <url><loc>/reference/sampler.edist.html</loc></url>
 <url><loc>/reference/sampler.empirical_dist.html</loc></url>
 <url><loc>/reference/sampler.exponential.html</loc></url>
@@ -108,6 +112,7 @@
 <url><loc>/reference/supremum.interval.html</loc></url>
 <url><loc>/reference/surv.exponential.html</loc></url>
 <url><loc>/reference/surv.html</loc></url>
+<url><loc>/reference/vcov.default.html</loc></url>
 <url><loc>/reference/vcov.edist.html</loc></url>
 <url><loc>/reference/vcov.empirical_dist.html</loc></url>
 <url><loc>/reference/vcov.exponential.html</loc></url>

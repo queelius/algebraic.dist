@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">algebraic.dist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
       </span>
     </div>
 
@@ -130,6 +130,10 @@
         </td>
         <td><p>Method for obtaining the dimension of a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="dot-dist.html">`-`(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for negation or subtraction of <code>dist</code> objects.</p></td>
+      </tr><tr><td>
           <p><code><a href="edist.html">edist()</a></code> </p>
         </td>
         <td><p>Takes an expression <code>e</code> and a list <code>vars</code> and returns a lazy <code>edist</code> (expression distribution object), that is a subclass of <code>dist</code> that can be used in place of a <code>dist</code> object.</p></td>
@@ -144,7 +148,7 @@
       </tr><tr><td>
           <p><code><a href="expectation.dist.html">expectation(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Expectation operator applied to <code>x</code> of type <code>dist</code> with respect to a function <code>g</code>. That is, <code>E(g(x))</code>.</p></td>
+        <td><p>Expectation of a Function Applied to a <code>dist</code> Object</p></td>
       </tr><tr><td>
           <p><code><a href="expectation.empirical_dist.html">expectation(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -326,6 +330,10 @@
         </td>
         <td><p>Method for obtaining the parameters of a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="plus-.dist.html">`+`(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for adding <code>dist</code> objects.</p></td>
+      </tr><tr><td>
           <p><code><a href="print.dist.html">print(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for printing a <code>dist</code> object</p></td>
@@ -381,6 +389,10 @@
           <p><code><a href="sampler.html">sampler()</a></code> </p>
         </td>
         <td><p>Generic method for sampling from distribution-like objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sampler.default.html">sampler(<i>&lt;default&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sampler for non-dist objects (degenerate distributions).</p></td>
       </tr><tr><td>
           <p><code><a href="sampler.edist.html">sampler(<i>&lt;edist&gt;</i>)</a></code> </p>
         </td>
@@ -461,6 +473,10 @@
           <p><code><a href="surv.exponential.html">surv(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method to obtain the cdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.default.html">vcov(<i>&lt;default&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance-covariance for non-dist objects (degenerate distributions).</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.edist.html">vcov(<i>&lt;edist&gt;</i>)</a></code> </p>
         </td>
