@@ -67,11 +67,24 @@ summary.dist <- function(object, ..., name = NULL, nobs = NULL) {
 }
 
 #' Method for printing a `dist` object
+#'
+#' This method handles printing for probability distribution objects.
+#' It defers to the stats package's print method for distance matrix objects.
+#'
 #' @param x The object to print
 #' @param ... Additional arguments to pass
 #' @export
 print.dist <- function(x, ...) {
-  print(summary(x, ...))
+  # Check if this is one of our probability distributions
+
+  # Our distributions inherit from univariate_dist, multivariate_dist, or edist
+  # Stats distance matrices only have class "dist"
+  if (inherits(x, c("univariate_dist", "multivariate_dist", "edist"))) {
+    print(summary(x, ...))
+  } else {
+    # Defer to stats::print.dist for distance matrices
+    NextMethod("print")
+  }
 }
 
 #' Method for obtaining the condition distribution, `x | P(x)`, of

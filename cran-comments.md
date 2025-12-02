@@ -8,11 +8,18 @@ There was 1 NOTE:
   Maintainer: 'Alexander Towell <lex@metafunctor.com>'
   New submission
 
+## Notes on print.dist method
+
+This package defines a `print.dist` method for probability distribution objects.
+The `stats` package also has a `print.dist` method for distance matrix objects
+(from `stats::dist()`). Our implementation checks the object's class and defers
+to `stats:::print.dist` via `NextMethod()` when the object is not one of our
+probability distribution types, ensuring proper interoperability.
+
 ## Test environments
 
-* Local: Ubuntu 24.04.3 LTS, R 4.3.3
+* Local: Ubuntu 24.04.3 LTS, R 4.3.3 (338 tests passing)
 * GitHub Actions (R-CMD-check):
-
   - ubuntu-latest (R oldrel-1): success
   - ubuntu-latest (R release): success
   - ubuntu-latest (R devel): success
@@ -23,9 +30,9 @@ There was 1 NOTE:
   - windows (R-devel): success
   - macos-arm64 (R-devel): success
 * win-builder:
-  - R-devel: (submitted, awaiting results)
-  - R-release: (submitted, awaiting results)
-  - R-oldrelease: (submitted, awaiting results)
+  - R-devel: pending
+  - R-release: pending
+  - R-oldrelease: pending
 
 ## Downstream dependencies
 

@@ -12,5 +12,6 @@
 \item{...}{Additional arguments to pass}
 }
 \description{
-Method for printing a \code{dist} object
+This method handles printing for probability distribution objects.
+It defers to the stats package's print method for distance matrix objects.
 }
