@@ -77,8 +77,9 @@
 
 <ul><li>
 <a href="#r-package-algebraicdist">R package: <code>algebraic.dist</code></a><ul>
+<li><a href="#about">About</a></li>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#todo">TODO</a></li>
+<li><a href="#future-development">Future Development</a></li>
 </ul>
 </li></ul>
 <!-- README.md is generated from README.Rmd. Please edit that file --><div class="section level1">
@@ -87,6 +88,21 @@
 </h1></div>
 <!-- badges: start -->
 <p>An algebra over distributions (random elements).</p>
+
+<div class="section level2">
+<h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
+</h2>
+<p>The R package <code>algebraic.dist</code> provides an algebra over distributions. It enables:</p>
+<ul>
+<li>Operations on distribution objects (addition, subtraction, transformations)</li>
+<li>Lazy composition of distributions via expression objects (<code>edist</code>)</li>
+<li>Sampling, expectation, conditioning, and marginalization operations</li>
+<li>Support for both parametric (normal, mvn, exponential) and empirical distributions</li>
+</ul>
+
+<p>Key features include algebraic operations that compose distributions, generic methods for statistical operations, and a flexible architecture supporting both univariate and multivariate distributions.</p>
+</div>
+
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -96,10 +112,17 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"queelius/algebraic.dist"</span><span class="op">)</span></span></code></pre></div>
 <p>See the vignette <a href="http://queelius.github.io/algebraic.dist/articles/example.html" class="external-link">algebraic.dist: Example</a> for a quick introduction to the package.</p>
 </div>
+
 <div class="section level2">
-<h2 id="todo">TODO<a class="anchor" aria-label="anchor" href="#todo"></a>
+<h2 id="future-development">Future Development<a class="anchor" aria-label="anchor" href="#future-development"></a>
 </h2>
-<ul><li>Flesh out the <code>algebra</code> logic for things like simplification.</li></ul>
+<p>Planned features include:</p>
+<ul>
+<li>Automatic simplification of composed distributions (e.g., sum of normals → normal)</li>
+<li>Lazy expression trees that simplify to closed forms when possible</li>
+<li>Limiting distributions and convergence analysis</li>
+<li>Automatic deduction of moments and distribution properties</li>
+</ul>
 </div>
 </div>
 

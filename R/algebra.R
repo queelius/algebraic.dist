@@ -16,36 +16,55 @@ simplify.dist <- function(x, ...) {
 }
 
 #' Method for simplifying an `edist` object.
-#' 
-#' This is a complicated function that walks the expression tree
-#' and tries to simplify it. Since sometimes a simplification
-#' made at some level of the expression tree can lead to a
-#' simplification at a higher level of the expression tree,
-#' we need to walk the expression tree from the bottom up.
-#' 
-#' Also, since some simplifications can lead to a change in
-#' the class of the distribution, we need to be careful to
-#' update the class of the distribution as we simplify it.
-#' 
-#' Finally, the simplifications we initially choose to do can
-#' prevent us from doing other simplifications that may ultimately
-#' be more beneficial. So, we need to try all valid simplifications,
-#' creating new `edist` objects for each simplification, and then
-#' choose the one that is the most simplified.
-#' 
+#'
+#' Attempts to reduce expression distributions to closed-form distributions
+#' when mathematical identities apply. For example:
+#' - normal + normal = normal (sum of independent normals)
+#' - normal - normal = normal (difference of independent normals)
+#'
 #' @param x The `edist` object to simplify
 #' @param ... Additional arguments to pass (not used)
-#' @return The simplified object
+#' @return The simplified distribution, or unchanged `edist` if no rule applies
 #' @export
 simplify.edist <- function(x, ...) {
-   # we need to walk the expression tree from the bottom up
-   # and try all valid simplifications
-   # we also need to update the class of the distribution
-   # as we simplify it
-   # finally, we need to choose the most simplified object
-   # from all the simplifications we tried
-   # for now, we just return the object
-   x
+  expr <- x$e
+  vars <- x$vars
+
+  # Check for binary operations with two operands
+
+  if (length(vars) == 2) {
+    d1 <- vars[[1]]
+    d2 <- vars[[2]]
+
+    # Detect operation from expression
+    op <- if (is.call(expr)) as.character(expr[[1]]) else NULL
+
+    # Rule: normal + normal -> normal
+    # X ~ N(μ₁, σ₁²), Y ~ N(μ₂, σ₂²) => X + Y ~ N(μ₁ + μ₂, σ₁² + σ₂²)
+    if (identical(op, "+") && is_normal(d1) && is_normal(d2)) {
+      return(normal(
+        mu = mean(d1) + mean(d2),
+        var = vcov(d1) + vcov(d2)
+      ))
+    }
+
+    # Rule: normal - normal -> normal
+    # X ~ N(μ₁, σ₁²), Y ~ N(μ₂, σ₂²) => X - Y ~ N(μ₁ - μ₂, σ₁² + σ₂²)
+    if (identical(op, "-") && is_normal(d1) && is_normal(d2)) {
+      return(normal(
+        mu = mean(d1) - mean(d2),
+        var = vcov(d1) + vcov(d2)
+      ))
+    }
+
+    # Additional rules can be added here:
+    # - exponential + exponential (same rate) -> Erlang/Gamma
+    # - sum of n iid exponentials -> Gamma(n, rate)
+    # - etc.
+  }
+
+  # No simplification rule matched, return unchanged
+  x
 }
 
 

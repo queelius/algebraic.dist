@@ -121,27 +121,37 @@ sampler.edist <- function(x, ...) {
 
 
 #' Method for adding `dist` objects.
-#' 
-#' We place the `dist` objects in an expression and then wrap it inside of
-#' an `edist` object.
-#' 
+#'
+#' Creates an expression distribution and automatically simplifies to
+#' closed form when possible (e.g., normal + normal = normal).
+#'
 #' @param x The first `dist` object to add
 #' @param y The second `dist` object to add
-#' @return An `edist` object
+#' @return A simplified distribution or `edist` if no closed form exists
 #' @export
 `+.dist` <- function(x, y) {
-  edist(x + y, list(x, y))
+  simplify(edist(quote(x + y), list(x = x, y = y)))
 }
 
-#' Method for subtracting `dist` objects.
-#'  
-#' We place the `dist` objects in an expression and then wrap it inside of
-#' an `edist` object.
-#' 
-#' @param x The first `dist` object to subtract
-#' @param y The second `dist` object to subtract
-#' @return An `edist` object
+#' Method for negation or subtraction of `dist` objects.
+#'
+#' Unary: returns negated distribution (e.g., -N(μ,σ²) = N(-μ,σ²))
+#' Binary: creates expression distribution and simplifies to closed form
+#' when possible (e.g., normal - normal = normal).
+#'
+#' @param x The first `dist` object
+#' @param y The second `dist` object (optional for unary negation)
+#' @return A simplified distribution or `edist` if no closed form exists
 #' @export
 `-.dist` <- function(x, y) {
-  edist(x - y, list(x, y))
+  if (missing(y)) {
+    # Unary negation
+    if (is_normal(x)) {
+      return(normal(mu = -mean(x), var = vcov(x)))
+    }
+    # For other distributions, create edist with negation
+    return(simplify(edist(quote(-x), list(x = x))))
+  }
+  # Binary subtraction
+  simplify(edist(quote(x - y), list(x = x, y = y)))
 }

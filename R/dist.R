@@ -162,10 +162,3 @@ vcov.default <- function(object, ...) {
   0
 }
 
-#' Method for obtaining the mean of a non-dist object.
-#' @param x The object to retrieve the mean from
-#' @param ... Additional arguments to pass (not used)
-#' @return The mean of the object
-mean.default <- function(x, ...) {
-  x
-}
