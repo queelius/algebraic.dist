@@ -40,7 +40,7 @@ simplify.edist <- function(x, ...) {
     op <- if (is.call(expr)) as.character(expr[[1]]) else NULL
 
     # Rule: normal + normal -> normal
-    # X ~ N(μ₁, σ₁²), Y ~ N(μ₂, σ₂²) => X + Y ~ N(μ₁ + μ₂, σ₁² + σ₂²)
+    # X ~ N(mu1, var1), Y ~ N(mu2, var2) => X + Y ~ N(mu1 + mu2, var1 + var2)
     if (identical(op, "+") && is_normal(d1) && is_normal(d2)) {
       return(normal(
         mu = mean(d1) + mean(d2),
@@ -49,7 +49,7 @@ simplify.edist <- function(x, ...) {
     }
 
     # Rule: normal - normal -> normal
-    # X ~ N(μ₁, σ₁²), Y ~ N(μ₂, σ₂²) => X - Y ~ N(μ₁ - μ₂, σ₁² + σ₂²)
+    # X ~ N(mu1, var1), Y ~ N(mu2, var2) => X - Y ~ N(mu1 - mu2, var1 + var2)
     if (identical(op, "-") && is_normal(d1) && is_normal(d2)) {
       return(normal(
         mu = mean(d1) - mean(d2),

@@ -15,7 +15,7 @@
 A simplified distribution or \code{edist} if no closed form exists
 }
 \description{
-Unary: returns negated distribution (e.g., -N(μ,σ²) = N(-μ,σ²))
+Unary: returns negated distribution (e.g., -N(mu, var) = N(-mu, var))
 Binary: creates expression distribution and simplifies to closed form
 when possible (e.g., normal - normal = normal).
 }
