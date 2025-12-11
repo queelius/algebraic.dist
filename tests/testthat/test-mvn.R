@@ -228,3 +228,48 @@ test_that("cdf.mvn returns cumulative probability", {
   p <- cdf_fn(c(0, 0))
   expect_equal(as.numeric(p), 0.25, tolerance = 0.01)
 })
+
+test_that("sample_mvn_region generates samples within probability region", {
+  # Given: MVN parameters
+  mu <- c(0, 0)
+  sigma <- diag(2)
+
+  # When: Sampling from the 95% probability region
+  set.seed(123)
+  samples <- sample_mvn_region(n = 100, mu = mu, sigma = sigma, p = 0.95)
+
+  # Then: All samples should be within the chi-squared critical value
+  k <- length(mu)
+  crit <- qchisq(0.95, k)
+  mahal_dists <- apply(samples, 1, function(x) mahalanobis(x, center = mu, cov = sigma))
+
+  expect_equal(nrow(samples), 100)
+  expect_equal(ncol(samples), 2)
+  expect_true(all(mahal_dists <= crit))
+})
+
+test_that("sample_mvn_region with p=1 includes all samples", {
+  # Given: MVN parameters
+  mu <- c(0, 0)
+  sigma <- diag(2)
+
+  # When: Sampling with p=1 (entire distribution)
+  set.seed(456)
+  samples <- sample_mvn_region(n = 50, mu = mu, sigma = sigma, p = 1)
+
+  # Then: Should return the requested number of samples
+  expect_equal(nrow(samples), 50)
+  expect_equal(ncol(samples), 2)
+})
+
+test_that("sample_mvn_region validates inputs", {
+  mu <- c(0, 0)
+  sigma <- diag(2)
+
+  # Invalid probability
+  expect_error(sample_mvn_region(n = 10, mu = mu, sigma = sigma, p = 1.5))
+  expect_error(sample_mvn_region(n = 10, mu = mu, sigma = sigma, p = -0.1))
+
+  # Invalid n
+  expect_error(sample_mvn_region(n = 0, mu = mu, sigma = sigma, p = 0.95))
+})

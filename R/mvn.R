@@ -183,14 +183,14 @@ sample_mvn_region <- function(n, mu, sigma, p = .95, ...) {
     k <- length(mu)
     crit <- qchisq(p, k)
     i <- 0L
-    samp <- sampler(x)
+    samp <- sampler(mvn(mu = mu, sigma = sigma))
     data <- matrix(nrow = n, ncol = k)
     while (i < n) {
-        x <- samp(1)
-        d <- mahalanobis(x, center = mu, cov = sigma, ...)
+        candidate <- samp(1)
+        d <- mahalanobis(candidate, center = mu, cov = sigma, ...)
         if (d <= crit) {
             i <- i + 1L
-            data[i, ] <- x
+            data[i, ] <- candidate
         }
     }
     data
