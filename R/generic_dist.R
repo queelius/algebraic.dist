@@ -16,6 +16,15 @@ cdf <- function(x, ...) {
     UseMethod("cdf", x)
 }
 
+#' Generic method for obtaining the pdf (probability density function) of an object.
+#'
+#' @param x The object to obtain the pdf of.
+#' @param ... Additional arguments to pass.
+#' @export
+pdf <- function(x, ...) {
+    UseMethod("pdf", x)
+}
+
 #' Generic method for obtaining the survival function of an object.
 #'
 #' @param x The object to obtain the survival function of.
