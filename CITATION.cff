@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "algebraic.dist: Algebra over Probability Distributions"
+version: 0.1.0
+date-released: "2025-12-02"
+license: GPL-3.0-or-later
+url: "https://github.com/queelius/algebraic.dist"
+repository-code: "https://github.com/queelius/algebraic.dist"
+authors:
+  - family-names: Towell
+    given-names: Alexander
+    email: lex@metafunctor.com
+    orcid: "https://orcid.org/0000-0001-6443-9897"
+keywords:
+  - probability distributions
+  - distribution algebra
+  - multivariate normal
+  - empirical distribution
+  - Monte Carlo
+  - R
+  - statistics
+abstract: >-
+  An R package providing an algebra over probability distributions.
+  Compose, sample, and automatically simplify distributions using
+  algebraic operations. Supports normal, exponential, multivariate
+  normal, and empirical distributions with expression distributions
+  (edist) for lazy composition and automatic simplification to
+  closed forms when mathematical identities apply.

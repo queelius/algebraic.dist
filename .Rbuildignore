@@ -19,3 +19,4 @@
 ^\.claude$
 ^featured\.png$
 ^cran-comments\.md$
+^CITATION\.cff$
