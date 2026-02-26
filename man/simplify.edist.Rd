@@ -24,8 +24,14 @@ Single-variable:
 \item c * Normal(mu, v) -> Normal(c\emph{mu, c^2}v)
 \item c * Gamma(a, r) -> Gamma(a, r/c) for c > 0
 \item c * Exponential(r) -> Gamma(1, r/c) for c > 0
+\item c * Uniform(a, b) -> Uniform(min(ca,cb), max(ca,cb)) for c != 0
+\item c * Weibull(k, lam) -> Weibull(k, c*lam) for c > 0
+\item c * ChiSq(df) -> Gamma(df/2, 1/(2c)) for c > 0
+\item c * LogNormal(ml, sl) -> LogNormal(ml + log(c), sl) for c > 0
 \item Normal(mu, v) + c -> Normal(mu + c, v)
 \item Normal(mu, v) - c -> Normal(mu - c, v)
+\item Uniform(a, b) + c -> Uniform(a + c, b + c)
+\item Uniform(a, b) - c -> Uniform(a - c, b - c)
 \item Normal(0, 1) ^ 2 -> ChiSquared(1)
 \item exp(Normal(mu, v)) -> LogNormal(mu, sqrt(v))
 \item log(LogNormal(ml, sl)) -> Normal(ml, sl^2)
@@ -40,5 +46,6 @@ Two-variable:
 \item Gamma + Exponential (same rate) -> Gamma(a+1, rate)
 \item ChiSquared + ChiSquared -> ChiSquared
 \item Poisson + Poisson -> Poisson
+\item LogNormal * LogNormal -> LogNormal
 }
 }

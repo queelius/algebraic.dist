@@ -165,6 +165,9 @@ sampler.edist <- function(x, ...) {
     if (is_normal(x)) {
       return(normal(mu = -mean(x), var = vcov(x)))
     }
+    if (is_uniform_dist(x)) {
+      return(uniform_dist(min = -x$max, max = -x$min))
+    }
     # For other distributions, create edist with negation
     return(simplify(edist(quote(-x), list(x = x))))
   }
@@ -212,6 +215,27 @@ sampler.edist <- function(x, ...) {
     return(simplify(edist(substitute(x^c, list(c = y)), list(x = x))))
   }
   simplify(edist(quote(x^y), list(x = x, y = y)))
+}
+
+#' Division of distribution objects.
+#'
+#' Handles dist / scalar (delegates to dist * (1/scalar)),
+#' scalar / dist, and dist / dist.
+#' @param x first operand
+#' @param y second operand
+#' @return A simplified distribution or edist
+#' @export
+`/.dist` <- function(x, y) {
+  if (is.numeric(y) && length(y) == 1) {
+    # dist / scalar → dist * (1/scalar), reuses scalar multiplication rules
+    return(x * (1 / y))
+  }
+  if (is.numeric(x) && length(x) == 1) {
+    # scalar / dist
+    return(simplify(edist(substitute(c / x, list(c = x)), list(x = y))))
+  }
+  # dist / dist
+  simplify(edist(quote(x / y), list(x = x, y = y)))
 }
 
 #' Math group generic for distribution objects.

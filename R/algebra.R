@@ -24,8 +24,14 @@ simplify.dist <- function(x, ...) {
 #' - c * Normal(mu, v) -> Normal(c*mu, c^2*v)
 #' - c * Gamma(a, r) -> Gamma(a, r/c) for c > 0
 #' - c * Exponential(r) -> Gamma(1, r/c) for c > 0
+#' - c * Uniform(a, b) -> Uniform(min(ca,cb), max(ca,cb)) for c != 0
+#' - c * Weibull(k, lam) -> Weibull(k, c*lam) for c > 0
+#' - c * ChiSq(df) -> Gamma(df/2, 1/(2c)) for c > 0
+#' - c * LogNormal(ml, sl) -> LogNormal(ml + log(c), sl) for c > 0
 #' - Normal(mu, v) + c -> Normal(mu + c, v)
 #' - Normal(mu, v) - c -> Normal(mu - c, v)
+#' - Uniform(a, b) + c -> Uniform(a + c, b + c)
+#' - Uniform(a, b) - c -> Uniform(a - c, b - c)
 #' - Normal(0, 1) ^ 2 -> ChiSquared(1)
 #' - exp(Normal(mu, v)) -> LogNormal(mu, sqrt(v))
 #' - log(LogNormal(ml, sl)) -> Normal(ml, sl^2)
@@ -38,6 +44,7 @@ simplify.dist <- function(x, ...) {
 #' - Gamma + Exponential (same rate) -> Gamma(a+1, rate)
 #' - ChiSquared + ChiSquared -> ChiSquared
 #' - Poisson + Poisson -> Poisson
+#' - LogNormal * LogNormal -> LogNormal
 #'
 #' @param x The `edist` object to simplify
 #' @param ... Additional arguments to pass (not used)
@@ -73,6 +80,24 @@ simplify.edist <- function(x, ...) {
         if (scalar > 0 && is_exponential(d)) {
           return(gamma_dist(shape = 1, rate = d$rate / scalar))
         }
+        # c * Uniform(a, b) -> Uniform(min(ca,cb), max(ca,cb)) when c != 0
+        if (scalar != 0 && is_uniform_dist(d)) {
+          new_a <- scalar * d$min
+          new_b <- scalar * d$max
+          return(uniform_dist(min = min(new_a, new_b), max = max(new_a, new_b)))
+        }
+        # c * Weibull(k, lam) -> Weibull(k, c*lam) when c > 0
+        if (scalar > 0 && is_weibull_dist(d)) {
+          return(weibull_dist(shape = d$shape, scale = scalar * d$scale))
+        }
+        # c * ChiSq(df) -> Gamma(df/2, 1/(2c)) when c > 0
+        if (scalar > 0 && is_chi_squared(d)) {
+          return(gamma_dist(shape = d$df / 2, rate = 1 / (2 * scalar)))
+        }
+        # c * LogNormal(ml, sl) -> LogNormal(ml + log(c), sl) when c > 0
+        if (scalar > 0 && is_lognormal(d)) {
+          return(lognormal(meanlog = d$meanlog + log(scalar), sdlog = d$sdlog))
+        }
       }
     }
 
@@ -88,8 +113,15 @@ simplify.edist <- function(x, ...) {
         scalar <- if (is.numeric(rhs)) -rhs else NULL
       }
 
-      if (!is.null(scalar) && is_normal(d)) {
-        return(normal(mu = mean(d) + scalar, var = vcov(d)))
+      if (!is.null(scalar)) {
+        if (is_normal(d)) {
+          return(normal(mu = mean(d) + scalar, var = vcov(d)))
+        }
+        # Uniform(a, b) + c -> Uniform(a + c, b + c)
+        # Uniform(a, b) - c -> Uniform(a - c, b - c)  (scalar is already negated)
+        if (is_uniform_dist(d)) {
+          return(uniform_dist(min = d$min + scalar, max = d$max + scalar))
+        }
       }
     }
 
@@ -164,6 +196,18 @@ simplify.edist <- function(x, ...) {
       # Normal - Normal -> Normal
       if (is_normal(d1) && is_normal(d2)) {
         return(normal(mu = mean(d1) - mean(d2), var = vcov(d1) + vcov(d2)))
+      }
+    }
+
+    if (identical(op, "*")) {
+      # LogNormal * LogNormal -> LogNormal
+      # Product of independent log-normals is log-normal:
+      # log(X*Y) = log(X) + log(Y) ~ Normal(ml1+ml2, sl1^2+sl2^2)
+      if (is_lognormal(d1) && is_lognormal(d2)) {
+        return(lognormal(
+          meanlog = d1$meanlog + d2$meanlog,
+          sdlog = sqrt(d1$sdlog^2 + d2$sdlog^2)
+        ))
       }
     }
   }

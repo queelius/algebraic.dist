@@ -266,3 +266,173 @@ test_that("zero location shift of normal", {
   expect_equal(mean(d), 5)
   expect_equal(vcov(d), 3)
 })
+
+# ---- Uniform location shift rules ----
+
+test_that("uniform + scalar simplifies", {
+  d <- uniform_dist(2, 5) + 3
+  expect_true(is_uniform_dist(d))
+  expect_equal(d$min, 5)
+  expect_equal(d$max, 8)
+})
+
+test_that("scalar + uniform simplifies", {
+  d <- 3 + uniform_dist(2, 5)
+  expect_true(is_uniform_dist(d))
+  expect_equal(d$min, 5)
+  expect_equal(d$max, 8)
+})
+
+test_that("uniform - scalar simplifies", {
+  d <- uniform_dist(2, 5) - 1
+  expect_true(is_uniform_dist(d))
+  expect_equal(d$min, 1)
+  expect_equal(d$max, 4)
+})
+
+# ---- Uniform scale rules ----
+
+test_that("positive scalar * uniform simplifies", {
+  d <- 2 * uniform_dist(1, 4)
+  expect_true(is_uniform_dist(d))
+  expect_equal(d$min, 2)
+  expect_equal(d$max, 8)
+})
+
+test_that("negative scalar * uniform flips bounds", {
+  d <- (-2) * uniform_dist(1, 4)
+  expect_true(is_uniform_dist(d))
+  expect_equal(d$min, -8)
+  expect_equal(d$max, -2)
+})
+
+test_that("uniform / scalar simplifies via multiplication", {
+  d <- uniform_dist(2, 6) / 2
+  expect_true(is_uniform_dist(d))
+  expect_equal(d$min, 1)
+  expect_equal(d$max, 3)
+})
+
+# ---- Unary negation of uniform ----
+
+test_that("-uniform flips bounds", {
+  d <- -uniform_dist(1, 4)
+  expect_true(is_uniform_dist(d))
+  expect_equal(d$min, -4)
+  expect_equal(d$max, -1)
+})
+
+# ---- Weibull scale rule ----
+
+test_that("positive scalar * weibull simplifies", {
+  d <- 3 * weibull_dist(shape = 2, scale = 5)
+  expect_true(is_weibull_dist(d))
+  expect_equal(d$shape, 2)
+  expect_equal(d$scale, 15)
+})
+
+test_that("weibull / scalar simplifies", {
+  d <- weibull_dist(shape = 2, scale = 6) / 3
+  expect_true(is_weibull_dist(d))
+  expect_equal(d$shape, 2)
+  expect_equal(d$scale, 2)
+})
+
+test_that("negative scalar * weibull stays edist", {
+  d <- (-2) * weibull_dist(shape = 2, scale = 5)
+  expect_true(is_edist(d))
+})
+
+# ---- ChiSq scale rule ----
+
+test_that("positive scalar * chi_squared -> gamma", {
+  d <- 3 * chi_squared(4)
+  expect_true(is_gamma_dist(d))
+  expect_equal(d$shape, 2)    # df/2 = 4/2
+  expect_equal(d$rate, 1/6)   # 1/(2*3)
+})
+
+test_that("chi_squared / scalar -> gamma", {
+  d <- chi_squared(6) / 2
+  expect_true(is_gamma_dist(d))
+  expect_equal(d$shape, 3)    # 6/2
+  expect_equal(d$rate, 1)     # 1/(2*0.5)
+})
+
+# ---- LogNormal scale rule ----
+
+test_that("positive scalar * lognormal simplifies", {
+  d <- 2 * lognormal(3, 1)
+  expect_true(is_lognormal(d))
+  expect_equal(d$meanlog, 3 + log(2))
+  expect_equal(d$sdlog, 1)
+})
+
+test_that("lognormal / scalar simplifies", {
+  d <- lognormal(3, 1) / 2
+  expect_true(is_lognormal(d))
+  expect_equal(d$meanlog, 3 + log(0.5))
+  expect_equal(d$sdlog, 1)
+})
+
+test_that("negative scalar * lognormal stays edist", {
+  d <- (-2) * lognormal(3, 1)
+  expect_true(is_edist(d))
+})
+
+# ---- LogNormal * LogNormal rule ----
+
+test_that("lognormal * lognormal simplifies", {
+  d <- lognormal(1, 2) * lognormal(3, 4)
+  expect_true(is_lognormal(d))
+  expect_equal(d$meanlog, 4)
+  expect_equal(d$sdlog, sqrt(4 + 16))
+})
+
+test_that("prod of lognormals chains correctly", {
+  d <- prod(lognormal(1, 1), lognormal(2, 1), lognormal(3, 1))
+  expect_true(is_lognormal(d))
+  expect_equal(d$meanlog, 6)
+  expect_equal(d$sdlog, sqrt(3))
+})
+
+# ---- Division operator ----
+
+test_that("scalar / dist creates edist", {
+  d <- 1 / normal(1, 1)
+  expect_true(is_edist(d))
+})
+
+test_that("dist / dist creates edist", {
+  d <- normal(1, 1) / normal(2, 1)
+  expect_true(is_edist(d))
+})
+
+# ---- MC validation of new rules ----
+
+test_that("uniform shift: MC moments match closed form", {
+  d_unsimplified <- edist(quote(x + 3), list(x = uniform_dist(0, 1)))
+  d_simplified <- uniform_dist(3, 4)
+
+  set.seed(42)
+  s1 <- sampler(d_unsimplified)(50000)
+  expect_equal(mean(s1), mean(d_simplified), tolerance = 0.05)
+  expect_equal(var(s1), vcov(d_simplified), tolerance = 0.05)
+})
+
+test_that("weibull scale: MC moments match closed form", {
+  d_simplified <- 3 * weibull_dist(shape = 2, scale = 5)
+
+  set.seed(42)
+  # Sample from unsimplified version
+  raw <- 3 * rweibull(50000, shape = 2, scale = 5)
+  expect_equal(mean(raw), mean(d_simplified), tolerance = 0.2)
+})
+
+test_that("lognormal product: MC moments match closed form", {
+  d_simplified <- lognormal(1, 2) * lognormal(3, 4)
+
+  set.seed(42)
+  raw <- rlnorm(50000, 1, 2) * rlnorm(50000, 3, 4)
+  expect_equal(mean(log(raw)), d_simplified$meanlog, tolerance = 0.1)
+})
