@@ -36,6 +36,12 @@ test_that("uniform_dist errors with non-numeric max", {
   expect_error(uniform_dist(max = c(1, 2)), "'max' must be a numeric scalar")
 })
 
+test_that("uniform_dist errors with NA parameters", {
+  expect_error(uniform_dist(min = NA), "'min' must be a numeric scalar")
+  expect_error(uniform_dist(max = NA), "'max' must be a numeric scalar")
+  expect_error(uniform_dist(min = NA_real_), "'min' must be a numeric scalar")
+})
+
 # -- is_uniform_dist -------------------------------------------------------
 
 test_that("is_uniform_dist identifies uniform_dist objects correctly", {

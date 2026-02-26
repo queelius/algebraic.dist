@@ -114,8 +114,8 @@ density.gamma_dist <- function(x, ...) {
 #' @importFrom stats pgamma
 #' @export
 cdf.gamma_dist <- function(x, ...) {
-  function(t, log.p = FALSE) {
-    pgamma(q = t, shape = x$shape, rate = x$rate, log.p = log.p)
+  function(q, log.p = FALSE) {
+    pgamma(q = q, shape = x$shape, rate = x$rate, log.p = log.p)
   }
 }
 
@@ -163,10 +163,11 @@ surv.gamma_dist <- function(x, ...) {
 #' @return A function that computes h(t) = f(t) / S(t)
 #' @export
 hazard.gamma_dist <- function(x, ...) {
-  f <- density(x)
-  S <- surv(x)
   function(t, log = FALSE) {
-    h <- f(t) / S(t)
-    if (log) log(h) else h
+    log_f <- dgamma(t, shape = x$shape, rate = x$rate, log = TRUE)
+    log_S <- pgamma(t, shape = x$shape, rate = x$rate,
+                    lower.tail = FALSE, log.p = TRUE)
+    log_h <- log_f - log_S
+    if (log) log_h else exp(log_h)
   }
 }

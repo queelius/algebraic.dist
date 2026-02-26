@@ -10,9 +10,9 @@
 #'   \code{c("uniform_dist", "univariate_dist", "continuous_dist", "dist")}.
 #' @export
 uniform_dist <- function(min = 0, max = 1) {
-  if (!is.numeric(min) || length(min) != 1)
+  if (!is.numeric(min) || length(min) != 1 || is.na(min))
     stop("'min' must be a numeric scalar, got: ", deparse(min))
-  if (!is.numeric(max) || length(max) != 1)
+  if (!is.numeric(max) || length(max) != 1 || is.na(max))
     stop("'max' must be a numeric scalar, got: ", deparse(max))
   if (min >= max)
     stop("'min' must be less than 'max', got min = ", min, ", max = ", max)

@@ -403,3 +403,44 @@ test_that("mixture weights tolerance allows tiny numerical error", {
   w <- c(1/3, 2/3)
   expect_no_error(mixture(list(n1, n2), w))
 })
+
+# --- Multivariate mixture tests ---
+
+test_that("multivariate mixture sampler returns correct shape", {
+  set.seed(42)
+  m1 <- mvn(mu = c(0, 0), sigma = diag(2))
+  m2 <- mvn(mu = c(5, 5), sigma = diag(2))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  samp_fn <- sampler(mix)
+  samples <- samp_fn(100)
+  expect_true(is.matrix(samples))
+  expect_equal(nrow(samples), 100)
+  expect_equal(ncol(samples), 2)
+})
+
+test_that("multivariate mixture vcov returns correct covariance matrix", {
+  m1 <- mvn(mu = c(0, 0), sigma = diag(2))
+  m2 <- mvn(mu = c(4, 4), sigma = diag(2))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  V <- vcov(mix)
+  expect_true(is.matrix(V))
+  expect_equal(nrow(V), 2)
+  expect_equal(ncol(V), 2)
+  # Within-component variance: 0.5 * I + 0.5 * I = I
+  # Between-component variance: 0.5 * outer(c(-2,-2), c(-2,-2)) +
+  #                              0.5 * outer(c(2,2), c(2,2)) = 4 * ones
+  # Total diagonal should be 1 + 4 = 5
+  expect_equal(V[1, 1], 5, tolerance = 1e-10)
+  expect_equal(V[2, 2], 5, tolerance = 1e-10)
+  expect_equal(V[1, 2], 4, tolerance = 1e-10)
+})
+
+test_that("multivariate mixture inherits multivariate_dist class", {
+  m1 <- mvn(mu = c(0, 0))
+  m2 <- mvn(mu = c(1, 1))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  expect_s3_class(mix, "multivariate_dist")
+})

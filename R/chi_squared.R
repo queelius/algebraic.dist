@@ -112,8 +112,8 @@ density.chi_squared <- function(x, ...) {
 #' @importFrom stats pchisq
 #' @export
 cdf.chi_squared <- function(x, ...) {
-  function(t, log.p = FALSE) {
-    pchisq(q = t, df = x$df, log.p = log.p)
+  function(q, log.p = FALSE) {
+    pchisq(q = q, df = x$df, log.p = log.p)
   }
 }
 
@@ -159,10 +159,10 @@ surv.chi_squared <- function(x, ...) {
 #' @return A function that computes h(t) = f(t) / S(t)
 #' @export
 hazard.chi_squared <- function(x, ...) {
-  f <- density(x)
-  S <- surv(x)
   function(t, log = FALSE) {
-    h <- f(t) / S(t)
-    if (log) log(h) else h
+    log_f <- dchisq(t, df = x$df, log = TRUE)
+    log_S <- pchisq(t, df = x$df, lower.tail = FALSE, log.p = TRUE)
+    log_h <- log_f - log_S
+    if (log) log_h else exp(log_h)
   }
 }

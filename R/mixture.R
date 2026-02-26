@@ -78,16 +78,28 @@ mean.mixture <- function(x, ...) {
 #' @return The variance (scalar for univariate mixtures).
 #' @export
 vcov.mixture <- function(object, ...) {
-  comp_means <- sapply(object$components, mean)
-  comp_vars <- sapply(object$components, vcov)
-  overall_mean <- sum(object$weights * comp_means)
-
-  # E[Var(X|K)]
-  within_var <- sum(object$weights * comp_vars)
-  # Var(E[X|K])
-  between_var <- sum(object$weights * (comp_means - overall_mean)^2)
-
-  within_var + between_var
+  d <- dim(object$components[[1]])
+  if (d == 1) {
+    # Univariate law of total variance
+    comp_means <- sapply(object$components, mean)
+    comp_vars <- sapply(object$components, vcov)
+    overall_mean <- sum(object$weights * comp_means)
+    within_var <- sum(object$weights * comp_vars)
+    between_var <- sum(object$weights * (comp_means - overall_mean)^2)
+    within_var + between_var
+  } else {
+    # Multivariate law of total variance
+    overall_mean <- mean(object)
+    within_cov <- matrix(0, d, d)
+    between_cov <- matrix(0, d, d)
+    for (k in seq_along(object$components)) {
+      w <- object$weights[k]
+      within_cov <- within_cov + w * vcov(object$components[[k]])
+      dev <- mean(object$components[[k]]) - overall_mean
+      between_cov <- between_cov + w * outer(dev, dev)
+    }
+    within_cov + between_cov
+  }
 }
 
 #' Probability density function for a mixture distribution.
@@ -144,16 +156,27 @@ cdf.mixture <- function(x, ...) {
 #' @export
 sampler.mixture <- function(x, ...) {
   comp_samplers <- lapply(x$components, sampler)
+  d <- dim(x$components[[1]])
+  is_mv <- d > 1
   function(n = 1, ...) {
     # Draw component indices
     indices <- sample(length(x$components), n, replace = TRUE,
                       prob = x$weights)
-    # Sample from each chosen component
-    result <- numeric(n)
-    for (k in seq_along(x$components)) {
-      mask <- indices == k
-      if (any(mask)) {
-        result[mask] <- comp_samplers[[k]](sum(mask), ...)
+    if (is_mv) {
+      result <- matrix(NA_real_, nrow = n, ncol = d)
+      for (k in seq_along(x$components)) {
+        mask <- indices == k
+        if (any(mask)) {
+          result[mask, ] <- comp_samplers[[k]](sum(mask), ...)
+        }
+      }
+    } else {
+      result <- numeric(n)
+      for (k in seq_along(x$components)) {
+        mask <- indices == k
+        if (any(mask)) {
+          result[mask] <- comp_samplers[[k]](sum(mask), ...)
+        }
       }
     }
     result

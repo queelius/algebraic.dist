@@ -19,6 +19,9 @@ expect_error(poisson_dist(lambda = 0))
   expect_error(poisson_dist(lambda = c(1, 2)))
   # NULL
   expect_error(poisson_dist(lambda = NULL))
+  # NA
+  expect_error(poisson_dist(lambda = NA), "'lambda' must be a positive scalar")
+  expect_error(poisson_dist(lambda = NA_real_), "'lambda' must be a positive scalar")
 })
 
 test_that("poisson_dist has correct class hierarchy", {

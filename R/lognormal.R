@@ -202,10 +202,11 @@ surv.lognormal <- function(x, ...) {
 #'   (or log-hazard) at \code{t}.
 #' @export
 hazard.lognormal <- function(x, ...) {
-  f <- density(x)
-  S <- surv(x)
   function(t, log = FALSE) {
-    h <- f(t) / S(t)
-    if (log) log(h) else h
+    log_f <- dlnorm(t, meanlog = x$meanlog, sdlog = x$sdlog, log = TRUE)
+    log_S <- plnorm(t, meanlog = x$meanlog, sdlog = x$sdlog,
+                    lower.tail = FALSE, log.p = TRUE)
+    log_h <- log_f - log_S
+    if (log) log_h else exp(log_h)
   }
 }

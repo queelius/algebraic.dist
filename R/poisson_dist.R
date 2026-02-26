@@ -9,7 +9,7 @@
 #'   \code{c("poisson_dist", "univariate_dist", "discrete_dist", "dist")}.
 #' @export
 poisson_dist <- function(lambda) {
-  if (!is.numeric(lambda) || length(lambda) != 1 || lambda <= 0)
+  if (!is.numeric(lambda) || length(lambda) != 1 || is.na(lambda) || lambda <= 0)
     stop("'lambda' must be a positive scalar, got: ", deparse(lambda))
   structure(list(lambda = lambda),
             class = c("poisson_dist", "univariate_dist",
