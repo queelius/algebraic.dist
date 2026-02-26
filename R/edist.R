@@ -15,7 +15,7 @@ edist <- function(e, vars) {
   classes <- paste0(classes, collapse = "_")
   expr_str <- paste0(e, "_", classes)
   expr_str <- gsub(" ", "_", expr_str)
-  structure(list(e = e, vars = vars),
+  structure(list(e = e, vars = vars, .cache = new.env(parent = emptyenv())),
             class = c(expr_str, "edist", "dist"))
 }
 
@@ -42,9 +42,9 @@ params.edist <- function(x) {
 #' @return The variance-covariance matrix of the `edist` object
 #' @export
 vcov.edist <- function(object, n = 10000, ...) {
-  samp <- sampler(object)(n)
-  if (is.matrix(samp)) cov(samp)
-  else var(samp)
+  v <- vcov(ensure_realized(object, n = n))
+  # vcov.empirical_dist returns a matrix; drop to scalar for univariate
+  drop(v)
 }
 
 #' Method for obtaining the mean of an `edist` object.
@@ -54,9 +54,7 @@ vcov.edist <- function(object, n = 10000, ...) {
 #' @return The mean of the `edist` object
 #' @export
 mean.edist <- function(x, n = 10000, ...) {
-  samp <- sampler(x)(n)
-  if (is.matrix(samp)) colMeans(samp)
-  else mean(samp)
+  mean(ensure_realized(x, n = n))
 }
 
 #' Format method for `edist` objects.
@@ -287,7 +285,7 @@ Summary.dist <- function(..., na.rm = FALSE) {
 #' @return A function computing the empirical CDF.
 #' @export
 cdf.edist <- function(x, ...) {
-  cdf(realize(x), ...)
+  cdf(ensure_realized(x), ...)
 }
 
 #' Density for expression distributions.
@@ -300,7 +298,7 @@ cdf.edist <- function(x, ...) {
 #' @return A function computing the empirical density (PMF).
 #' @export
 density.edist <- function(x, ...) {
-  density(realize(x), ...)
+  density(ensure_realized(x), ...)
 }
 
 #' Support for expression distributions.
@@ -312,7 +310,7 @@ density.edist <- function(x, ...) {
 #' @return A \code{finite_set} support object.
 #' @export
 sup.edist <- function(x) {
-  sup(realize(x))
+  sup(ensure_realized(x))
 }
 
 #' Conditional distribution for expression distributions.
@@ -326,7 +324,7 @@ sup.edist <- function(x) {
 #' @return A conditional \code{empirical_dist}.
 #' @export
 conditional.edist <- function(x, P, ...) {
-  conditional(realize(x), P, ...)
+  conditional(ensure_realized(x), P, ...)
 }
 
 #' Map function over expression distribution.
@@ -340,7 +338,7 @@ conditional.edist <- function(x, P, ...) {
 #' @return A transformed \code{empirical_dist}.
 #' @export
 rmap.edist <- function(x, g, ...) {
-  rmap(realize(x), g, ...)
+  rmap(ensure_realized(x), g, ...)
 }
 
 #' Inverse CDF (quantile function) for expression distributions.
@@ -354,5 +352,5 @@ rmap.edist <- function(x, g, ...) {
 #' @return A function computing the empirical quantile function.
 #' @export
 inv_cdf.edist <- function(x, ...) {
-  inv_cdf(realize(x), ...)
+  inv_cdf(ensure_realized(x), ...)
 }

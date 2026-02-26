@@ -79,7 +79,7 @@ summary.dist <- function(object, ..., name = NULL, nobs = NULL) {
 #' @param ... additional arguments to pass into `P`.
 #' @export
 conditional.dist <- function(x, P, n = 10000L, ...) {
-  conditional(empirical_dist(sampler(x)(n)), P)
+  conditional(ensure_realized(x, n = n), P, ...)
 }
 
 #' Method for obtaining g(x)) where x is a `dist` object.
@@ -93,7 +93,7 @@ conditional.dist <- function(x, P, n = 10000L, ...) {
 #' @param ... additional arguments to pass into `g`.
 #' @export
 rmap.dist <- function(x, g, n = 10000L, ...) {
-  rmap(empirical_dist(sampler(x)(n)), g, ...)
+  rmap(ensure_realized(x, n = n), g, ...)
 }
 
 

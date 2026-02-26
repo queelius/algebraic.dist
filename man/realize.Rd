@@ -4,6 +4,7 @@
 \alias{realize}
 \alias{realize.dist}
 \alias{realize.empirical_dist}
+\alias{realize.realized_dist}
 \title{Materialize any distribution to empirical_dist by sampling.}
 \usage{
 realize(x, n = 10000, ...)
@@ -11,6 +12,8 @@ realize(x, n = 10000, ...)
 \method{realize}{dist}(x, n = 10000, ...)
 
 \method{realize}{empirical_dist}(x, ...)
+
+\method{realize}{realized_dist}(x, n = 10000, ...)
 }
 \arguments{
 \item{x}{A distribution object (inheriting from \code{dist}).}
@@ -20,7 +23,8 @@ realize(x, n = 10000, ...)
 \item{...}{Additional arguments passed to methods.}
 }
 \value{
-An \code{\link{empirical_dist}} object.
+An \code{\link{empirical_dist}} (or \code{\link{realized_dist}})
+object.
 }
 \description{
 \code{realize} draws \code{n} samples from a distribution and wraps
@@ -31,6 +35,14 @@ converted to a discrete approximation on which methods like
 are always available.
 }
 \details{
+For non-empirical distributions, the result is a
+\code{\link{realized_dist}} that preserves the source distribution
+as provenance metadata.  This enables re-sampling via
+\code{realize(x$source, n = ...)} and informative printing.
+
 The \code{empirical_dist} method is a no-op: the distribution is
 already materialized.
+
+The \code{realized_dist} method re-samples from the original source
+distribution, allowing cheap regeneration with a different sample size.
 }
