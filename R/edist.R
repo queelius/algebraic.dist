@@ -235,6 +235,8 @@ Math.dist <- function(x, ...) {
 #' @param ... dist objects
 #' @param na.rm ignored
 #' @return A simplified distribution or edist
+#' @rdname dist_summary_group
+#' @importFrom stats setNames
 #' @export
 Summary.dist <- function(..., na.rm = FALSE) {
   op <- .Generic

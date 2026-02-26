@@ -1,16 +1,17 @@
 Package: algebraic.dist
 Title: Algebra over Probability Distributions
-Version: 0.1.0
+Version: 0.2.0
 Authors@R:
     person("Alexander", "Towell", , "lex@metafunctor.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6443-9897"))
 Description: Provides an algebra over probability distributions enabling
     composition, sampling, and automatic simplification to closed forms.
-    Supports normal, exponential, multivariate normal, and empirical
-    distributions with operations like addition and subtraction that
-    automatically simplify when mathematical identities apply (e.g., the
-    sum of independent normal distributions is normal). Uses S3 classes for
-    distributions and R6 for support objects.
+    Supports normal, exponential, gamma, Weibull, chi-squared, uniform,
+    beta, log-normal, Poisson, multivariate normal, empirical, and mixture
+    distributions with algebraic operators (addition, subtraction,
+    multiplication, power, exp, log, min, max) that automatically simplify
+    when mathematical identities apply. Uses S3 classes for distributions
+    and R6 for support objects.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
