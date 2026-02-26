@@ -212,6 +212,27 @@ cdf.empirical_dist <- function(x, ...) {
   ecdf(x$data)
 }
 
+#' Method for obtaining the inverse CDF (quantile function) of a univariate
+#' `empirical_dist` object.
+#'
+#' Uses the empirical quantile function from the observed data.
+#'
+#' @param x The empirical distribution object.
+#' @param ... Additional arguments (not used).
+#' @return A function that accepts a vector of probabilities `p` and returns
+#'   the corresponding quantiles.
+#' @importFrom stats quantile
+#' @export
+inv_cdf.empirical_dist <- function(x, ...) {
+  if (dim(x) > 1) {
+    stop("inv_cdf not defined for multivariate empirical distribution")
+  }
+  xdata <- as.numeric(x$data)
+  function(p, ...) {
+    as.numeric(quantile(xdata, probs = p, type = 1, ...))
+  }
+}
+
 #' Method for obtaining the support of `empirical_dist` object `x`.
 #' @param x The empirical distribution object.
 #' @return A `finite_set` object containing the support of `x`.

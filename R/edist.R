@@ -155,3 +155,87 @@ sampler.edist <- function(x, ...) {
   # Binary subtraction
   simplify(edist(quote(x - y), list(x = x, y = y)))
 }
+
+
+# ---- edist auto-fallback methods via realize() ----------------------------
+
+#' CDF for expression distributions.
+#'
+#' Falls back to \code{\link{realize}} to materialize the distribution
+#' as an \code{\link{empirical_dist}}, then delegates to
+#' \code{\link{cdf.empirical_dist}}.
+#'
+#' @param x An \code{edist} object.
+#' @param ... Additional arguments forwarded to \code{cdf.empirical_dist}.
+#' @return A function computing the empirical CDF.
+#' @export
+cdf.edist <- function(x, ...) {
+  cdf(realize(x), ...)
+}
+
+#' Density for expression distributions.
+#'
+#' Falls back to \code{\link{realize}} and delegates to
+#' \code{\link{density.empirical_dist}}.
+#'
+#' @param x An \code{edist} object.
+#' @param ... Additional arguments forwarded to \code{density.empirical_dist}.
+#' @return A function computing the empirical density (PMF).
+#' @export
+density.edist <- function(x, ...) {
+  density(realize(x), ...)
+}
+
+#' Support for expression distributions.
+#'
+#' Falls back to \code{\link{realize}} and delegates to
+#' \code{\link{sup.empirical_dist}}.
+#'
+#' @param x An \code{edist} object.
+#' @return A \code{finite_set} support object.
+#' @export
+sup.edist <- function(x) {
+  sup(realize(x))
+}
+
+#' Conditional distribution for expression distributions.
+#'
+#' Falls back to \code{\link{realize}} and delegates to
+#' \code{\link{conditional.empirical_dist}}.
+#'
+#' @param x An \code{edist} object.
+#' @param P Predicate function to condition on.
+#' @param ... Additional arguments forwarded to the predicate \code{P}.
+#' @return A conditional \code{empirical_dist}.
+#' @export
+conditional.edist <- function(x, P, ...) {
+  conditional(realize(x), P, ...)
+}
+
+#' Map function over expression distribution.
+#'
+#' Falls back to \code{\link{realize}} and delegates to
+#' \code{\link{rmap.empirical_dist}}.
+#'
+#' @param x An \code{edist} object.
+#' @param g Function to apply to each observation.
+#' @param ... Additional arguments forwarded to \code{g}.
+#' @return A transformed \code{empirical_dist}.
+#' @export
+rmap.edist <- function(x, g, ...) {
+  rmap(realize(x), g, ...)
+}
+
+#' Inverse CDF (quantile function) for expression distributions.
+#'
+#' Falls back to \code{\link{realize}} and delegates to
+#' \code{\link{inv_cdf.empirical_dist}}.
+#'
+#' @param x An \code{edist} object.
+#' @param ... Additional arguments forwarded to
+#'   \code{inv_cdf.empirical_dist}.
+#' @return A function computing the empirical quantile function.
+#' @export
+inv_cdf.edist <- function(x, ...) {
+  inv_cdf(realize(x), ...)
+}
