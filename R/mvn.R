@@ -19,10 +19,14 @@ mvn <- function(
     mu,
     sigma = diag(length(mu))) {
 
-    stopifnot(is.numeric(mu),
-              is.matrix(sigma),
-              nrow(sigma) == ncol(sigma),
-              nrow(sigma) == length(mu))
+    if (!is.numeric(mu))
+        stop("'mu' must be a numeric vector, got: ", deparse(mu))
+    if (!is.matrix(sigma) || !is.numeric(sigma))
+        stop("'sigma' must be a numeric matrix")
+    if (nrow(sigma) != ncol(sigma))
+        stop("'sigma' must be square, got ", nrow(sigma), "x", ncol(sigma))
+    if (nrow(sigma) != length(mu))
+        stop("dimensions of 'sigma' (", nrow(sigma), ") must match length of 'mu' (", length(mu), ")")
 
     if (length(mu) == 1) {
         return(normal(mu, sigma))
@@ -197,15 +201,26 @@ sample_mvn_region <- function(n, mu, sigma, p = .95, ...) {
 }
 
 
+#' Format method for `mvn` objects.
+#' @param x The object to format
+#' @param ... Additional arguments (not used)
+#' @return A character string
+#' @export
+format.mvn <- function(x, ...) {
+    sprintf("Multivariate normal distribution (%d dimensions)", length(x$mu))
+}
+
 #' Method for printing an `mvn` object.
 #' @param x The object to print
 #' @param ... Additional arguments to pass to `print`
 #' @export
 print.mvn <- function(x, ...) {
-    cat("Multivariate normal distribution with mean:\n")
+    cat(format(x), "\n")
+    cat("  mu:\n")
     print(x$mu)
-    cat("and variance-covariance matrix:\n")
+    cat("  sigma:\n")
     print(x$sigma)
+    invisible(x)
 }
 
 

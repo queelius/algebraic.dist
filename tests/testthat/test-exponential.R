@@ -172,5 +172,5 @@ test_that("print.exponential produces output without error", {
   e <- exponential(rate = 2)
 
   expect_output(print(e), "Exponential distribution")
-  expect_output(print(e), "failure rate 2")
+  expect_output(print(e), "rate = 2")
 })

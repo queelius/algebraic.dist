@@ -4,18 +4,31 @@
 #' @param var variance
 #' @export
 normal <- function(mu = 0, var = 1) {
-    stopifnot(is.numeric(mu), is.numeric(var))
+    if (!is.numeric(mu) || length(mu) != 1 || is.na(mu))
+        stop("'mu' must be a numeric scalar, got: ", deparse(mu))
+    if (!is.numeric(var) || length(var) != 1 || is.na(var) || var < 0)
+        stop("'var' must be a non-negative numeric scalar, got: ", deparse(var))
     structure(list(mu = mu, var = var),
               class = c("normal", "univariate_dist",
                         "continuous_dist", "dist"))
 }
 
-#' Method for printing a `normal` object.
+#' Format method for `normal` objects.
+#' @param x The object to format
+#' @param ... Additional arguments (not used)
+#' @return A character string
+#' @export
+format.normal <- function(x, ...) {
+    sprintf("Normal distribution (mu = %g, var = %g)", x$mu, x$var)
+}
+
+#' Print method for `normal` objects.
 #' @param x The object to print
 #' @param ... Additional arguments to pass (not used)
 #' @export
 print.normal <- function(x, ...) {
-    cat("Normal distribution with mean", x$mu, "and variance", x$var, "\n")
+    cat(format(x), "\n")
+    invisible(x)
 }
 
 #' Retrieve the variance-covariance matrix (or scalar)

@@ -180,6 +180,6 @@ test_that("print.normal produces output without error", {
   n <- normal(mu = 2, var = 3)
 
   expect_output(print(n), "Normal distribution")
-  expect_output(print(n), "mean 2")
-  expect_output(print(n), "variance 3")
+  expect_output(print(n), "mu = 2")
+  expect_output(print(n), "var = 3")
 })

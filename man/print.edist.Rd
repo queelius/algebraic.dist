@@ -2,7 +2,7 @@
 % Please edit documentation in R/edist.R
 \name{print.edist}
 \alias{print.edist}
-\title{Method for printing an \code{edist} object.}
+\title{Print method for \code{edist} objects.}
 \usage{
 \method{print}{edist}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Additional arguments to pass (not used)}
 }
 \description{
-Method for printing an \code{edist} object.
+Print method for \code{edist} objects.
 }

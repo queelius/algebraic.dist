@@ -2,7 +2,7 @@
 % Please edit documentation in R/empirical_dist.R
 \name{print.empirical_dist}
 \alias{print.empirical_dist}
-\title{Method for printing a \code{dist} object}
+\title{Print method for \code{empirical_dist} objects.}
 \usage{
 \method{print}{empirical_dist}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Additional arguments to pass}
 }
 \description{
-Method for printing a \code{dist} object
+Print method for \code{empirical_dist} objects.
 }

@@ -216,8 +216,8 @@ test_that("print.mvn produces output without error", {
   m <- mvn(mu = c(1, 2))
 
   expect_output(print(m), "Multivariate normal")
-  expect_output(print(m), "mean")
-  expect_output(print(m), "variance-covariance")
+  expect_output(print(m), "mu")
+  expect_output(print(m), "sigma")
 })
 
 test_that("cdf.mvn returns cumulative probability", {

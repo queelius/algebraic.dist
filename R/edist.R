@@ -59,18 +59,25 @@ mean.edist <- function(x, n = 10000, ...) {
   else mean(samp)
 }
 
-#' Method for printing an `edist` object.
+#' Format method for `edist` objects.
+#' @param x The object to format
+#' @param ... Additional arguments (not used)
+#' @return A character string
+#' @export
+format.edist <- function(x, ...) {
+  sprintf("Expression distribution: %s", deparse(x$e))
+}
+
+#' Print method for `edist` objects.
 #' @param x The object to print
 #' @param ... Additional arguments to pass (not used)
-#' 
 #' @export
 print.edist <- function(x, ...) {
-  cat("Distribution", deparse(x$e), "\n")
-  for (i in 1:length(x$vars)) {
-    cat("  ", names(x$vars)[i], " ~ ")
-    print(x$vars[[i]])
-    cat("\n")
+  cat(format(x), "\n")
+  for (i in seq_along(x$vars)) {
+    cat("  ", names(x$vars)[i], " ~ ", format(x$vars[[i]]), "\n")
   }
+  invisible(x)
 }
 
 #' Method for obtaining the sampler of an `edist` object.

@@ -3,6 +3,8 @@
 #' @param rate failure rate
 #' @export
 exponential <- function(rate) {
+  if (!is.numeric(rate) || length(rate) != 1 || is.na(rate) || rate <= 0)
+    stop("'rate' must be a positive numeric scalar, got: ", deparse(rate))
   structure(list(rate = rate),
             class = c("exponential", "univariate_dist",
                       "continuous_dist", "dist"))
@@ -134,7 +136,7 @@ cdf.exponential <- function(x, ...) {
 #' @return The variance-covariance matrix of the `normal` object
 #' @export
 vcov.exponential <- function(object, ...) {
-    object$rate
+    1 / object$rate^2
 }
 
 #' Support for exponential distribution, the positive real numbers, (0, Inf).
@@ -163,12 +165,22 @@ surv.exponential <- function(x, ...) {
   }
 }
 
+#' Format method for `exponential` objects.
+#' @param x The `exponential` object to format
+#' @param ... Additional arguments (not used)
+#' @return A character string
+#' @export
+format.exponential <- function(x, ...) {
+  sprintf("Exponential distribution (rate = %g)", x$rate)
+}
+
 #' Print method for `exponential` objects.
 #' @param x The `exponential` object to print.
 #' @param ... Additional arguments (not used)
 #' @export
 print.exponential <- function(x, ...) {
-  cat("Exponential distribution with failure rate", x$rate, "\n")
+  cat(format(x), "\n")
+  invisible(x)
 }
 
 #' Method to obtain the dimension of an `exponential` object.

@@ -51,15 +51,15 @@ expectation_data <- function(
 
     z.alpha <- qnorm(1 - alpha / 2)
     if (is.matrix(data)) {
-        sd <- sqrt(diag(cov(data)) / n)
-        # we construct a confidence interval for
-        # each component of the expectation
+        v <- diag(cov(data))
+        sd <- sqrt(pmax(v, 0) / n)
         ci <- matrix(NA, nrow = length(mu), ncol = 2)
         ci[, 1] <- mu - z.alpha * sd
         ci[, 2] <- mu + z.alpha * sd
         return(list(value = mu, ci = ci, n = n))
     } else {
-        sd <- sqrt(var(data) / n)
+        v <- var(data)
+        sd <- sqrt(max(v, 0) / n)
         return(list(value = mu,
                     ci = c(mu - z.alpha * sd, mu + z.alpha * sd),
                     n = n))

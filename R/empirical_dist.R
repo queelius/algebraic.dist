@@ -176,7 +176,10 @@ marginal.empirical_dist <- function(x, indices) {
 #' @param ... additional arguments to pass into `P`.
 #' @export
 conditional.empirical_dist <- function(x, P, ...) {
-  empirical_dist(x$data[apply(X = x$data, MARGIN = 1, FUN = P, ...), ])
+  mask <- apply(X = x$data, MARGIN = 1, FUN = P, ...)
+  if (!any(mask))
+    stop("conditioning resulted in zero observations; predicate matched no rows")
+  empirical_dist(x$data[mask, , drop = FALSE])
 }
 
 
@@ -274,12 +277,23 @@ params.empirical_dist <- function(x) {
   NULL
 }
 
-#' Method for printing a `dist` object
+#' Format method for `empirical_dist` objects.
+#' @param x The object to format
+#' @param ... Additional arguments (not used)
+#' @return A character string
+#' @export
+format.empirical_dist <- function(x, ...) {
+  sprintf("Empirical distribution (%d observations, %d dimensions)",
+          nobs(x), ncol(x$data))
+}
+
+#' Print method for `empirical_dist` objects.
 #' @param x The object to print
 #' @param ... Additional arguments to pass
 #' @export
 print.empirical_dist <- function(x, ...) {
-  print(summary(x, name = "Empirical Distribution", nobs = nobs(x), ...))
+  cat(format(x), "\n")
+  invisible(x)
 }
 
 

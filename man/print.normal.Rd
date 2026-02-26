@@ -2,7 +2,7 @@
 % Please edit documentation in R/normal.R
 \name{print.normal}
 \alias{print.normal}
-\title{Method for printing a \code{normal} object.}
+\title{Print method for \code{normal} objects.}
 \usage{
 \method{print}{normal}(x, ...)
 }
@@ -12,5 +12,5 @@
 \item{...}{Additional arguments to pass (not used)}
 }
 \description{
-Method for printing a \code{normal} object.
+Print method for \code{normal} objects.
 }

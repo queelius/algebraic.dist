@@ -148,7 +148,7 @@ test_that("print.edist produces output without error", {
   y <- exponential(rate = 1)
   ed <- edist(expression(x + y), list(x = x, y = y))
 
-  expect_output(print(ed), "Distribution")
+  expect_output(print(ed), "Expression distribution")
 })
 
 test_that("+.normal returns closed-form normal distribution", {
