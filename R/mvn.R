@@ -274,3 +274,117 @@ rmap.mvn <- function(x, g, n = 10000L, ...) {
     D <- rmap(empirical_dist(sampler(x)(n)), g, ...)
     mvn(mu = mean(D), sigma = vcov(D))
 }
+
+
+#' Conditional distribution for multivariate normal.
+#'
+#' Supports two calling patterns:
+#' \enumerate{
+#'   \item \strong{Closed-form} (via \code{given_indices} and
+#'     \code{given_values}): Uses the exact Schur complement formula.
+#'     Returns a \code{normal} (1D result) or \code{mvn}.
+#'   \item \strong{Predicate-based} (via \code{P}): Falls back to MC
+#'     realization via \code{\link{ensure_realized}}.
+#' }
+#'
+#' @param x An \code{mvn} object.
+#' @param P Optional predicate function for MC fallback.
+#' @param ... Additional arguments forwarded to the predicate \code{P}.
+#' @param given_indices Integer vector of observed variable indices.
+#' @param given_values Numeric vector of observed values (same length as
+#'   \code{given_indices}).
+#' @return A \code{normal}, \code{mvn}, or \code{empirical_dist} object.
+#' @export
+conditional.mvn <- function(x, P = NULL, ...,
+                            given_indices = NULL, given_values = NULL) {
+    # Closed-form via Schur complement
+    if (!is.null(given_indices) && !is.null(given_values)) {
+        if (length(given_indices) != length(given_values))
+            stop("'given_indices' and 'given_values' must have the same length")
+        if (any(given_indices < 1) || any(given_indices > dim(x)))
+            stop("'given_indices' must be in [1, dim(x)]")
+
+        all_idx <- seq_len(dim(x))
+        free_idx <- setdiff(all_idx, given_indices)
+        if (length(free_idx) == 0)
+            stop("cannot condition on all variables")
+
+        mu1 <- x$mu[free_idx]
+        mu2 <- x$mu[given_indices]
+        sig11 <- x$sigma[free_idx, free_idx, drop = FALSE]
+        sig12 <- x$sigma[free_idx, given_indices, drop = FALSE]
+        sig22 <- x$sigma[given_indices, given_indices, drop = FALSE]
+
+        sig22_inv <- solve(sig22)
+        mu_cond <- as.numeric(mu1 + sig12 %*% sig22_inv %*% (given_values - mu2))
+        sig_cond <- sig11 - sig12 %*% sig22_inv %*% t(sig12)
+
+        if (length(free_idx) == 1) {
+            return(normal(mu = mu_cond, var = as.numeric(sig_cond)))
+        }
+        return(mvn(mu = mu_cond, sigma = sig_cond))
+    }
+
+    # Predicate-based MC fallback
+    if (!is.null(P)) {
+        return(conditional(ensure_realized(x), P, ...))
+    }
+
+    stop("must provide either 'P' or both 'given_indices' and 'given_values'")
+}
+
+
+#' Affine transformation of a normal or multivariate normal distribution.
+#'
+#' Computes the distribution of \eqn{AX + b} where \eqn{X \sim MVN(\mu, \Sigma)}.
+#' The result is \eqn{MVN(A\mu + b, A \Sigma A^T)}.
+#'
+#' For a univariate \code{normal}, scalars \code{A} and \code{b} are promoted
+#' to 1x1 matrices and scalar internally. Returns a \code{normal} if the
+#' result is 1-dimensional.
+#'
+#' @param x A \code{normal} or \code{mvn} distribution object.
+#' @param A A numeric matrix (or scalar for univariate).
+#' @param b An optional numeric vector (or scalar) for the offset. Default is
+#'   a zero vector.
+#' @return A \code{normal} or \code{mvn} distribution.
+#' @export
+affine_transform <- function(x, A, b = NULL) {
+    if (!inherits(x, "dist"))
+        stop("'x' must be a 'dist' object")
+
+    # Promote univariate normal to matrix form
+    if (is_normal(x)) {
+        mu <- mean(x)
+        sigma <- matrix(vcov(x), 1, 1)
+    } else if (is_mvn(x)) {
+        mu <- x$mu
+        sigma <- x$sigma
+    } else {
+        stop("'x' must be a 'normal' or 'mvn' distribution")
+    }
+
+    # Ensure A is a matrix
+    if (!is.matrix(A)) {
+        A <- matrix(A, nrow = 1, ncol = length(mu))
+    }
+    if (ncol(A) != length(mu))
+        stop("ncol(A) must equal dim(x), got ", ncol(A), " vs ", length(mu))
+
+    # Default b to zero
+    if (is.null(b)) {
+        b <- rep(0, nrow(A))
+    }
+    if (length(b) != nrow(A))
+        stop("length(b) must equal nrow(A), got ", length(b), " vs ", nrow(A))
+
+    mu_new <- as.numeric(A %*% mu + b)
+    sigma_new <- A %*% sigma %*% t(A)
+
+    # Return normal for 1D, mvn for multivariate
+    if (length(mu_new) == 1) {
+        normal(mu = mu_new, var = as.numeric(sigma_new))
+    } else {
+        mvn(mu = mu_new, sigma = sigma_new)
+    }
+}

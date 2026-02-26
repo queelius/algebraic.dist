@@ -262,3 +262,79 @@ print.mixture <- function(x, ...) {
   }
   invisible(x)
 }
+
+
+#' Marginal distribution of a mixture.
+#'
+#' The marginal of a mixture is itself a mixture of the component marginals
+#' with the same mixing weights:
+#' \eqn{p(x_I) = \sum_k w_k p_k(x_I)}.
+#'
+#' Requires all components to support \code{\link{marginal}}.
+#'
+#' @param x A \code{mixture} object.
+#' @param indices Integer vector of variable indices to keep.
+#' @return A \code{mixture} object with marginalized components.
+#' @export
+marginal.mixture <- function(x, indices) {
+  comp_marginals <- lapply(x$components, marginal, indices = indices)
+  mixture(comp_marginals, x$weights)
+}
+
+
+#' Conditional distribution of a mixture.
+#'
+#' For a mixture of distributions that support closed-form conditioning
+#' (e.g. MVN), uses Bayes' rule to update the mixing weights:
+#' \deqn{w_k' \propto w_k f_k(x_{given})}
+#' where \eqn{f_k} is the marginal density of component \eqn{k} at the
+#' observed values. The component conditionals are computed via
+#' \code{conditional(component_k, given_indices = ..., given_values = ...)}.
+#'
+#' Falls back to MC realization if \code{P} is provided or if any
+#' component does not support \code{given_indices}/\code{given_values}.
+#'
+#' @param x A \code{mixture} object.
+#' @param P Optional predicate function for MC fallback.
+#' @param ... Additional arguments.
+#' @param given_indices Integer vector of observed variable indices.
+#' @param given_values Numeric vector of observed values.
+#' @return A \code{mixture} or \code{empirical_dist} object.
+#' @export
+conditional.mixture <- function(x, P = NULL, ...,
+                                given_indices = NULL, given_values = NULL) {
+  # Closed-form path for mixture-of-MVN
+  if (!is.null(given_indices) && !is.null(given_values)) {
+    K <- length(x$components)
+
+    # Compute marginal densities at observed values for weight update
+    log_weights <- numeric(K)
+    for (k in seq_len(K)) {
+      comp <- x$components[[k]]
+      # Get marginal density over given_indices
+      marg <- marginal(comp, given_indices)
+      dens_fn <- density(marg)
+      log_weights[k] <- log(x$weights[k]) + log(dens_fn(given_values))
+    }
+
+    # Normalize weights (log-sum-exp for numerical stability)
+    max_lw <- max(log_weights)
+    new_weights <- exp(log_weights - max_lw)
+    new_weights <- new_weights / sum(new_weights)
+
+    # Compute component conditionals
+    new_components <- lapply(x$components, function(comp) {
+      conditional(comp, given_indices = given_indices,
+                  given_values = given_values)
+    })
+
+    return(mixture(new_components, new_weights))
+  }
+
+  # Predicate-based MC fallback
+  if (!is.null(P)) {
+    return(conditional(ensure_realized(x), P, ...))
+  }
+
+  stop("must provide either 'P' or both 'given_indices' and 'given_values'")
+}

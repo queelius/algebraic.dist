@@ -444,3 +444,104 @@ test_that("multivariate mixture inherits multivariate_dist class", {
 
   expect_s3_class(mix, "multivariate_dist")
 })
+
+
+# ---- marginal.mixture tests ----
+
+test_that("marginal of MVN mixture returns mixture of marginals", {
+  m1 <- mvn(mu = c(0, 10), sigma = diag(2))
+  m2 <- mvn(mu = c(5, 20), sigma = diag(2))
+  mix <- mixture(list(m1, m2), c(0.3, 0.7))
+
+  # Marginal over first variable
+  marg <- marginal(mix, 1)
+  expect_true(is_mixture(marg))
+  expect_equal(length(marg$components), 2)
+  expect_equal(marg$weights, c(0.3, 0.7))
+
+  # Components should be univariate normals
+  expect_true(is_normal(marg$components[[1]]))
+  expect_true(is_normal(marg$components[[2]]))
+  expect_equal(mean(marg$components[[1]]), 0)
+  expect_equal(mean(marg$components[[2]]), 5)
+})
+
+test_that("marginal of MVN mixture: mean matches", {
+  m1 <- mvn(mu = c(1, 2), sigma = diag(2))
+  m2 <- mvn(mu = c(3, 4), sigma = diag(2))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  marg <- marginal(mix, 1)
+  # Mean of marginal = 0.5*1 + 0.5*3 = 2
+  expect_equal(mean(marg), 2)
+})
+
+test_that("marginal of 3D MVN mixture keeps 2 components", {
+  m1 <- mvn(mu = c(1, 2, 3), sigma = diag(3))
+  m2 <- mvn(mu = c(4, 5, 6), sigma = diag(3))
+  mix <- mixture(list(m1, m2), c(0.4, 0.6))
+
+  marg <- marginal(mix, c(1, 3))
+  expect_true(is_mixture(marg))
+  expect_true(is_mvn(marg$components[[1]]))
+  expect_equal(dim(marg$components[[1]]), 2)
+})
+
+
+# ---- conditional.mixture tests ----
+
+test_that("conditional of MVN mixture: weights update via Bayes rule", {
+  # Two well-separated 2D MVN components
+  m1 <- mvn(mu = c(0, 0), sigma = diag(2))
+  m2 <- mvn(mu = c(10, 10), sigma = diag(2))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  # Condition on X2 = 0 — strongly favors component 1
+  result <- conditional(mix, given_indices = 2, given_values = 0)
+  expect_true(is_mixture(result))
+  expect_true(result$weights[1] > 0.99)  # Component 1 dominates
+})
+
+test_that("conditional of MVN mixture: components are correct", {
+  sigma <- matrix(c(1, 0.5, 0.5, 1), 2, 2)
+  m1 <- mvn(mu = c(0, 0), sigma = sigma)
+  m2 <- mvn(mu = c(5, 5), sigma = sigma)
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  result <- conditional(mix, given_indices = 2, given_values = 0)
+  # Both components should be univariate normals (result of conditioning 2D MVN)
+  expect_true(is_normal(result$components[[1]]))
+  expect_true(is_normal(result$components[[2]]))
+})
+
+test_that("conditional.mixture with equal weights and symmetric conditioning", {
+  m1 <- mvn(mu = c(0, 0), sigma = diag(2))
+  m2 <- mvn(mu = c(0, 0), sigma = 4 * diag(2))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  # Condition on X2 = 0 — both have same marginal mean for X2
+  result <- conditional(mix, given_indices = 2, given_values = 0)
+  expect_true(is_mixture(result))
+  # Component 1 has density dnorm(0,0,1), component 2 has dnorm(0,0,2)
+  # w1 ~ 0.5 * dnorm(0,0,1), w2 ~ 0.5 * dnorm(0,0,2)
+  # dnorm(0,0,1) = 0.3989, dnorm(0,0,2) = 0.1995
+  expect_true(result$weights[1] > result$weights[2])
+})
+
+test_that("conditional.mixture P fallback works", {
+  m1 <- mvn(mu = c(0, 0), sigma = diag(2))
+  m2 <- mvn(mu = c(5, 5), sigma = diag(2))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  set.seed(42)
+  result <- conditional(mix, P = function(x) x[1] > 3)
+  expect_s3_class(result, "empirical_dist")
+})
+
+test_that("conditional.mixture errors: no P or given_indices", {
+  m1 <- mvn(mu = c(0, 0), sigma = diag(2))
+  m2 <- mvn(mu = c(1, 1), sigma = diag(2))
+  mix <- mixture(list(m1, m2), c(0.5, 0.5))
+
+  expect_error(conditional(mix), "must provide either")
+})
