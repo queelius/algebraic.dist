@@ -16,9 +16,29 @@ The simplified distribution, or unchanged \code{edist} if no rule applies
 }
 \description{
 Attempts to reduce expression distributions to closed-form distributions
-when mathematical identities apply. For example:
+when mathematical identities apply. Supported rules include:
+}
+\details{
+Single-variable:
 \itemize{
-\item normal + normal = normal (sum of independent normals)
-\item normal - normal = normal (difference of independent normals)
+\item c * Normal(mu, v) -> Normal(c\emph{mu, c^2}v)
+\item c * Gamma(a, r) -> Gamma(a, r/c) for c > 0
+\item c * Exponential(r) -> Gamma(1, r/c) for c > 0
+\item Normal(mu, v) + c -> Normal(mu + c, v)
+\item Normal(mu, v) - c -> Normal(mu - c, v)
+\item Normal(0, 1) ^ 2 -> ChiSquared(1)
+\item exp(Normal(mu, v)) -> LogNormal(mu, sqrt(v))
+\item log(LogNormal(ml, sl)) -> Normal(ml, sl^2)
+}
+
+Two-variable:
+\itemize{
+\item Normal + Normal -> Normal
+\item Normal - Normal -> Normal
+\item Gamma + Gamma (same rate) -> Gamma
+\item Exponential + Exponential (same rate) -> Gamma(2, rate)
+\item Gamma + Exponential (same rate) -> Gamma(a+1, rate)
+\item ChiSquared + ChiSquared -> ChiSquared
+\item Poisson + Poisson -> Poisson
 }
 }

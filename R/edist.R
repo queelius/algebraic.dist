@@ -101,10 +101,12 @@ sampler.edist <- function(x, ...) {
   function(n = 1, ...) {
     # we sample from each `dist` object
     samples <- sapply(samplers, function(sampler) sampler(n, ...))
+    # When n=1, sapply returns a named vector instead of a matrix
+    if (!is.matrix(samples)) samples <- matrix(samples, nrow = 1)
     colnames(samples) <- cnames
     esamples <- list()
-    for (i in 1:nrow(samples)) {
-      es <- eval(x$e, envir = as.list(samples[i,]))
+    for (i in seq_len(nrow(samples))) {
+      es <- base::eval(x$e, envir = as.list(samples[i,]))
       esamples[[i]] <- es
     }
     # convert esamples to vector or matrix, depending on
@@ -120,16 +122,25 @@ sampler.edist <- function(x, ...) {
 
 
 
-#' Method for adding `dist` objects.
+#' Method for adding `dist` objects, or shifting a distribution by a scalar.
 #'
 #' Creates an expression distribution and automatically simplifies to
-#' closed form when possible (e.g., normal + normal = normal).
+#' closed form when possible (e.g., normal + normal = normal,
+#' normal + scalar = normal with shifted mean).
 #'
-#' @param x The first `dist` object to add
-#' @param y The second `dist` object to add
+#' @param x A `dist` object or numeric scalar
+#' @param y A `dist` object or numeric scalar
 #' @return A simplified distribution or `edist` if no closed form exists
 #' @export
 `+.dist` <- function(x, y) {
+  if (is.numeric(x) && length(x) == 1) {
+    # scalar + dist
+    return(simplify(edist(substitute(c + x, list(c = x)), list(x = y))))
+  }
+  if (is.numeric(y) && length(y) == 1) {
+    # dist + scalar
+    return(simplify(edist(substitute(x + c, list(c = y)), list(x = x))))
+  }
   simplify(edist(quote(x + y), list(x = x, y = y)))
 }
 
@@ -137,10 +148,10 @@ sampler.edist <- function(x, ...) {
 #'
 #' Unary: returns negated distribution (e.g., -N(mu, var) = N(-mu, var))
 #' Binary: creates expression distribution and simplifies to closed form
-#' when possible (e.g., normal - normal = normal).
+#' when possible (e.g., normal - normal = normal, normal - scalar = normal).
 #'
-#' @param x The first `dist` object
-#' @param y The second `dist` object (optional for unary negation)
+#' @param x A `dist` object or numeric scalar
+#' @param y A `dist` object or numeric scalar (optional for unary negation)
 #' @return A simplified distribution or `edist` if no closed form exists
 #' @export
 `-.dist` <- function(x, y) {
@@ -152,10 +163,107 @@ sampler.edist <- function(x, ...) {
     # For other distributions, create edist with negation
     return(simplify(edist(quote(-x), list(x = x))))
   }
+  if (is.numeric(y) && length(y) == 1) {
+    # dist - scalar
+    return(simplify(edist(substitute(x - c, list(c = y)), list(x = x))))
+  }
+  if (is.numeric(x) && length(x) == 1) {
+    # scalar - dist
+    return(simplify(edist(substitute(c - x, list(c = x)), list(x = y))))
+  }
   # Binary subtraction
   simplify(edist(quote(x - y), list(x = x, y = y)))
 }
 
+
+#' Multiplication of distribution objects.
+#'
+#' Handles scalar * dist, dist * scalar, and dist * dist.
+#' @param x first operand
+#' @param y second operand
+#' @return A simplified distribution or edist
+#' @export
+`*.dist` <- function(x, y) {
+  if (is.numeric(x) && length(x) == 1) {
+    # scalar * dist
+    return(simplify(edist(substitute(c * x, list(c = x)), list(x = y))))
+  }
+  if (is.numeric(y) && length(y) == 1) {
+    # dist * scalar
+    return(simplify(edist(substitute(x * c, list(c = y)), list(x = x))))
+  }
+  # dist * dist
+  simplify(edist(quote(x * y), list(x = x, y = y)))
+}
+
+#' Power operator for distribution objects.
+#'
+#' @param x a dist object (base)
+#' @param y a numeric scalar (exponent)
+#' @return A simplified distribution or edist
+#' @export
+`^.dist` <- function(x, y) {
+  if (is.numeric(y) && length(y) == 1) {
+    return(simplify(edist(substitute(x^c, list(c = y)), list(x = x))))
+  }
+  simplify(edist(quote(x^y), list(x = x, y = y)))
+}
+
+#' Math group generic for distribution objects.
+#'
+#' Handles exp(), log(), sqrt(), abs(), cos(), sin(), etc.
+#' @param x a dist object
+#' @param ... additional arguments
+#' @return A simplified distribution or edist
+#' @export
+Math.dist <- function(x, ...) {
+  op <- .Generic
+  expr <- substitute(OP(x), list(OP = as.name(op)))
+  simplify(edist(expr, list(x = x)))
+}
+
+#' Summary group generic for distribution objects.
+#'
+#' Handles sum(), prod(), min(), max() of distributions.
+#' @param ... dist objects
+#' @param na.rm ignored
+#' @return A simplified distribution or edist
+#' @export
+Summary.dist <- function(..., na.rm = FALSE) {
+  op <- .Generic
+  dists <- list(...)
+
+  if (length(dists) == 1) return(dists[[1]])
+
+  if (op == "sum") return(Reduce(`+`, dists))
+  if (op == "prod") return(Reduce(`*`, dists))
+
+  if (op == "min") {
+    # Check if all are exponential — min of exp is exp with summed rates
+    if (all(vapply(dists, is_exponential, logical(1)))) {
+      total_rate <- sum(vapply(dists, function(d) d$rate, numeric(1)))
+      return(exponential(total_rate))
+    }
+    # Otherwise build pmin edist
+    n <- length(dists)
+    var_names <- paste0("x", seq_len(n))
+    vars <- setNames(dists, var_names)
+    args <- paste(var_names, collapse = ", ")
+    expr <- parse(text = paste0("pmin(", args, ")"))[[1]]
+    return(simplify(edist(expr, vars)))
+  }
+
+  if (op == "max") {
+    n <- length(dists)
+    var_names <- paste0("x", seq_len(n))
+    vars <- setNames(dists, var_names)
+    args <- paste(var_names, collapse = ", ")
+    expr <- parse(text = paste0("pmax(", args, ")"))[[1]]
+    return(simplify(edist(expr, vars)))
+  }
+
+  stop("Unsupported Summary operation: ", op)
+}
 
 # ---- edist auto-fallback methods via realize() ----------------------------
 

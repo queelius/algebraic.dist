@@ -206,14 +206,28 @@ test_that("edist works with different distribution types", {
   expect_length(samples, 10000)
 })
 
-test_that("simplify.edist returns the object unchanged (current stub)", {
-  x <- normal()
-  y <- normal()
-  ed <- edist(expression(x + y), list(x = x, y = y))
+test_that("simplify.edist simplifies normal + normal to normal", {
+  x <- normal(mu = 1, var = 2)
+  y <- normal(mu = 3, var = 4)
+  ed <- edist(quote(x + y), list(x = x, y = y))
 
   simplified <- simplify(ed)
 
-  # Currently simplify is a stub that returns unchanged
+  # Normal + Normal should simplify to a normal distribution
+
+  expect_true(is_normal(simplified))
+  expect_equal(mean(simplified), 4)
+  expect_equal(vcov(simplified), 6)
+})
+
+test_that("simplify.edist returns unchanged when no rule matches", {
+  x <- normal()
+  e <- exponential(rate = 1)
+  ed <- edist(quote(x + e), list(x = x, e = e))
+
+  simplified <- simplify(ed)
+
+  # Normal + Exponential has no simplification rule
   expect_identical(simplified, ed)
 })
 

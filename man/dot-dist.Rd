@@ -7,9 +7,9 @@
 \method{-}{dist}(x, y)
 }
 \arguments{
-\item{x}{The first \code{dist} object}
+\item{x}{A \code{dist} object or numeric scalar}
 
-\item{y}{The second \code{dist} object (optional for unary negation)}
+\item{y}{A \code{dist} object or numeric scalar (optional for unary negation)}
 }
 \value{
 A simplified distribution or \code{edist} if no closed form exists
@@ -17,5 +17,5 @@ A simplified distribution or \code{edist} if no closed form exists
 \description{
 Unary: returns negated distribution (e.g., -N(mu, var) = N(-mu, var))
 Binary: creates expression distribution and simplifies to closed form
-when possible (e.g., normal - normal = normal).
+when possible (e.g., normal - normal = normal, normal - scalar = normal).
 }

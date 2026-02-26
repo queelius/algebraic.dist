@@ -2,19 +2,20 @@
 % Please edit documentation in R/edist.R
 \name{+.dist}
 \alias{+.dist}
-\title{Method for adding \code{dist} objects.}
+\title{Method for adding \code{dist} objects, or shifting a distribution by a scalar.}
 \usage{
 \method{+}{dist}(x, y)
 }
 \arguments{
-\item{x}{The first \code{dist} object to add}
+\item{x}{A \code{dist} object or numeric scalar}
 
-\item{y}{The second \code{dist} object to add}
+\item{y}{A \code{dist} object or numeric scalar}
 }
 \value{
 A simplified distribution or \code{edist} if no closed form exists
 }
 \description{
 Creates an expression distribution and automatically simplifies to
-closed form when possible (e.g., normal + normal = normal).
+closed form when possible (e.g., normal + normal = normal,
+normal + scalar = normal with shifted mean).
 }

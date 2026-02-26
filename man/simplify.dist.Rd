@@ -2,7 +2,7 @@
 % Please edit documentation in R/algebra.R
 \name{simplify.dist}
 \alias{simplify.dist}
-\title{Default Method for simplifming a \code{dist} object. Just returns the object.}
+\title{Default Method for simplifying a \code{dist} object. Just returns the object.}
 \usage{
 \method{simplify}{dist}(x, ...)
 }
@@ -15,5 +15,5 @@
 The \code{dist} object
 }
 \description{
-Default Method for simplifming a \code{dist} object. Just returns the object.
+Default Method for simplifying a \code{dist} object. Just returns the object.
 }
