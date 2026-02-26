@@ -1,3 +1,45 @@
+# algebraic.dist 0.3.0
+
+## Unified Fallback Layer
+
+* `realized_dist` subclass of `empirical_dist` — preserves provenance (source distribution, sample count) when materializing via Monte Carlo
+* `ensure_realized()` internal memoized entry point — all MC fallback methods now share cached samples (calling `cdf(e)` + `density(e)` on the same edist no longer draws independent samples)
+* `conditional.dist` and `rmap.dist` now route through `ensure_realized()` for consistent provenance
+
+## New Simplification Rules
+
+* `Uniform(a,b) + c` → `Uniform(a+c, b+c)` (location shift)
+* `Uniform(a,b) - c` → `Uniform(a-c, b-c)` (location shift)
+* `c * Uniform(a,b)` → `Uniform(min(ca,cb), max(ca,cb))` for c ≠ 0
+* `c * Weibull(k,λ)` → `Weibull(k, c*λ)` for c > 0
+* `c * ChiSq(df)` → `Gamma(df/2, 1/(2c))` for c > 0
+* `c * LogNormal(μ,σ)` → `LogNormal(μ+log(c), σ)` for c > 0
+* `LogNormal * LogNormal` → `LogNormal(μ₁+μ₂, √(σ₁²+σ₂²))`
+* `-Uniform(a,b)` → `Uniform(-b, -a)` (unary negation)
+
+## New Operators
+
+* `/.dist` — Division operator: `dist / scalar` delegates to scalar multiplication rules; `scalar / dist` and `dist / dist` create `edist`
+
+## MVN Algebra
+
+* `conditional.mvn` — closed-form Schur complement conditioning with `given_indices`/`given_values`, or predicate-based MC fallback
+* `affine_transform(x, A, b)` — compute AX + b for normal/MVN distributions (exact)
+
+## Mixture Multivariate
+
+* `marginal.mixture` — marginal of mixture is mixture of marginals (exact)
+* `conditional.mixture` — Bayes' rule weight update for mixture-of-MVN conditioning, with predicate-based MC fallback
+
+## Limiting Distributions
+
+* `clt(base_dist)` — CLT limiting distribution: Normal(0, Var) or MVN(0, Σ)
+* `lln(base_dist)` — LLN degenerate limit: Normal(μ, 0) or MVN(μ, 0)
+* `delta_clt(base_dist, g, dg)` — delta method with user-supplied derivative/Jacobian
+* `normal_approx(x)` — moment-matching normal approximation of any distribution
+
+---
+
 # algebraic.dist 0.2.0
 
 ## New Distributions
