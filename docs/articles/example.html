@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">algebraic.dist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
       </span>
     </div>
 
@@ -49,9 +49,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/algebra.html">Distribution Algebra with algebraic.dist</a>
+    </li>
+    <li>
       <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
+    <li>
+      <a href="../articles/multivariate.html">Multivariate and Mixture Distributions</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -103,9 +112,10 @@ with:</p>
 <code class="sourceCode R"><span><span class="co"># we define the parameters of the MVN</span></span>
 <span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mvn.html">mvn</a></span><span class="op">(</span>mu <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Multivariate normal distribution with mean:</span></span>
+<span><span class="co">#&gt; Multivariate normal distribution (5 dimensions) </span></span>
+<span><span class="co">#&gt;   mu:</span></span>
 <span><span class="co">#&gt; [1] 1 2 3 4 5</span></span>
-<span><span class="co">#&gt; and variance-covariance matrix:</span></span>
+<span><span class="co">#&gt;   sigma:</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5]</span></span>
 <span><span class="co">#&gt; [1,]    1    0    0    0    0</span></span>
 <span><span class="co">#&gt; [2,]    0    2    0    0    0</span></span>
@@ -149,17 +159,7 @@ with:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/empirical_dist.html">empirical_dist</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Empirical Distribution </span></span>
-<span><span class="co">#&gt; Mean:</span></span>
-<span><span class="co">#&gt; [1] 0.991 1.974 2.981 4.034 4.973</span></span>
-<span><span class="co">#&gt; Covariance:</span></span>
-<span><span class="co">#&gt;         [,1]      [,2]      [,3]     [,4]    [,5]</span></span>
-<span><span class="co">#&gt; [1,] 1.01490  0.006508  0.005468  0.00654  0.0384</span></span>
-<span><span class="co">#&gt; [2,] 0.00651  1.984264 -0.000128  0.04647 -0.0432</span></span>
-<span><span class="co">#&gt; [3,] 0.00547 -0.000128  2.956973 -0.01391  0.0135</span></span>
-<span><span class="co">#&gt; [4,] 0.00654  0.046470 -0.013906  3.93482 -0.0848</span></span>
-<span><span class="co">#&gt; [5,] 0.03844 -0.043164  0.013515 -0.08485  5.0086</span></span>
-<span><span class="co">#&gt; Number of observations: 10000</span></span></code></pre></div>
+<span><span class="co">#&gt; Empirical distribution (10000 observations, 5 dimensions)</span></span></code></pre></div>
 <p>Since this is the empirical distribution, it is parameter-free:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/params.html">params</a></span><span class="op">(</span><span class="va">emp</span><span class="op">)</span></span>
@@ -374,10 +374,9 @@ random variable.</p>
 the distributions of its variables:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Distribution expression(x + y) </span></span>
-<span><span class="co">#&gt;    x  ~ Normal distribution with mean 0 and variance 1 </span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;    y  ~ Exponential distribution with failure rate 1</span></span></code></pre></div>
+<span><span class="co">#&gt; Expression distribution: expression(x + y) </span></span>
+<span><span class="co">#&gt;    x  ~  Normal distribution (mu = 0, var = 1) </span></span>
+<span><span class="co">#&gt;    y  ~  Exponential distribution (rate = 1)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="mean-and-variance-of-edist-objects">Mean and Variance of <code>edist</code> Objects<a class="anchor" aria-label="anchor" href="#mean-and-variance-of-edist-objects"></a>
@@ -388,7 +387,7 @@ using the <code>mean</code> and <code>vcov</code> functions:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.996</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 2.01</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 1.97</span></span></code></pre></div>
 <p>Let’s have a look at the parameters of the <code>edist</code>
 object:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
@@ -405,8 +404,8 @@ method:</p>
 <code class="sourceCode R"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sampler.html">sampler</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
 <span><span class="va">samp</span> <span class="op">&lt;-</span> <span class="fu">s</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>  <span class="co"># Generate a sample of size 10</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">samp</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] -0.2146  1.6992  0.9204  1.0641  0.5465  0.2170  1.8576  2.6080  2.3899</span></span>
-<span><span class="co">#&gt; [10]  0.0691</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1]  3.2954  1.1684  4.3740  4.2106  0.0794  1.1944  3.0863  1.1661  0.7995</span></span>
+<span><span class="co">#&gt; [10] -1.1392</span></span></code></pre></div>
 <p>This concludes our overview of the <code>edist</code> object. It’s a
 powerful tool for working with algebraic expressions of distributions,
 and we hope you find it useful in your statistical analyses.</p>

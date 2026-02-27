@@ -1,8 +1,13 @@
 
 - [R package: `algebraic.dist`](#r-package-algebraicdist)
-  - [GitHub Pages Documentation](#github-pages-documentation)
   - [Installation](#installation)
-  - [About](#about)
+  - [Overview](#overview)
+    - [Distribution types](#distribution-types)
+    - [Automatic simplification](#automatic-simplification)
+    - [Multivariate operations](#multivariate-operations)
+    - [Limiting distributions](#limiting-distributions)
+  - [Quick example](#quick-example)
+  - [Documentation](#documentation)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -13,81 +18,128 @@
 [![GPL-3
 License](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![R-CMD-check](https://github.com/queelius/algebraic.dist/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/queelius/algebraic.dist/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/algebraic.dist)](https://CRAN.R-project.org/package=algebraic.dist)
 <!-- badges: end -->
 
 <!-- summary-start -->
 
-An algebra over distributions (random elements). <!-- summary-end -->
+An algebra over probability distributions: compose, transform, and
+automatically simplify distribution expressions in R.
+<!-- summary-end -->
 
 <!-- tags-start -->
 
-**Tags**: multivariate distributions, multivariate normal distribution,
-multivariate empirical distribution, data generating process, R,
-data-science, statistics, inference, likelihood-models,
-probability-theory <!-- tags-end -->
-
-## GitHub Pages Documentation
-
-The GitHub documentation can be viewed
-[here](https://queelius.github.io/algebraic.dist/).
-
-See the vignette [algebraic.dist:
-Example](https://queelius.github.io/algebraic.dist/articles/example.html)
-for a quick introduction to the package.
+**Tags**: probability distributions, distribution algebra, automatic
+simplification, multivariate normal, mixture models, CLT, delta method,
+Monte Carlo, R, statistics <!-- tags-end -->
 
 ## Installation
 
-You can install the development version of `algebraic.dist` from
-[GitHub](https://github.com/) with:
+Install the stable release from CRAN:
+
+``` r
+install.packages("algebraic.dist")
+```
+
+Or install the development version from GitHub:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("queelius/algebraic.dist")
 ```
 
-## About
+## Overview
 
-The R package `algebraic.dist` provides an algebra over distributions.
-It’s not fully-formed yet, but I plan on using it for a lot of my future
-work. For instance, I’ll move a lot of the code in `algebraic.mle` and
-`likelihood.model` to this package.
+`algebraic.dist` lets you build and manipulate probability distributions
+as first-class R objects. Algebraic operations (`+`, `-`, `*`, `/`, `^`,
+`exp`, `log`, `min`, `max`, …) on distribution objects automatically
+simplify to closed-form distributions when mathematical identities
+apply, and fall back to lazy Monte Carlo expressions (`edist`)
+otherwise.
 
-After that, I want to experiment with using the `algebraic.dist` to do
-the following:
+### Distribution types
 
-- Compose distributions such that operations over distributions generate
-  other known distributions.
+Normal, exponential, gamma, Weibull, chi-squared, uniform, beta,
+log-normal, Poisson, multivariate normal (MVN), mixture, and empirical
+distributions.
 
-  There are a lot of well-known compositions, such as the exponential
-  distribution being the minimum of independent exponential
-  distributions, or the sum of independent normal distributions being a
-  normal distribution, but there is a very large space of possible
-  compositions that are not as well-known or well-studied that I want to
-  explore.
+### Automatic simplification
 
-- Let people use an R expression to lazily compose functions of
-  distributions. Simplifying a distribution expression will generate a
-  most simple R expression that represents the same distribution.
+Over 20 built-in rules, including:
 
-Sometimes, this may result in a simple close-form distribution, like a
-multivariate normal distribution, but in other cases it may result in a
-(hopefully simpler) expression that composes multiple distributions and
-operations over them.
+- `Normal + Normal` → `Normal`
+- `Gamma + Gamma` (same rate) → `Gamma`
+- `exp(Normal)` → `LogNormal`
+- `Normal(0,1)^2` → `ChiSq(1)`
+- `min(Exp, ..., Exp)` → `Exp`
+- `c * Uniform(a,b)` → `Uniform`
 
-- With these R expressions that represent distributions, we can define
-  more operations, like taking the limiting distribution of a sequence
-  of distributions, say
-  $\lim_{n \to \infty} \frac{1}{n} \sum_{i=1}^n X_i$, which is of normal
-  by the central limit theorem.
+When no rule matches, the result is a lazy `edist` that samples from its
+components and evaluates the expression on demand.
 
-- Deduce various properties of these distributions, such as their
-  moments, variances, etc. Sometimes, this may require numerical
-  integration or Monte Carlo methods, but if the expression simplifies
-  to a known distribution, then we can use the known properties of that
-  distribution.
+### Multivariate operations
 
-I have a lot of this code in place in C++, but I want to re-implement it
-in R so that it’s more accessible to others. I may also implement some
-of the more interesting compositions in C++ and expose them to R via
-Rcpp, but I’m not sure yet. I use a lot of templates and metaprogramming
-in C++, and I’m not sure how well that will translate to Rcpp.
+- **MVN conditioning**: closed-form Schur complement via `conditional()`
+- **Affine transforms**: `affine_transform(x, A, b)` for exact linear
+  maps
+- **Mixture conditioning**: Bayesian weight updates via Bayes’ rule
+- **Marginals**: exact for MVN and mixture distributions
+
+### Limiting distributions
+
+- `clt()` — Central Limit Theorem
+- `lln()` — Law of Large Numbers
+- `delta_clt()` — delta method for transformed means
+- `normal_approx()` — moment-matching normal approximation
+
+## Quick example
+
+``` r
+library(algebraic.dist)
+
+# Sum of normals simplifies to a normal
+x <- normal(1, 4)
+y <- normal(2, 5)
+z <- x + y
+z
+#> Normal distribution (mu = 3, var = 9)
+```
+
+``` r
+# exp of a normal simplifies to log-normal
+w <- exp(normal(0, 1))
+w
+#> Log-normal distribution (meanlog = 0, sdlog = 1)
+```
+
+``` r
+# Gamma addition with matching rates
+g <- gamma_dist(3, 2) + gamma_dist(4, 2)
+g
+#> Gamma distribution (shape = 7, rate = 2)
+```
+
+``` r
+# CLT: the standardized sample mean converges to N(0, 1)
+clt(normal(5, 4))
+#> Normal distribution (mu = 0, var = 4)
+```
+
+## Documentation
+
+The full documentation is available at
+<https://queelius.github.io/algebraic.dist/>.
+
+Vignettes:
+
+- [Getting
+  started](https://queelius.github.io/algebraic.dist/articles/example.html)
+  — core distribution objects, sampling, and basic operations
+- [Distribution
+  algebra](https://queelius.github.io/algebraic.dist/articles/algebra.html)
+  — simplification rules, limiting distributions, and the CLT/LLN/delta
+  method
+- [Multivariate
+  operations](https://queelius.github.io/algebraic.dist/articles/multivariate.html)
+  — MVN conditioning, affine transforms, and Gaussian mixture models

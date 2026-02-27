@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Algebra over Probability Distributions">
-<meta property="og:description" content="Provides an algebra over probability distributions enabling composition, sampling, and automatic simplification to closed forms. Supports normal, exponential, multivariate normal, and empirical distributions with operations like addition and subtraction that automatically simplify when mathematical identities apply (e.g., the sum of independent normal distributions is normal). Uses S3 classes for distributions and R6 for support objects.">
+<meta property="og:description" content="Provides an algebra over probability distributions enabling composition, sampling, and automatic simplification to closed forms. Supports normal, exponential, gamma, Weibull, chi-squared, uniform, beta, log-normal, Poisson, multivariate normal, empirical, and mixture distributions with algebraic operators (addition, subtraction, multiplication, division, power, exp, log, min, max) that automatically simplify when mathematical identities apply. Includes closed-form MVN conditioning (Schur complement), affine transformations, mixture marginals/conditionals (Bayes rule), and limiting distribution builders (CLT, LLN, delta method). Uses S3 classes for distributions and R6 for support objects.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">algebraic.dist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
       </span>
     </div>
 
@@ -50,9 +50,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="articles/algebra.html">Distribution Algebra with algebraic.dist</a>
+    </li>
+    <li>
       <a href="articles/example.html">algebraic.dist: Examples</a>
     </li>
+    <li>
+      <a href="articles/multivariate.html">Multivariate and Mixture Distributions</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -79,9 +88,18 @@
 <li>
 <a href="#r-package-algebraicdist">R package: <code>algebraic.dist</code></a>
 <ul>
-<li><a href="#github-pages-documentation">GitHub Pages Documentation</a></li>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#about">About</a></li>
+<li>
+<a href="#overview">Overview</a>
+<ul>
+<li><a href="#distribution-types">Distribution types</a></li>
+<li><a href="#automatic-simplification">Automatic simplification</a></li>
+<li><a href="#multivariate-operations">Multivariate operations</a></li>
+<li><a href="#limiting-distributions">Limiting distributions</a></li>
+</ul>
+</li>
+<li><a href="#quick-example">Quick example</a></li>
+<li><a href="#documentation">Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -92,41 +110,125 @@
 <!-- badges: start -->
 
 <!-- summary-start -->
-<p>An algebra over distributions (random elements). <!-- summary-end --></p>
+<p>An algebra over probability distributions: compose, transform, and automatically simplify distribution expressions in R. <!-- summary-end --></p>
 <!-- tags-start -->
-<p><strong>Tags</strong>: multivariate distributions, multivariate normal distribution, multivariate empirical distribution, data generating process, R, data-science, statistics, inference, likelihood-models, probability-theory <!-- tags-end --></p>
-<div class="section level2">
-<h2 id="github-pages-documentation">GitHub Pages Documentation<a class="anchor" aria-label="anchor" href="#github-pages-documentation"></a>
-</h2>
-<p>The GitHub documentation can be viewed <a href="https://queelius.github.io/algebraic.dist/" class="external-link">here</a>.</p>
-<p>See the vignette <a href="https://queelius.github.io/algebraic.dist/articles/example.html" class="external-link">algebraic.dist: Example</a> for a quick introduction to the package.</p>
-</div>
+<p><strong>Tags</strong>: probability distributions, distribution algebra, automatic simplification, multivariate normal, mixture models, CLT, delta method, Monte Carlo, R, statistics <!-- tags-end --></p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of <code>algebraic.dist</code> from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>Install the stable release from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"algebraic.dist"</span><span class="op">)</span></span></code></pre></div>
+<p>Or install the development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"queelius/algebraic.dist"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The R package <code>algebraic.dist</code> provides an algebra over distributions. It’s not fully-formed yet, but I plan on using it for a lot of my future work. For instance, I’ll move a lot of the code in <code>algebraic.mle</code> and <code>likelihood.model</code> to this package.</p>
-<p>After that, I want to experiment with using the <code>algebraic.dist</code> to do the following:</p>
+<p><code>algebraic.dist</code> lets you build and manipulate probability distributions as first-class R objects. Algebraic operations (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>, <code>exp</code>, <code>log</code>, <code>min</code>, <code>max</code>, …) on distribution objects automatically simplify to closed-form distributions when mathematical identities apply, and fall back to lazy Monte Carlo expressions (<code>edist</code>) otherwise.</p>
+<div class="section level3">
+<h3 id="distribution-types">Distribution types<a class="anchor" aria-label="anchor" href="#distribution-types"></a>
+</h3>
+<p>Normal, exponential, gamma, Weibull, chi-squared, uniform, beta, log-normal, Poisson, multivariate normal (MVN), mixture, and empirical distributions.</p>
+</div>
+<div class="section level3">
+<h3 id="automatic-simplification">Automatic simplification<a class="anchor" aria-label="anchor" href="#automatic-simplification"></a>
+</h3>
+<p>Over 20 built-in rules, including:</p>
 <ul>
 <li>
-<p>Compose distributions such that operations over distributions generate other known distributions.</p>
-<p>There are a lot of well-known compositions, such as the exponential distribution being the minimum of independent exponential distributions, or the sum of independent normal distributions being a normal distribution, but there is a very large space of possible compositions that are not as well-known or well-studied that I want to explore.</p>
+<code>Normal + Normal</code> → <code>Normal</code>
 </li>
-<li><p>Let people use an R expression to lazily compose functions of distributions. Simplifying a distribution expression will generate a most simple R expression that represents the same distribution.</p></li>
+<li>
+<code>Gamma + Gamma</code> (same rate) → <code>Gamma</code>
+</li>
+<li>
+<code>exp(Normal)</code> → <code>LogNormal</code>
+</li>
+<li>
+<code>Normal(0,1)^2</code> → <code>ChiSq(1)</code>
+</li>
+<li>
+<code>min(Exp, ..., Exp)</code> → <code>Exp</code>
+</li>
+<li>
+<code>c * Uniform(a,b)</code> → <code>Uniform</code>
+</li>
 </ul>
-<p>Sometimes, this may result in a simple close-form distribution, like a multivariate normal distribution, but in other cases it may result in a (hopefully simpler) expression that composes multiple distributions and operations over them.</p>
+<p>When no rule matches, the result is a lazy <code>edist</code> that samples from its components and evaluates the expression on demand.</p>
+</div>
+<div class="section level3">
+<h3 id="multivariate-operations">Multivariate operations<a class="anchor" aria-label="anchor" href="#multivariate-operations"></a>
+</h3>
 <ul>
-<li><p>With these R expressions that represent distributions, we can define more operations, like taking the limiting distribution of a sequence of distributions, say <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>lim</mo><mrow><mi>n</mi><mo>→</mo><mi>∞</mi></mrow></msub><mfrac><mn>1</mn><mi>n</mi></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></msubsup><msub><mi>X</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\lim_{n \to \infty} \frac{1}{n} \sum_{i=1}^n X_i</annotation></semantics></math>, which is of normal by the central limit theorem.</p></li>
-<li><p>Deduce various properties of these distributions, such as their moments, variances, etc. Sometimes, this may require numerical integration or Monte Carlo methods, but if the expression simplifies to a known distribution, then we can use the known properties of that distribution.</p></li>
+<li>
+<strong>MVN conditioning</strong>: closed-form Schur complement via <code><a href="reference/conditional.html">conditional()</a></code>
+</li>
+<li>
+<strong>Affine transforms</strong>: <code>affine_transform(x, A, b)</code> for exact linear maps</li>
+<li>
+<strong>Mixture conditioning</strong>: Bayesian weight updates via Bayes’ rule</li>
+<li>
+<strong>Marginals</strong>: exact for MVN and mixture distributions</li>
 </ul>
-<p>I have a lot of this code in place in C++, but I want to re-implement it in R so that it’s more accessible to others. I may also implement some of the more interesting compositions in C++ and expose them to R via Rcpp, but I’m not sure yet. I use a lot of templates and metaprogramming in C++, and I’m not sure how well that will translate to Rcpp.</p>
+</div>
+<div class="section level3">
+<h3 id="limiting-distributions">Limiting distributions<a class="anchor" aria-label="anchor" href="#limiting-distributions"></a>
+</h3>
+<ul>
+<li>
+<code><a href="reference/clt.html">clt()</a></code> — Central Limit Theorem</li>
+<li>
+<code><a href="reference/lln.html">lln()</a></code> — Law of Large Numbers</li>
+<li>
+<code><a href="reference/delta_clt.html">delta_clt()</a></code> — delta method for transformed means</li>
+<li>
+<code><a href="reference/normal_approx.html">normal_approx()</a></code> — moment-matching normal approximation</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="quick-example">Quick example<a class="anchor" aria-label="anchor" href="#quick-example"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/queelius/algebraic.dist" class="external-link">algebraic.dist</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Sum of normals simplifies to a normal</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/normal.html">normal</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/normal.html">normal</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">+</span> <span class="va">y</span></span>
+<span><span class="va">z</span></span>
+<span><span class="co">#&gt; Normal distribution (mu = 3, var = 9)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># exp of a normal simplifies to log-normal</span></span>
+<span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="reference/normal.html">normal</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">w</span></span>
+<span><span class="co">#&gt; Log-normal distribution (meanlog = 0, sdlog = 1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Gamma addition with matching rates</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/gamma_dist.html">gamma_dist</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="reference/gamma_dist.html">gamma_dist</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">g</span></span>
+<span><span class="co">#&gt; Gamma distribution (shape = 7, rate = 2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CLT: the standardized sample mean converges to N(0, 1)</span></span>
+<span><span class="fu"><a href="reference/clt.html">clt</a></span><span class="op">(</span><span class="fu"><a href="reference/normal.html">normal</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Normal distribution (mu = 0, var = 4)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<p>The full documentation is available at <a href="https://queelius.github.io/algebraic.dist/" class="external-link uri">https://queelius.github.io/algebraic.dist/</a>.</p>
+<p>Vignettes:</p>
+<ul>
+<li>
+<a href="https://queelius.github.io/algebraic.dist/articles/example.html" class="external-link">Getting started</a> — core distribution objects, sampling, and basic operations</li>
+<li>
+<a href="https://queelius.github.io/algebraic.dist/articles/algebra.html" class="external-link">Distribution algebra</a> — simplification rules, limiting distributions, and the CLT/LLN/delta method</li>
+<li>
+<a href="https://queelius.github.io/algebraic.dist/articles/multivariate.html" class="external-link">Multivariate operations</a> — MVN conditioning, affine transforms, and Gaussian mixture models</li>
+</ul>
 </div>
 </div>
 
@@ -136,6 +238,7 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=algebraic.dist" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/queelius/algebraic.dist/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/queelius/algebraic.dist/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -149,6 +252,13 @@
 </ul>
 </div>
 
+<div class="community">
+<h2 data-toc-skip>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>

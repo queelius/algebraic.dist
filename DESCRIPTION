@@ -1,6 +1,6 @@
 Package: algebraic.dist
 Title: Algebra over Probability Distributions
-Version: 0.3.0
+Version: 0.9.1
 Authors@R:
     person("Alexander", "Towell", , "lex@metafunctor.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-6443-9897"))

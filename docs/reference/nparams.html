@@ -18,7 +18,7 @@ distribution-like object x."><!-- mathjax --><script src="https://cdnjs.cloudfla
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">algebraic.dist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
       </span>
     </div>
 
@@ -33,9 +33,18 @@ distribution-like object x."><!-- mathjax --><script src="https://cdnjs.cloudfla
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/algebra.html">Distribution Algebra with algebraic.dist</a>
+    </li>
+    <li>
       <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
+    <li>
+      <a href="../articles/multivariate.html">Multivariate and Mixture Distributions</a>
+    </li>
   </ul></li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/queelius/algebraic.dist/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
@@ -73,7 +82,18 @@ distribution-like object <code>x</code>.</p>
 <dd><p>the object to obtain the number of parameters for</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>Integer; the number of parameters.</p>
+    </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="empirical_dist.html">empirical_dist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">nparams</span><span class="op">(</span><span class="va">d</span><span class="op">)</span>  <span class="co"># 0 (non-parametric)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

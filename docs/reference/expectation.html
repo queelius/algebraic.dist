@@ -18,7 +18,7 @@ x."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">algebraic.dist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
       </span>
     </div>
 
@@ -33,9 +33,18 @@ x."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/algebra.html">Distribution Algebra with algebraic.dist</a>
+    </li>
+    <li>
       <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
+    <li>
+      <a href="../articles/multivariate.html">Multivariate and Mixture Distributions</a>
+    </li>
   </ul></li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/queelius/algebraic.dist/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
@@ -81,7 +90,21 @@ x."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/
 <dd><p>Additional arguments to pass into <code>g</code>.</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    <p>The expected value of <code>g(x)</code>.</p>
+    </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="exponential.html">exponential</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># E[X] for Exp(1) is 1</span></span></span>
+<span class="r-in"><span><span class="fu">expectation</span><span class="op">(</span><span class="va">x</span>, <span class="kw">function</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="va">t</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

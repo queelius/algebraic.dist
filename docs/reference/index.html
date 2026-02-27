@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">algebraic.dist</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.9.0</span>
       </span>
     </div>
 
@@ -32,9 +32,18 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/algebra.html">Distribution Algebra with algebraic.dist</a>
+    </li>
+    <li>
       <a href="../articles/example.html">algebraic.dist: Examples</a>
     </li>
+    <li>
+      <a href="../articles/multivariate.html">Multivariate and Mixture Distributions</a>
+    </li>
   </ul></li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/queelius/algebraic.dist/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
@@ -58,9 +67,33 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="Math.dist.html">Math(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Math group generic for distribution objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="affine_transform.html">affine_transform()</a></code> </p>
+        </td>
+        <td><p>Affine transformation of a normal or multivariate normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="beta_dist.html">beta_dist()</a></code> </p>
+        </td>
+        <td><p>Construct a beta distribution object.</p></td>
+      </tr><tr><td>
           <p><code><a href="cdf.html">cdf()</a></code> </p>
         </td>
         <td><p>Generic method for obtaining the cdf of an object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.beta_dist.html">cdf(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cumulative distribution function for a beta distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.chi_squared.html">cdf(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the cdf of a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.edist.html">cdf(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>CDF for expression distributions.</p></td>
       </tr><tr><td>
           <p><code><a href="cdf.empirical_dist.html">cdf(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -70,6 +103,18 @@
         </td>
         <td><p>Method to obtain the cdf of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="cdf.gamma_dist.html">cdf(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the cdf of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.lognormal.html">cdf(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cumulative distribution function for a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.mixture.html">cdf(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cumulative distribution function for a mixture distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="cdf.mvn.html">cdf(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the CDF of a <code>mvn</code> object.</p></td>
@@ -77,6 +122,26 @@
           <p><code><a href="cdf.normal.html">cdf(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the cdf of an <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.poisson_dist.html">cdf(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cumulative distribution function for a Poisson distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.uniform_dist.html">cdf(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cumulative distribution function for a uniform distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="cdf.weibull_dist.html">cdf(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Cumulative distribution function for a Weibull distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="chi_squared.html">chi_squared()</a></code> </p>
+        </td>
+        <td><p>Construct a chi-squared distribution object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="clt.html">clt()</a></code> </p>
+        </td>
+        <td><p>Central Limit Theorem Limiting Distribution</p></td>
       </tr><tr><td>
           <p><code><a href="conditional.html">conditional()</a></code> </p>
         </td>
@@ -86,9 +151,41 @@
         </td>
         <td><p>Method for obtaining the condition distribution, <code>x | P(x)</code>, of <code>dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="conditional.edist.html">conditional(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Conditional distribution for expression distributions.</p></td>
+      </tr><tr><td>
           <p><code><a href="conditional.empirical_dist.html">conditional(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the condition distribution, <code>x | P(x)</code>, of <code>empirical_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="conditional.mixture.html">conditional(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Conditional distribution of a mixture.</p></td>
+      </tr><tr><td>
+          <p><code><a href="conditional.mvn.html">conditional(<i>&lt;mvn&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Conditional distribution for multivariate normal.</p></td>
+      </tr><tr><td>
+          <p><code><a href="countable_set.html">countable_set</a></code> </p>
+        </td>
+        <td><p>Countable Set</p></td>
+      </tr><tr><td>
+          <p><code><a href="delta_clt.html">delta_clt()</a></code> </p>
+        </td>
+        <td><p>Delta Method CLT Limiting Distribution</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.beta_dist.html">density(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Probability density function for a beta distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.chi_squared.html">density(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the density (pdf) of a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.edist.html">density(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Density for expression distributions.</p></td>
       </tr><tr><td>
           <p><code><a href="density.empirical_dist.html">density(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -98,6 +195,18 @@
         </td>
         <td><p>Method to obtain the pdf of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="density.gamma_dist.html">density(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the density (pdf) of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.lognormal.html">density(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Probability density function for a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.mixture.html">density(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Probability density function for a mixture distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="density.mvn.html">density(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Function generator for obtaining the pdf of an <code>mvn</code> object (multivariate normal).</p></td>
@@ -105,6 +214,30 @@
           <p><code><a href="density.normal.html">density(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the pdf of an <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.poisson_dist.html">density(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Probability mass function for a Poisson distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.uniform_dist.html">density(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Probability density function for a uniform distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="density.weibull_dist.html">density(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Probability density function for a Weibull distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.beta_dist.html">dim(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Dimension of a beta distribution (always 1).</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.chi_squared.html">dim(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the dimension of a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.countable_set.html">dim(<i>&lt;countable_set&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Get the dimension of a countable set.</p></td>
       </tr><tr><td>
           <p><code><a href="dim.empirical_dist.html">dim(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -118,9 +251,21 @@
         </td>
         <td><p>Return the dimension of the finite set.</p></td>
       </tr><tr><td>
+          <p><code><a href="dim.gamma_dist.html">dim(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the dimension of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="dim.interval.html">dim(<i>&lt;interval&gt;</i>)</a></code> </p>
         </td>
         <td><p>Return the dimension of the interval.</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.lognormal.html">dim(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Dimension of a log-normal distribution (always 1).</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.mixture.html">dim(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Dimension of a mixture distribution.</p></td>
       </tr><tr><td>
           <p><code><a href="dim.mvn.html">dim(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
@@ -129,6 +274,22 @@
           <p><code><a href="dim.normal.html">dim(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the dimension of a <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.poisson_dist.html">dim(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Dimension of a Poisson distribution (always 1).</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.uniform_dist.html">dim(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Dimension of a uniform distribution (always 1).</p></td>
+      </tr><tr><td>
+          <p><code><a href="dim.weibull_dist.html">dim(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Dimension of a Weibull distribution (always 1).</p></td>
+      </tr><tr><td>
+          <p><code><a href="dist_summary_group.html">Summary(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Summary group generic for distribution objects.</p></td>
       </tr><tr><td>
           <p><code><a href="dot-dist.html">`-`(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
@@ -154,6 +315,10 @@
         </td>
         <td><p>Method for obtaining the expectation of <code>empirical_dist</code> object <code>x</code> under function <code>g</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="expectation.poisson_dist.html">expectation(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Exact expectation for a Poisson distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="expectation.univariate_dist.html">expectation(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the expectation of <code>f</code> with respect to a <code>univariate_dist</code> object <code>x</code>.</p></td>
@@ -170,9 +335,73 @@
         </td>
         <td><p>Finite set</p></td>
       </tr><tr><td>
+          <p><code><a href="format.beta_dist.html">format(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>beta_dist</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.chi_squared.html">format(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>chi_squared</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.edist.html">format(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format method for <code>edist</code> objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.empirical_dist.html">format(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format method for <code>empirical_dist</code> objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.exponential.html">format(<i>&lt;exponential&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format method for <code>exponential</code> objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.gamma_dist.html">format(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>gamma_dist</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.lognormal.html">format(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>lognormal</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.mixture.html">format(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>mixture</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.mvn.html">format(<i>&lt;mvn&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format method for <code>mvn</code> objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.normal.html">format(<i>&lt;normal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format method for <code>normal</code> objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.poisson_dist.html">format(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>poisson_dist</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.realized_dist.html">format(<i>&lt;realized_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>realized_dist</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.uniform_dist.html">format(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>uniform_dist</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="format.weibull_dist.html">format(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Format a <code>weibull_dist</code> object as a character string.</p></td>
+      </tr><tr><td>
+          <p><code><a href="gamma_dist.html">gamma_dist()</a></code> </p>
+        </td>
+        <td><p>Construct a gamma distribution object.</p></td>
+      </tr><tr><td>
           <p><code><a href="has.html">has()</a></code> </p>
         </td>
         <td><p>Support</p></td>
+      </tr><tr><td>
+          <p><code><a href="has.countable_set.html">has(<i>&lt;countable_set&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Check membership in a countable set.</p></td>
       </tr><tr><td>
           <p><code><a href="has.finite_set.html">has(<i>&lt;finite_set&gt;</i>)</a></code> </p>
         </td>
@@ -186,13 +415,33 @@
         </td>
         <td><p>Generic method for obtaining the hazard function of an object.</p></td>
       </tr><tr><td>
+          <p><code><a href="hazard.chi_squared.html">hazard(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the hazard function of a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="hazard.exponential.html">hazard(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method to obtain the hazard function of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="hazard.gamma_dist.html">hazard(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the hazard function of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="hazard.lognormal.html">hazard(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Hazard function for a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="hazard.weibull_dist.html">hazard(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Hazard function for a Weibull distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="infimum.html">infimum()</a></code> </p>
         </td>
         <td><p>Get the infimum of the support.</p></td>
+      </tr><tr><td>
+          <p><code><a href="infimum.countable_set.html">infimum(<i>&lt;countable_set&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Get the infimum of a countable set.</p></td>
       </tr><tr><td>
           <p><code><a href="infimum.finite_set.html">infimum(<i>&lt;finite_set&gt;</i>)</a></code> </p>
         </td>
@@ -210,13 +459,57 @@
         </td>
         <td><p>Generic method for obtaining the quantile (inverse cdf) of an object.</p></td>
       </tr><tr><td>
+          <p><code><a href="inv_cdf.beta_dist.html">inv_cdf(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Inverse CDF (quantile function) for a beta distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.chi_squared.html">inv_cdf(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the inverse cdf (quantile function) of a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.edist.html">inv_cdf(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Inverse CDF (quantile function) for expression distributions.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.empirical_dist.html">inv_cdf(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the inverse CDF (quantile function) of a univariate <code>empirical_dist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="inv_cdf.exponential.html">inv_cdf(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method to obtain the inverse cdf of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="inv_cdf.gamma_dist.html">inv_cdf(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the inverse cdf (quantile function) of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.lognormal.html">inv_cdf(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Inverse CDF (quantile function) for a log-normal distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="inv_cdf.normal.html">inv_cdf(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the inverse cdf of an <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.poisson_dist.html">inv_cdf(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Inverse CDF (quantile function) for a Poisson distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.uniform_dist.html">inv_cdf(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Inverse CDF (quantile function) for a uniform distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="inv_cdf.weibull_dist.html">inv_cdf(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Inverse CDF (quantile function) for a Weibull distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_beta_dist.html">is_beta_dist()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>beta_dist</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_chi_squared.html">is_chi_squared()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>chi_squared</code>.</p></td>
       </tr><tr><td>
           <p><code><a href="is_dist.html">is_dist()</a></code> </p>
         </td>
@@ -234,6 +527,18 @@
         </td>
         <td><p>Function to determine whether an object <code>x</code> is an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="is_gamma_dist.html">is_gamma_dist()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>gamma_dist</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_lognormal.html">is_lognormal()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>lognormal</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_mixture.html">is_mixture()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>mixture</code> distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="is_mvn.html">is_mvn()</a></code> </p>
         </td>
         <td><p>Function to determine whether an object <code>x</code> is an <code>mvn</code> object.</p></td>
@@ -241,6 +546,30 @@
           <p><code><a href="is_normal.html">is_normal()</a></code> </p>
         </td>
         <td><p>Function to determine whether an object <code>x</code> is an <code>normal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_poisson_dist.html">is_poisson_dist()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>poisson_dist</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_realized_dist.html">is_realized_dist()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>realized_dist</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_uniform_dist.html">is_uniform_dist()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>uniform_dist</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="is_weibull_dist.html">is_weibull_dist()</a></code> </p>
+        </td>
+        <td><p>Test whether an object is a <code>weibull_dist</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="lln.html">lln()</a></code> </p>
+        </td>
+        <td><p>Law of Large Numbers Limiting Distribution</p></td>
+      </tr><tr><td>
+          <p><code><a href="lognormal.html">lognormal()</a></code> </p>
+        </td>
+        <td><p>Construct a log-normal distribution object.</p></td>
       </tr><tr><td>
           <p><code><a href="marginal.html">marginal()</a></code> </p>
         </td>
@@ -250,9 +579,21 @@
         </td>
         <td><p>Method for obtaining the marginal distribution of <code>empirical_dist</code> object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="marginal.mixture.html">marginal(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Marginal distribution of a mixture.</p></td>
+      </tr><tr><td>
           <p><code><a href="marginal.mvn.html">marginal(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Generic method for obtaining the marginal distribution of an <code>mvn</code> object <code>x</code> over components <code>indices</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mean.beta_dist.html">mean(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mean of a beta distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mean.chi_squared.html">mean(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the mean of a <code>chi_squared</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="mean.edist.html">mean(<i>&lt;edist&gt;</i>)</a></code> </p>
         </td>
@@ -266,6 +607,18 @@
         </td>
         <td><p>Method to obtain the mean of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="mean.gamma_dist.html">mean(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the mean of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mean.lognormal.html">mean(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mean of a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mean.mixture.html">mean(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mean of a mixture distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="mean.mvn.html">mean(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Retrieve the mean of a <code>mvn</code> object.</p></td>
@@ -274,9 +627,25 @@
         </td>
         <td><p>Retrieve the mean of a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="mean.poisson_dist.html">mean(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mean of a Poisson distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mean.uniform_dist.html">mean(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mean of a uniform distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="mean.univariate_dist.html">mean(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the mean of <code>univariate_dist</code> object <code>x</code>.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mean.weibull_dist.html">mean(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Mean of a Weibull distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="mixture.html">mixture()</a></code> </p>
+        </td>
+        <td><p>Construct a mixture distribution.</p></td>
       </tr><tr><td>
           <p><code><a href="mvn.html">mvn()</a></code> </p>
         </td>
@@ -290,6 +659,10 @@
         </td>
         <td><p>Construct univariate normal distribution object.</p></td>
       </tr><tr><td>
+          <p><code><a href="normal_approx.html">normal_approx()</a></code> </p>
+        </td>
+        <td><p>Moment-Matching Normal Approximation</p></td>
+      </tr><tr><td>
           <p><code><a href="nparams.html">nparams()</a></code> </p>
         </td>
         <td><p>Generic method for obtaining the number of parameters of distribution-like object <code>x</code>.</p></td>
@@ -297,6 +670,10 @@
           <p><code><a href="nparams.empirical_dist.html">nparams(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the name of a <code>empirical_dist</code> object. Since the empirical distribution is parameter-free, this function returns 0.</p></td>
+      </tr><tr><td>
+          <p><code><a href="nparams.mixture.html">nparams(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Number of parameters for a <code>mixture</code> distribution.</p></td>
       </tr><tr><td>
           <p><code><a href="obs.html">obs()</a></code> </p>
         </td>
@@ -310,6 +687,14 @@
         </td>
         <td><p>Generic method for obtaining the parameters of an object.</p></td>
       </tr><tr><td>
+          <p><code><a href="params.beta_dist.html">params(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the parameters of a <code>beta_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="params.chi_squared.html">params(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the parameters of a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="params.edist.html">params(<i>&lt;edist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the parameters of an <code>edist</code> object.</p></td>
@@ -322,6 +707,18 @@
         </td>
         <td><p>Method for obtaining the parameters of an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="params.gamma_dist.html">params(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the parameters of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="params.lognormal.html">params(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the parameters of a <code>lognormal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="params.mixture.html">params(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the parameters of a <code>mixture</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="params.mvn.html">params(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the parameters of a <code>mvn</code> object.</p></td>
@@ -330,29 +727,65 @@
         </td>
         <td><p>Method for obtaining the parameters of a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="params.poisson_dist.html">params(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the parameters of a <code>poisson_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="params.uniform_dist.html">params(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the parameters of a <code>uniform_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="params.weibull_dist.html">params(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the parameters of a <code>weibull_dist</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="plus-.dist.html">`+`(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for adding <code>dist</code> objects.</p></td>
+        <td><p>Method for adding <code>dist</code> objects, or shifting a distribution by a scalar.</p></td>
       </tr><tr><td>
-          <p><code><a href="print.dist.html">print(<i>&lt;dist&gt;</i>)</a></code> </p>
+          <p><code><a href="poisson_dist.html">poisson_dist()</a></code> </p>
         </td>
-        <td><p>Method for printing a <code>dist</code> object</p></td>
+        <td><p>Construct a Poisson distribution object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="pow-.dist.html">`^`(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Power operator for distribution objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.beta_dist.html">print(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>beta_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.chi_squared.html">print(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print method for <code>chi_squared</code> objects.</p></td>
       </tr><tr><td>
           <p><code><a href="print.edist.html">print(<i>&lt;edist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for printing an <code>edist</code> object.</p></td>
+        <td><p>Print method for <code>edist</code> objects.</p></td>
       </tr><tr><td>
           <p><code><a href="print.empirical_dist.html">print(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for printing a <code>dist</code> object</p></td>
+        <td><p>Print method for <code>empirical_dist</code> objects.</p></td>
       </tr><tr><td>
           <p><code><a href="print.exponential.html">print(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
         <td><p>Print method for <code>exponential</code> objects.</p></td>
       </tr><tr><td>
+          <p><code><a href="print.gamma_dist.html">print(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print method for <code>gamma_dist</code> objects.</p></td>
+      </tr><tr><td>
           <p><code><a href="print.interval.html">print(<i>&lt;interval&gt;</i>)</a></code> </p>
         </td>
         <td><p>Print the interval.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.lognormal.html">print(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>lognormal</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.mixture.html">print(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>mixture</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="print.mvn.html">print(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
@@ -360,11 +793,31 @@
       </tr><tr><td>
           <p><code><a href="print.normal.html">print(<i>&lt;normal&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Method for printing a <code>normal</code> object.</p></td>
+        <td><p>Print method for <code>normal</code> objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.poisson_dist.html">print(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>poisson_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.realized_dist.html">print(<i>&lt;realized_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>realized_dist</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="print.summary_dist.html">print(<i>&lt;summary_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Print method for <code>summary_dist</code> objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.uniform_dist.html">print(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>uniform_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="print.weibull_dist.html">print(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a <code>weibull_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="realize.html">realize()</a></code> </p>
+        </td>
+        <td><p>Materialize any distribution to empirical_dist by sampling.</p></td>
       </tr><tr><td>
           <p><code><a href="rmap.html">rmap()</a></code> </p>
         </td>
@@ -373,6 +826,10 @@
           <p><code><a href="rmap.dist.html">rmap(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining g(x)) where x is a <code>dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="rmap.edist.html">rmap(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Map function over expression distribution.</p></td>
       </tr><tr><td>
           <p><code><a href="rmap.empirical_dist.html">rmap(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
@@ -390,6 +847,14 @@
         </td>
         <td><p>Generic method for sampling from distribution-like objects.</p></td>
       </tr><tr><td>
+          <p><code><a href="sampler.beta_dist.html">sampler(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sampler for a beta distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sampler.chi_squared.html">sampler(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for sampling from a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="sampler.default.html">sampler(<i>&lt;default&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sampler for non-dist objects (degenerate distributions).</p></td>
@@ -406,6 +871,18 @@
         </td>
         <td><p>Method to sample from an <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="sampler.gamma_dist.html">sampler(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for sampling from a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sampler.lognormal.html">sampler(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sampler for a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sampler.mixture.html">sampler(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sampler for a mixture distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="sampler.mvn.html">sampler(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Function generator for sampling from a <code>mvn</code> (multivariate normal) object.</p></td>
@@ -414,17 +891,33 @@
         </td>
         <td><p>Method for sampling from a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="sampler.poisson_dist.html">sampler(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sampler for a Poisson distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sampler.uniform_dist.html">sampler(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sampler for a uniform distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sampler.weibull_dist.html">sampler(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Sampler for a Weibull distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="simplify.html">simplify()</a></code> </p>
         </td>
         <td><p>Generic method for simplifying distributions.</p></td>
       </tr><tr><td>
           <p><code><a href="simplify.dist.html">simplify(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Default Method for simplifming a <code>dist</code> object. Just returns the object.</p></td>
+        <td><p>Default Method for simplifying a <code>dist</code> object. Just returns the object.</p></td>
       </tr><tr><td>
           <p><code><a href="simplify.edist.html">simplify(<i>&lt;edist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for simplifying an <code>edist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="slash-.dist.html">`/`(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Division of distribution objects.</p></td>
       </tr><tr><td>
           <p><code><a href="summary.dist.html">summary(<i>&lt;dist&gt;</i>)</a></code> </p>
         </td>
@@ -438,6 +931,18 @@
         </td>
         <td><p>Generic method for retrieving the support of a (dist) object <code>x</code>.</p></td>
       </tr><tr><td>
+          <p><code><a href="sup.beta_dist.html">sup(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support of a beta distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.chi_squared.html">sup(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support for chi-squared distribution, the positive real numbers (0, Inf).</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.edist.html">sup(<i>&lt;edist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support for expression distributions.</p></td>
+      </tr><tr><td>
           <p><code><a href="sup.empirical_dist.html">sup(<i>&lt;empirical_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the support of <code>empirical_dist</code> object <code>x</code>.</p></td>
@@ -445,6 +950,18 @@
           <p><code><a href="sup.exponential.html">sup(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
         <td><p>Support for exponential distribution, the positive real numbers, (0, Inf).</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.gamma_dist.html">sup(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support for gamma distribution, the positive real numbers (0, Inf).</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.lognormal.html">sup(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support of a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.mixture.html">sup(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support of a mixture distribution.</p></td>
       </tr><tr><td>
           <p><code><a href="sup.mvn.html">sup(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
@@ -454,9 +971,25 @@
         </td>
         <td><p>Method for obtaining the support of a <code>normal</code> object, where the support is defined as values that have non-zero probability density.</p></td>
       </tr><tr><td>
+          <p><code><a href="sup.poisson_dist.html">sup(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support of a Poisson distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.uniform_dist.html">sup(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support of a uniform distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="sup.weibull_dist.html">sup(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Support of a Weibull distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="supremum.html">supremum()</a></code> </p>
         </td>
         <td><p>Get the supremum of the support.</p></td>
+      </tr><tr><td>
+          <p><code><a href="supremum.countable_set.html">supremum(<i>&lt;countable_set&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Get the supremum of a countable set.</p></td>
       </tr><tr><td>
           <p><code><a href="supremum.finite_set.html">supremum(<i>&lt;finite_set&gt;</i>)</a></code> </p>
         </td>
@@ -470,9 +1003,41 @@
         </td>
         <td><p>Generic method for obtaining the survival function of an object.</p></td>
       </tr><tr><td>
+          <p><code><a href="surv.chi_squared.html">surv(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the survival function of a <code>chi_squared</code> object.</p></td>
+      </tr><tr><td>
           <p><code><a href="surv.exponential.html">surv(<i>&lt;exponential&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method to obtain the cdf of an <code>exponential</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="surv.gamma_dist.html">surv(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Method for obtaining the survival function of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="surv.lognormal.html">surv(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Survival function for a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="surv.weibull_dist.html">surv(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Survival function for a Weibull distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="times-.dist.html">`*`(<i>&lt;dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Multiplication of distribution objects.</p></td>
+      </tr><tr><td>
+          <p><code><a href="uniform_dist.html">uniform_dist()</a></code> </p>
+        </td>
+        <td><p>Construct a uniform distribution object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.beta_dist.html">vcov(<i>&lt;beta_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance of a beta distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.chi_squared.html">vcov(<i>&lt;chi_squared&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the variance of a <code>chi_squared</code> object.</p></td>
       </tr><tr><td>
           <p><code><a href="vcov.default.html">vcov(<i>&lt;default&gt;</i>)</a></code> </p>
         </td>
@@ -490,6 +1055,18 @@
         </td>
         <td><p>Retrieve the variance of a <code>exponential</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="vcov.gamma_dist.html">vcov(<i>&lt;gamma_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Retrieve the variance of a <code>gamma_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.lognormal.html">vcov(<i>&lt;lognormal&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance of a log-normal distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.mixture.html">vcov(<i>&lt;mixture&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance of a mixture distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="vcov.mvn.html">vcov(<i>&lt;mvn&gt;</i>)</a></code> </p>
         </td>
         <td><p>Retrieve the variance-covariance matrix of an <code>mvn</code> object.</p></td>
@@ -498,9 +1075,25 @@
         </td>
         <td><p>Retrieve the variance-covariance matrix (or scalar) of a <code>normal</code> object.</p></td>
       </tr><tr><td>
+          <p><code><a href="vcov.poisson_dist.html">vcov(<i>&lt;poisson_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance of a Poisson distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.uniform_dist.html">vcov(<i>&lt;uniform_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance of a uniform distribution.</p></td>
+      </tr><tr><td>
           <p><code><a href="vcov.univariate_dist.html">vcov(<i>&lt;univariate_dist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Method for obtaining the variance of <code>univariate_dist</code> object.</p></td>
+      </tr><tr><td>
+          <p><code><a href="vcov.weibull_dist.html">vcov(<i>&lt;weibull_dist&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance of a Weibull distribution.</p></td>
+      </tr><tr><td>
+          <p><code><a href="weibull_dist.html">weibull_dist()</a></code> </p>
+        </td>
+        <td><p>Construct a Weibull distribution object.</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

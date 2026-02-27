@@ -7,7 +7,7 @@ The single NOTE is:
 * checking CRAN incoming feasibility ... NOTE
   Maintainer: 'Alexander Towell <lex@metafunctor.com>'
 
-  This is a version update (0.1.0 -> 0.3.0) of an existing CRAN package.
+  This is a version update (0.1.0 -> 0.9.1) of an existing CRAN package.
 
 ## Changes in this version
 

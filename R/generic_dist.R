@@ -1,3 +1,26 @@
+#' Convert an object to a probability distribution.
+#'
+#' Generic method for converting objects (such as fitted models) into
+#' distribution objects from the \code{algebraic.dist} package.
+#'
+#' @param x The object to convert to a distribution.
+#' @param ... Additional arguments to pass to methods.
+#' @return A \code{dist} object.
+#' @examples
+#' # Identity for existing distributions
+#' d <- normal(0, 1)
+#' identical(as_dist(d), d)
+#' @export
+as_dist <- function(x, ...) {
+    UseMethod("as_dist", x)
+}
+
+#' @rdname as_dist
+#' @export
+as_dist.dist <- function(x, ...) {
+    x
+}
+
 #' Generic method for obtaining the hazard function of an object.
 #'
 #' @param x The object to obtain the hazard function of.

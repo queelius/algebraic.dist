@@ -380,8 +380,8 @@ plot(x2_grid, y_post_pos, type = "l", lwd = 2,
 
 ### Ambiguous observations
 
-When the observation falls between the two clusters, the weights become
-more balanced and the posterior is visibly bimodal.
+When the observation falls between the two cluster means, both classes
+retain meaningful probability and the posterior becomes bimodal.
 
 ```{r gmm-classify-mid}
 post_mid <- conditional(gmm, given_indices = 1, given_values = 0)
@@ -397,8 +397,12 @@ plot(x2_grid, y_post_mid, type = "l", lwd = 2,
      main = "Posterior density of X2 given X1 = 0 (ambiguous)")
 ```
 
-At $X_1 = 0$ neither class dominates, so the posterior for $X_2$ is
-bimodal -- one mode near the Class A conditional mean, one near Class B.
-This is the hallmark of soft classification: rather than forcing a hard
-decision, the mixture posterior represents genuine uncertainty about
-the class label.
+At $X_1 = 0$ the posterior for $X_2$ is bimodal -- one mode near the
+Class A conditional mean, one near Class B. Although $X_1 = 0$ is
+equidistant from the two class means ($-2$ and $2$), Class A receives
+roughly 75% of the posterior weight because its broader $X_1$ variance
+($\sigma^2 = 1$ vs $0.6$) gives it higher density at the midpoint.
+Class B still retains about 25% of the weight, so neither class is
+overwhelmingly dominant. This is the hallmark of soft classification:
+rather than forcing a hard decision, the mixture posterior represents
+genuine uncertainty about the class label.

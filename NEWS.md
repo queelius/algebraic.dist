@@ -1,4 +1,8 @@
-# algebraic.dist 0.3.0
+# algebraic.dist 0.9.1
+
+## New Generics
+
+* `as_dist()` — S3 generic for converting objects (e.g., fitted models) into `dist` objects. Identity method for `dist`; designed as an extension point for downstream packages
 
 ## Unified Fallback Layer
 
