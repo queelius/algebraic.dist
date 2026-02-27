@@ -15,6 +15,14 @@ simplify.dist <- function(x, ...) {
   x
 }
 
+# Extract a numeric scalar from either side of a binary call expression.
+# Returns NULL if neither operand is a numeric literal.
+extract_scalar <- function(expr) {
+  lhs <- expr[[2]]
+  rhs <- expr[[3]]
+  if (is.numeric(lhs)) lhs else if (is.numeric(rhs)) rhs else NULL
+}
+
 #' Method for simplifying an `edist` object.
 #'
 #' Attempts to reduce expression distributions to closed-form distributions
@@ -62,39 +70,29 @@ simplify.edist <- function(x, ...) {
 
     # Scalar multiplication: c * dist or dist * c
     if (identical(op, "*")) {
-      # Extract scalar from expression
-      lhs <- expr[[2]]
-      rhs <- expr[[3]]
-      scalar <- if (is.numeric(lhs)) lhs else if (is.numeric(rhs)) rhs else NULL
+      scalar <- extract_scalar(expr)
 
       if (!is.null(scalar)) {
-        # c * Normal(mu, v) -> Normal(c*mu, c^2*v)
         if (is_normal(d)) {
           return(normal(mu = scalar * mean(d), var = scalar^2 * vcov(d)))
         }
-        # c * Gamma(a, r) -> Gamma(a, r/c) when c > 0
         if (scalar > 0 && is_gamma_dist(d)) {
           return(gamma_dist(shape = d$shape, rate = d$rate / scalar))
         }
-        # c * Exponential(r) -> Gamma(1, r/c) when c > 0
         if (scalar > 0 && is_exponential(d)) {
           return(gamma_dist(shape = 1, rate = d$rate / scalar))
         }
-        # c * Uniform(a, b) -> Uniform(min(ca,cb), max(ca,cb)) when c != 0
         if (scalar != 0 && is_uniform_dist(d)) {
           new_a <- scalar * d$min
           new_b <- scalar * d$max
           return(uniform_dist(min = min(new_a, new_b), max = max(new_a, new_b)))
         }
-        # c * Weibull(k, lam) -> Weibull(k, c*lam) when c > 0
         if (scalar > 0 && is_weibull_dist(d)) {
           return(weibull_dist(shape = d$shape, scale = scalar * d$scale))
         }
-        # c * ChiSq(df) -> Gamma(df/2, 1/(2c)) when c > 0
         if (scalar > 0 && is_chi_squared(d)) {
           return(gamma_dist(shape = d$df / 2, rate = 1 / (2 * scalar)))
         }
-        # c * LogNormal(ml, sl) -> LogNormal(ml + log(c), sl) when c > 0
         if (scalar > 0 && is_lognormal(d)) {
           return(lognormal(meanlog = d$meanlog + log(scalar), sdlog = d$sdlog))
         }
@@ -103,22 +101,17 @@ simplify.edist <- function(x, ...) {
 
     # Location shift: dist + c or c + dist or dist - c
     if (identical(op, "+") || identical(op, "-")) {
-      lhs <- expr[[2]]
-      rhs <- expr[[3]]
-
-      if (identical(op, "+")) {
-        scalar <- if (is.numeric(lhs)) lhs else if (is.numeric(rhs)) rhs else NULL
+      scalar <- if (identical(op, "+")) {
+        extract_scalar(expr)
       } else {
-        # For subtraction: x - c, scalar is rhs and negative
-        scalar <- if (is.numeric(rhs)) -rhs else NULL
+        rhs <- expr[[3]]
+        if (is.numeric(rhs)) -rhs else NULL
       }
 
       if (!is.null(scalar)) {
         if (is_normal(d)) {
           return(normal(mu = mean(d) + scalar, var = vcov(d)))
         }
-        # Uniform(a, b) + c -> Uniform(a + c, b + c)
-        # Uniform(a, b) - c -> Uniform(a - c, b - c)  (scalar is already negated)
         if (is_uniform_dist(d)) {
           return(uniform_dist(min = d$min + scalar, max = d$max + scalar))
         }
@@ -128,27 +121,18 @@ simplify.edist <- function(x, ...) {
     # Power: dist ^ c
     if (identical(op, "^")) {
       exponent <- expr[[3]]
-      if (is.numeric(exponent) && exponent == 2) {
-        # Normal(0,1)^2 -> chi_squared(1)
-        if (is_normal(d) && mean(d) == 0 && vcov(d) == 1) {
-          return(chi_squared(1))
-        }
+      if (is.numeric(exponent) && exponent == 2 &&
+          is_normal(d) && mean(d) == 0 && vcov(d) == 1) {
+        return(chi_squared(1))
       }
     }
 
-    # Math functions: exp, log
-    if (identical(op, "exp")) {
-      # exp(Normal(mu, v)) -> lognormal(mu, sqrt(v))
-      if (is_normal(d)) {
-        return(lognormal(meanlog = mean(d), sdlog = sqrt(vcov(d))))
-      }
+    if (identical(op, "exp") && is_normal(d)) {
+      return(lognormal(meanlog = mean(d), sdlog = sqrt(vcov(d))))
     }
 
-    if (identical(op, "log")) {
-      # log(LogNormal(ml, sl)) -> Normal(ml, sl^2)
-      if (is_lognormal(d)) {
-        return(normal(mu = d$meanlog, var = d$sdlog^2))
-      }
+    if (identical(op, "log") && is_lognormal(d)) {
+      return(normal(mu = d$meanlog, var = d$sdlog^2))
     }
   }
 

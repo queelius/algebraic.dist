@@ -8,13 +8,8 @@
 #' @return An `edist` object.
 #' @export
 edist <- function(e, vars) {
-  # retrieve the class of each of the distributions
-  # to include that in the class of the edist object
-  # we are creating
-  classes <- sapply(vars, class)[1,]
-  classes <- paste0(classes, collapse = "_")
-  expr_str <- paste0(e, "_", classes)
-  expr_str <- gsub(" ", "_", expr_str)
+  primary_classes <- vapply(vars, function(v) class(v)[1], character(1))
+  expr_str <- gsub(" ", "_", paste0(e, "_", paste0(primary_classes, collapse = "_")))
   structure(list(e = e, vars = vars, .cache = new.env(parent = emptyenv())),
             class = c(expr_str, "edist", "dist"))
 }
@@ -88,40 +83,20 @@ print.edist <- function(x, ...) {
 #'         sampled values.
 #' @export
 sampler.edist <- function(x, ...) {
-
-  # we use `sampler` to obtain the sampler
-  # for each `dist` object in `x$vars`
-  # so, here is what `x$vars` looks like:
-  # `x$vars <- list("x" = dist1, "y" = dist2)`
-  # and here is an example of what `x$e` looks like:
-  # `x$e <- expression(x + y)`
-  # so, we want to sample from `dist1` and `dist2`
-  # and then evaluate `x + y` against the sampled values
   samplers <- lapply(x$vars, sampler, ...)
   cnames <- names(x$vars)
 
-  # todo: accept a param and override the params in the e$vars
-  # distributions. each distribution should have a nparam method
-  # we can call (including `edist`!), so use it
   function(n = 1, ...) {
-    # we sample from each `dist` object
-    samples <- sapply(samplers, function(sampler) sampler(n, ...))
-    # When n=1, sapply returns a named vector instead of a matrix
+    samples <- sapply(samplers, function(s) s(n, ...))
     if (!is.matrix(samples)) samples <- matrix(samples, nrow = 1)
     colnames(samples) <- cnames
-    esamples <- list()
+
+    esamples <- vector("list", nrow(samples))
     for (i in seq_len(nrow(samples))) {
-      es <- base::eval(x$e, envir = as.list(samples[i,]))
-      esamples[[i]] <- es
+      esamples[[i]] <- base::eval(x$e, envir = as.list(samples[i, ]))
     }
-    # convert esamples to vector or matrix, depending on
-    # dimensionality of the first element in the list
-    if (is.matrix(esamples[[1]])) {
-      esamples <- do.call(rbind, esamples)
-    } else {
-      esamples <- unlist(esamples)
-    }
-    esamples
+
+    if (is.matrix(esamples[[1]])) do.call(rbind, esamples) else unlist(esamples)
   }
 }
 
@@ -251,6 +226,14 @@ Math.dist <- function(x, ...) {
   simplify(edist(expr, list(x = x)))
 }
 
+# Build an edist that applies a parallel function (pmin, pmax) over distributions.
+make_elementwise_edist <- function(fn_name, dists) {
+  var_names <- paste0("x", seq_along(dists))
+  vars <- setNames(dists, var_names)
+  expr <- parse(text = paste0(fn_name, "(", paste(var_names, collapse = ", "), ")"))[[1]]
+  simplify(edist(expr, vars))
+}
+
 #' Summary group generic for distribution objects.
 #'
 #' Handles sum(), prod(), min(), max() of distributions.
@@ -270,27 +253,15 @@ Summary.dist <- function(..., na.rm = FALSE) {
   if (op == "prod") return(Reduce(`*`, dists))
 
   if (op == "min") {
-    # Check if all are exponential — min of exp is exp with summed rates
     if (all(vapply(dists, is_exponential, logical(1)))) {
       total_rate <- sum(vapply(dists, function(d) d$rate, numeric(1)))
       return(exponential(total_rate))
     }
-    # Otherwise build pmin edist
-    n <- length(dists)
-    var_names <- paste0("x", seq_len(n))
-    vars <- setNames(dists, var_names)
-    args <- paste(var_names, collapse = ", ")
-    expr <- parse(text = paste0("pmin(", args, ")"))[[1]]
-    return(simplify(edist(expr, vars)))
+    return(make_elementwise_edist("pmin", dists))
   }
 
   if (op == "max") {
-    n <- length(dists)
-    var_names <- paste0("x", seq_len(n))
-    vars <- setNames(dists, var_names)
-    args <- paste(var_names, collapse = ", ")
-    expr <- parse(text = paste0("pmax(", args, ")"))[[1]]
-    return(simplify(edist(expr, vars)))
+    return(make_elementwise_edist("pmax", dists))
   }
 
   stop("Unsupported Summary operation: ", op)

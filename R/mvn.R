@@ -30,11 +30,10 @@ mvn <- function(
 
     if (length(mu) == 1) {
         return(normal(mu, sigma))
-    } else {
-        structure(list(mu = mu, sigma = sigma),
-            class = c("mvn", "multivariate_dist",
-                      "continuous_dist", "dist"))
     }
+    structure(list(mu = mu, sigma = sigma),
+        class = c("mvn", "multivariate_dist",
+                  "continuous_dist", "dist"))
 }
 
 #' Retrieve the variance-covariance matrix of an `mvn` object.
@@ -152,18 +151,15 @@ sup.mvn <- function(x, ...) {
 #' @param indices The indices of the marginal distribution to obtain.
 #' @export
 marginal.mvn <- function(x, indices) {
-    if (length(indices) == 0) {
+    if (length(indices) == 0)
         stop("indices must be non-empty")
-    }
-    else if (length(indices) == 1) {
-        return(normal(x$mu[indices], x$sigma[indices,indices]))
-    }
-    else if (any(indices < 0) || any(indices > dim(x))) {
+    if (any(indices < 1) || any(indices > dim(x)))
         stop("indices must be in [1, dim(x)]")
-    }
-    mu <- x$mu[indices]
-    sigma <- x$sigma[indices, indices]
-    mvn(mu, sigma)
+
+    if (length(indices) == 1)
+        return(normal(x$mu[indices], x$sigma[indices, indices]))
+
+    mvn(x$mu[indices], x$sigma[indices, indices])
 }
 
 #' Function for obtaining sample points for an `mvn` object that is within
@@ -241,17 +237,11 @@ cdf.mvn <- function(x, ...) {
     function(q, mu = x$mu, sigma = x$sigma, lower.tail = TRUE,
              log.p = FALSE, ...) {
         p <- pmvnorm(mean = mu, sigma = sigma, upper = q, ...)
-        # check to see if `p` numeric has an attr `error` set to non-zero
         if (attr(p, "error") != 0) {
-            warning(paste0("error (", attr(p, "error"),"): ", attr(p, "msg")))
+            warning(sprintf("error (%s): %s", attr(p, "error"), attr(p, "msg")))
         }
-        attr(p, "error") <- NULL
-        attr(p, "msg") <- NULL
-        if (log.p) {
-            return(log(p))
-        } else {
-            return(p)
-        }
+        p <- as.numeric(p)
+        if (log.p) log(p) else p
     }
 }
 
@@ -353,7 +343,6 @@ affine_transform <- function(x, A, b = NULL) {
     if (!inherits(x, "dist"))
         stop("'x' must be a 'dist' object")
 
-    # Promote univariate normal to matrix form
     if (is_normal(x)) {
         mu <- mean(x)
         sigma <- matrix(vcov(x), 1, 1)
@@ -364,24 +353,19 @@ affine_transform <- function(x, A, b = NULL) {
         stop("'x' must be a 'normal' or 'mvn' distribution")
     }
 
-    # Ensure A is a matrix
-    if (!is.matrix(A)) {
+    if (!is.matrix(A))
         A <- matrix(A, nrow = 1, ncol = length(mu))
-    }
     if (ncol(A) != length(mu))
         stop("ncol(A) must equal dim(x), got ", ncol(A), " vs ", length(mu))
 
-    # Default b to zero
-    if (is.null(b)) {
+    if (is.null(b))
         b <- rep(0, nrow(A))
-    }
     if (length(b) != nrow(A))
         stop("length(b) must equal nrow(A), got ", length(b), " vs ", nrow(A))
 
     mu_new <- as.numeric(A %*% mu + b)
     sigma_new <- A %*% sigma %*% t(A)
 
-    # Return normal for 1D, mvn for multivariate
     if (length(mu_new) == 1) {
         normal(mu = mu_new, var = as.numeric(sigma_new))
     } else {

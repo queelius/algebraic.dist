@@ -18,7 +18,7 @@
 mixture <- function(components, weights) {
   if (!is.list(components) || length(components) == 0)
     stop("'components' must be a non-empty list of distributions")
-  if (!all(sapply(components, inherits, "dist")))
+  if (!all(vapply(components, inherits, logical(1), "dist")))
     stop("all components must be 'dist' objects")
   if (!is.numeric(weights) || length(weights) != length(components))
     stop("'weights' must be a numeric vector of length ", length(components))
@@ -27,16 +27,17 @@ mixture <- function(components, weights) {
   if (abs(sum(weights) - 1) > 1e-10)
     stop("'weights' must sum to 1, got: ", sum(weights))
 
-  # Determine class based on components
+  all_inherit <- function(cls) all(vapply(components, inherits, logical(1), cls))
+
   classes <- "mixture"
-  if (all(sapply(components, inherits, "univariate_dist"))) {
+  if (all_inherit("univariate_dist")) {
     classes <- c(classes, "univariate_dist")
-  } else if (all(sapply(components, inherits, "multivariate_dist"))) {
+  } else if (all_inherit("multivariate_dist")) {
     classes <- c(classes, "multivariate_dist")
   }
-  if (all(sapply(components, inherits, "continuous_dist"))) {
+  if (all_inherit("continuous_dist")) {
     classes <- c(classes, "continuous_dist")
-  } else if (all(sapply(components, inherits, "discrete_dist"))) {
+  } else if (all_inherit("discrete_dist")) {
     classes <- c(classes, "discrete_dist")
   }
   classes <- c(classes, "dist")
@@ -80,9 +81,8 @@ mean.mixture <- function(x, ...) {
 vcov.mixture <- function(object, ...) {
   d <- dim(object$components[[1]])
   if (d == 1) {
-    # Univariate law of total variance
-    comp_means <- sapply(object$components, mean)
-    comp_vars <- sapply(object$components, vcov)
+    comp_means <- vapply(object$components, mean, numeric(1))
+    comp_vars <- vapply(object$components, vcov, numeric(1))
     overall_mean <- sum(object$weights * comp_means)
     within_var <- sum(object$weights * comp_vars)
     between_var <- sum(object$weights * (comp_means - overall_mean)^2)
@@ -115,9 +115,10 @@ vcov.mixture <- function(object, ...) {
 #' @export
 density.mixture <- function(x, ...) {
   comp_densities <- lapply(x$components, density)
+  weights <- x$weights
   function(t, log = FALSE, ...) {
-    vals <- sapply(seq_along(x$components), function(i) {
-      x$weights[i] * comp_densities[[i]](t, ...)
+    vals <- sapply(seq_along(comp_densities), function(i) {
+      weights[i] * comp_densities[[i]](t, ...)
     })
     result <- if (is.matrix(vals)) rowSums(vals) else sum(vals)
     if (log) log(result) else result
@@ -135,9 +136,10 @@ density.mixture <- function(x, ...) {
 #' @export
 cdf.mixture <- function(x, ...) {
   comp_cdfs <- lapply(x$components, cdf)
+  weights <- x$weights
   function(q, ...) {
-    vals <- sapply(seq_along(x$components), function(i) {
-      x$weights[i] * comp_cdfs[[i]](q, ...)
+    vals <- sapply(seq_along(comp_cdfs), function(i) {
+      weights[i] * comp_cdfs[[i]](q, ...)
     })
     if (is.matrix(vals)) rowSums(vals) else sum(vals)
   }
@@ -207,7 +209,7 @@ params.mixture <- function(x) {
 #' @return An integer count of parameters.
 #' @export
 nparams.mixture <- function(x) {
-  sum(sapply(x$components, function(comp) length(params(comp)))) +
+  sum(vapply(x$components, function(comp) length(params(comp)), integer(1))) +
     length(x$weights)
 }
 
@@ -233,8 +235,8 @@ dim.mixture <- function(x) {
 #' @export
 sup.mixture <- function(x) {
   sups <- lapply(x$components, sup)
-  lo <- min(sapply(sups, infimum))
-  hi <- max(sapply(sups, supremum))
+  lo <- min(vapply(sups, infimum, numeric(1)))
+  hi <- max(vapply(sups, supremum, numeric(1)))
   interval$new(lower = lo, upper = hi)
 }
 

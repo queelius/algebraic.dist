@@ -130,9 +130,6 @@ summary_dist <- function(name, mean, vcov, nobs = NULL) {
 }
 
 
-
-
-
 #' Sampler for non-dist objects (degenerate distributions).
 #'
 #' @param x The object to sample from

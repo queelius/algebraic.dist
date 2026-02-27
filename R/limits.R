@@ -1,3 +1,16 @@
+# Helper: check that x is a dist and return its effective dimension (1 for
+# univariate/NULL, d otherwise).
+assert_dist <- function(x, arg_name = "x") {
+  if (!inherits(x, "dist"))
+    stop("'", arg_name, "' must be a 'dist' object, got class: ",
+         paste(class(x), collapse = ", "))
+}
+
+is_univariate <- function(x) {
+  d <- dim(x)
+  is.null(d) || d == 1
+}
+
 #' Central Limit Theorem Limiting Distribution
 #'
 #' Returns the limiting distribution of the standardized sample mean
@@ -12,17 +25,13 @@
 #' @importFrom stats vcov
 #' @export
 clt <- function(base_dist) {
-  if (!inherits(base_dist, "dist"))
-    stop("'base_dist' must be a 'dist' object, got class: ",
-         paste(class(base_dist), collapse = ", "))
-
-  d <- dim(base_dist)
+  assert_dist(base_dist, "base_dist")
   v <- vcov(base_dist)
 
-  if (is.null(d) || d == 1) {
+  if (is_univariate(base_dist)) {
     normal(mu = 0, var = v)
   } else {
-    mvn(mu = rep(0, d), sigma = v)
+    mvn(mu = rep(0, dim(base_dist)), sigma = v)
   }
 }
 
@@ -39,16 +48,13 @@ clt <- function(base_dist) {
 #' @importFrom stats vcov
 #' @export
 lln <- function(base_dist) {
-  if (!inherits(base_dist, "dist"))
-    stop("'base_dist' must be a 'dist' object, got class: ",
-         paste(class(base_dist), collapse = ", "))
-
-  d <- dim(base_dist)
+  assert_dist(base_dist, "base_dist")
   mu <- mean(base_dist)
 
-  if (is.null(d) || d == 1) {
+  if (is_univariate(base_dist)) {
     normal(mu = mu, var = 0)
   } else {
+    d <- dim(base_dist)
     mvn(mu = mu, sigma = matrix(0, d, d))
   }
 }
@@ -71,23 +77,18 @@ lln <- function(base_dist) {
 #' @importFrom stats vcov
 #' @export
 delta_clt <- function(base_dist, g, dg) {
-  if (!inherits(base_dist, "dist"))
-    stop("'base_dist' must be a 'dist' object, got class: ",
-         paste(class(base_dist), collapse = ", "))
-
-  d <- dim(base_dist)
+  assert_dist(base_dist, "base_dist")
   mu <- mean(base_dist)
   v <- vcov(base_dist)
 
-  if (is.null(d) || d == 1) {
+  if (is_univariate(base_dist)) {
     dg_val <- dg(mu)
     normal(mu = 0, var = dg_val^2 * v)
   } else {
     J <- dg(mu)
     if (!is.matrix(J))
       stop("'dg' must return a matrix (Jacobian) for multivariate distributions")
-    sigma_out <- J %*% v %*% t(J)
-    mvn(mu = rep(0, nrow(J)), sigma = sigma_out)
+    mvn(mu = rep(0, nrow(J)), sigma = J %*% v %*% t(J))
   }
 }
 
@@ -105,15 +106,11 @@ delta_clt <- function(base_dist, g, dg) {
 #' @importFrom stats vcov
 #' @export
 normal_approx <- function(x) {
-  if (!inherits(x, "dist"))
-    stop("'x' must be a 'dist' object, got class: ",
-         paste(class(x), collapse = ", "))
-
-  d <- dim(x)
+  assert_dist(x)
   mu <- mean(x)
   v <- vcov(x)
 
-  if (is.null(d) || d == 1) {
+  if (is_univariate(x)) {
     normal(mu = mu, var = v)
   } else {
     mvn(mu = mu, sigma = v)

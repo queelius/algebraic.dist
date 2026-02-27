@@ -29,9 +29,7 @@ realize <- function(x, n = 10000, ...) UseMethod("realize")
 #' @rdname realize
 #' @export
 realize.dist <- function(x, n = 10000, ...) {
-  if (!is.numeric(n) || length(n) != 1 || n <= 0)
-    stop("'n' must be a positive integer, got: ", deparse(n))
-  n <- as.integer(n)
+  n <- validate_n(n)
   samples <- sampler(x)(n)
   realized_dist(samples, source = x, n = n)
 }
@@ -45,11 +43,14 @@ realize.empirical_dist <- function(x, ...) {
 #' @rdname realize
 #' @export
 realize.realized_dist <- function(x, n = 10000, ...) {
+  n <- validate_n(n)
+  realize(x$source, n = n)
+}
+
+validate_n <- function(n) {
   if (!is.numeric(n) || length(n) != 1 || n <= 0)
     stop("'n' must be a positive integer, got: ", deparse(n))
-  n <- as.integer(n)
-  samples <- sampler(x$source)(n)
-  realized_dist(samples, source = x$source, n = n)
+  as.integer(n)
 }
 
 
