@@ -69,8 +69,8 @@ summary.dist <- function(object, ..., name = NULL, nobs = NULL) {
 #' Method for obtaining the condition distribution, `x | P(x)`, of
 #' `dist` object `x`.
 #' 
-#' We just sample from `x` and place the sample in `empirical_dist` and
-#' then condition on it.
+#' Falls back to MC: materializes `x` via `ensure_realized()` and
+#' then conditions on the resulting empirical distribution.
 #' 
 #' @param x The distribution object.
 #' @param P The predicate function to condition the distribution on
@@ -84,8 +84,8 @@ conditional.dist <- function(x, P, n = 10000L, ...) {
 
 #' Method for obtaining g(x)) where x is a `dist` object.
 #' 
-#' We just sample from `x` and place the sample in `empirical_dist` and
-#' then apply `rmap` with `g` to it.
+#' Falls back to MC: materializes `x` via `ensure_realized()` and
+#' then applies `rmap` with `g` to the resulting empirical distribution.
 #' @param x The distribution object.
 #' @param g The function to apply to the distribution.
 #' @param n The number of samples to generate for the MC estimate of the

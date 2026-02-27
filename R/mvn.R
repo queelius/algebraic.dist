@@ -271,7 +271,7 @@ cdf.mvn <- function(x, ...) {
 #' @importFrom stats vcov
 #' @export
 rmap.mvn <- function(x, g, n = 10000L, ...) {
-    D <- rmap(empirical_dist(sampler(x)(n)), g, ...)
+    D <- rmap(ensure_realized(x, n = n), g, ...)
     mvn(mu = mean(D), sigma = vcov(D))
 }
 

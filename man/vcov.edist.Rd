@@ -9,7 +9,7 @@
 \arguments{
 \item{object}{The \code{edist} object to retrieve the variance-covariance matrix from}
 
-\item{n}{The number of samples to take (default: 1000)}
+\item{n}{The number of samples to take (default: 10000)}
 
 \item{...}{Additional arguments to pass (not used)}
 }

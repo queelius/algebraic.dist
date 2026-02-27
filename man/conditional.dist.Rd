@@ -18,6 +18,6 @@ conditional distribution x | P. Defaults to 10000.}
 \item{...}{additional arguments to pass into \code{P}.}
 }
 \description{
-We just sample from \code{x} and place the sample in \code{empirical_dist} and
-then condition on it.
+Falls back to MC: materializes \code{x} via \code{ensure_realized()} and
+then conditions on the resulting empirical distribution.
 }

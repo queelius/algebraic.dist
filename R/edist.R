@@ -37,7 +37,7 @@ params.edist <- function(x) {
 #' Method for obtaining the variance-covariance matrix (or scalar)
 #' 
 #' @param object The `edist` object to retrieve the variance-covariance matrix from
-#' @param n The number of samples to take (default: 1000)
+#' @param n The number of samples to take (default: 10000)
 #' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `edist` object
 #' @export
@@ -49,7 +49,7 @@ vcov.edist <- function(object, n = 10000, ...) {
 
 #' Method for obtaining the mean of an `edist` object.
 #' @param x The `edist` object to retrieve the mean from
-#' @param n The number of samples to take (default: 1000)
+#' @param n The number of samples to take (default: 10000)
 #' @param ... Additional arguments to pass (not used)
 #' @return The mean of the `edist` object
 #' @export

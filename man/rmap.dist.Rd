@@ -17,6 +17,6 @@ conditional distribution x | P. Defaults to 10000.}
 \item{...}{additional arguments to pass into \code{g}.}
 }
 \description{
-We just sample from \code{x} and place the sample in \code{empirical_dist} and
-then apply \code{rmap} with \code{g} to it.
+Falls back to MC: materializes \code{x} via \code{ensure_realized()} and
+then applies \code{rmap} with \code{g} to the resulting empirical distribution.
 }
