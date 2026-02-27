@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments to pass into \code{expectation}.}
 }
+\value{
+Numeric scalar; the mean of the distribution.
+}
 \description{
 Method for obtaining the mean of \code{univariate_dist} object \code{x}.
+}
+\examples{
+mean(normal(5, 2))    # 5
+mean(exponential(2))  # 0.5
 }

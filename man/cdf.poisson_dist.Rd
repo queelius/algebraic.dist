@@ -18,3 +18,9 @@ CDF (or log-CDF) at \code{q}.
 \description{
 Returns a function that evaluates the Poisson CDF at given points.
 }
+\examples{
+x <- poisson_dist(5)
+F <- cdf(x)
+F(5)
+F(10)
+}

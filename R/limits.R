@@ -22,6 +22,12 @@ is_univariate <- function(x) {
 #' @param base_dist A \code{dist} object representing the base distribution.
 #' @return A \code{normal} or \code{mvn} distribution representing the
 #'   CLT limiting distribution.
+#' @examples
+#' # CLT for Exp(2): sqrt(n)(Xbar - 1/2) -> N(0, 1/4)
+#' x <- exponential(rate = 2)
+#' z <- clt(x)
+#' mean(z)
+#' vcov(z)
 #' @importFrom stats vcov
 #' @export
 clt <- function(base_dist) {
@@ -45,6 +51,12 @@ clt <- function(base_dist) {
 #' @param base_dist A \code{dist} object representing the base distribution.
 #' @return A \code{normal} or \code{mvn} distribution with zero variance,
 #'   representing the degenerate distribution at the mean.
+#' @examples
+#' # LLN for Exp(2): Xbar -> 1/2 (degenerate)
+#' x <- exponential(rate = 2)
+#' d <- lln(x)
+#' mean(d)
+#' vcov(d)
 #' @importFrom stats vcov
 #' @export
 lln <- function(base_dist) {
@@ -74,6 +86,12 @@ lln <- function(base_dist) {
 #'   a matrix (the Jacobian).
 #' @return A \code{normal} or \code{mvn} distribution representing the
 #'   Delta Method limiting distribution.
+#' @examples
+#' # Delta method: g = exp, dg = exp
+#' x <- exponential(rate = 1)
+#' z <- delta_clt(x, g = exp, dg = exp)
+#' mean(z)
+#' vcov(z)
 #' @importFrom stats vcov
 #' @export
 delta_clt <- function(base_dist, g, dg) {
@@ -103,6 +121,12 @@ delta_clt <- function(base_dist, g, dg) {
 #' @return A \code{normal} distribution (for univariate inputs) or an
 #'   \code{mvn} distribution (for multivariate inputs) with the same
 #'   mean and variance-covariance as \code{x}.
+#' @examples
+#' # Approximate a Gamma(5, 2) with a normal
+#' g <- gamma_dist(shape = 5, rate = 2)
+#' n <- normal_approx(g)
+#' mean(n)
+#' vcov(n)
 #' @importFrom stats vcov
 #' @export
 normal_approx <- function(x) {

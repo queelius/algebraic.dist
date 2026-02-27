@@ -17,3 +17,6 @@ A character string describing the distribution.
 \description{
 Format a \code{beta_dist} object as a character string.
 }
+\examples{
+format(beta_dist(2, 5))
+}

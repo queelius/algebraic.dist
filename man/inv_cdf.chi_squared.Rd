@@ -19,3 +19,9 @@ A function that computes the quantile at probability \code{p}
 Method for obtaining the inverse cdf (quantile function) of a \code{chi_squared}
 object.
 }
+\examples{
+x <- chi_squared(5)
+q <- inv_cdf(x)
+q(0.5)
+q(0.95)
+}

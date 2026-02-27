@@ -11,6 +11,14 @@
 
 \item{x}{A vector of values.}
 }
+\value{
+Logical vector indicating containment.
+}
 \description{
 Determine if a value is contained in the interval.
+}
+\examples{
+iv <- interval$new(lower = 0, upper = 1)
+has(iv, 0.5) # TRUE
+has(iv, 2.0) # FALSE
 }

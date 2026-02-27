@@ -12,6 +12,19 @@ data frame, each row is a joint observation, if a vector, each
 element is an observation. whatever data is, it must be
 convertible to a tibble.}
 }
+\value{
+An \code{empirical_dist} object.
+}
 \description{
 Construct empirical distribution object.
+}
+\examples{
+# Univariate empirical distribution from a vector
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+mean(ed)
+
+# Multivariate empirical distribution from a matrix
+mat <- matrix(c(1, 2, 3, 4, 5, 6), ncol = 2)
+ed_mv <- empirical_dist(mat)
+dim(ed_mv)
 }

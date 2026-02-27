@@ -24,3 +24,13 @@ the returned value is not guaranteed to be in the support of \code{x}. You may n
 to call \code{call} to check.
 }
 }
+\examples{
+x <- normal(0, 1)
+S <- sup(x)
+infimum(S)   # -Inf
+supremum(S)  # Inf
+
+y <- exponential(1)
+S2 <- sup(y)
+infimum(S2)  # 0
+}

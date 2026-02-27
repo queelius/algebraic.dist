@@ -21,3 +21,6 @@ A \code{summary_dist} object
 \description{
 Method for obtaining a summary of a \code{dist} object.
 }
+\examples{
+summary(normal(0, 1))
+}

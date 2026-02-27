@@ -15,3 +15,6 @@ A named numeric vector of parameters
 \description{
 Method for obtaining the parameters of a \code{chi_squared} object.
 }
+\examples{
+params(chi_squared(5))
+}

@@ -17,3 +17,7 @@ A character string
 \description{
 Format method for \code{edist} objects.
 }
+\examples{
+z <- normal(0, 1) * exponential(2)
+format(z)
+}

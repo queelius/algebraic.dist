@@ -17,3 +17,6 @@ A character string describing the distribution.
 \description{
 Format a \code{lognormal} object as a character string.
 }
+\examples{
+format(lognormal(0, 1))
+}

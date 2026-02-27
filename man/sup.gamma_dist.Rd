@@ -15,3 +15,6 @@ An \code{interval} object representing (0, Inf)
 \description{
 Support for gamma distribution, the positive real numbers (0, Inf).
 }
+\examples{
+sup(gamma_dist(2, 1))
+}

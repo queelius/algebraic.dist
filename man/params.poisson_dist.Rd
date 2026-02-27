@@ -15,3 +15,6 @@ A named numeric vector with element \code{lambda}.
 \description{
 Retrieve the parameters of a \code{poisson_dist} object.
 }
+\examples{
+params(poisson_dist(5))
+}

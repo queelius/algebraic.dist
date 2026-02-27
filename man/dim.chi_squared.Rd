@@ -15,3 +15,6 @@
 \description{
 Retrieve the dimension of a \code{chi_squared} object.
 }
+\examples{
+dim(chi_squared(5))
+}

@@ -9,6 +9,13 @@
 \arguments{
 \item{object}{An interval object.}
 }
+\value{
+Numeric vector of lower bounds.
+}
 \description{
 Return the (vector of) infimum of the interval.
+}
+\examples{
+iv <- interval$new(lower = 0, upper = 1)
+infimum(iv) # 0
 }

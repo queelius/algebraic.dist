@@ -20,3 +20,11 @@ A transformed \code{empirical_dist}.
 Falls back to \code{\link{realize}} and delegates to
 \code{\link{rmap.empirical_dist}}.
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(1)
+abs_z <- rmap(z, abs)
+mean(abs_z)
+}
+}

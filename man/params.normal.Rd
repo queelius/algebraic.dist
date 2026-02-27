@@ -15,3 +15,7 @@ A named vector of parameters
 \description{
 Method for obtaining the parameters of a \code{normal} object.
 }
+\examples{
+x <- normal(3, 2)
+params(x)
+}

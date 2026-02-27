@@ -23,3 +23,9 @@ pass to the \code{pnorm} function.
 \description{
 Method for obtaining the cdf of an \code{normal} object.
 }
+\examples{
+x <- normal(0, 1)
+F <- cdf(x)
+F(0)
+F(1.96)
+}

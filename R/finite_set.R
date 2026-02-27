@@ -79,6 +79,11 @@ finite_set <- R6::R6Class(
 #' Determine if a value is contained in the finite set.
 #' @param object A finite set.
 #' @param x A vector of values.
+#' @return Logical indicating membership.
+#' @examples
+#' fs <- finite_set$new(c(1, 3, 5, 7))
+#' has(fs, 3) # TRUE
+#' has(fs, 4) # FALSE
 #' @export
 has.finite_set <- function(object, x) {
     object$has(x)
@@ -86,6 +91,10 @@ has.finite_set <- function(object, x) {
 
 #' Return the infimum of the finite set.
 #' @param object A finite set.
+#' @return Numeric; the minimum value(s).
+#' @examples
+#' fs <- finite_set$new(c(1, 3, 5, 7))
+#' infimum(fs) # 1
 #' @export
 infimum.finite_set <- function(object) {
     object$infimum()
@@ -93,13 +102,21 @@ infimum.finite_set <- function(object) {
 
 #' Return the supremum of the finite set.
 #' @param object A finite set.
+#' @return Numeric; the maximum value(s).
+#' @examples
+#' fs <- finite_set$new(c(1, 3, 5, 7))
+#' supremum(fs) # 7
 #' @export
 supremum.finite_set <- function(object) {
     object$supremum()
 }
 
 #' Return the dimension of the finite set.
-#' @param x A finite set. 
+#' @param x A finite set.
+#' @return Integer; the dimension of the set.
+#' @examples
+#' fs <- finite_set$new(c(1, 3, 5, 7))
+#' dim(fs) # 1
 #' @export
 dim.finite_set <- function(x) {
     x$dim()

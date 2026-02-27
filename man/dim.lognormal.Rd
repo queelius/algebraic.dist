@@ -15,3 +15,6 @@
 \description{
 Dimension of a log-normal distribution (always 1).
 }
+\examples{
+dim(lognormal(0, 1))
+}

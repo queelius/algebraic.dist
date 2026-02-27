@@ -23,3 +23,9 @@ of object \code{x}.
 \description{
 Method to obtain the inverse cdf of an \code{exponential} object.
 }
+\examples{
+x <- exponential(rate = 1)
+q <- inv_cdf(x)
+q(0.5)
+q(0.95)
+}

@@ -17,3 +17,6 @@ A character string describing the distribution
 \description{
 Format a \code{chi_squared} object as a character string.
 }
+\examples{
+format(chi_squared(5))
+}

@@ -32,3 +32,13 @@ observed values. The component conditionals are computed via
 Falls back to MC realization if \code{P} is provided or if any
 component does not support \code{given_indices}/\code{given_values}.
 }
+\examples{
+# Closed-form conditioning on MVN mixture
+m <- mixture(
+  list(mvn(c(0, 0), diag(2)), mvn(c(3, 3), diag(2))),
+  c(0.5, 0.5)
+)
+# Condition on X2 = 1
+mc <- conditional(m, given_indices = 2, given_values = 1)
+mean(mc)
+}

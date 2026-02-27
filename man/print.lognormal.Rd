@@ -17,3 +17,6 @@
 \description{
 Print a \code{lognormal} object.
 }
+\examples{
+print(lognormal(0, 1))
+}

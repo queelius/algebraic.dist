@@ -18,3 +18,7 @@ The variance (scalar for univariate mixtures).
 Uses the law of total variance:
 \eqn{Var(X) = E[Var(X|K)] + Var(E[X|K])}.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(10, 1)), c(0.5, 0.5))
+vcov(m)
+}

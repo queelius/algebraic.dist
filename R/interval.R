@@ -99,6 +99,11 @@ interval <- R6::R6Class(
 #' Determine if a value is contained in the interval.
 #' @param object An interval object.
 #' @param x A vector of values.
+#' @return Logical vector indicating containment.
+#' @examples
+#' iv <- interval$new(lower = 0, upper = 1)
+#' has(iv, 0.5) # TRUE
+#' has(iv, 2.0) # FALSE
 #' @export
 has.interval <- function(object, x) {
     object$has(x)
@@ -106,6 +111,10 @@ has.interval <- function(object, x) {
 
 #' Return the (vector of) infimum of the interval.
 #' @param object An interval object.
+#' @return Numeric vector of lower bounds.
+#' @examples
+#' iv <- interval$new(lower = 0, upper = 1)
+#' infimum(iv) # 0
 #' @export
 infimum.interval <- function(object) {
     object$infimum()
@@ -113,6 +122,10 @@ infimum.interval <- function(object) {
 
 #' Return the (vector of) supremum of the interval.
 #' @param object An interval object.
+#' @return Numeric vector of upper bounds.
+#' @examples
+#' iv <- interval$new(lower = 0, upper = 1)
+#' supremum(iv) # 1
 #' @export
 supremum.interval <- function(object) {
     object$supremum()
@@ -120,6 +133,10 @@ supremum.interval <- function(object) {
 
 #' Return the dimension of the interval.
 #' @param x An interval object.
+#' @return Integer; the number of interval components.
+#' @examples
+#' iv <- interval$new(lower = 0, upper = 1)
+#' dim(iv) # 1
 #' @export
 dim.interval <- function(x) {
     x$dim()
@@ -128,6 +145,10 @@ dim.interval <- function(x) {
 #' Print the interval.
 #' @param x An interval object.
 #' @param ... Additional arguments.
+#' @return \code{x}, invisibly.
+#' @examples
+#' iv <- interval$new(lower = 0, upper = 1, lower_closed = TRUE)
+#' print(iv) # [0, 1)
 #' @export
 print.interval <- function(x, ...) {
     for (i in 1:length(x$lower)) {
@@ -138,4 +159,5 @@ print.interval <- function(x, ...) {
         else cat(")", sep = "")
         cat("\n")
     }
+    invisible(x)
 }

@@ -15,3 +15,6 @@ The dimension of the \code{normal} object
 \description{
 Method for obtaining the dimension of a \code{normal} object.
 }
+\examples{
+dim(normal(0, 1))
+}

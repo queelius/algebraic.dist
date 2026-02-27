@@ -19,3 +19,10 @@ The variance-covariance matrix of the \code{edist} object
 \description{
 Method for obtaining the variance-covariance matrix (or scalar)
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(2)
+vcov(z)
+}
+}

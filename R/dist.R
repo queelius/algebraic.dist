@@ -1,6 +1,9 @@
 #' Function to determine whether an object `x` is a `dist` object.
 #' @param x The object to test
 #' @return Logical indicating whether `x` is a `dist` object.
+#' @examples
+#' is_dist(normal(0, 1))   # TRUE
+#' is_dist(42)             # FALSE
 #' @export
 is_dist <- function(x) {
   inherits(x, "dist")
@@ -27,6 +30,13 @@ is_dist <- function(x) {
 #'   value - The estimate of the expectation
 #'   ci    - The confidence intervals for each component of the expectation
 #'   n     - The number of samples
+#' @examples
+#' \donttest{
+#' # MC expectation of X^2 where X ~ Exp(1)
+#' set.seed(1)
+#' ex <- exponential(1)
+#' expectation(ex, g = function(t) t^2)
+#' }
 #' @export
 expectation.dist <- function(
     x,
@@ -57,6 +67,8 @@ expectation.dist <- function(
 #' @param name The name of the distribution, defaults to the class of the object.
 #' @param nobs The number of observations to report for the summary, if applicable.
 #' @return A `summary_dist` object
+#' @examples
+#' summary(normal(0, 1))
 #' @export
 summary.dist <- function(object, ..., name = NULL, nobs = NULL) {
   summary_dist(
@@ -77,6 +89,15 @@ summary.dist <- function(object, ..., name = NULL, nobs = NULL) {
 #' @param n The number of samples to generate for the MC estimate of the
 #'         conditional distribution x | P. Defaults to 10000.
 #' @param ... additional arguments to pass into `P`.
+#' @return An \code{empirical_dist} approximating the conditional distribution.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' x <- exponential(1)
+#' # Condition on X > 2
+#' x_gt2 <- conditional(x, function(t) t > 2)
+#' mean(x_gt2)
+#' }
 #' @export
 conditional.dist <- function(x, P, n = 10000L, ...) {
   conditional(ensure_realized(x, n = n), P, ...)
@@ -91,6 +112,15 @@ conditional.dist <- function(x, P, n = 10000L, ...) {
 #' @param n The number of samples to generate for the MC estimate of the
 #'          conditional distribution x | P. Defaults to 10000.
 #' @param ... additional arguments to pass into `g`.
+#' @return An \code{empirical_dist} of the transformed samples.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' x <- exponential(1)
+#' # Distribution of log(X) where X ~ Exp(1)
+#' log_x <- rmap(x, log)
+#' mean(log_x)
+#' }
 #' @export
 rmap.dist <- function(x, g, n = 10000L, ...) {
   rmap(ensure_realized(x, n = n), g, ...)
@@ -100,6 +130,10 @@ rmap.dist <- function(x, g, n = 10000L, ...) {
 #' Print method for `summary_dist` objects.
 #' @param x The object to print
 #' @param ... Additional arguments
+#' @return \code{x}, invisibly.
+#' @examples
+#' s <- summary(normal(5, 2))
+#' print(s)
 #' @export
 print.summary_dist <- function(x, ...) {
   cat(x$name, "\n")
@@ -110,6 +144,7 @@ print.summary_dist <- function(x, ...) {
   if (!is.null(x$nobs)) {
     cat("Number of observations:", x$nobs, "\n")
   }
+  invisible(x)
 }
 
 #' Method for constructing a `summary_dist` object.
@@ -119,6 +154,9 @@ print.summary_dist <- function(x, ...) {
 #' @param nobs The number of observations used to construct the distribution,
 #'             if applicable.
 #' @return A `summary_dist` object
+#' @examples
+#' s <- summary_dist(name = "my_dist", mean = 0, vcov = 1)
+#' print(s)
 #' @export
 summary_dist <- function(name, mean, vcov, nobs = NULL) {
   structure(list(
@@ -135,6 +173,9 @@ summary_dist <- function(name, mean, vcov, nobs = NULL) {
 #' @param x The object to sample from
 #' @param ... Additional arguments to pass
 #' @return A function that takes n and returns n copies of x
+#' @examples
+#' s <- sampler(5)
+#' s(3)  # returns c(5, 5, 5)
 #' @export
 sampler.default <- function(x, ...) {
   function(n) {
@@ -147,6 +188,8 @@ sampler.default <- function(x, ...) {
 #' @param object The object (returns 0 for constants)
 #' @param ... Additional arguments to pass (not used)
 #' @return 0 (degenerate distributions have no variance)
+#' @examples
+#' vcov(42)  # returns 0
 #' @export
 vcov.default <- function(object, ...) {
   0

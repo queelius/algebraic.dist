@@ -33,3 +33,8 @@ n     - The number of samples
 Method for obtaining the expectation of \code{empirical_dist} object \code{x}
 under function \code{g}.
 }
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+expectation(ed)                     # E[X] = 3
+expectation(ed, function(x) x^2)    # E[X^2] = 11
+}

@@ -19,3 +19,9 @@ empirical cdf of \code{x} evaluated at \code{t}.
 If \code{x} is a multivariate empirical distribution, this function will
 throw an error. It's only defined for univariate empirical distributions.
 }
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+Fx <- cdf(ed)
+Fx(3) # 0.6
+Fx(c(1, 5)) # 0.2, 1.0
+}

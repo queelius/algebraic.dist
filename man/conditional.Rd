@@ -14,7 +14,18 @@ conditional(x, P, ...)
 
 \item{...}{additional arguments to pass into \code{P}}
 }
+\value{
+A distribution object for the conditional distribution.
+}
 \description{
 Generic method for obtaining the conditional distribution of a distribution
 object \code{x} given condition \code{P}.
+}
+\examples{
+\donttest{
+d <- empirical_dist(1:100)
+# condition on values greater than 50
+d_gt50 <- conditional(d, function(x) x > 50)
+mean(d_gt50)
+}
 }

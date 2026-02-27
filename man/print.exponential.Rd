@@ -11,6 +11,12 @@
 
 \item{...}{Additional arguments (not used)}
 }
+\value{
+\code{x}, invisibly.
+}
 \description{
 Print method for \code{exponential} objects.
+}
+\examples{
+print(exponential(rate = 2))
 }

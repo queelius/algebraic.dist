@@ -18,3 +18,9 @@ returning the quantile at probability \code{p}.
 \description{
 Returns a function that computes quantiles of the uniform distribution.
 }
+\examples{
+x <- uniform_dist(0, 10)
+q <- inv_cdf(x)
+q(0.5)
+q(0.9)
+}

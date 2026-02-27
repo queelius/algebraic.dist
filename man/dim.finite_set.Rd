@@ -9,6 +9,13 @@
 \arguments{
 \item{x}{A finite set.}
 }
+\value{
+Integer; the dimension of the set.
+}
 \description{
 Return the dimension of the finite set.
+}
+\examples{
+fs <- finite_set$new(c(1, 3, 5, 7))
+dim(fs) # 1
 }

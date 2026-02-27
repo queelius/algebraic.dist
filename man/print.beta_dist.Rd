@@ -17,3 +17,6 @@
 \description{
 Print a \code{beta_dist} object.
 }
+\examples{
+print(beta_dist(2, 5))
+}

@@ -12,7 +12,16 @@
 
 \item{indices}{The indices of the marginal distribution to obtain.}
 }
+\value{
+An \code{empirical_dist} over the selected columns.
+}
 \description{
 Method for obtaining the marginal distribution of \code{empirical_dist} object
 \code{x}.
+}
+\examples{
+mat <- matrix(1:12, ncol = 3)
+ed <- empirical_dist(mat)
+ed_marginal <- marginal(ed, c(1, 3))
+dim(ed_marginal) # 2
 }

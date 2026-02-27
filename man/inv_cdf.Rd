@@ -11,6 +11,15 @@ inv_cdf(x, ...)
 
 \item{...}{Additional arguments to pass.}
 }
+\value{
+A function computing the quantile (inverse CDF).
+}
 \description{
 Generic method for obtaining the quantile (inverse cdf) of an object.
+}
+\examples{
+x <- normal(0, 1)
+Q <- inv_cdf(x)
+Q(0.5)   # 0 (median of standard normal)
+Q(0.975) # approximately 1.96
 }

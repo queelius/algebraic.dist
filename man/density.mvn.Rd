@@ -30,3 +30,9 @@ Defaults to \code{FALSE}.
 Function generator for obtaining the pdf of an \code{mvn} object (multivariate
 normal).
 }
+\examples{
+X <- mvn(c(0, 0), diag(2))
+f <- density(X)
+f(c(0, 0))
+f(c(1, 1))
+}

@@ -15,3 +15,7 @@ Logical indicating whether \code{x} is a \code{dist} object.
 \description{
 Function to determine whether an object \code{x} is a \code{dist} object.
 }
+\examples{
+is_dist(normal(0, 1))   # TRUE
+is_dist(42)             # FALSE
+}

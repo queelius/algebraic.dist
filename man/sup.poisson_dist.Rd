@@ -16,3 +16,6 @@ A \code{countable_set} object with lower bound 0.
 The Poisson distribution is supported on the non-negative integers
 \eqn{\{0, 1, 2, \ldots\}}.
 }
+\examples{
+sup(poisson_dist(5))
+}

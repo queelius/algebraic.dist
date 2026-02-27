@@ -11,7 +11,16 @@
 
 \item{x}{Value(s) to check.}
 }
+\value{
+Logical; \code{TRUE} if all values are valid members of the set.
+}
 \description{
 Returns \code{TRUE} if all values are integers (within floating-point
 tolerance) that are at least as large as the lower bound.
+}
+\examples{
+cs <- countable_set$new(0L)
+has(cs, c(0, 3, 5))   # TRUE
+has(cs, c(-1, 2))     # FALSE (negative integer)
+has(cs, 1.5)          # FALSE (not integer)
 }

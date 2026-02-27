@@ -15,3 +15,6 @@ A named numeric vector with elements \code{shape} and \code{scale}.
 \description{
 Retrieve the parameters of a \code{weibull_dist} object.
 }
+\examples{
+params(weibull_dist(2, 3))
+}

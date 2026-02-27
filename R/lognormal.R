@@ -11,6 +11,11 @@
 #'   positive.
 #' @return A \code{lognormal} object with classes
 #'   \code{c("lognormal", "univariate_dist", "continuous_dist", "dist")}.
+#' @examples
+#' x <- lognormal(meanlog = 0, sdlog = 1)
+#' mean(x)
+#' vcov(x)
+#' format(x)
 #' @export
 lognormal <- function(meanlog = 0, sdlog = 1) {
   if (!is.numeric(meanlog) || length(meanlog) != 1 || is.na(meanlog))
@@ -27,6 +32,9 @@ lognormal <- function(meanlog = 0, sdlog = 1) {
 #' @param x The object to test.
 #' @return \code{TRUE} if \code{x} inherits from \code{"lognormal"},
 #'   \code{FALSE} otherwise.
+#' @examples
+#' is_lognormal(lognormal(0, 1))
+#' is_lognormal(normal(0, 1))
 #' @export
 is_lognormal <- function(x) {
   inherits(x, "lognormal")
@@ -36,6 +44,8 @@ is_lognormal <- function(x) {
 #'
 #' @param x A \code{lognormal} object.
 #' @return A named numeric vector with elements \code{meanlog} and \code{sdlog}.
+#' @examples
+#' params(lognormal(0, 1))
 #' @export
 params.lognormal <- function(x) {
   c(meanlog = x$meanlog, sdlog = x$sdlog)
@@ -48,6 +58,8 @@ params.lognormal <- function(x) {
 #' @param x A \code{lognormal} object.
 #' @param ... Additional arguments (not used).
 #' @return The mean of the distribution.
+#' @examples
+#' mean(lognormal(0, 1))
 #' @export
 mean.lognormal <- function(x, ...) {
   exp(x$meanlog + x$sdlog^2 / 2)
@@ -60,6 +72,8 @@ mean.lognormal <- function(x, ...) {
 #' @param object A \code{lognormal} object.
 #' @param ... Additional arguments (not used).
 #' @return The variance (scalar).
+#' @examples
+#' vcov(lognormal(0, 1))
 #' @export
 vcov.lognormal <- function(object, ...) {
   (exp(object$sdlog^2) - 1) * exp(2 * object$meanlog + object$sdlog^2)
@@ -69,6 +83,8 @@ vcov.lognormal <- function(object, ...) {
 #'
 #' @param x A \code{lognormal} object.
 #' @return \code{1}.
+#' @examples
+#' dim(lognormal(0, 1))
 #' @export
 dim.lognormal <- function(x) {
   1
@@ -79,6 +95,8 @@ dim.lognormal <- function(x) {
 #' @param x A \code{lognormal} object.
 #' @param ... Additional arguments (not used).
 #' @return A character string describing the distribution.
+#' @examples
+#' format(lognormal(0, 1))
 #' @export
 format.lognormal <- function(x, ...) {
   sprintf("Log-normal distribution (meanlog = %g, sdlog = %g)",
@@ -90,6 +108,8 @@ format.lognormal <- function(x, ...) {
 #' @param x A \code{lognormal} object.
 #' @param ... Additional arguments (not used).
 #' @return \code{x}, invisibly.
+#' @examples
+#' print(lognormal(0, 1))
 #' @export
 print.lognormal <- function(x, ...) {
   cat(format(x), "\n")
@@ -102,6 +122,8 @@ print.lognormal <- function(x, ...) {
 #'
 #' @param x A \code{lognormal} object.
 #' @return An \code{interval} object representing \eqn{(0, \infty)}.
+#' @examples
+#' sup(lognormal(0, 1))
 #' @export
 sup.lognormal <- function(x) {
   interval$new(lower = 0, lower_closed = FALSE)
@@ -116,6 +138,11 @@ sup.lognormal <- function(x) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(n = 1, ...)} returning a numeric vector
 #'   of length \code{n}.
+#' @examples
+#' x <- lognormal(0, 1)
+#' s <- sampler(x)
+#' set.seed(42)
+#' s(5)
 #' @importFrom stats rlnorm
 #' @export
 sampler.lognormal <- function(x, ...) {
@@ -132,6 +159,11 @@ sampler.lognormal <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(t, log = FALSE, ...)} returning the
 #'   density (or log-density) at \code{t}.
+#' @examples
+#' x <- lognormal(0, 1)
+#' f <- density(x)
+#' f(1)
+#' f(2)
 #' @importFrom stats dlnorm density
 #' @export
 density.lognormal <- function(x, ...) {
@@ -148,6 +180,11 @@ density.lognormal <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(q, log.p = FALSE, ...)} returning the
 #'   CDF (or log-CDF) at \code{q}.
+#' @examples
+#' x <- lognormal(0, 1)
+#' F <- cdf(x)
+#' F(1)
+#' F(2)
 #' @importFrom stats plnorm
 #' @export
 cdf.lognormal <- function(x, ...) {
@@ -164,6 +201,11 @@ cdf.lognormal <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(p, lower.tail = TRUE, log.p = FALSE, ...)}
 #'   returning the quantile at probability \code{p}.
+#' @examples
+#' x <- lognormal(0, 1)
+#' q <- inv_cdf(x)
+#' q(0.5)
+#' q(0.95)
 #' @importFrom stats qlnorm
 #' @export
 inv_cdf.lognormal <- function(x, ...) {
@@ -182,6 +224,11 @@ inv_cdf.lognormal <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(t, log.p = FALSE, ...)} returning the
 #'   survival probability (or log-survival probability) at \code{t}.
+#' @examples
+#' x <- lognormal(0, 1)
+#' S <- surv(x)
+#' S(1)
+#' S(2)
 #' @importFrom stats plnorm
 #' @export
 surv.lognormal <- function(x, ...) {
@@ -200,6 +247,11 @@ surv.lognormal <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(t, log = FALSE)} returning the hazard
 #'   (or log-hazard) at \code{t}.
+#' @examples
+#' x <- lognormal(0, 1)
+#' h <- hazard(x)
+#' h(1)
+#' h(2)
 #' @export
 hazard.lognormal <- function(x, ...) {
   function(t, log = FALSE) {

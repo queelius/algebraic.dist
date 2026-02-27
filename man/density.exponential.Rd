@@ -21,3 +21,9 @@ whether to compute the log of the pdf.
 \description{
 Method to obtain the pdf of an \code{exponential} object.
 }
+\examples{
+x <- exponential(rate = 2)
+f <- density(x)
+f(0)
+f(1)
+}

@@ -9,6 +9,16 @@ supremum(object)
 \arguments{
 \item{object}{A support object.}
 }
+\value{
+The supremum (least upper bound) of the support.
+}
 \description{
 Get the supremum of the support.
+}
+\examples{
+I <- interval$new(0, 10)
+supremum(I)  # 10
+
+S <- finite_set$new(c(3, 7, 11))
+supremum(S)  # 11
 }

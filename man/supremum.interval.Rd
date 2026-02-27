@@ -9,6 +9,13 @@
 \arguments{
 \item{object}{An interval object.}
 }
+\value{
+Numeric vector of upper bounds.
+}
 \description{
 Return the (vector of) supremum of the interval.
+}
+\examples{
+iv <- interval$new(lower = 0, upper = 1)
+supremum(iv) # 1
 }

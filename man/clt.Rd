@@ -20,3 +20,10 @@ For a univariate distribution with variance \eqn{\sigma^2}, this is
 \eqn{N(0, \sigma^2)}. For a multivariate distribution with covariance
 matrix \eqn{\Sigma}, this is \eqn{MVN(0, \Sigma)}.
 }
+\examples{
+# CLT for Exp(2): sqrt(n)(Xbar - 1/2) -> N(0, 1/4)
+x <- exponential(rate = 2)
+z <- clt(x)
+mean(z)
+vcov(z)
+}

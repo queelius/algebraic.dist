@@ -9,6 +9,13 @@ is_edist(x)
 \arguments{
 \item{x}{The object to test}
 }
+\value{
+Logical; \code{TRUE} if \code{x} is an \code{edist}.
+}
 \description{
 Function to determine whether an object \code{x} is an \code{edist} object.
+}
+\examples{
+is_edist(normal(0, 1) * exponential(1))  # TRUE
+is_edist(normal(0, 1))                   # FALSE
 }

@@ -15,3 +15,6 @@ An \code{interval} object representing \eqn{(0, \infty)}.
 \description{
 The Weibull distribution is supported on \eqn{(0, \infty)}.
 }
+\examples{
+sup(weibull_dist(2, 3))
+}

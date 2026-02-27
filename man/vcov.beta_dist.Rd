@@ -17,3 +17,6 @@ The variance (scalar).
 \description{
 Computes \eqn{\alpha\beta / ((\alpha+\beta)^2 (\alpha+\beta+1))}.
 }
+\examples{
+vcov(beta_dist(2, 5))
+}

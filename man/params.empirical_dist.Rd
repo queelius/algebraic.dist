@@ -9,6 +9,13 @@
 \arguments{
 \item{x}{The empirical distribution object.}
 }
+\value{
+\code{NULL} (empirical distributions have no parameters).
+}
 \description{
 \code{empirical_dist} objects have no parameters, so this function returns NULL.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 3))
+params(ed) # NULL
 }

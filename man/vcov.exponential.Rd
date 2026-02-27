@@ -17,3 +17,7 @@ The variance-covariance matrix of the \code{normal} object
 \description{
 Retrieve the variance of a \code{exponential} object.
 }
+\examples{
+x <- exponential(rate = 2)
+vcov(x)
+}

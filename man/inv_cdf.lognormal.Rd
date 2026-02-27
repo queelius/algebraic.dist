@@ -18,3 +18,9 @@ returning the quantile at probability \code{p}.
 \description{
 Returns a function that computes quantiles of the log-normal distribution.
 }
+\examples{
+x <- lognormal(0, 1)
+q <- inv_cdf(x)
+q(0.5)
+q(0.95)
+}

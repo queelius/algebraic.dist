@@ -17,3 +17,6 @@
 \description{
 Variance-covariance for non-dist objects (degenerate distributions).
 }
+\examples{
+vcov(42)  # returns 0
+}

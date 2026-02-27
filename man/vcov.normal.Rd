@@ -19,3 +19,7 @@ The variance-covariance matrix of the \code{normal} object
 Retrieve the variance-covariance matrix (or scalar)
 of a \code{normal} object.
 }
+\examples{
+x <- normal(0, 4)
+vcov(x)
+}

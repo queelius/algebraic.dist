@@ -22,3 +22,7 @@ A \code{summary_dist} object
 \description{
 Method for constructing a \code{summary_dist} object.
 }
+\examples{
+s <- summary_dist(name = "my_dist", mean = 0, vcov = 1)
+print(s)
+}

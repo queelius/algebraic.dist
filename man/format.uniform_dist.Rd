@@ -17,3 +17,6 @@ A character string describing the distribution.
 \description{
 Format a \code{uniform_dist} object as a character string.
 }
+\examples{
+format(uniform_dist(0, 10))
+}

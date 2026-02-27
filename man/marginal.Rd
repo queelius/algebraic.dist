@@ -12,7 +12,15 @@ marginal(x, indices)
 
 \item{indices}{The indices of the marginal distribution to obtain.}
 }
+\value{
+A distribution object for the marginal over \code{indices}.
+}
 \description{
 Generic method for obtaining the marginal distribution of a distribution
 object \code{x} over components \code{indices}.
+}
+\examples{
+x <- mvn(c(0, 0), diag(2))
+m <- marginal(x, 1)  # marginal over first component
+mean(m)               # 0
 }

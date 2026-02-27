@@ -19,3 +19,10 @@ The mean of the \code{edist} object
 \description{
 Method for obtaining the mean of an \code{edist} object.
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(2)
+mean(z)
+}
+}

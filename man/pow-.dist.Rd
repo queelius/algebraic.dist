@@ -17,3 +17,8 @@ A simplified distribution or edist
 \description{
 Power operator for distribution objects.
 }
+\examples{
+# Standard normal squared yields chi-squared(1)
+z <- normal(0, 1)^2
+z
+}

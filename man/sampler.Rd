@@ -11,9 +11,18 @@ sampler(x, ...)
 
 \item{...}{additional arguments to pass}
 }
+\value{
+A function that takes \code{n} and returns \code{n} samples.
+}
 \description{
 It creates a sampler for the \code{x} object. It returns a function
 that accepts a parameter \code{n} denoting the number of samples
 to draw from the \code{x} object and also any additional parameters
 \code{...} are passed to the generated function.
+}
+\examples{
+x <- normal(0, 1)
+samp <- sampler(x)
+set.seed(42)
+samp(5)  # draw 5 samples from standard normal
 }

@@ -11,6 +11,16 @@
 
 \item{...}{Additional arguments to pass (not used).}
 }
+\value{
+A function that takes \code{n} and returns \code{n} resampled
+observations.
+}
 \description{
 Method for obtaining the sampler for a \code{empirical_dist} object.
+}
+\examples{
+ed <- empirical_dist(c(10, 20, 30))
+s <- sampler(ed)
+set.seed(42)
+s(5)
 }

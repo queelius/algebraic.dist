@@ -19,3 +19,9 @@ A function \code{function(t, log = FALSE)} returning the hazard
 Returns a function that evaluates the Weibull hazard rate
 \eqn{h(t) = (shape/scale)(t/scale)^{shape-1}} for \eqn{t > 0}.
 }
+\examples{
+x <- weibull_dist(shape = 2, scale = 3)
+h <- hazard(x)
+h(1)
+h(3)
+}

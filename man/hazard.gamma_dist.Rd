@@ -17,3 +17,8 @@ A function that computes h(t) = f(t) / S(t)
 \description{
 Method for obtaining the hazard function of a \code{gamma_dist} object.
 }
+\examples{
+x <- gamma_dist(shape = 2, rate = 1)
+h <- hazard(x)
+h(1)
+}

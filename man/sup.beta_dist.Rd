@@ -15,3 +15,6 @@ An \code{interval} object representing \eqn{(0, 1)}.
 \description{
 The beta distribution is supported on the open interval \eqn{(0, 1)}.
 }
+\examples{
+sup(beta_dist(2, 5))
+}

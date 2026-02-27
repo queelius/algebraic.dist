@@ -15,3 +15,7 @@ Logical; TRUE if \code{x} inherits from \code{gamma_dist}
 \description{
 Test whether an object is a \code{gamma_dist}.
 }
+\examples{
+is_gamma_dist(gamma_dist(2, 1))
+is_gamma_dist(normal(0, 1))
+}

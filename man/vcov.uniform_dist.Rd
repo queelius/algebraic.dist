@@ -17,3 +17,6 @@ The variance (scalar).
 \description{
 Computes \eqn{(max - min)^2 / 12}.
 }
+\examples{
+vcov(uniform_dist(0, 10))
+}

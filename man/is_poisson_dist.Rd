@@ -16,3 +16,7 @@ is_poisson_dist(x)
 \description{
 Test whether an object is a \code{poisson_dist}.
 }
+\examples{
+is_poisson_dist(poisson_dist(5))
+is_poisson_dist(normal(0, 1))
+}

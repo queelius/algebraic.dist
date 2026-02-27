@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments to pass}
 }
+\value{
+\code{x}, invisibly.
+}
 \description{
 Print method for \code{empirical_dist} objects.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+print(ed)
 }

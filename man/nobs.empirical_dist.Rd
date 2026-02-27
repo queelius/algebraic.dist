@@ -12,7 +12,14 @@
 
 \item{...}{Additional arguments to pass (not used).}
 }
+\value{
+Integer; number of observations.
+}
 \description{
 Method for obtaining the number of observations used to construct a
 \code{empirical_dist} object.
+}
+\examples{
+ed <- empirical_dist(c(10, 20, 30, 40))
+nobs(ed) # 4
 }

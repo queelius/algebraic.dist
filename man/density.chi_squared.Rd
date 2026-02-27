@@ -17,3 +17,9 @@ A function that computes the pdf at point(s) \code{t}
 \description{
 Method for obtaining the density (pdf) of a \code{chi_squared} object.
 }
+\examples{
+x <- chi_squared(5)
+f <- density(x)
+f(5)
+f(10)
+}

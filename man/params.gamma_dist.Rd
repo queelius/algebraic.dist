@@ -15,3 +15,6 @@ A named numeric vector of parameters
 \description{
 Method for obtaining the parameters of a \code{gamma_dist} object.
 }
+\examples{
+params(gamma_dist(2, 1))
+}

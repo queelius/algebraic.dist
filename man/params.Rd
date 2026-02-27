@@ -9,6 +9,16 @@ params(x)
 \arguments{
 \item{x}{The object to obtain the parameters of.}
 }
+\value{
+A named vector (or list) of distribution parameters.
+}
 \description{
 Generic method for obtaining the parameters of an object.
+}
+\examples{
+x <- normal(5, 2)
+params(x)  # mu = 5, var = 2
+
+y <- exponential(3)
+params(y)  # rate = 3
 }

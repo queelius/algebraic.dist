@@ -21,3 +21,9 @@ shape and scale parameters. The Weibull PDF is
 \deqn{f(t) = (shape/scale)(t/scale)^{shape-1} \exp(-(t/scale)^{shape})}
 for \eqn{t > 0}.
 }
+\examples{
+x <- weibull_dist(shape = 2, scale = 3)
+mean(x)
+vcov(x)
+format(x)
+}

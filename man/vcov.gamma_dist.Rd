@@ -17,3 +17,6 @@ The variance, \code{shape / rate^2}
 \description{
 Retrieve the variance of a \code{gamma_dist} object.
 }
+\examples{
+vcov(gamma_dist(shape = 3, rate = 2))
+}

@@ -22,3 +22,9 @@ parameters \code{shape1} and \code{shape2}.  The PDF on \eqn{(0, 1)} is
 where \eqn{a} = \code{shape1}, \eqn{b} = \code{shape2}, and \eqn{B(a,b)}
 is the beta function.
 }
+\examples{
+x <- beta_dist(shape1 = 2, shape2 = 5)
+mean(x)
+vcov(x)
+format(x)
+}

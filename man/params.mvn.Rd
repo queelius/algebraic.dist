@@ -15,3 +15,7 @@ A named vector of parameters
 \description{
 Method for obtaining the parameters of a \code{mvn} object.
 }
+\examples{
+X <- mvn(c(0, 0), diag(2))
+params(X)
+}

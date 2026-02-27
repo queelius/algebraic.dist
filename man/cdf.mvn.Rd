@@ -11,6 +11,14 @@
 
 \item{...}{Additional arguments to pass (not used)}
 }
+\value{
+A function computing the multivariate normal CDF.
+}
 \description{
 Method for obtaining the CDF of a \code{mvn} object.
+}
+\examples{
+X <- mvn(c(0, 0), diag(2))
+F <- cdf(X)
+F(c(0, 0))
 }

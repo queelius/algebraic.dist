@@ -9,6 +9,13 @@ is_normal(x)
 \arguments{
 \item{x}{The object to test}
 }
+\value{
+Logical; \code{TRUE} if \code{x} is a \code{normal}.
+}
 \description{
 Function to determine whether an object \code{x} is an \code{normal} object.
+}
+\examples{
+is_normal(normal(0, 1))
+is_normal(exponential(1))
 }

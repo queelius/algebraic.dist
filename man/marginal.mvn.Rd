@@ -12,7 +12,17 @@
 
 \item{indices}{The indices of the marginal distribution to obtain.}
 }
+\value{
+A \code{normal} (for a single index) or \code{mvn} marginal distribution.
+}
 \description{
 Generic method for obtaining the marginal distribution of an \code{mvn} object
 \code{x} over components \code{indices}.
+}
+\examples{
+X <- mvn(c(1, 2, 3))
+# Univariate marginal
+marginal(X, 1)
+# Bivariate marginal
+marginal(X, c(1, 3))
 }

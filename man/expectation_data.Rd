@@ -41,3 +41,15 @@ example: expectation_data(D, function(x) (x-colMeans(D)) \%*\% t(x-colMeans(D)))
 computes the covariance of the data D, except the matrix structure is lost
 (it's just a vector, which can be coerced back to a matrix if needed).
 }
+\examples{
+set.seed(42)
+data <- matrix(rnorm(200), ncol = 2)
+# sample mean with confidence interval
+expectation_data(data)
+
+# just the point estimate, no CI
+expectation_data(data, compute_stats = FALSE)
+
+# expectation of a function of the data (row-wise)
+expectation_data(data, g = function(x) sum(x^2))
+}

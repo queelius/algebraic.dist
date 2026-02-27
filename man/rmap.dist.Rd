@@ -16,7 +16,19 @@ conditional distribution x | P. Defaults to 10000.}
 
 \item{...}{additional arguments to pass into \code{g}.}
 }
+\value{
+An \code{empirical_dist} of the transformed samples.
+}
 \description{
 Falls back to MC: materializes \code{x} via \code{ensure_realized()} and
 then applies \code{rmap} with \code{g} to the resulting empirical distribution.
+}
+\examples{
+\donttest{
+set.seed(1)
+x <- exponential(1)
+# Distribution of log(X) where X ~ Exp(1)
+log_x <- rmap(x, log)
+mean(log_x)
+}
 }

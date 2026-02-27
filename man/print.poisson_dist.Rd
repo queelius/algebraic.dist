@@ -17,3 +17,6 @@
 \description{
 Print a \code{poisson_dist} object.
 }
+\examples{
+print(poisson_dist(5))
+}

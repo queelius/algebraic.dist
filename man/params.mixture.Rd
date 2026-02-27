@@ -16,3 +16,7 @@ A named numeric vector.
 Returns a named numeric vector containing all component parameters
 (flattened) followed by the mixing weights.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 2)), c(0.3, 0.7))
+params(m)
+}

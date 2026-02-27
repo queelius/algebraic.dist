@@ -29,3 +29,9 @@ corresponds to the entire distribution.
 \description{
 Function generator for sampling from a \code{mvn} (multivariate normal) object.
 }
+\examples{
+X <- mvn(c(0, 0), diag(2))
+s <- sampler(X)
+set.seed(42)
+s(3)
+}

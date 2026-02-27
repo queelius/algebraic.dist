@@ -17,3 +17,8 @@ A function that computes S(t) = P(X > t)
 \description{
 Method for obtaining the survival function of a \code{gamma_dist} object.
 }
+\examples{
+x <- gamma_dist(shape = 2, rate = 1)
+S <- surv(x)
+S(1)
+}

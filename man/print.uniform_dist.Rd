@@ -17,3 +17,6 @@
 \description{
 Print a \code{uniform_dist} object.
 }
+\examples{
+print(uniform_dist(0, 10))
+}

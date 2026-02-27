@@ -15,3 +15,9 @@ A \code{chi_squared} object
 \description{
 Construct a chi-squared distribution object.
 }
+\examples{
+x <- chi_squared(df = 5)
+mean(x)
+vcov(x)
+format(x)
+}

@@ -17,3 +17,6 @@ The mean of the distribution.
 \description{
 Computes \eqn{scale \cdot \Gamma(1 + 1/shape)}.
 }
+\examples{
+mean(weibull_dist(shape = 2, scale = 3))
+}

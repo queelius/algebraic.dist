@@ -11,6 +11,12 @@
 
 \item{...}{Additional arguments to pass to \code{print}}
 }
+\value{
+\code{x}, invisibly.
+}
 \description{
 Method for printing an \code{mvn} object.
+}
+\examples{
+print(mvn(c(0, 0)))
 }

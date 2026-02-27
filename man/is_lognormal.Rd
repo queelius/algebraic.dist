@@ -16,3 +16,7 @@ is_lognormal(x)
 \description{
 Test whether an object is a \code{lognormal}.
 }
+\examples{
+is_lognormal(lognormal(0, 1))
+is_lognormal(normal(0, 1))
+}

@@ -17,3 +17,6 @@ The mean of the distribution.
 \description{
 Computes \eqn{\exp(meanlog + sdlog^2 / 2)}.
 }
+\examples{
+mean(lognormal(0, 1))
+}

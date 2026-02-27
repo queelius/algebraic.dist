@@ -18,3 +18,9 @@ Creates an S3 object representing a Poisson distribution with rate
 parameter \eqn{\lambda}.  The PMF is
 \eqn{P(X = k) = \lambda^k e^{-\lambda} / k!} for \eqn{k = 0, 1, 2, \ldots}.
 }
+\examples{
+x <- poisson_dist(lambda = 5)
+mean(x)
+vcov(x)
+format(x)
+}

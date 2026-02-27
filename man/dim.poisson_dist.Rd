@@ -15,3 +15,6 @@
 \description{
 Dimension of a Poisson distribution (always 1).
 }
+\examples{
+dim(poisson_dist(5))
+}

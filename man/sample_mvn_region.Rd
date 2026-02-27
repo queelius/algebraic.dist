@@ -22,6 +22,10 @@ sample_mvn_region(n, mu, sigma, p = 0.95, ...)
 
 \item{...}{additional arguments to pass into \code{mahalanobis}}
 }
+\value{
+An \code{n} by \code{length(mu)} matrix of samples within the
+probability region.
+}
 \description{
 Function for obtaining sample points for an \code{mvn} object that is within
 the \code{p}-probability region. That is, it samples from the smallest region of
@@ -29,4 +33,11 @@ the distribution that contains \code{p} probability mass. This is done by first
 sampling from the entire distribution, then rejecting samples that are not
 in the probability region (using the statistical distance \code{mahalanobis}
 from \code{mu}).
+}
+\examples{
+\donttest{
+set.seed(42)
+pts <- sample_mvn_region(10, mu = c(0, 0), sigma = diag(2), p = 0.95)
+dim(pts)
+}
 }

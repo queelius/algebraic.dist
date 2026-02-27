@@ -19,3 +19,11 @@ Unary: returns negated distribution (e.g., -N(mu, var) = N(-mu, var))
 Binary: creates expression distribution and simplifies to closed form
 when possible (e.g., normal - normal = normal, normal - scalar = normal).
 }
+\examples{
+# Difference of normals simplifies to a normal
+z <- normal(5, 2) - normal(1, 3)
+z  # Normal(mu = 4, var = 5)
+
+# Unary negation
+-normal(3, 1)  # Normal(mu = -3, var = 1)
+}

@@ -17,3 +17,9 @@ A \code{gamma_dist} object
 \description{
 Construct a gamma distribution object.
 }
+\examples{
+x <- gamma_dist(shape = 2, rate = 1)
+mean(x)
+vcov(x)
+format(x)
+}

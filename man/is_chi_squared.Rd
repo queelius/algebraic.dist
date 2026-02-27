@@ -15,3 +15,7 @@ Logical; TRUE if \code{x} inherits from \code{chi_squared}
 \description{
 Test whether an object is a \code{chi_squared}.
 }
+\examples{
+is_chi_squared(chi_squared(3))
+is_chi_squared(normal(0, 1))
+}

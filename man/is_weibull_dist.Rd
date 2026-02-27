@@ -16,3 +16,7 @@ is_weibull_dist(x)
 \description{
 Test whether an object is a \code{weibull_dist}.
 }
+\examples{
+is_weibull_dist(weibull_dist(2, 3))
+is_weibull_dist(normal(0, 1))
+}

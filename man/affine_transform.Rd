@@ -26,3 +26,14 @@ For a univariate \code{normal}, scalars \code{A} and \code{b} are promoted
 to 1x1 matrices and scalar internally. Returns a \code{normal} if the
 result is 1-dimensional.
 }
+\examples{
+X <- mvn(c(0, 0), diag(2))
+# Project to first component via 1x2 matrix
+Y <- affine_transform(X, A = matrix(c(1, 0), 1, 2), b = 5)
+mean(Y)
+
+# Scale a univariate normal
+Z <- affine_transform(normal(0, 1), A = 3, b = 2)
+mean(Z)
+vcov(Z)
+}

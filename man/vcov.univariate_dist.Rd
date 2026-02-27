@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments to pass into \code{expectation}.}
 }
+\value{
+Numeric scalar; the variance of the distribution.
+}
 \description{
 Method for obtaining the variance of \code{univariate_dist} object.
+}
+\examples{
+vcov(normal(0, 4))    # 4
+vcov(exponential(2))  # 0.25
 }

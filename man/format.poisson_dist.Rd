@@ -17,3 +17,6 @@ A character string describing the distribution.
 \description{
 Format a \code{poisson_dist} object as a character string.
 }
+\examples{
+format(poisson_dist(5))
+}

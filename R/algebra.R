@@ -3,6 +3,9 @@
 #' @param x The distribution to simplify
 #' @param ... Additional arguments to pass
 #' @return The simplified distribution
+#' @examples
+#' # Simplify dispatches to the appropriate method
+#' simplify(normal(0, 1))  # unchanged (already simplified)
 #' @export
 simplify <- function(x, ...) UseMethod("simplify")
 
@@ -10,6 +13,9 @@ simplify <- function(x, ...) UseMethod("simplify")
 #' @param x The `dist` object to simplify
 #' @param ... Additional arguments to pass (not used)
 #' @return The `dist` object
+#' @examples
+#' x <- normal(0, 1)
+#' identical(simplify(x), x)  # TRUE, returns unchanged
 #' @export
 simplify.dist <- function(x, ...) {
   x
@@ -57,6 +63,15 @@ extract_scalar <- function(expr) {
 #' @param x The `edist` object to simplify
 #' @param ... Additional arguments to pass (not used)
 #' @return The simplified distribution, or unchanged `edist` if no rule applies
+#' @examples
+#' # Normal + Normal simplifies to a Normal
+#' z <- normal(0, 1) + normal(2, 3)
+#' is_normal(z)  # TRUE
+#' z             # Normal(mu = 2, var = 4)
+#'
+#' # exp(Normal) simplifies to LogNormal
+#' w <- exp(normal(0, 1))
+#' is_lognormal(w)  # TRUE
 #' @export
 simplify.edist <- function(x, ...) {
   expr <- x$e

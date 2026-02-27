@@ -17,3 +17,9 @@
 \description{
 Print a \code{realized_dist} object.
 }
+\examples{
+\donttest{
+rd <- realize(normal(0, 1), n = 100)
+print(rd)
+}
+}

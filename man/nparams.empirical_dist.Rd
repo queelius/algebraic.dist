@@ -10,7 +10,14 @@ empirical distribution is parameter-free, this function returns 0.}
 \arguments{
 \item{x}{The empirical distribution object.}
 }
+\value{
+0 (empirical distributions are non-parametric).
+}
 \description{
 Method for obtaining the name of a \code{empirical_dist} object. Since the
 empirical distribution is parameter-free, this function returns 0.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 3))
+nparams(ed) # 0
 }

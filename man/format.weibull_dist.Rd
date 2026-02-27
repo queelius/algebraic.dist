@@ -17,3 +17,6 @@ A character string describing the distribution.
 \description{
 Format a \code{weibull_dist} object as a character string.
 }
+\examples{
+format(weibull_dist(2, 3))
+}

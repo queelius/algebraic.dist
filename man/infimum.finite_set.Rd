@@ -9,6 +9,13 @@
 \arguments{
 \item{object}{A finite set.}
 }
+\value{
+Numeric; the minimum value(s).
+}
 \description{
 Return the infimum of the finite set.
+}
+\examples{
+fs <- finite_set$new(c(1, 3, 5, 7))
+infimum(fs) # 1
 }

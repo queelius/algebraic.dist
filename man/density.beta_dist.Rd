@@ -18,3 +18,9 @@ density (or log-density) at \code{t}.
 \description{
 Returns a function that evaluates the beta PDF at given points.
 }
+\examples{
+x <- beta_dist(2, 5)
+f <- density(x)
+f(0.3)
+f(0.5)
+}

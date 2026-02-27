@@ -17,3 +17,12 @@ A simplified distribution or edist
 \description{
 Handles exp(), log(), sqrt(), abs(), cos(), sin(), etc.
 }
+\examples{
+# exp(Normal) simplifies to LogNormal
+z <- exp(normal(0, 1))
+z
+
+# sqrt of a distribution (no closed-form rule, remains edist)
+w <- sqrt(exponential(1))
+is_edist(w)  # TRUE
+}

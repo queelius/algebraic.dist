@@ -19,3 +19,9 @@ survival probability (or log-survival probability) at \code{t}.
 Returns a function that computes \eqn{S(t) = P(X > t)} for the log-normal
 distribution.
 }
+\examples{
+x <- lognormal(0, 1)
+S <- surv(x)
+S(1)
+S(2)
+}

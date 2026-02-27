@@ -18,3 +18,9 @@ density (or log-density) at \code{t}.
 \description{
 Returns a function that evaluates the Weibull PDF at given points.
 }
+\examples{
+x <- weibull_dist(shape = 2, scale = 3)
+f <- density(x)
+f(1)
+f(3)
+}

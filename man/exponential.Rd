@@ -9,6 +9,15 @@ exponential(rate)
 \arguments{
 \item{rate}{failure rate}
 }
+\value{
+An \code{exponential} distribution object.
+}
 \description{
 Construct exponential distribution object.
+}
+\examples{
+x <- exponential(rate = 2)
+mean(x)
+vcov(x)
+format(x)
 }

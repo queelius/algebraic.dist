@@ -15,3 +15,9 @@ A \code{finite_set} object containing the support of \code{x}.
 \description{
 Method for obtaining the support of \code{empirical_dist} object \code{x}.
 }
+\examples{
+ed <- empirical_dist(c(1, 2, 2, 3))
+s <- sup(ed)
+s$has(2) # TRUE
+s$has(4) # FALSE
+}

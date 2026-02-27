@@ -17,3 +17,7 @@
 \description{
 Print a \code{mixture} object.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+print(m)
+}

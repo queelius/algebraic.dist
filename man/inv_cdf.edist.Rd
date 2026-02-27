@@ -19,3 +19,11 @@ A function computing the empirical quantile function.
 Falls back to \code{\link{realize}} and delegates to
 \code{\link{inv_cdf.empirical_dist}}.
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(1)
+qz <- inv_cdf(z)
+qz(0.5)
+}
+}

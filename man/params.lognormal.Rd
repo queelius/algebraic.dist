@@ -15,3 +15,6 @@ A named numeric vector with elements \code{meanlog} and \code{sdlog}.
 \description{
 Retrieve the parameters of a \code{lognormal} object.
 }
+\examples{
+params(lognormal(0, 1))
+}

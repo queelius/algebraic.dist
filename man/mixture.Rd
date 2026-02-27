@@ -27,3 +27,12 @@ The class hierarchy is determined by the components: if all components
 are univariate (or multivariate, continuous, discrete), the mixture
 inherits those classes as well.
 }
+\examples{
+m <- mixture(
+  components = list(normal(0, 1), normal(5, 2)),
+  weights = c(0.3, 0.7)
+)
+mean(m)
+vcov(m)
+format(m)
+}

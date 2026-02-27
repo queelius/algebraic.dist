@@ -22,3 +22,9 @@ Takes an expression \code{e} and a list \code{vars} and returns a
 lazy \code{edist} (expression distribution object), that is a subclass
 of \code{dist} that can be used in place of a \code{dist} object.
 }
+\examples{
+x <- normal(0, 1)
+y <- normal(2, 3)
+e <- edist(quote(x + y), list(x = x, y = y))
+e
+}

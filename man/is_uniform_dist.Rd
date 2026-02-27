@@ -16,3 +16,7 @@ is_uniform_dist(x)
 \description{
 Test whether an object is a \code{uniform_dist}.
 }
+\examples{
+is_uniform_dist(uniform_dist(0, 1))
+is_uniform_dist(normal(0, 1))
+}

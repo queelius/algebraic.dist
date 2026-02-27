@@ -19,3 +19,9 @@ of length \code{n}.
 Returns a function that draws \code{n} independent samples from the
 uniform distribution.
 }
+\examples{
+x <- uniform_dist(0, 10)
+s <- sampler(x)
+set.seed(42)
+s(5)
+}

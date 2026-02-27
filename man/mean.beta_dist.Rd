@@ -18,3 +18,6 @@ The mean of the distribution.
 Computes \eqn{\alpha / (\alpha + \beta)} where \eqn{\alpha} = \code{shape1}
 and \eqn{\beta} = \code{shape2}.
 }
+\examples{
+mean(beta_dist(2, 5))
+}

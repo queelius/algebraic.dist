@@ -17,3 +17,7 @@ The \code{dist} object
 \description{
 Default Method for simplifying a \code{dist} object. Just returns the object.
 }
+\examples{
+x <- normal(0, 1)
+identical(simplify(x), x)  # TRUE, returns unchanged
+}

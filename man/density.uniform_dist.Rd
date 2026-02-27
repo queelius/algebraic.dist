@@ -18,3 +18,9 @@ density (or log-density) at \code{t}.
 \description{
 Returns a function that evaluates the uniform PDF at given points.
 }
+\examples{
+x <- uniform_dist(0, 10)
+f <- density(x)
+f(5)
+f(15)
+}

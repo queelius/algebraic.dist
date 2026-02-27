@@ -46,3 +46,11 @@ already materialized.
 The \code{realized_dist} method re-samples from the original source
 distribution, allowing cheap regeneration with a different sample size.
 }
+\examples{
+\donttest{
+set.seed(1)
+x <- normal(0, 1)
+rd <- realize(x, n = 1000)
+mean(rd)
+}
+}

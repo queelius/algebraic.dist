@@ -11,10 +11,19 @@
 
 \item{...}{Additional arguments to pass into the pdf function.}
 }
+\value{
+A function computing the empirical PMF at given points.
+}
 \description{
 Method for obtaining the pdf of a \code{empirical_dist} object.
 }
 \note{
 sort tibble lexicographically and do a binary search to find upper
 and lower bound in \code{log(nobs(x))} time.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 2, 3, 3, 3))
+f <- density(ed)
+f(2)          # 2/6
+f(3, log = TRUE) # log(3/6)
 }

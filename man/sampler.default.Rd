@@ -17,3 +17,7 @@ A function that takes n and returns n copies of x
 \description{
 Sampler for non-dist objects (degenerate distributions).
 }
+\examples{
+s <- sampler(5)
+s(3)  # returns c(5, 5, 5)
+}

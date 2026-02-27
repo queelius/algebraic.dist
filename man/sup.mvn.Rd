@@ -20,3 +20,7 @@ A support-type object (see \code{support.R}), in this case an
 Method for obtaining the support of a \code{mvn} object, where the support
 is defined as values that have non-zero probability density.
 }
+\examples{
+X <- mvn(c(0, 0))
+sup(X)
+}

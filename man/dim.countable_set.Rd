@@ -15,3 +15,7 @@
 \description{
 Get the dimension of a countable set.
 }
+\examples{
+cs <- countable_set$new(0L)
+dim(cs)  # 1
+}

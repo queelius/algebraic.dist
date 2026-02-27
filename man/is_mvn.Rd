@@ -9,6 +9,13 @@ is_mvn(x)
 \arguments{
 \item{x}{The object to test}
 }
+\value{
+Logical; \code{TRUE} if \code{x} is an \code{mvn}.
+}
 \description{
 Function to determine whether an object \code{x} is an \code{mvn} object.
+}
+\examples{
+is_mvn(mvn(c(0, 0)))
+is_mvn(normal(0, 1))
 }

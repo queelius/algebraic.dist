@@ -21,3 +21,8 @@ Computes \eqn{E[g(X)]} using truncated summation over the support.
 The summation is truncated at the \eqn{1 - 10^{-12}} quantile to
 ensure negligible truncation error.
 }
+\examples{
+x <- poisson_dist(5)
+expectation(x, identity)
+expectation(x, function(k) k^2)
+}

@@ -31,3 +31,17 @@ Returns a \code{normal} (1D result) or \code{mvn}.
 realization via \code{\link{ensure_realized}}.
 }
 }
+\examples{
+# Closed-form conditioning: X2 | X1 = 1
+sigma <- matrix(c(1, 0.5, 0.5, 1), 2, 2)
+X <- mvn(c(0, 0), sigma)
+X2_given <- conditional(X, given_indices = 1, given_values = 1)
+mean(X2_given)
+vcov(X2_given)
+
+# Predicate-based MC fallback (slower)
+\donttest{
+set.seed(42)
+X2_mc <- conditional(X, P = function(x) x[1] > 0)
+}
+}

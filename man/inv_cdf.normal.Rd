@@ -17,3 +17,9 @@ A function that computes the inverse cdf of the normal distribution.
 \description{
 Method for obtaining the inverse cdf of an \code{normal} object.
 }
+\examples{
+x <- normal(0, 1)
+q <- inv_cdf(x)
+q(0.5)
+q(0.975)
+}

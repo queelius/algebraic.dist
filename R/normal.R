@@ -2,6 +2,12 @@
 #'
 #' @param mu mean
 #' @param var variance
+#' @return A \code{normal} distribution object.
+#' @examples
+#' x <- normal(mu = 0, var = 1)
+#' mean(x)
+#' vcov(x)
+#' format(x)
 #' @export
 normal <- function(mu = 0, var = 1) {
     if (!is.numeric(mu) || length(mu) != 1 || is.na(mu))
@@ -17,6 +23,9 @@ normal <- function(mu = 0, var = 1) {
 #' @param x The object to format
 #' @param ... Additional arguments (not used)
 #' @return A character string
+#' @examples
+#' x <- normal(2, 3)
+#' format(x)
 #' @export
 format.normal <- function(x, ...) {
     sprintf("Normal distribution (mu = %g, var = %g)", x$mu, x$var)
@@ -25,6 +34,10 @@ format.normal <- function(x, ...) {
 #' Print method for `normal` objects.
 #' @param x The object to print
 #' @param ... Additional arguments to pass (not used)
+#' @return \code{x}, invisibly.
+#' @examples
+#' x <- normal(2, 3)
+#' print(x)
 #' @export
 print.normal <- function(x, ...) {
     cat(format(x), "\n")
@@ -37,6 +50,9 @@ print.normal <- function(x, ...) {
 #' @param object The `normal` object to retrieve the variance-covariance matrix from
 #' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `normal` object
+#' @examples
+#' x <- normal(0, 4)
+#' vcov(x)
 #' @export
 vcov.normal <- function(object, ...) {
     object$var
@@ -46,6 +62,9 @@ vcov.normal <- function(object, ...) {
 #' @param x The `normal` object to retrieve the mean from
 #' @param ... Additional arguments to pass (not used)
 #' @return The mean of the `normal` object
+#' @examples
+#' x <- normal(5, 2)
+#' mean(x)
 #' @export
 mean.normal <- function(x, ...) {
     x$mu
@@ -55,6 +74,9 @@ mean.normal <- function(x, ...) {
 #'
 #' @param x The object to obtain the parameters of
 #' @return A named vector of parameters
+#' @examples
+#' x <- normal(3, 2)
+#' params(x)
 #' @export
 params.normal <- function(x) {
     c("mu" = x$mu, "var" = x$var)
@@ -62,6 +84,10 @@ params.normal <- function(x) {
 
 #' Function to determine whether an object `x` is an `normal` object.
 #' @param x The object to test
+#' @return Logical; \code{TRUE} if \code{x} is a \code{normal}.
+#' @examples
+#' is_normal(normal(0, 1))
+#' is_normal(exponential(1))
 #' @export
 is_normal <- function(x) {
     inherits(x, "normal")
@@ -75,6 +101,11 @@ is_normal <- function(x) {
 #'         it accepts a sample size `n`, a numeric `mu`, and a variance
 #'         numeric `var`. By default, `mu` and `var` are the mean and
 #'         variance of object `x`.
+#' @examples
+#' x <- normal(0, 1)
+#' s <- sampler(x)
+#' set.seed(42)
+#' s(5)
 #' @importFrom stats rnorm
 #' @export
 sampler.normal <- function(x, ...) {
@@ -91,6 +122,11 @@ sampler.normal <- function(x, ...) {
 #'         a variance-covariance matrix `var`, and a `log` argument
 #'         determining whether to compute the log of the pdf. By default,
 #'         `mu` and `var` are the mean and variance of object `x`.
+#' @examples
+#' x <- normal(0, 1)
+#' f <- density(x)
+#' f(0)
+#' f(1)
 #' @importFrom stats dnorm density
 #' @export
 density.normal <- function(x, ...) {
@@ -109,6 +145,11 @@ density.normal <- function(x, ...) {
 #'         `mu` and `var` are the mean and variance of object `x` and `log`
 #'         is `FALSE`. Finally, it accepts additional arguments `...` to
 #'         pass to the `pnorm` function.
+#' @examples
+#' x <- normal(0, 1)
+#' F <- cdf(x)
+#' F(0)
+#' F(1.96)
 #' @importFrom stats pnorm
 #' @export
 cdf.normal <- function(x, ...) {
@@ -122,7 +163,10 @@ cdf.normal <- function(x, ...) {
 #' 
 #' @param x The `normal` object to obtain the support of
 #' @return A support-type object (see `support.R`), in this case an
-#'         `interval` object for each component. 
+#'         `interval` object for each component.
+#' @examples
+#' x <- normal(0, 1)
+#' sup(x)
 #' @export
 sup.normal <- function(x) {
     interval$new()
@@ -131,6 +175,8 @@ sup.normal <- function(x) {
 #' Method for obtaining the dimension of a `normal` object.
 #' @param x The `normal` object to obtain the dimension of
 #' @return The dimension of the `normal` object
+#' @examples
+#' dim(normal(0, 1))
 #' @export
 dim.normal <- function(x) {
     1
@@ -140,6 +186,11 @@ dim.normal <- function(x) {
 #' @param x The object to obtain the inverse cdf of
 #' @param ... Additional arguments to pass (not used)
 #' @return A function that computes the inverse cdf of the normal distribution.
+#' @examples
+#' x <- normal(0, 1)
+#' q <- inv_cdf(x)
+#' q(0.5)
+#' q(0.975)
 #' @importFrom stats qnorm
 #' @export
 inv_cdf.normal <- function(x, ...) {

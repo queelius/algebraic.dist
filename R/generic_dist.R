@@ -2,6 +2,11 @@
 #'
 #' @param x The object to obtain the hazard function of.
 #' @param ... Additional arguments to pass.
+#' @return A function computing the hazard rate at given points.
+#' @examples
+#' x <- exponential(2)
+#' h <- hazard(x)
+#' h(1)  # hazard rate at t = 1 (constant for exponential)
 #' @export
 hazard <- function(x, ...) {
     UseMethod("hazard", x)
@@ -11,6 +16,12 @@ hazard <- function(x, ...) {
 #'
 #' @param x The object to obtain the cdf of.
 #' @param ... Additional arguments to pass.
+#' @return A function computing the cumulative distribution function.
+#' @examples
+#' x <- normal(0, 1)
+#' F <- cdf(x)
+#' F(0)    # 0.5 (median of standard normal)
+#' F(1.96) # approximately 0.975
 #' @export
 cdf <- function(x, ...) {
     UseMethod("cdf", x)
@@ -20,6 +31,12 @@ cdf <- function(x, ...) {
 #'
 #' @param x The object to obtain the survival function of.
 #' @param ... Additional arguments to pass.
+#' @return A function computing the survival function \eqn{S(t) = P(X > t)}.
+#' @examples
+#' x <- exponential(1)
+#' S <- surv(x)
+#' S(0)  # 1 (survival at time 0)
+#' S(1)  # exp(-1), approximately 0.368
 #' @export
 surv <- function(x, ...) {
     UseMethod("surv", x)
@@ -29,6 +46,12 @@ surv <- function(x, ...) {
 #'
 #' @param x The object to obtain the quantile of.
 #' @param ... Additional arguments to pass.
+#' @return A function computing the quantile (inverse CDF).
+#' @examples
+#' x <- normal(0, 1)
+#' Q <- inv_cdf(x)
+#' Q(0.5)   # 0 (median of standard normal)
+#' Q(0.975) # approximately 1.96
 #' @export
 inv_cdf <- function(x, ...) {
     UseMethod("inv_cdf", x)
@@ -43,14 +66,27 @@ inv_cdf <- function(x, ...) {
 #'
 #' @param x the `x` object to create a sampler for
 #' @param ... additional arguments to pass
+#' @return A function that takes \code{n} and returns \code{n} samples.
+#' @examples
+#' x <- normal(0, 1)
+#' samp <- sampler(x)
+#' set.seed(42)
+#' samp(5)  # draw 5 samples from standard normal
 #' @export
 sampler <- function(x, ...) {
     UseMethod("sampler", x)
 }
 
 #' Generic method for obtaining the parameters of an object.
-#' 
+#'
 #' @param x The object to obtain the parameters of.
+#' @return A named vector (or list) of distribution parameters.
+#' @examples
+#' x <- normal(5, 2)
+#' params(x)  # mu = 5, var = 2
+#'
+#' y <- exponential(3)
+#' params(y)  # rate = 3
 #' @export
 params <- function(x) {
     UseMethod("params", x)
@@ -60,6 +96,10 @@ params <- function(x) {
 #' distribution-like object `x`.
 #'
 #' @param x the object to obtain the number of parameters for
+#' @return Integer; the number of parameters.
+#' @examples
+#' d <- empirical_dist(matrix(rnorm(30), ncol = 3))
+#' nparams(d)  # 0 (non-parametric)
 #' @export
 nparams <- function(x) {
     UseMethod("nparams", x)
@@ -71,6 +111,13 @@ nparams <- function(x) {
 #' @param x The distribution object.
 #' @param g The function to take the expectation of.
 #' @param ... Additional arguments to pass into `g`.
+#' @return The expected value of \code{g(x)}.
+#' @examples
+#' \donttest{
+#' x <- exponential(1)
+#' # E[X] for Exp(1) is 1
+#' expectation(x, function(t) t)
+#' }
 #' @export
 expectation <- function(x, g, ...) {
     UseMethod("expectation", x)
@@ -80,6 +127,11 @@ expectation <- function(x, g, ...) {
 #' object `x` over components `indices`.
 #' @param x The distribution object.
 #' @param indices The indices of the marginal distribution to obtain.
+#' @return A distribution object for the marginal over \code{indices}.
+#' @examples
+#' x <- mvn(c(0, 0), diag(2))
+#' m <- marginal(x, 1)  # marginal over first component
+#' mean(m)               # 0
 #' @export
 marginal <- function(x, indices) {
     UseMethod("marginal", x)
@@ -91,6 +143,14 @@ marginal <- function(x, indices) {
 #' @param x The empirical distribution object.
 #' @param P The predicate function to condition `x` on
 #' @param ... additional arguments to pass into `P`
+#' @return A distribution object for the conditional distribution.
+#' @examples
+#' \donttest{
+#' d <- empirical_dist(1:100)
+#' # condition on values greater than 50
+#' d_gt50 <- conditional(d, function(x) x > 50)
+#' mean(d_gt50)
+#' }
 #' @export
 conditional <- function(x, P, ...) {
     UseMethod("conditional", x)
@@ -100,6 +160,13 @@ conditional <- function(x, P, ...) {
 #' @param x The distribution object.
 #' @param g The function to apply.
 #' @param ... Additional arguments to pass into `g`.
+#' @return A distribution representing the push-forward of \code{x} through \code{g}.
+#' @examples
+#' \donttest{
+#' d <- empirical_dist(1:20)
+#' d_sq <- rmap(d, function(x) x^2)
+#' mean(d_sq)  # E[X^2] for uniform 1..20
+#' }
 #' @export
 rmap <- function(x, g, ...) {
     UseMethod("rmap", x)
@@ -117,6 +184,15 @@ rmap <- function(x, g, ...) {
 #'    to call `call` to check.
 #' @param x The object to obtain the support of.
 #' @return A support object for `x`.
+#' @examples
+#' x <- normal(0, 1)
+#' S <- sup(x)
+#' infimum(S)   # -Inf
+#' supremum(S)  # Inf
+#'
+#' y <- exponential(1)
+#' S2 <- sup(y)
+#' infimum(S2)  # 0
 #' @export
 sup <- function(x) {
     UseMethod("sup", x)
@@ -128,6 +204,10 @@ sup <- function(x) {
 #' object, like an maximum likelihood estimate.
 #'
 #' @param x the object to retrieve the observations from
+#' @return The data (matrix or vector) used to construct \code{x}.
+#' @examples
+#' d <- empirical_dist(1:10)
+#' obs(d)  # returns the vector 1:10
 #' @export
 obs <- function(x) {
     UseMethod("obs", x)

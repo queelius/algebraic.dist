@@ -17,3 +17,7 @@ The simplified distribution
 \description{
 Generic method for simplifying distributions.
 }
+\examples{
+# Simplify dispatches to the appropriate method
+simplify(normal(0, 1))  # unchanged (already simplified)
+}

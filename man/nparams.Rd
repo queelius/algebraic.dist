@@ -10,7 +10,14 @@ nparams(x)
 \arguments{
 \item{x}{the object to obtain the number of parameters for}
 }
+\value{
+Integer; the number of parameters.
+}
 \description{
 Generic method for obtaining the number of parameters of
 distribution-like object \code{x}.
+}
+\examples{
+d <- empirical_dist(matrix(rnorm(30), ncol = 3))
+nparams(d)  # 0 (non-parametric)
 }

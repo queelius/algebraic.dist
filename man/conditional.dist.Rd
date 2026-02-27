@@ -17,7 +17,19 @@ conditional distribution x | P. Defaults to 10000.}
 
 \item{...}{additional arguments to pass into \code{P}.}
 }
+\value{
+An \code{empirical_dist} approximating the conditional distribution.
+}
 \description{
 Falls back to MC: materializes \code{x} via \code{ensure_realized()} and
 then conditions on the resulting empirical distribution.
+}
+\examples{
+\donttest{
+set.seed(1)
+x <- exponential(1)
+# Condition on X > 2
+x_gt2 <- conditional(x, function(t) t > 2)
+mean(x_gt2)
+}
 }

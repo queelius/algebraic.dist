@@ -21,3 +21,12 @@ sampled values.
 \description{
 Method for obtaining the sampler of an \code{edist} object.
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(2)
+s <- sampler(z)
+samples <- s(100)
+head(samples)
+}
+}

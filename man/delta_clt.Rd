@@ -26,3 +26,10 @@ under the Delta Method. For a univariate distribution, this is
 \eqn{N(0, g'(\mu)^2 \sigma^2)}. For a multivariate distribution with
 Jacobian \eqn{J = Dg(\mu)}, this is \eqn{MVN(0, J \Sigma J^T)}.
 }
+\examples{
+# Delta method: g = exp, dg = exp
+x <- exponential(rate = 1)
+z <- delta_clt(x, g = exp, dg = exp)
+mean(z)
+vcov(z)
+}

@@ -19,3 +19,9 @@ the corresponding quantiles.
 \description{
 Uses the empirical quantile function from the observed data.
 }
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+qf <- inv_cdf(ed)
+qf(0.5)       # median
+qf(c(0.25, 0.75)) # quartiles
+}

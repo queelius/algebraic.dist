@@ -11,6 +11,12 @@
 
 \item{...}{Additional arguments (not used)}
 }
+\value{
+\code{x}, invisibly.
+}
 \description{
 Print method for \code{chi_squared} objects.
+}
+\examples{
+print(chi_squared(5))
 }

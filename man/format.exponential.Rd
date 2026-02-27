@@ -17,3 +17,6 @@ A character string
 \description{
 Format method for \code{exponential} objects.
 }
+\examples{
+format(exponential(rate = 2))
+}

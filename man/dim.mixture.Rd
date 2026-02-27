@@ -16,3 +16,7 @@ The dimension of the distribution.
 Returns the dimension of the first component (all components are
 assumed to have the same dimension).
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+dim(m)
+}

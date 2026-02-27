@@ -11,6 +11,14 @@ hazard(x, ...)
 
 \item{...}{Additional arguments to pass.}
 }
+\value{
+A function computing the hazard rate at given points.
+}
 \description{
 Generic method for obtaining the hazard function of an object.
+}
+\examples{
+x <- exponential(2)
+h <- hazard(x)
+h(1)  # hazard rate at t = 1 (constant for exponential)
 }

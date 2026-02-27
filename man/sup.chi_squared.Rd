@@ -15,3 +15,6 @@ An \code{interval} object representing (0, Inf)
 \description{
 Support for chi-squared distribution, the positive real numbers (0, Inf).
 }
+\examples{
+sup(chi_squared(5))
+}

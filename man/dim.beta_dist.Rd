@@ -15,3 +15,6 @@
 \description{
 Dimension of a beta distribution (always 1).
 }
+\examples{
+dim(beta_dist(2, 5))
+}

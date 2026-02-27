@@ -11,6 +11,14 @@
 
 \item{x}{A vector of values.}
 }
+\value{
+Logical indicating membership.
+}
 \description{
 Determine if a value is contained in the finite set.
+}
+\examples{
+fs <- finite_set$new(c(1, 3, 5, 7))
+has(fs, 3) # TRUE
+has(fs, 4) # FALSE
 }

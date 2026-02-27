@@ -33,3 +33,11 @@ Expectation operator applied to \code{x} of type \code{dist}
 with respect to a function \code{g}. Optionally, constructs a confidence interval
 for the expectation estimate using the Central Limit Theorem.
 }
+\examples{
+\donttest{
+# MC expectation of X^2 where X ~ Exp(1)
+set.seed(1)
+ex <- exponential(1)
+expectation(ex, g = function(t) t^2)
+}
+}

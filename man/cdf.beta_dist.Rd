@@ -18,3 +18,9 @@ CDF (or log-CDF) at \code{q}.
 \description{
 Returns a function that evaluates the beta CDF at given points.
 }
+\examples{
+x <- beta_dist(2, 5)
+F <- cdf(x)
+F(0.3)
+F(0.5)
+}

@@ -22,3 +22,12 @@ with the same mixing weights:
 \details{
 Requires all components to support \code{\link{marginal}}.
 }
+\examples{
+# Mixture of bivariate normals, extract marginal over first variable
+m <- mixture(
+  list(mvn(c(0, 0), diag(2)), mvn(c(3, 3), diag(2))),
+  c(0.5, 0.5)
+)
+m1 <- marginal(m, 1)
+mean(m1)
+}

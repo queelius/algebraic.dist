@@ -17,3 +17,7 @@ A character string
 \description{
 Format method for \code{empirical_dist} objects.
 }
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+format(ed)
+}

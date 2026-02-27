@@ -14,7 +14,17 @@ expectation(x, g, ...)
 
 \item{...}{Additional arguments to pass into \code{g}.}
 }
+\value{
+The expected value of \code{g(x)}.
+}
 \description{
 Generic method for obtaining the expectation of \code{f} with respect to
 \code{x}.
+}
+\examples{
+\donttest{
+x <- exponential(1)
+# E[X] for Exp(1) is 1
+expectation(x, function(t) t)
+}
 }

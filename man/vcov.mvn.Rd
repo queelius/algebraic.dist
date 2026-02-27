@@ -17,3 +17,7 @@ The variance-covariance matrix of the \code{mvn} object
 \description{
 Retrieve the variance-covariance matrix of an \code{mvn} object.
 }
+\examples{
+X <- mvn(c(0, 0), diag(2))
+vcov(X)
+}

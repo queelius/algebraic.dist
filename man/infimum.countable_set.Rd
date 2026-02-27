@@ -15,3 +15,7 @@ The lower bound (integer).
 \description{
 Get the infimum of a countable set.
 }
+\examples{
+cs <- countable_set$new(0L)
+infimum(cs)  # 0
+}

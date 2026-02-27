@@ -17,7 +17,19 @@
 \item{control}{An (optional) list of control parameters for \code{integrate} or
 \code{expectation_data} (if \code{x} is not continuous)}
 }
+\value{
+The expected value (numeric scalar), or the full
+\code{integrate()} result if \code{compute_stats = TRUE}.
+}
 \description{
 Assumes the support is a contiguous interval that has operations
 for retrieving the lower and upper bounds.
+}
+\examples{
+x <- normal(3, 4)
+# E[X] for Normal(3, 4) is 3
+expectation(x, function(t) t)
+
+# E[X^2] for Exp(1) is 2
+expectation(exponential(1), function(t) t^2)
 }

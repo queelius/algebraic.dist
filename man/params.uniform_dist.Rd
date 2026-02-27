@@ -15,3 +15,6 @@ A named numeric vector with elements \code{min} and \code{max}.
 \description{
 Retrieve the parameters of a \code{uniform_dist} object.
 }
+\examples{
+params(uniform_dist(0, 10))
+}

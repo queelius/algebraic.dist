@@ -10,7 +10,14 @@
 \arguments{
 \item{x}{The empirical distribution object.}
 }
+\value{
+A matrix of observations (rows = observations, columns = dimensions).
+}
 \description{
 Method for obtaining the observations used to construct a
 \code{empirical_dist} object.
+}
+\examples{
+ed <- empirical_dist(c(5, 10, 15))
+obs(ed)
 }

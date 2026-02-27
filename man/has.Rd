@@ -11,6 +11,9 @@ has(object, x)
 
 \item{x}{A vector of values.}
 }
+\value{
+Logical vector indicating membership.
+}
 \description{
 support is a class that represents the support of a random
 element or distribution, i.e. the set of values that it realize.
@@ -31,4 +34,13 @@ We provide two implementations that satisfy the concept:
 \item \code{finite_set}: a support that is a finite set of values
 Determine if a value is contained in the support.
 }
+}
+\examples{
+I <- interval$new(0, 1, lower_closed = TRUE, upper_closed = TRUE)
+has(I, 0.5)  # TRUE
+has(I, 2)    # FALSE
+
+S <- finite_set$new(c(1, 2, 3))
+has(S, 2)    # TRUE
+has(S, 4)    # FALSE
 }

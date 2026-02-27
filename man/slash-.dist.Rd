@@ -18,3 +18,8 @@ A simplified distribution or edist
 Handles dist / scalar (delegates to dist * (1/scalar)),
 scalar / dist, and dist / dist.
 }
+\examples{
+# Division by scalar reuses multiplication rule
+z <- normal(0, 4) / 2
+z  # Normal(mu = 0, var = 1)
+}

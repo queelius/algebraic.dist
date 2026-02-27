@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments to pass (not used)}
 }
+\value{
+\code{x}, invisibly.
+}
 \description{
 Print method for \code{normal} objects.
+}
+\examples{
+x <- normal(2, 3)
+print(x)
 }

@@ -15,3 +15,6 @@ The dimension of the \code{mvn} object
 \description{
 Method for obtaining the dimension of an \code{mvn} object.
 }
+\examples{
+dim(mvn(c(0, 0, 0)))
+}

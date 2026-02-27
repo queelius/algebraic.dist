@@ -6,6 +6,11 @@
 #' @param vars the list of distributions (with variable names)
 #'             to evaluate the expression `e` against.
 #' @return An `edist` object.
+#' @examples
+#' x <- normal(0, 1)
+#' y <- normal(2, 3)
+#' e <- edist(quote(x + y), list(x = x, y = y))
+#' e
 #' @export
 edist <- function(e, vars) {
   primary_classes <- vapply(vars, function(v) class(v)[1], character(1))
@@ -16,6 +21,10 @@ edist <- function(e, vars) {
 
 #' Function to determine whether an object `x` is an `edist` object.
 #' @param x The object to test
+#' @return Logical; \code{TRUE} if \code{x} is an \code{edist}.
+#' @examples
+#' is_edist(normal(0, 1) * exponential(1))  # TRUE
+#' is_edist(normal(0, 1))                   # FALSE
 #' @export
 is_edist <- function(x) {
   inherits(x, "edist")
@@ -24,6 +33,9 @@ is_edist <- function(x) {
 #' Method for obtaining the parameters of an `edist` object.
 #' @param x The object to obtain the parameters of
 #' @return A named vector of parameters
+#' @examples
+#' z <- normal(0, 1) * exponential(2)
+#' params(z)
 #' @export
 params.edist <- function(x) {
   do.call(c, lapply(x$vars, params))
@@ -35,6 +47,12 @@ params.edist <- function(x) {
 #' @param n The number of samples to take (default: 10000)
 #' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `edist` object
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(2)
+#' vcov(z)
+#' }
 #' @export
 vcov.edist <- function(object, n = 10000, ...) {
   v <- vcov(ensure_realized(object, n = n))
@@ -47,6 +65,12 @@ vcov.edist <- function(object, n = 10000, ...) {
 #' @param n The number of samples to take (default: 10000)
 #' @param ... Additional arguments to pass (not used)
 #' @return The mean of the `edist` object
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(2)
+#' mean(z)
+#' }
 #' @export
 mean.edist <- function(x, n = 10000, ...) {
   mean(ensure_realized(x, n = n))
@@ -56,6 +80,9 @@ mean.edist <- function(x, n = 10000, ...) {
 #' @param x The object to format
 #' @param ... Additional arguments (not used)
 #' @return A character string
+#' @examples
+#' z <- normal(0, 1) * exponential(2)
+#' format(z)
 #' @export
 format.edist <- function(x, ...) {
   sprintf("Expression distribution: %s", deparse(x$e))
@@ -64,6 +91,9 @@ format.edist <- function(x, ...) {
 #' Print method for `edist` objects.
 #' @param x The object to print
 #' @param ... Additional arguments to pass (not used)
+#' @examples
+#' z <- normal(0, 1) * exponential(2)
+#' print(z)
 #' @export
 print.edist <- function(x, ...) {
   cat(format(x), "\n")
@@ -81,6 +111,14 @@ print.edist <- function(x, ...) {
 #'         which is passed into the expression `x$e` and returns
 #'         the result of applying the expression `x$e` to the
 #'         sampled values.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(2)
+#' s <- sampler(z)
+#' samples <- s(100)
+#' head(samples)
+#' }
 #' @export
 sampler.edist <- function(x, ...) {
   samplers <- lapply(x$vars, sampler, ...)
@@ -111,6 +149,13 @@ sampler.edist <- function(x, ...) {
 #' @param x A `dist` object or numeric scalar
 #' @param y A `dist` object or numeric scalar
 #' @return A simplified distribution or `edist` if no closed form exists
+#' @examples
+#' # Sum of two normals simplifies to a normal
+#' z <- normal(0, 1) + normal(2, 3)
+#' z  # Normal(mu = 2, var = 4)
+#'
+#' # Shift a distribution by a constant
+#' normal(0, 1) + 5  # Normal(mu = 5, var = 1)
 #' @export
 `+.dist` <- function(x, y) {
   if (is.numeric(x) && length(x) == 1) {
@@ -133,6 +178,13 @@ sampler.edist <- function(x, ...) {
 #' @param x A `dist` object or numeric scalar
 #' @param y A `dist` object or numeric scalar (optional for unary negation)
 #' @return A simplified distribution or `edist` if no closed form exists
+#' @examples
+#' # Difference of normals simplifies to a normal
+#' z <- normal(5, 2) - normal(1, 3)
+#' z  # Normal(mu = 4, var = 5)
+#'
+#' # Unary negation
+#' -normal(3, 1)  # Normal(mu = -3, var = 1)
 #' @export
 `-.dist` <- function(x, y) {
   if (missing(y)) {
@@ -165,6 +217,14 @@ sampler.edist <- function(x, ...) {
 #' @param x first operand
 #' @param y second operand
 #' @return A simplified distribution or edist
+#' @examples
+#' # Scalar multiplication simplifies for normal
+#' z <- 2 * normal(0, 1)
+#' z  # Normal(mu = 0, var = 4)
+#'
+#' # Product of two distributions yields an edist
+#' w <- normal(0, 1) * exponential(1)
+#' is_edist(w)  # TRUE
 #' @export
 `*.dist` <- function(x, y) {
   if (is.numeric(x) && length(x) == 1) {
@@ -184,6 +244,10 @@ sampler.edist <- function(x, ...) {
 #' @param x a dist object (base)
 #' @param y a numeric scalar (exponent)
 #' @return A simplified distribution or edist
+#' @examples
+#' # Standard normal squared yields chi-squared(1)
+#' z <- normal(0, 1)^2
+#' z
 #' @export
 `^.dist` <- function(x, y) {
   if (is.numeric(y) && length(y) == 1) {
@@ -199,6 +263,10 @@ sampler.edist <- function(x, ...) {
 #' @param x first operand
 #' @param y second operand
 #' @return A simplified distribution or edist
+#' @examples
+#' # Division by scalar reuses multiplication rule
+#' z <- normal(0, 4) / 2
+#' z  # Normal(mu = 0, var = 1)
 #' @export
 `/.dist` <- function(x, y) {
   if (is.numeric(y) && length(y) == 1) {
@@ -219,6 +287,14 @@ sampler.edist <- function(x, ...) {
 #' @param x a dist object
 #' @param ... additional arguments
 #' @return A simplified distribution or edist
+#' @examples
+#' # exp(Normal) simplifies to LogNormal
+#' z <- exp(normal(0, 1))
+#' z
+#'
+#' # sqrt of a distribution (no closed-form rule, remains edist)
+#' w <- sqrt(exponential(1))
+#' is_edist(w)  # TRUE
 #' @export
 Math.dist <- function(x, ...) {
   op <- .Generic
@@ -240,6 +316,14 @@ make_elementwise_edist <- function(fn_name, dists) {
 #' @param ... dist objects
 #' @param na.rm ignored
 #' @return A simplified distribution or edist
+#' @examples
+#' # sum() reduces via + operator
+#' z <- sum(normal(0, 1), normal(2, 3))
+#' z  # Normal(mu = 2, var = 4)
+#'
+#' # min() of exponentials simplifies
+#' w <- min(exponential(1), exponential(2))
+#' w  # Exponential(rate = 3)
 #' @rdname dist_summary_group
 #' @importFrom stats setNames
 #' @export
@@ -278,6 +362,13 @@ Summary.dist <- function(..., na.rm = FALSE) {
 #' @param x An \code{edist} object.
 #' @param ... Additional arguments forwarded to \code{cdf.empirical_dist}.
 #' @return A function computing the empirical CDF.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(1)
+#' Fz <- cdf(z)
+#' Fz(0)
+#' }
 #' @export
 cdf.edist <- function(x, ...) {
   cdf(ensure_realized(x), ...)
@@ -291,6 +382,12 @@ cdf.edist <- function(x, ...) {
 #' @param x An \code{edist} object.
 #' @param ... Additional arguments forwarded to \code{density.empirical_dist}.
 #' @return A function computing the empirical density (PMF).
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(1)
+#' fz <- density(z)
+#' }
 #' @export
 density.edist <- function(x, ...) {
   density(ensure_realized(x), ...)
@@ -303,6 +400,12 @@ density.edist <- function(x, ...) {
 #'
 #' @param x An \code{edist} object.
 #' @return A \code{finite_set} support object.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(1)
+#' sup(z)
+#' }
 #' @export
 sup.edist <- function(x) {
   sup(ensure_realized(x))
@@ -317,6 +420,13 @@ sup.edist <- function(x) {
 #' @param P Predicate function to condition on.
 #' @param ... Additional arguments forwarded to the predicate \code{P}.
 #' @return A conditional \code{empirical_dist}.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) + exponential(1)
+#' z_pos <- conditional(z, function(t) t > 2)
+#' mean(z_pos)
+#' }
 #' @export
 conditional.edist <- function(x, P, ...) {
   conditional(ensure_realized(x), P, ...)
@@ -331,6 +441,13 @@ conditional.edist <- function(x, P, ...) {
 #' @param g Function to apply to each observation.
 #' @param ... Additional arguments forwarded to \code{g}.
 #' @return A transformed \code{empirical_dist}.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(1)
+#' abs_z <- rmap(z, abs)
+#' mean(abs_z)
+#' }
 #' @export
 rmap.edist <- function(x, g, ...) {
   rmap(ensure_realized(x), g, ...)
@@ -345,6 +462,13 @@ rmap.edist <- function(x, g, ...) {
 #' @param ... Additional arguments forwarded to
 #'   \code{inv_cdf.empirical_dist}.
 #' @return A function computing the empirical quantile function.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' z <- normal(0, 1) * exponential(1)
+#' qz <- inv_cdf(z)
+#' qz(0.5)
+#' }
 #' @export
 inv_cdf.edist <- function(x, ...) {
   inv_cdf(ensure_realized(x), ...)

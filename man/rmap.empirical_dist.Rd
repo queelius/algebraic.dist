@@ -14,7 +14,15 @@ observations of \code{empirical_dist} object \code{x}.}
 
 \item{...}{Additional arguments to pass into function \code{g}.}
 }
+\value{
+An \code{empirical_dist} of the transformed observations.
+}
 \description{
 Method for obtaining the empirical distribution of a function of the
 observations of \code{empirical_dist} object \code{x}.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4))
+ed2 <- rmap(ed, function(x) x^2)
+mean(ed2) # mean of 1, 4, 9, 16
 }

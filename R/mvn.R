@@ -11,9 +11,17 @@
 #'              distribution. It must be a square matrix with the same number of 
 #'              rows and columns as the length of `mu`. Default is the identity 
 #'              matrix of size equal to the length of `mu`.
-#' @return If `mu` has length 1, it returns a `normal` object. If `mu` has length 
-#'         > 1, it returns an `mvn` object. Both types of objects contain `mu` 
+#' @return If `mu` has length 1, it returns a `normal` object. If `mu` has length
+#'         > 1, it returns an `mvn` object. Both types of objects contain `mu`
 #'         and `sigma` as their properties.
+#' @examples
+#' # Bivariate normal with identity covariance
+#' X <- mvn(mu = c(0, 0))
+#' mean(X)
+#' vcov(X)
+#'
+#' # 1D case returns a normal object
+#' is_normal(mvn(mu = 1, sigma = matrix(4)))
 #' @export
 mvn <- function(
     mu,
@@ -40,6 +48,9 @@ mvn <- function(
 #' @param object The `mvn` object to retrieve the variance-covariance matrix of
 #' @param ... Additional arguments to pass (not used)
 #' @return The variance-covariance matrix of the `mvn` object
+#' @examples
+#' X <- mvn(c(0, 0), diag(2))
+#' vcov(X)
 #' @export
 vcov.mvn <- function(object, ...) {
     object$sigma
@@ -49,6 +60,9 @@ vcov.mvn <- function(object, ...) {
 #' @param x The `mvn` object to retrieve the mean from
 #' @param ... Additional arguments to pass (not used)
 #' @return The mean of the `mvn` object
+#' @examples
+#' X <- mvn(c(1, 2, 3))
+#' mean(X)
 #' @export
 mean.mvn <- function(x, ...) {
     x$mu
@@ -58,6 +72,9 @@ mean.mvn <- function(x, ...) {
 #'
 #' @param x The object to obtain the parameters of
 #' @return A named vector of parameters
+#' @examples
+#' X <- mvn(c(0, 0), diag(2))
+#' params(X)
 #' @export
 params.mvn <- function(x) {
     c("mu" = x$mu, "sigma" = x$sigma)
@@ -65,6 +82,10 @@ params.mvn <- function(x) {
 
 #' Function to determine whether an object `x` is an `mvn` object.
 #' @param x The object to test
+#' @return Logical; \code{TRUE} if \code{x} is an \code{mvn}.
+#' @examples
+#' is_mvn(mvn(c(0, 0)))
+#' is_mvn(normal(0, 1))
 #' @export
 is_mvn <- function(x) {
     inherits(x, "mvn")
@@ -87,6 +108,11 @@ is_mvn <- function(x) {
 #'            `sample_mvn_region` method. It's used when `p` is less than 1.
 #'          - `...`: any additional parameters to pass to `rmvnorm` or 
 #'            `sample_mvn_region` which can be different during each call.
+#' @examples
+#' X <- mvn(c(0, 0), diag(2))
+#' s <- sampler(X)
+#' set.seed(42)
+#' s(3)
 #' @importFrom mvtnorm rmvnorm
 #' @export
 sampler.mvn <- function(x, ...) {
@@ -119,6 +145,11 @@ sampler.mvn <- function(x, ...) {
 #'          - `log`: logical, determines whether to compute the log of the pdf.
 #'            Defaults to `FALSE`.
 #'          - `...`: any additional parameters to pass to `dmvnorm`.
+#' @examples
+#' X <- mvn(c(0, 0), diag(2))
+#' f <- density(X)
+#' f(c(0, 0))
+#' f(c(1, 1))
 #' @importFrom mvtnorm dmvnorm
 #' @export
 density.mvn <- function(x, ...) {
@@ -136,7 +167,10 @@ density.mvn <- function(x, ...) {
 #' @param x The `mvn` object to obtain the support of
 #' @param ... Additional arguments to pass (not used)
 #' @return A support-type object (see `support.R`), in this case an
-#'         `interval` object for each component. 
+#'         `interval` object for each component.
+#' @examples
+#' X <- mvn(c(0, 0))
+#' sup(X)
 #' @export
 sup.mvn <- function(x, ...) {
     interval$new(lower = rep(-Inf, length(x$mu)),
@@ -149,6 +183,13 @@ sup.mvn <- function(x, ...) {
 #' `x` over components `indices`.
 #' @param x The `mvn` object.
 #' @param indices The indices of the marginal distribution to obtain.
+#' @return A \code{normal} (for a single index) or \code{mvn} marginal distribution.
+#' @examples
+#' X <- mvn(c(1, 2, 3))
+#' # Univariate marginal
+#' marginal(X, 1)
+#' # Bivariate marginal
+#' marginal(X, c(1, 3))
 #' @export
 marginal.mvn <- function(x, indices) {
     if (length(indices) == 0)
@@ -174,6 +215,14 @@ marginal.mvn <- function(x, indices) {
 #' @param sigma variance-covariance matrix
 #' @param p the probability region
 #' @param ... additional arguments to pass into `mahalanobis`
+#' @return An \code{n} by \code{length(mu)} matrix of samples within the
+#'   probability region.
+#' @examples
+#' \donttest{
+#' set.seed(42)
+#' pts <- sample_mvn_region(10, mu = c(0, 0), sigma = diag(2), p = 0.95)
+#' dim(pts)
+#' }
 #' @importFrom stats qchisq mahalanobis
 #' @export
 sample_mvn_region <- function(n, mu, sigma, p = .95, ...) {
@@ -201,6 +250,8 @@ sample_mvn_region <- function(n, mu, sigma, p = .95, ...) {
 #' @param x The object to format
 #' @param ... Additional arguments (not used)
 #' @return A character string
+#' @examples
+#' format(mvn(c(0, 0)))
 #' @export
 format.mvn <- function(x, ...) {
     sprintf("Multivariate normal distribution (%d dimensions)", length(x$mu))
@@ -209,6 +260,9 @@ format.mvn <- function(x, ...) {
 #' Method for printing an `mvn` object.
 #' @param x The object to print
 #' @param ... Additional arguments to pass to `print`
+#' @return \code{x}, invisibly.
+#' @examples
+#' print(mvn(c(0, 0)))
 #' @export
 print.mvn <- function(x, ...) {
     cat(format(x), "\n")
@@ -223,6 +277,8 @@ print.mvn <- function(x, ...) {
 #' Method for obtaining the dimension of an `mvn` object.
 #' @param x The object to obtain the dimension of
 #' @return The dimension of the `mvn` object
+#' @examples
+#' dim(mvn(c(0, 0, 0)))
 #' @export
 dim.mvn <- function(x) {
     length(x$mu)
@@ -231,6 +287,11 @@ dim.mvn <- function(x) {
 #' Method for obtaining the CDF of a `mvn` object.
 #' @param x The object to obtain the CDF of
 #' @param ... Additional arguments to pass (not used)
+#' @return A function computing the multivariate normal CDF.
+#' @examples
+#' X <- mvn(c(0, 0), diag(2))
+#' F <- cdf(X)
+#' F(c(0, 0))
 #' @importFrom mvtnorm pmvnorm
 #' @export
 cdf.mvn <- function(x, ...) {
@@ -258,6 +319,14 @@ cdf.mvn <- function(x, ...) {
 #' @param n number of samples to take to estimate distribution of `g(x)` if
 #'         `method` is `mc` or `empirical`. Defaults to 10000.
 #' @param ... additional arguments to pass into the `g` function.
+#' @return An \code{mvn} distribution fitted to the transformed samples.
+#' @examples
+#' \donttest{
+#' X <- mvn(c(1, 2), diag(2))
+#' set.seed(42)
+#' Y <- rmap(X, function(x) x^2)
+#' mean(Y)
+#' }
 #' @importFrom stats vcov
 #' @export
 rmap.mvn <- function(x, g, n = 10000L, ...) {
@@ -284,6 +353,19 @@ rmap.mvn <- function(x, g, n = 10000L, ...) {
 #' @param given_values Numeric vector of observed values (same length as
 #'   \code{given_indices}).
 #' @return A \code{normal}, \code{mvn}, or \code{empirical_dist} object.
+#' @examples
+#' # Closed-form conditioning: X2 | X1 = 1
+#' sigma <- matrix(c(1, 0.5, 0.5, 1), 2, 2)
+#' X <- mvn(c(0, 0), sigma)
+#' X2_given <- conditional(X, given_indices = 1, given_values = 1)
+#' mean(X2_given)
+#' vcov(X2_given)
+#'
+#' # Predicate-based MC fallback (slower)
+#' \donttest{
+#' set.seed(42)
+#' X2_mc <- conditional(X, P = function(x) x[1] > 0)
+#' }
 #' @export
 conditional.mvn <- function(x, P = NULL, ...,
                             given_indices = NULL, given_values = NULL) {
@@ -338,6 +420,16 @@ conditional.mvn <- function(x, P = NULL, ...,
 #' @param b An optional numeric vector (or scalar) for the offset. Default is
 #'   a zero vector.
 #' @return A \code{normal} or \code{mvn} distribution.
+#' @examples
+#' X <- mvn(c(0, 0), diag(2))
+#' # Project to first component via 1x2 matrix
+#' Y <- affine_transform(X, A = matrix(c(1, 0), 1, 2), b = 5)
+#' mean(Y)
+#'
+#' # Scale a univariate normal
+#' Z <- affine_transform(normal(0, 1), A = 3, b = 2)
+#' mean(Z)
+#' vcov(Z)
 #' @export
 affine_transform <- function(x, A, b = NULL) {
     if (!inherits(x, "dist"))

@@ -11,6 +11,15 @@ cdf(x, ...)
 
 \item{...}{Additional arguments to pass.}
 }
+\value{
+A function computing the cumulative distribution function.
+}
 \description{
 Generic method for obtaining the cdf of an object.
+}
+\examples{
+x <- normal(0, 1)
+F <- cdf(x)
+F(0)    # 0.5 (median of standard normal)
+F(1.96) # approximately 0.975
 }

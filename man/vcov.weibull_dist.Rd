@@ -17,3 +17,6 @@ The variance (scalar).
 \description{
 Computes \eqn{scale^2 (\Gamma(1 + 2/shape) - [\Gamma(1 + 1/shape)]^2)}.
 }
+\examples{
+vcov(weibull_dist(shape = 2, scale = 3))
+}

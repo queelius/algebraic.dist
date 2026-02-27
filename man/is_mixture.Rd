@@ -16,3 +16,8 @@ is_mixture(x)
 \description{
 Test whether an object is a \code{mixture} distribution.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 2)), c(0.5, 0.5))
+is_mixture(m)
+is_mixture(normal(0, 1))
+}

@@ -18,3 +18,9 @@ density (or log-density) at \code{t}.
 \description{
 Returns a function that evaluates the log-normal PDF at given points.
 }
+\examples{
+x <- lognormal(0, 1)
+f <- density(x)
+f(1)
+f(2)
+}

@@ -19,3 +19,9 @@ survival probability (or log-survival probability) at \code{t}.
 Returns a function that computes \eqn{S(t) = P(X > t)} for the Weibull
 distribution.
 }
+\examples{
+x <- weibull_dist(shape = 2, scale = 3)
+S <- surv(x)
+S(1)
+S(3)
+}

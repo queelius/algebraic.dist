@@ -20,3 +20,9 @@ the failure rate of object \code{x}.
 \description{
 Method to sample from an \code{exponential} object.
 }
+\examples{
+x <- exponential(rate = 2)
+s <- sampler(x)
+set.seed(42)
+s(5)
+}

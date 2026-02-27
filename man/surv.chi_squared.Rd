@@ -17,3 +17,8 @@ A function that computes S(t) = P(X > t)
 \description{
 Method for obtaining the survival function of a \code{chi_squared} object.
 }
+\examples{
+x <- chi_squared(5)
+S <- surv(x)
+S(5)
+}

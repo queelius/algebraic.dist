@@ -17,3 +17,9 @@ A character string.
 \description{
 Shows the number of samples and a summary of the source distribution.
 }
+\examples{
+\donttest{
+rd <- realize(normal(0, 1), n = 100)
+format(rd)
+}
+}

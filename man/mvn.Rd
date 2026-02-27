@@ -26,3 +26,12 @@ This function constructs an object representing a normal distribution.
 If the length of the mean vector \code{mu} is 1, it creates a univariate
 normal distribution. Otherwise, it creates a multivariate normal distribution.
 }
+\examples{
+# Bivariate normal with identity covariance
+X <- mvn(mu = c(0, 0))
+mean(X)
+vcov(X)
+
+# 1D case returns a normal object
+is_normal(mvn(mu = 1, sigma = matrix(4)))
+}

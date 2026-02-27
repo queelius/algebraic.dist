@@ -20,3 +20,9 @@ Returns a function that draws samples from the mixture by first
 selecting a component according to the mixing weights, then
 sampling from the selected component.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+s <- sampler(m)
+set.seed(42)
+s(6)
+}

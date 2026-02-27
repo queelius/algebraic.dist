@@ -11,6 +11,16 @@
 
 \item{...}{Additional arguments to pass (not used).}
 }
+\value{
+The sample variance-covariance matrix.
+}
 \description{
 Method for obtaining the variance of \code{empirical_dist} object \code{x}.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+vcov(ed) # sample variance
+
+ed_mv <- empirical_dist(matrix(rnorm(20), ncol = 2))
+vcov(ed_mv) # 2x2 covariance matrix
 }

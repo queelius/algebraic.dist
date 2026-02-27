@@ -9,6 +9,16 @@
 \arguments{
 \item{x}{The object to obtain the dimension of.}
 }
+\value{
+Integer; the number of dimensions.
+}
 \description{
 Method for obtaining the dimension of a \code{empirical_dist} object.
+}
+\examples{
+ed1 <- empirical_dist(c(1, 2, 3))
+dim(ed1) # 1
+
+ed2 <- empirical_dist(matrix(1:6, ncol = 2))
+dim(ed2) # 2
 }

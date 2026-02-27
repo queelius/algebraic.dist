@@ -19,3 +19,9 @@ of length \code{n}.
 Returns a function that draws \code{n} independent samples from the
 beta distribution.
 }
+\examples{
+x <- beta_dist(2, 5)
+s <- sampler(x)
+set.seed(42)
+s(5)
+}

@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments}
 }
+\value{
+\code{x}, invisibly.
+}
 \description{
 Print method for \code{summary_dist} objects.
+}
+\examples{
+s <- summary(normal(5, 2))
+print(s)
 }

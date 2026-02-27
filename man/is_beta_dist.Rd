@@ -16,3 +16,7 @@ is_beta_dist(x)
 \description{
 Test whether an object is a \code{beta_dist}.
 }
+\examples{
+is_beta_dist(beta_dist(2, 5))
+is_beta_dist(normal(0, 1))
+}

@@ -17,3 +17,6 @@ The mean, equal to \code{lambda}.
 \description{
 Mean of a Poisson distribution.
 }
+\examples{
+mean(poisson_dist(5))
+}

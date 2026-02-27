@@ -15,3 +15,6 @@
 \description{
 Retrieve the dimension of a \code{gamma_dist} object.
 }
+\examples{
+dim(gamma_dist(2, 1))
+}

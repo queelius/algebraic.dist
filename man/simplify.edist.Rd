@@ -49,3 +49,13 @@ Two-variable:
 \item LogNormal * LogNormal -> LogNormal
 }
 }
+\examples{
+# Normal + Normal simplifies to a Normal
+z <- normal(0, 1) + normal(2, 3)
+is_normal(z)  # TRUE
+z             # Normal(mu = 2, var = 4)
+
+# exp(Normal) simplifies to LogNormal
+w <- exp(normal(0, 1))
+is_lognormal(w)  # TRUE
+}

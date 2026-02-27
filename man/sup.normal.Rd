@@ -18,3 +18,7 @@ A support-type object (see \code{support.R}), in this case an
 Method for obtaining the support of a \code{normal} object, where the support
 is defined as values that have non-zero probability density.
 }
+\examples{
+x <- normal(0, 1)
+sup(x)
+}

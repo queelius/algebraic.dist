@@ -17,3 +17,6 @@ A character string
 \description{
 Format method for \code{mvn} objects.
 }
+\examples{
+format(mvn(c(0, 0)))
+}

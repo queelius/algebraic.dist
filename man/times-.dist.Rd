@@ -17,3 +17,12 @@ A simplified distribution or edist
 \description{
 Handles scalar * dist, dist * scalar, and dist * dist.
 }
+\examples{
+# Scalar multiplication simplifies for normal
+z <- 2 * normal(0, 1)
+z  # Normal(mu = 0, var = 4)
+
+# Product of two distributions yields an edist
+w <- normal(0, 1) * exponential(1)
+is_edist(w)  # TRUE
+}

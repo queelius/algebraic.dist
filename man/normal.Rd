@@ -11,6 +11,15 @@ normal(mu = 0, var = 1)
 
 \item{var}{variance}
 }
+\value{
+A \code{normal} distribution object.
+}
 \description{
 Construct univariate normal distribution object.
+}
+\examples{
+x <- normal(mu = 0, var = 1)
+mean(x)
+vcov(x)
+format(x)
 }

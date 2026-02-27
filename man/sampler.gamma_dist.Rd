@@ -17,3 +17,9 @@ A function that generates \code{n} samples from the gamma distribution
 \description{
 Method for sampling from a \code{gamma_dist} object.
 }
+\examples{
+x <- gamma_dist(shape = 2, rate = 1)
+s <- sampler(x)
+set.seed(42)
+s(5)
+}

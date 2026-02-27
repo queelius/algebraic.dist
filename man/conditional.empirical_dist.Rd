@@ -14,6 +14,9 @@
 
 \item{...}{additional arguments to pass into \code{P}.}
 }
+\value{
+An \code{empirical_dist} containing only rows satisfying \code{P}.
+}
 \description{
 In other words, we condition the data on the predicate function.
 In order to do so, we simply remove all rows from the data that do not
@@ -28,4 +31,13 @@ greater than the second dimension, we would do the following:
 This would return a new empirical distribution object with the same
 dimensionality as \code{x}, but with all rows where the first dimension is
 less than or equal to the second dimension removed.
+}
+\examples{
+\donttest{
+mat <- matrix(c(1, 5, 2, 3, 4, 1, 6, 2), ncol = 2)
+ed <- empirical_dist(mat)
+# Condition on first column being greater than second
+ed_cond <- conditional(ed, function(d) d[1] > d[2])
+nobs(ed_cond)
+}
 }

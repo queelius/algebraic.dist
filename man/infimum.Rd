@@ -9,6 +9,16 @@ infimum(object)
 \arguments{
 \item{object}{A support object.}
 }
+\value{
+The infimum (greatest lower bound) of the support.
+}
 \description{
 Get the infimum of the support.
+}
+\examples{
+I <- interval$new(0, 10)
+infimum(I)  # 0
+
+S <- finite_set$new(c(3, 7, 11))
+infimum(S)  # 3
 }

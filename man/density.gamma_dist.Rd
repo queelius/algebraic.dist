@@ -17,3 +17,9 @@ A function that computes the pdf at point(s) \code{t}
 \description{
 Method for obtaining the density (pdf) of a \code{gamma_dist} object.
 }
+\examples{
+x <- gamma_dist(shape = 2, rate = 1)
+f <- density(x)
+f(1)
+f(2)
+}

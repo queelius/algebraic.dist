@@ -20,3 +20,10 @@ the mean and variance-covariance of the input distribution. This is
 useful as a quick Gaussian approximation for any distribution whose
 first two moments are available.
 }
+\examples{
+# Approximate a Gamma(5, 2) with a normal
+g <- gamma_dist(shape = 5, rate = 2)
+n <- normal_approx(g)
+mean(n)
+vcov(n)
+}

@@ -15,3 +15,6 @@ An \code{interval} object representing \eqn{(0, \infty)}.
 \description{
 The log-normal distribution is supported on \eqn{(0, \infty)}.
 }
+\examples{
+sup(lognormal(0, 1))
+}

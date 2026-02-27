@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments to pass (not used).}
 }
+\value{
+Numeric vector of column means.
+}
 \description{
 Method for obtaining the mean of \code{empirical_dist} object \code{x}.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 3, 4, 5))
+mean(ed) # 3
 }

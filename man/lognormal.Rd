@@ -23,3 +23,9 @@ Creates an S3 object representing a log-normal distribution with the given
   \exp\!\left(-\frac{(\log t - meanlog)^2}{2 \cdot sdlog^2}\right)}
 for \eqn{t > 0}.
 }
+\examples{
+x <- lognormal(meanlog = 0, sdlog = 1)
+mean(x)
+vcov(x)
+format(x)
+}

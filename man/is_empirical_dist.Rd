@@ -9,6 +9,14 @@ is_empirical_dist(x)
 \arguments{
 \item{x}{The object to test}
 }
+\value{
+Logical; \code{TRUE} if \code{x} is an \code{empirical_dist}.
+}
 \description{
 Function to determine whether an object \code{x} is an \code{empirical_dist} object.
+}
+\examples{
+ed <- empirical_dist(c(1, 2, 3))
+is_empirical_dist(ed)    # TRUE
+is_empirical_dist("abc") # FALSE
 }

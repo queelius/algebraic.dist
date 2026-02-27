@@ -11,6 +11,15 @@ surv(x, ...)
 
 \item{...}{Additional arguments to pass.}
 }
+\value{
+A function computing the survival function \eqn{S(t) = P(X > t)}.
+}
 \description{
 Generic method for obtaining the survival function of an object.
+}
+\examples{
+x <- exponential(1)
+S <- surv(x)
+S(0)  # 1 (survival at time 0)
+S(1)  # exp(-1), approximately 0.368
 }

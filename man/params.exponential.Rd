@@ -15,3 +15,7 @@ A named vector of parameters
 \description{
 Method for obtaining the parameters of an \code{exponential} object.
 }
+\examples{
+x <- exponential(rate = 0.5)
+params(x)
+}

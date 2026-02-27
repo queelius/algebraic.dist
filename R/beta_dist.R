@@ -10,6 +10,11 @@
 #' @param shape2 Second shape parameter, must be a positive scalar.
 #' @return A \code{beta_dist} object with classes
 #'   \code{c("beta_dist", "univariate_dist", "continuous_dist", "dist")}.
+#' @examples
+#' x <- beta_dist(shape1 = 2, shape2 = 5)
+#' mean(x)
+#' vcov(x)
+#' format(x)
 #' @export
 beta_dist <- function(shape1, shape2) {
   if (!is.numeric(shape1) || length(shape1) != 1 || is.na(shape1) || shape1 <= 0)
@@ -26,6 +31,9 @@ beta_dist <- function(shape1, shape2) {
 #' @param x The object to test.
 #' @return \code{TRUE} if \code{x} inherits from \code{"beta_dist"},
 #'   \code{FALSE} otherwise.
+#' @examples
+#' is_beta_dist(beta_dist(2, 5))
+#' is_beta_dist(normal(0, 1))
 #' @export
 is_beta_dist <- function(x) {
   inherits(x, "beta_dist")
@@ -35,6 +43,8 @@ is_beta_dist <- function(x) {
 #'
 #' @param x A \code{beta_dist} object.
 #' @return A named numeric vector with elements \code{shape1} and \code{shape2}.
+#' @examples
+#' params(beta_dist(2, 5))
 #' @export
 params.beta_dist <- function(x) {
   c(shape1 = x$shape1, shape2 = x$shape2)
@@ -48,6 +58,8 @@ params.beta_dist <- function(x) {
 #' @param x A \code{beta_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return The mean of the distribution.
+#' @examples
+#' mean(beta_dist(2, 5))
 #' @export
 mean.beta_dist <- function(x, ...) {
   x$shape1 / (x$shape1 + x$shape2)
@@ -60,6 +72,8 @@ mean.beta_dist <- function(x, ...) {
 #' @param object A \code{beta_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return The variance (scalar).
+#' @examples
+#' vcov(beta_dist(2, 5))
 #' @export
 vcov.beta_dist <- function(object, ...) {
   a <- object$shape1
@@ -71,6 +85,8 @@ vcov.beta_dist <- function(object, ...) {
 #'
 #' @param x A \code{beta_dist} object.
 #' @return \code{1}.
+#' @examples
+#' dim(beta_dist(2, 5))
 #' @export
 dim.beta_dist <- function(x) {
   1
@@ -81,6 +97,8 @@ dim.beta_dist <- function(x) {
 #' @param x A \code{beta_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return A character string describing the distribution.
+#' @examples
+#' format(beta_dist(2, 5))
 #' @export
 format.beta_dist <- function(x, ...) {
   sprintf("Beta distribution (shape1 = %g, shape2 = %g)", x$shape1, x$shape2)
@@ -91,6 +109,8 @@ format.beta_dist <- function(x, ...) {
 #' @param x A \code{beta_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return \code{x}, invisibly.
+#' @examples
+#' print(beta_dist(2, 5))
 #' @export
 print.beta_dist <- function(x, ...) {
   cat(format(x), "\n")
@@ -103,6 +123,8 @@ print.beta_dist <- function(x, ...) {
 #'
 #' @param x A \code{beta_dist} object.
 #' @return An \code{interval} object representing \eqn{(0, 1)}.
+#' @examples
+#' sup(beta_dist(2, 5))
 #' @export
 sup.beta_dist <- function(x) {
   interval$new(lower = 0, upper = 1,
@@ -118,6 +140,11 @@ sup.beta_dist <- function(x) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(n = 1, ...)} returning a numeric vector
 #'   of length \code{n}.
+#' @examples
+#' x <- beta_dist(2, 5)
+#' s <- sampler(x)
+#' set.seed(42)
+#' s(5)
 #' @importFrom stats rbeta
 #' @export
 sampler.beta_dist <- function(x, ...) {
@@ -134,6 +161,11 @@ sampler.beta_dist <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(t, log = FALSE, ...)} returning the
 #'   density (or log-density) at \code{t}.
+#' @examples
+#' x <- beta_dist(2, 5)
+#' f <- density(x)
+#' f(0.3)
+#' f(0.5)
 #' @importFrom stats dbeta density
 #' @export
 density.beta_dist <- function(x, ...) {
@@ -150,6 +182,11 @@ density.beta_dist <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(q, log.p = FALSE, ...)} returning the
 #'   CDF (or log-CDF) at \code{q}.
+#' @examples
+#' x <- beta_dist(2, 5)
+#' F <- cdf(x)
+#' F(0.3)
+#' F(0.5)
 #' @importFrom stats pbeta
 #' @export
 cdf.beta_dist <- function(x, ...) {
@@ -166,6 +203,11 @@ cdf.beta_dist <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(p, lower.tail = TRUE, log.p = FALSE, ...)}
 #'   returning the quantile at probability \code{p}.
+#' @examples
+#' x <- beta_dist(2, 5)
+#' q <- inv_cdf(x)
+#' q(0.5)
+#' q(0.95)
 #' @importFrom stats qbeta
 #' @export
 inv_cdf.beta_dist <- function(x, ...) {

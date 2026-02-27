@@ -9,6 +9,13 @@
 \arguments{
 \item{object}{A finite set.}
 }
+\value{
+Numeric; the maximum value(s).
+}
 \description{
 Return the supremum of the finite set.
+}
+\examples{
+fs <- finite_set$new(c(1, 3, 5, 7))
+supremum(fs) # 7
 }

@@ -18,3 +18,9 @@ CDF (or log-CDF) at \code{q}.
 \description{
 Returns a function that evaluates the uniform CDF at given points.
 }
+\examples{
+x <- uniform_dist(0, 10)
+F <- cdf(x)
+F(5)
+F(10)
+}

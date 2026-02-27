@@ -9,6 +9,13 @@ is_exponential(x)
 \arguments{
 \item{x}{The object to test}
 }
+\value{
+Logical; \code{TRUE} if \code{x} is an \code{exponential}.
+}
 \description{
 Function to determine whether an object \code{x} is an \code{exponential} object.
+}
+\examples{
+is_exponential(exponential(1))
+is_exponential(normal(0, 1))
 }

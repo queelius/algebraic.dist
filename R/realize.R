@@ -23,6 +23,13 @@
 #' @param ... Additional arguments passed to methods.
 #' @return An \code{\link{empirical_dist}} (or \code{\link{realized_dist}})
 #'   object.
+#' @examples
+#' \donttest{
+#' set.seed(1)
+#' x <- normal(0, 1)
+#' rd <- realize(x, n = 1000)
+#' mean(rd)
+#' }
 #' @export
 realize <- function(x, n = 10000, ...) UseMethod("realize")
 

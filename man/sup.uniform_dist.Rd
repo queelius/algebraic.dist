@@ -15,3 +15,6 @@ An \code{interval} object representing \eqn{[min, max]}.
 \description{
 The uniform distribution is supported on \eqn{[min, max]}.
 }
+\examples{
+sup(uniform_dist(0, 10))
+}

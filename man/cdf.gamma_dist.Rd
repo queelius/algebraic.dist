@@ -17,3 +17,9 @@ A function that computes the cdf at point(s) \code{t}
 \description{
 Method for obtaining the cdf of a \code{gamma_dist} object.
 }
+\examples{
+x <- gamma_dist(shape = 2, rate = 1)
+F <- cdf(x)
+F(1)
+F(2)
+}

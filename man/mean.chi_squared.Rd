@@ -17,3 +17,6 @@ The mean, equal to \code{df}
 \description{
 Retrieve the mean of a \code{chi_squared} object.
 }
+\examples{
+mean(chi_squared(10))
+}

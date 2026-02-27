@@ -18,3 +18,9 @@ distribution
 \description{
 Method for sampling from a \code{chi_squared} object.
 }
+\examples{
+x <- chi_squared(5)
+s <- sampler(x)
+set.seed(42)
+s(5)
+}

@@ -17,3 +17,6 @@ The variance (scalar), equal to \code{lambda}.
 \description{
 For the Poisson distribution, the variance equals \code{lambda}.
 }
+\examples{
+vcov(poisson_dist(5))
+}

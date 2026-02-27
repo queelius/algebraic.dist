@@ -15,3 +15,7 @@
 \description{
 Get the supremum of a countable set.
 }
+\examples{
+cs <- countable_set$new(0L)
+supremum(cs)  # Inf
+}

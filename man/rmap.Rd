@@ -13,6 +13,16 @@ rmap(x, g, ...)
 
 \item{...}{Additional arguments to pass into \code{g}.}
 }
+\value{
+A distribution representing the push-forward of \code{x} through \code{g}.
+}
 \description{
 Generic method for applying a map \code{f} to distribution object \code{x}.
+}
+\examples{
+\donttest{
+d <- empirical_dist(1:20)
+d_sq <- rmap(d, function(x) x^2)
+mean(d_sq)  # E[X^2] for uniform 1..20
+}
 }

@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments.}
 }
+\value{
+\code{x}, invisibly.
+}
 \description{
 Print the interval.
+}
+\examples{
+iv <- interval$new(lower = 0, upper = 1, lower_closed = TRUE)
+print(iv) # [0, 1)
 }

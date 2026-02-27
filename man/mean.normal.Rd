@@ -17,3 +17,7 @@ The mean of the \code{normal} object
 \description{
 Retrieve the mean of a \code{normal} object.
 }
+\examples{
+x <- normal(5, 2)
+mean(x)
+}

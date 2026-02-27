@@ -19,3 +19,9 @@ A function \code{function(t, log = FALSE)} returning the hazard
 Returns a function that evaluates the log-normal hazard rate
 \eqn{h(t) = f(t) / S(t)} for \eqn{t > 0}.
 }
+\examples{
+x <- lognormal(0, 1)
+h <- hazard(x)
+h(1)
+h(2)
+}

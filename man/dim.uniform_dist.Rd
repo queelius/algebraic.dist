@@ -15,3 +15,6 @@
 \description{
 Dimension of a uniform distribution (always 1).
 }
+\examples{
+dim(uniform_dist(0, 1))
+}

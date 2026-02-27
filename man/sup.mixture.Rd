@@ -16,3 +16,7 @@ An \code{interval} object.
 Returns an \code{\link{interval}} spanning the widest range of all
 component supports (from the smallest infimum to the largest supremum).
 }
+\examples{
+m <- mixture(list(normal(0, 1), exponential(1)), c(0.5, 0.5))
+sup(m)
+}

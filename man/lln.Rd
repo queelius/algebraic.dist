@@ -19,3 +19,10 @@ Returns the degenerate limiting distribution of the sample mean
 point mass at the population mean (represented as a normal or mvn
 with zero variance).
 }
+\examples{
+# LLN for Exp(2): Xbar -> 1/2 (degenerate)
+x <- exponential(rate = 2)
+d <- lln(x)
+mean(d)
+vcov(d)
+}

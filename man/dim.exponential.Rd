@@ -15,3 +15,6 @@ The dimension of the \code{exponential} object
 \description{
 Method to obtain the dimension of an \code{exponential} object.
 }
+\examples{
+dim(exponential(rate = 1))
+}

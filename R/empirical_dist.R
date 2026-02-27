@@ -3,6 +3,16 @@
 #'             data frame, each row is a joint observation, if a vector, each
 #'             element is an observation. whatever data is, it must be
 #'             convertible to a tibble.
+#' @return An \code{empirical_dist} object.
+#' @examples
+#' # Univariate empirical distribution from a vector
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' mean(ed)
+#'
+#' # Multivariate empirical distribution from a matrix
+#' mat <- matrix(c(1, 2, 3, 4, 5, 6), ncol = 2)
+#' ed_mv <- empirical_dist(mat)
+#' dim(ed_mv)
 #' @export
 empirical_dist <- function(data) {
 
@@ -22,6 +32,11 @@ empirical_dist <- function(data) {
 
 #' Function to determine whether an object `x` is an `empirical_dist` object.
 #' @param x The object to test
+#' @return Logical; \code{TRUE} if \code{x} is an \code{empirical_dist}.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3))
+#' is_empirical_dist(ed)    # TRUE
+#' is_empirical_dist("abc") # FALSE
 #' @export
 is_empirical_dist <- function(x) {
   inherits(x, "empirical_dist")
@@ -29,6 +44,13 @@ is_empirical_dist <- function(x) {
 
 #' Method for obtaining the dimension of a `empirical_dist` object.
 #' @param x The object to obtain the dimension of.
+#' @return Integer; the number of dimensions.
+#' @examples
+#' ed1 <- empirical_dist(c(1, 2, 3))
+#' dim(ed1) # 1
+#'
+#' ed2 <- empirical_dist(matrix(1:6, ncol = 2))
+#' dim(ed2) # 2
 #' @export
 dim.empirical_dist <- function(x) {
   ncol(x$data)
@@ -40,6 +62,12 @@ dim.empirical_dist <- function(x) {
 #' @param ... Additional arguments to pass into the pdf function.
 #' @note sort tibble lexicographically and do a binary search to find upper
 #'       and lower bound in `log(nobs(x))` time.
+#' @return A function computing the empirical PMF at given points.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 2, 3, 3, 3))
+#' f <- density(ed)
+#' f(2)          # 2/6
+#' f(3, log = TRUE) # log(3/6)
 #' @export
 density.empirical_dist <- function(x, ...) {
   n <- nobs(x)
@@ -72,6 +100,13 @@ density.empirical_dist <- function(x, ...) {
 #'
 #' @param x The object to obtain the sampler of.
 #' @param ... Additional arguments to pass (not used).
+#' @return A function that takes \code{n} and returns \code{n} resampled
+#'   observations.
+#' @examples
+#' ed <- empirical_dist(c(10, 20, 30))
+#' s <- sampler(ed)
+#' set.seed(42)
+#' s(5)
 #' @importFrom stats nobs
 #' @export
 sampler.empirical_dist <- function(x, ...) {
@@ -101,6 +136,10 @@ sampler.empirical_dist <- function(x, ...) {
 #'   value - The estimate of the expectation
 #'   ci    - The confidence intervals for each component of the expectation
 #'   n     - The number of samples
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' expectation(ed)                     # E[X] = 3
+#' expectation(ed, function(x) x^2)    # E[X^2] = 11
 #' @export
 expectation.empirical_dist <- function(
   x,
@@ -127,6 +166,10 @@ expectation.empirical_dist <- function(
 #'
 #' @param x The distribution object.
 #' @param ... Additional arguments to pass (not used).
+#' @return Numeric vector of column means.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' mean(ed) # 3
 #' @export
 mean.empirical_dist <- function(x, ...) {
   colMeans(x$data)
@@ -136,6 +179,13 @@ mean.empirical_dist <- function(x, ...) {
 #'
 #' @param object The empirical distribution object.
 #' @param ... Additional arguments to pass (not used).
+#' @return The sample variance-covariance matrix.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' vcov(ed) # sample variance
+#'
+#' ed_mv <- empirical_dist(matrix(rnorm(20), ncol = 2))
+#' vcov(ed_mv) # 2x2 covariance matrix
 #' @importFrom stats cov
 #' @export
 vcov.empirical_dist <- function(object, ...) {
@@ -146,6 +196,12 @@ vcov.empirical_dist <- function(object, ...) {
 #' `x`.
 #' @param x The empirical distribution object.
 #' @param indices The indices of the marginal distribution to obtain.
+#' @return An \code{empirical_dist} over the selected columns.
+#' @examples
+#' mat <- matrix(1:12, ncol = 3)
+#' ed <- empirical_dist(mat)
+#' ed_marginal <- marginal(ed, c(1, 3))
+#' dim(ed_marginal) # 2
 #' @export
 marginal.empirical_dist <- function(x, indices) {
   if (any(indices < 1) || any(indices > dim(x))) {
@@ -174,6 +230,15 @@ marginal.empirical_dist <- function(x, indices) {
 #' @param x The empirical distribution object.
 #' @param P The predicate function to condition the data on.
 #' @param ... additional arguments to pass into `P`.
+#' @return An \code{empirical_dist} containing only rows satisfying \code{P}.
+#' @examples
+#' \donttest{
+#' mat <- matrix(c(1, 5, 2, 3, 4, 1, 6, 2), ncol = 2)
+#' ed <- empirical_dist(mat)
+#' # Condition on first column being greater than second
+#' ed_cond <- conditional(ed, function(d) d[1] > d[2])
+#' nobs(ed_cond)
+#' }
 #' @export
 conditional.empirical_dist <- function(x, P, ...) {
   mask <- apply(X = x$data, MARGIN = 1, FUN = P, ...)
@@ -189,6 +254,11 @@ conditional.empirical_dist <- function(x, P, ...) {
 #' @param x The empirical distribution object.
 #' @param g The function to apply to each observation.
 #' @param ... Additional arguments to pass into function `g`.
+#' @return An \code{empirical_dist} of the transformed observations.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4))
+#' ed2 <- rmap(ed, function(x) x^2)
+#' mean(ed2) # mean of 1, 4, 9, 16
 #' @export
 rmap.empirical_dist <- function(x, g, ...) {
   g_data <- apply(x$data, 1, g, ...)
@@ -206,6 +276,11 @@ rmap.empirical_dist <- function(x, g, ...) {
 #' @param ... Additional arguments to pass (not used))
 #' @return A function that takes a numeric vector `t` and returns the
 #'         empirical cdf of `x` evaluated at `t`.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' Fx <- cdf(ed)
+#' Fx(3) # 0.6
+#' Fx(c(1, 5)) # 0.2, 1.0
 #' @importFrom stats ecdf
 #' @export
 cdf.empirical_dist <- function(x, ...) {
@@ -224,6 +299,11 @@ cdf.empirical_dist <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function that accepts a vector of probabilities `p` and returns
 #'   the corresponding quantiles.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' qf <- inv_cdf(ed)
+#' qf(0.5)       # median
+#' qf(c(0.25, 0.75)) # quartiles
 #' @importFrom stats quantile
 #' @export
 inv_cdf.empirical_dist <- function(x, ...) {
@@ -239,6 +319,11 @@ inv_cdf.empirical_dist <- function(x, ...) {
 #' Method for obtaining the support of `empirical_dist` object `x`.
 #' @param x The empirical distribution object.
 #' @return A `finite_set` object containing the support of `x`.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 2, 3))
+#' s <- sup(ed)
+#' s$has(2) # TRUE
+#' s$has(4) # FALSE
 #' @export
 sup.empirical_dist <- function(x) {
   finite_set$new(x$data)
@@ -248,6 +333,10 @@ sup.empirical_dist <- function(x) {
 #' `empirical_dist` object.
 #' @param object The empirical distribution object.
 #' @param ... Additional arguments to pass (not used).
+#' @return Integer; number of observations.
+#' @examples
+#' ed <- empirical_dist(c(10, 20, 30, 40))
+#' nobs(ed) # 4
 #' @export
 nobs.empirical_dist <- function(object, ...) {
   nrow(object$data)
@@ -256,6 +345,10 @@ nobs.empirical_dist <- function(object, ...) {
 #' Method for obtaining the observations used to construct a
 #' `empirical_dist` object.
 #' @param x The empirical distribution object.
+#' @return A matrix of observations (rows = observations, columns = dimensions).
+#' @examples
+#' ed <- empirical_dist(c(5, 10, 15))
+#' obs(ed)
 #' @export
 obs.empirical_dist <- function(x) {
   x$data
@@ -265,6 +358,10 @@ obs.empirical_dist <- function(x) {
 #' Method for obtaining the name of a `empirical_dist` object. Since the
 #' empirical distribution is parameter-free, this function returns 0.
 #' @param x The empirical distribution object.
+#' @return 0 (empirical distributions are non-parametric).
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3))
+#' nparams(ed) # 0
 #' @export
 nparams.empirical_dist <- function(x) {
   0
@@ -272,6 +369,10 @@ nparams.empirical_dist <- function(x) {
 
 #' `empirical_dist` objects have no parameters, so this function returns NULL.
 #' @param x The empirical distribution object.
+#' @return \code{NULL} (empirical distributions have no parameters).
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3))
+#' params(ed) # NULL
 #' @export
 params.empirical_dist <- function(x) {
   NULL
@@ -281,6 +382,9 @@ params.empirical_dist <- function(x) {
 #' @param x The object to format
 #' @param ... Additional arguments (not used)
 #' @return A character string
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' format(ed)
 #' @export
 format.empirical_dist <- function(x, ...) {
   sprintf("Empirical distribution (%d observations, %d dimensions)",
@@ -290,6 +394,10 @@ format.empirical_dist <- function(x, ...) {
 #' Print method for `empirical_dist` objects.
 #' @param x The object to print
 #' @param ... Additional arguments to pass
+#' @return \code{x}, invisibly.
+#' @examples
+#' ed <- empirical_dist(c(1, 2, 3, 4, 5))
+#' print(ed)
 #' @export
 print.empirical_dist <- function(x, ...) {
   cat(format(x), "\n")

@@ -21,3 +21,9 @@ determining whether to compute the log of the pdf. By default,
 \description{
 Method for obtaining the pdf of an \code{normal} object.
 }
+\examples{
+x <- normal(0, 1)
+f <- density(x)
+f(0)
+f(1)
+}

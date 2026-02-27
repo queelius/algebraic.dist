@@ -18,3 +18,9 @@ probability mass (or log-probability) at \code{k}.
 \description{
 Returns a function that evaluates the Poisson PMF at given points.
 }
+\examples{
+x <- poisson_dist(5)
+f <- density(x)
+f(5)
+f(0)
+}

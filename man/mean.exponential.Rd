@@ -11,6 +11,13 @@
 
 \item{...}{Additional arguments (not used)}
 }
+\value{
+The mean of the exponential distribution (\code{1 / rate}).
+}
 \description{
 Method to obtain the mean of an \code{exponential} object.
+}
+\examples{
+x <- exponential(rate = 0.5)
+mean(x)
 }

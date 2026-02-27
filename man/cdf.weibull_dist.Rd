@@ -18,3 +18,9 @@ CDF (or log-CDF) at \code{q}.
 \description{
 Returns a function that evaluates the Weibull CDF at given points.
 }
+\examples{
+x <- weibull_dist(shape = 2, scale = 3)
+F <- cdf(x)
+F(1)
+F(3)
+}

@@ -23,6 +23,12 @@ realized_dist <- function(data, source, n) {
 #' @param x The object to test.
 #' @return \code{TRUE} if \code{x} inherits from \code{"realized_dist"},
 #'   \code{FALSE} otherwise.
+#' @examples
+#' \donttest{
+#' rd <- realize(normal(0, 1), n = 100)
+#' is_realized_dist(rd)  # TRUE
+#' }
+#' is_realized_dist(normal(0, 1))  # FALSE
 #' @export
 is_realized_dist <- function(x) {
   inherits(x, "realized_dist")
@@ -35,6 +41,11 @@ is_realized_dist <- function(x) {
 #' @param x A \code{realized_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return A character string.
+#' @examples
+#' \donttest{
+#' rd <- realize(normal(0, 1), n = 100)
+#' format(rd)
+#' }
 #' @export
 format.realized_dist <- function(x, ...) {
   sprintf("Realized distribution (%d samples from: %s)",
@@ -46,6 +57,11 @@ format.realized_dist <- function(x, ...) {
 #' @param x A \code{realized_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return \code{x}, invisibly.
+#' @examples
+#' \donttest{
+#' rd <- realize(normal(0, 1), n = 100)
+#' print(rd)
+#' }
 #' @export
 print.realized_dist <- function(x, ...) {
   cat(format(x), "\n")

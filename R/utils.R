@@ -21,6 +21,17 @@
 #'  ci    - The confidence intervals for each component of the expectation
 #'  n     - The number of samples
 #' otherwise, just the value of the expectation.
+#' @examples
+#' set.seed(42)
+#' data <- matrix(rnorm(200), ncol = 2)
+#' # sample mean with confidence interval
+#' expectation_data(data)
+#'
+#' # just the point estimate, no CI
+#' expectation_data(data, compute_stats = FALSE)
+#'
+#' # expectation of a function of the data (row-wise)
+#' expectation_data(data, g = function(x) sum(x^2))
 #' @export
 expectation_data <- function(
   data,

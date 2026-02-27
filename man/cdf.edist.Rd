@@ -19,3 +19,11 @@ Falls back to \code{\link{realize}} to materialize the distribution
 as an \code{\link{empirical_dist}}, then delegates to
 \code{\link{cdf.empirical_dist}}.
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(1)
+Fz <- cdf(z)
+Fz(0)
+}
+}

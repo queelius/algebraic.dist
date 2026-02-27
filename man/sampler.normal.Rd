@@ -20,3 +20,9 @@ variance of object \code{x}.
 \description{
 Method for sampling from a \code{normal} object.
 }
+\examples{
+x <- normal(0, 1)
+s <- sampler(x)
+set.seed(42)
+s(5)
+}

@@ -15,3 +15,6 @@ A named numeric vector with elements \code{shape1} and \code{shape2}.
 \description{
 Retrieve the parameters of a \code{beta_dist} object.
 }
+\examples{
+params(beta_dist(2, 5))
+}

@@ -21,3 +21,9 @@ By default, \code{rate} is the failure rate of object \code{x}.
 \description{
 Method to obtain the cdf of an \code{exponential} object.
 }
+\examples{
+x <- exponential(rate = 1)
+S <- surv(x)
+S(1)
+S(2)
+}

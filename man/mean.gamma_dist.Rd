@@ -17,3 +17,6 @@ The mean, \code{shape / rate}
 \description{
 Retrieve the mean of a \code{gamma_dist} object.
 }
+\examples{
+mean(gamma_dist(shape = 3, rate = 2))
+}

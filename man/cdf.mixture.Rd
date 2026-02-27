@@ -18,3 +18,9 @@ A function \code{function(q, ...)} returning the CDF at \code{q}.
 Returns a function that evaluates the mixture CDF at given points.
 The mixture CDF is \eqn{F(x) = \sum_k w_k F_k(x)}.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+F <- cdf(m)
+F(0)
+F(5)
+}

@@ -16,10 +16,21 @@
 
 \item{...}{additional arguments to pass into the \code{g} function.}
 }
+\value{
+An \code{mvn} distribution fitted to the transformed samples.
+}
 \description{
 By the invariance property, if \code{x} is an \code{mvn} object,
 then under the right conditions, asymptotically, \code{g(x)} is an MVN
 distributed,
 g(x) ~ normal(g(mean(x)), sigma)
 where \code{sigma} is the variance-covariance of \code{g(x)}
+}
+\examples{
+\donttest{
+X <- mvn(c(1, 2), diag(2))
+set.seed(42)
+Y <- rmap(X, function(x) x^2)
+mean(Y)
+}
 }

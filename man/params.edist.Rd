@@ -15,3 +15,7 @@ A named vector of parameters
 \description{
 Method for obtaining the parameters of an \code{edist} object.
 }
+\examples{
+z <- normal(0, 1) * exponential(2)
+params(z)
+}

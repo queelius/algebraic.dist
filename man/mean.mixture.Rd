@@ -18,3 +18,7 @@ The mean of the mixture distribution.
 The mean of a mixture is the weighted sum of the component means:
 \eqn{E[X] = \sum_k w_k \mu_k}.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(10, 1)), c(0.5, 0.5))
+mean(m)
+}

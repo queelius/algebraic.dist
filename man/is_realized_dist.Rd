@@ -16,3 +16,10 @@ is_realized_dist(x)
 \description{
 Test whether an object is a \code{realized_dist}.
 }
+\examples{
+\donttest{
+rd <- realize(normal(0, 1), n = 100)
+is_realized_dist(rd)  # TRUE
+}
+is_realized_dist(normal(0, 1))  # FALSE
+}

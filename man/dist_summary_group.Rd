@@ -17,3 +17,12 @@ A simplified distribution or edist
 \description{
 Handles sum(), prod(), min(), max() of distributions.
 }
+\examples{
+# sum() reduces via + operator
+z <- sum(normal(0, 1), normal(2, 3))
+z  # Normal(mu = 2, var = 4)
+
+# min() of exponentials simplifies
+w <- min(exponential(1), exponential(2))
+w  # Exponential(rate = 3)
+}

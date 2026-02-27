@@ -18,3 +18,10 @@ A function computing the empirical density (PMF).
 Falls back to \code{\link{realize}} and delegates to
 \code{\link{density.empirical_dist}}.
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(1)
+fz <- density(z)
+}
+}

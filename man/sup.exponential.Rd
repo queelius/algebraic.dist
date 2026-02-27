@@ -15,3 +15,7 @@ An \code{interval} object representing the support of the exponential
 \description{
 Support for exponential distribution, the positive real numbers, (0, Inf).
 }
+\examples{
+x <- exponential(rate = 1)
+sup(x)
+}

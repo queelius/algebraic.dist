@@ -7,6 +7,11 @@
 #' @param lambda Rate parameter (mean), must be a positive scalar.
 #' @return A \code{poisson_dist} object with classes
 #'   \code{c("poisson_dist", "univariate_dist", "discrete_dist", "dist")}.
+#' @examples
+#' x <- poisson_dist(lambda = 5)
+#' mean(x)
+#' vcov(x)
+#' format(x)
 #' @export
 poisson_dist <- function(lambda) {
   if (!is.numeric(lambda) || length(lambda) != 1 || is.na(lambda) || lambda <= 0)
@@ -21,6 +26,9 @@ poisson_dist <- function(lambda) {
 #' @param x The object to test.
 #' @return \code{TRUE} if \code{x} inherits from \code{"poisson_dist"},
 #'   \code{FALSE} otherwise.
+#' @examples
+#' is_poisson_dist(poisson_dist(5))
+#' is_poisson_dist(normal(0, 1))
 #' @export
 is_poisson_dist <- function(x) {
   inherits(x, "poisson_dist")
@@ -30,6 +38,8 @@ is_poisson_dist <- function(x) {
 #'
 #' @param x A \code{poisson_dist} object.
 #' @return A named numeric vector with element \code{lambda}.
+#' @examples
+#' params(poisson_dist(5))
 #' @export
 params.poisson_dist <- function(x) {
   c("lambda" = x$lambda)
@@ -40,6 +50,8 @@ params.poisson_dist <- function(x) {
 #' @param x A \code{poisson_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return The mean, equal to \code{lambda}.
+#' @examples
+#' mean(poisson_dist(5))
 #' @export
 mean.poisson_dist <- function(x, ...) {
   x$lambda
@@ -52,6 +64,8 @@ mean.poisson_dist <- function(x, ...) {
 #' @param object A \code{poisson_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return The variance (scalar), equal to \code{lambda}.
+#' @examples
+#' vcov(poisson_dist(5))
 #' @export
 vcov.poisson_dist <- function(object, ...) {
   object$lambda
@@ -61,6 +75,8 @@ vcov.poisson_dist <- function(object, ...) {
 #'
 #' @param x A \code{poisson_dist} object.
 #' @return \code{1}.
+#' @examples
+#' dim(poisson_dist(5))
 #' @export
 dim.poisson_dist <- function(x) {
   1
@@ -71,6 +87,8 @@ dim.poisson_dist <- function(x) {
 #' @param x A \code{poisson_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return A character string describing the distribution.
+#' @examples
+#' format(poisson_dist(5))
 #' @export
 format.poisson_dist <- function(x, ...) {
   sprintf("Poisson distribution (lambda = %g)", x$lambda)
@@ -81,6 +99,8 @@ format.poisson_dist <- function(x, ...) {
 #' @param x A \code{poisson_dist} object.
 #' @param ... Additional arguments (not used).
 #' @return \code{x}, invisibly.
+#' @examples
+#' print(poisson_dist(5))
 #' @export
 print.poisson_dist <- function(x, ...) {
   cat(format(x), "\n")
@@ -94,6 +114,8 @@ print.poisson_dist <- function(x, ...) {
 #'
 #' @param x A \code{poisson_dist} object.
 #' @return A \code{countable_set} object with lower bound 0.
+#' @examples
+#' sup(poisson_dist(5))
 #' @export
 sup.poisson_dist <- function(x) {
   countable_set$new(lower = 0L)
@@ -108,6 +130,11 @@ sup.poisson_dist <- function(x) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(n = 1, ...)} returning an integer vector
 #'   of length \code{n}.
+#' @examples
+#' x <- poisson_dist(5)
+#' s <- sampler(x)
+#' set.seed(42)
+#' s(5)
 #' @importFrom stats rpois
 #' @export
 sampler.poisson_dist <- function(x, ...) {
@@ -124,6 +151,11 @@ sampler.poisson_dist <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(k, log = FALSE, ...)} returning the
 #'   probability mass (or log-probability) at \code{k}.
+#' @examples
+#' x <- poisson_dist(5)
+#' f <- density(x)
+#' f(5)
+#' f(0)
 #' @importFrom stats dpois density
 #' @export
 density.poisson_dist <- function(x, ...) {
@@ -140,6 +172,11 @@ density.poisson_dist <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(q, log.p = FALSE, ...)} returning the
 #'   CDF (or log-CDF) at \code{q}.
+#' @examples
+#' x <- poisson_dist(5)
+#' F <- cdf(x)
+#' F(5)
+#' F(10)
 #' @importFrom stats ppois
 #' @export
 cdf.poisson_dist <- function(x, ...) {
@@ -156,6 +193,11 @@ cdf.poisson_dist <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(p, lower.tail = TRUE, log.p = FALSE, ...)}
 #'   returning the quantile at probability \code{p}.
+#' @examples
+#' x <- poisson_dist(5)
+#' q <- inv_cdf(x)
+#' q(0.5)
+#' q(0.95)
 #' @importFrom stats qpois
 #' @export
 inv_cdf.poisson_dist <- function(x, ...) {
@@ -174,6 +216,10 @@ inv_cdf.poisson_dist <- function(x, ...) {
 #' @param g A function to take the expectation of.
 #' @param ... Additional arguments passed to \code{g}.
 #' @return The expected value \eqn{E[g(X)]}.
+#' @examples
+#' x <- poisson_dist(5)
+#' expectation(x, identity)
+#' expectation(x, function(k) k^2)
 #' @importFrom stats qpois dpois
 #' @export
 expectation.poisson_dist <- function(x, g, ...) {

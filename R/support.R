@@ -19,6 +19,15 @@
 #' Determine if a value is contained in the support.
 #' @param object A support object.
 #' @param x A vector of values.
+#' @return Logical vector indicating membership.
+#' @examples
+#' I <- interval$new(0, 1, lower_closed = TRUE, upper_closed = TRUE)
+#' has(I, 0.5)  # TRUE
+#' has(I, 2)    # FALSE
+#'
+#' S <- finite_set$new(c(1, 2, 3))
+#' has(S, 2)    # TRUE
+#' has(S, 4)    # FALSE
 #' @export
 has <- function(object, x) {
     UseMethod("has", object)
@@ -26,6 +35,13 @@ has <- function(object, x) {
 
 #' Get the infimum of the support.
 #' @param object A support object.
+#' @return The infimum (greatest lower bound) of the support.
+#' @examples
+#' I <- interval$new(0, 10)
+#' infimum(I)  # 0
+#'
+#' S <- finite_set$new(c(3, 7, 11))
+#' infimum(S)  # 3
 #' @export
 infimum <- function(object) {
     UseMethod("infimum", object)
@@ -33,6 +49,13 @@ infimum <- function(object) {
 
 #' Get the supremum of the support.
 #' @param object A support object.
+#' @return The supremum (least upper bound) of the support.
+#' @examples
+#' I <- interval$new(0, 10)
+#' supremum(I)  # 10
+#'
+#' S <- finite_set$new(c(3, 7, 11))
+#' supremum(S)  # 11
 #' @export
 supremum <- function(object) {
     UseMethod("supremum", object)

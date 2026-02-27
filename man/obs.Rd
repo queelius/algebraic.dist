@@ -12,9 +12,16 @@ obs(x)
 \arguments{
 \item{x}{the object to retrieve the observations from}
 }
+\value{
+The data (matrix or vector) used to construct \code{x}.
+}
 \description{
 Retrieve the observations used to construct a distribution-like object. This is
 useful for obtaining the data used to construct an empirical distribution, but
 it is also useful for, say, retrieving the sample that was used by a fitted
 object, like an maximum likelihood estimate.
+}
+\examples{
+d <- empirical_dist(1:10)
+obs(d)  # returns the vector 1:10
 }

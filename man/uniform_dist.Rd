@@ -20,3 +20,9 @@ Creates an S3 object representing a continuous uniform distribution on the
 interval \eqn{[min, max]}.  The PDF is \eqn{f(x) = 1/(max - min)} for
 \eqn{min \le x \le max}.
 }
+\examples{
+x <- uniform_dist(min = 0, max = 10)
+mean(x)
+vcov(x)
+format(x)
+}

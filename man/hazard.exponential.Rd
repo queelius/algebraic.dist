@@ -21,3 +21,9 @@ to compute the log of the hazard function.
 \description{
 Method to obtain the hazard function of an \code{exponential} object.
 }
+\examples{
+x <- exponential(rate = 2)
+h <- hazard(x)
+h(1)
+h(5)
+}

@@ -14,6 +14,14 @@
 #'   sum to 1 (within tolerance \code{1e-10}).  Must have the same
 #'   length as \code{components}.
 #' @return A \code{mixture} object with appropriate class hierarchy.
+#' @examples
+#' m <- mixture(
+#'   components = list(normal(0, 1), normal(5, 2)),
+#'   weights = c(0.3, 0.7)
+#' )
+#' mean(m)
+#' vcov(m)
+#' format(m)
 #' @export
 mixture <- function(components, weights) {
   if (!is.list(components) || length(components) == 0)
@@ -51,6 +59,10 @@ mixture <- function(components, weights) {
 #' @param x The object to test.
 #' @return \code{TRUE} if \code{x} inherits from \code{"mixture"},
 #'   \code{FALSE} otherwise.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 2)), c(0.5, 0.5))
+#' is_mixture(m)
+#' is_mixture(normal(0, 1))
 #' @export
 is_mixture <- function(x) inherits(x, "mixture")
 
@@ -62,6 +74,9 @@ is_mixture <- function(x) inherits(x, "mixture")
 #' @param x A \code{mixture} object.
 #' @param ... Additional arguments (not used).
 #' @return The mean of the mixture distribution.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(10, 1)), c(0.5, 0.5))
+#' mean(m)
 #' @export
 mean.mixture <- function(x, ...) {
   weighted_means <- mapply(function(comp, w) w * mean(comp),
@@ -77,6 +92,9 @@ mean.mixture <- function(x, ...) {
 #' @param object A \code{mixture} object.
 #' @param ... Additional arguments (not used).
 #' @return The variance (scalar for univariate mixtures).
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(10, 1)), c(0.5, 0.5))
+#' vcov(m)
 #' @export
 vcov.mixture <- function(object, ...) {
   d <- dim(object$components[[1]])
@@ -111,6 +129,11 @@ vcov.mixture <- function(object, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(t, log = FALSE, ...)} returning the
 #'   density (or log-density) at \code{t}.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+#' f <- density(m)
+#' f(0)
+#' f(2.5)
 #' @importFrom stats density
 #' @export
 density.mixture <- function(x, ...) {
@@ -133,6 +156,11 @@ density.mixture <- function(x, ...) {
 #' @param x A \code{mixture} object.
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(q, ...)} returning the CDF at \code{q}.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+#' F <- cdf(m)
+#' F(0)
+#' F(5)
 #' @export
 cdf.mixture <- function(x, ...) {
   comp_cdfs <- lapply(x$components, cdf)
@@ -155,6 +183,11 @@ cdf.mixture <- function(x, ...) {
 #' @param ... Additional arguments (not used).
 #' @return A function \code{function(n = 1, ...)} returning a numeric
 #'   vector of length \code{n}.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+#' s <- sampler(m)
+#' set.seed(42)
+#' s(6)
 #' @export
 sampler.mixture <- function(x, ...) {
   comp_samplers <- lapply(x$components, sampler)
@@ -192,6 +225,9 @@ sampler.mixture <- function(x, ...) {
 #'
 #' @param x A \code{mixture} object.
 #' @return A named numeric vector.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 2)), c(0.3, 0.7))
+#' params(m)
 #' @export
 params.mixture <- function(x) {
   comp_params <- lapply(x$components, params)
@@ -207,6 +243,9 @@ params.mixture <- function(x) {
 #'
 #' @param x A \code{mixture} object.
 #' @return An integer count of parameters.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 2)), c(0.3, 0.7))
+#' nparams(m)
 #' @export
 nparams.mixture <- function(x) {
   sum(vapply(x$components, function(comp) length(params(comp)), integer(1))) +
@@ -220,6 +259,9 @@ nparams.mixture <- function(x) {
 #'
 #' @param x A \code{mixture} object.
 #' @return The dimension of the distribution.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+#' dim(m)
 #' @export
 dim.mixture <- function(x) {
   dim(x$components[[1]])
@@ -232,6 +274,9 @@ dim.mixture <- function(x) {
 #'
 #' @param x A \code{mixture} object.
 #' @return An \code{interval} object.
+#' @examples
+#' m <- mixture(list(normal(0, 1), exponential(1)), c(0.5, 0.5))
+#' sup(m)
 #' @export
 sup.mixture <- function(x) {
   sups <- lapply(x$components, sup)
@@ -245,6 +290,9 @@ sup.mixture <- function(x) {
 #' @param x A \code{mixture} object.
 #' @param ... Additional arguments (not used).
 #' @return A character string describing the mixture.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+#' format(m)
 #' @export
 format.mixture <- function(x, ...) {
   k <- length(x$components)
@@ -256,6 +304,9 @@ format.mixture <- function(x, ...) {
 #' @param x A \code{mixture} object.
 #' @param ... Additional arguments (not used).
 #' @return \code{x}, invisibly.
+#' @examples
+#' m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+#' print(m)
 #' @export
 print.mixture <- function(x, ...) {
   cat(format(x), "\n")
@@ -277,6 +328,14 @@ print.mixture <- function(x, ...) {
 #' @param x A \code{mixture} object.
 #' @param indices Integer vector of variable indices to keep.
 #' @return A \code{mixture} object with marginalized components.
+#' @examples
+#' # Mixture of bivariate normals, extract marginal over first variable
+#' m <- mixture(
+#'   list(mvn(c(0, 0), diag(2)), mvn(c(3, 3), diag(2))),
+#'   c(0.5, 0.5)
+#' )
+#' m1 <- marginal(m, 1)
+#' mean(m1)
 #' @export
 marginal.mixture <- function(x, indices) {
   comp_marginals <- lapply(x$components, marginal, indices = indices)
@@ -302,6 +361,15 @@ marginal.mixture <- function(x, indices) {
 #' @param given_indices Integer vector of observed variable indices.
 #' @param given_values Numeric vector of observed values.
 #' @return A \code{mixture} or \code{empirical_dist} object.
+#' @examples
+#' # Closed-form conditioning on MVN mixture
+#' m <- mixture(
+#'   list(mvn(c(0, 0), diag(2)), mvn(c(3, 3), diag(2))),
+#'   c(0.5, 0.5)
+#' )
+#' # Condition on X2 = 1
+#' mc <- conditional(m, given_indices = 2, given_values = 1)
+#' mean(mc)
 #' @export
 conditional.mixture <- function(x, P = NULL, ...,
                                 given_indices = NULL, given_values = NULL) {

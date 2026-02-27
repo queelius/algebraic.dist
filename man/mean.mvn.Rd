@@ -17,3 +17,7 @@ The mean of the \code{mvn} object
 \description{
 Retrieve the mean of a \code{mvn} object.
 }
+\examples{
+X <- mvn(c(1, 2, 3))
+mean(X)
+}

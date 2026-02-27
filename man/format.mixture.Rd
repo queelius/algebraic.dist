@@ -17,3 +17,7 @@ A character string describing the mixture.
 \description{
 Format a \code{mixture} object as a character string.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+format(m)
+}

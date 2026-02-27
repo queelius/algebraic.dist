@@ -16,3 +16,7 @@ An integer count of parameters.
 The total number of parameters is the sum of component parameters
 plus the number of mixing weights.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 2)), c(0.3, 0.7))
+nparams(m)
+}

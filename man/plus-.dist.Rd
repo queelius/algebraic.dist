@@ -19,3 +19,11 @@ Creates an expression distribution and automatically simplifies to
 closed form when possible (e.g., normal + normal = normal,
 normal + scalar = normal with shifted mean).
 }
+\examples{
+# Sum of two normals simplifies to a normal
+z <- normal(0, 1) + normal(2, 3)
+z  # Normal(mu = 2, var = 4)
+
+# Shift a distribution by a constant
+normal(0, 1) + 5  # Normal(mu = 5, var = 1)
+}

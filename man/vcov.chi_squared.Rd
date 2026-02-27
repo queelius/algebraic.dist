@@ -17,3 +17,6 @@ The variance, \code{2 * df}
 \description{
 Retrieve the variance of a \code{chi_squared} object.
 }
+\examples{
+vcov(chi_squared(10))
+}

@@ -17,3 +17,7 @@ A character string
 \description{
 Format method for \code{normal} objects.
 }
+\examples{
+x <- normal(2, 3)
+format(x)
+}

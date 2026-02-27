@@ -17,3 +17,6 @@ The mean of the distribution.
 \description{
 Computes \eqn{(min + max) / 2}.
 }
+\examples{
+mean(uniform_dist(0, 10))
+}

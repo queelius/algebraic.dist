@@ -17,3 +17,8 @@ A function that computes h(t) = f(t) / S(t)
 \description{
 Method for obtaining the hazard function of a \code{chi_squared} object.
 }
+\examples{
+x <- chi_squared(5)
+h <- hazard(x)
+h(5)
+}

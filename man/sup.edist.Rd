@@ -16,3 +16,10 @@ A \code{finite_set} support object.
 Falls back to \code{\link{realize}} and delegates to
 \code{\link{sup.empirical_dist}}.
 }
+\examples{
+\donttest{
+set.seed(1)
+z <- normal(0, 1) * exponential(1)
+sup(z)
+}
+}

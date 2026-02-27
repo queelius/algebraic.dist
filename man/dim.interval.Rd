@@ -9,6 +9,13 @@
 \arguments{
 \item{x}{An interval object.}
 }
+\value{
+Integer; the number of interval components.
+}
 \description{
 Return the dimension of the interval.
+}
+\examples{
+iv <- interval$new(lower = 0, upper = 1)
+dim(iv) # 1
 }

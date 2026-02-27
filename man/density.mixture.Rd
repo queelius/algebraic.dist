@@ -19,3 +19,9 @@ density (or log-density) at \code{t}.
 Returns a function that evaluates the mixture density at given points.
 The mixture density is \eqn{f(x) = \sum_k w_k f_k(x)}.
 }
+\examples{
+m <- mixture(list(normal(0, 1), normal(5, 1)), c(0.5, 0.5))
+f <- density(m)
+f(0)
+f(2.5)
+}

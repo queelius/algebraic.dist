@@ -17,3 +17,6 @@
 \description{
 Print a \code{weibull_dist} object.
 }
+\examples{
+print(weibull_dist(2, 3))
+}

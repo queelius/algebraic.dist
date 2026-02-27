@@ -17,3 +17,9 @@ A function that computes the cdf at point(s) \code{t}
 \description{
 Method for obtaining the cdf of a \code{chi_squared} object.
 }
+\examples{
+x <- chi_squared(5)
+F <- cdf(x)
+F(5)
+F(10)
+}

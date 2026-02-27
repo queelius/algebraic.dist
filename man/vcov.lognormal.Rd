@@ -17,3 +17,6 @@ The variance (scalar).
 \description{
 Computes \eqn{(\exp(sdlog^2) - 1) \exp(2 \cdot meanlog + sdlog^2)}.
 }
+\examples{
+vcov(lognormal(0, 1))
+}

@@ -17,3 +17,6 @@ A character string describing the distribution
 \description{
 Format a \code{gamma_dist} object as a character string.
 }
+\examples{
+format(gamma_dist(2, 1))
+}

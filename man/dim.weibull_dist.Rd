@@ -15,3 +15,6 @@
 \description{
 Dimension of a Weibull distribution (always 1).
 }
+\examples{
+dim(weibull_dist(2, 3))
+}

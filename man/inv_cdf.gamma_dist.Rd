@@ -19,3 +19,9 @@ A function that computes the quantile at probability \code{p}
 Method for obtaining the inverse cdf (quantile function) of a \code{gamma_dist}
 object.
 }
+\examples{
+x <- gamma_dist(shape = 2, rate = 1)
+q <- inv_cdf(x)
+q(0.5)
+q(0.95)
+}
