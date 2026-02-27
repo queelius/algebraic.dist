@@ -1,0 +1,404 @@
+---
+title: "Multivariate and Mixture Distributions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multivariate and Mixture Distributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r library}
+library(algebraic.dist)
+```
+
+This vignette covers the multivariate normal (MVN), affine transformations,
+and mixture distribution facilities in `algebraic.dist`. These features were
+introduced in version 0.3.0 and provide closed-form operations wherever
+possible, falling back to Monte Carlo only when necessary.
+
+## MVN Basics
+
+Construct an MVN with `mvn()`. The `mu` argument is the mean vector and
+`sigma` is the variance-covariance matrix (defaulting to the identity).
+
+```{r mvn-construct}
+M <- mvn(mu = c(1, 2, 3),
+         sigma = matrix(c(1.0, 0.5, 0.2,
+                          0.5, 2.0, 0.3,
+                          0.2, 0.3, 1.5), nrow = 3, byrow = TRUE))
+M
+```
+
+Standard accessors return the moments and dimensionality.
+
+```{r mvn-accessors}
+mean(M)
+vcov(M)
+dim(M)
+```
+
+The `params()` generic flattens all parameters into a single named vector
+(useful for optimisation interfaces).
+
+```{r mvn-params}
+params(M)
+```
+
+### Sampling
+
+`sampler()` returns a reusable sampling function. The output is an n-by-d
+matrix where rows are observations and columns are dimensions.
+
+```{r mvn-sampling}
+set.seed(42)
+samp <- sampler(M)
+X <- samp(100)
+dim(X)
+head(X, 5)
+```
+
+### Marginals
+
+Extracting a marginal over a subset of indices returns a new MVN (or a
+univariate `normal` when a single index is selected).
+
+```{r mvn-marginal}
+M13 <- marginal(M, c(1, 3))
+M13
+mean(M13)
+vcov(M13)
+```
+
+Selecting a single component yields a univariate normal.
+
+```{r mvn-marginal-univariate}
+M1 <- marginal(M, 1)
+M1
+mean(M1)
+vcov(M1)
+```
+
+## Closed-Form MVN Conditioning
+
+Conditioning a multivariate normal on observed values uses the Schur
+complement formula. Given an MVN partitioned into free variables $X_1$
+and observed variables $X_2 = a$, the conditional distribution is:
+
+$$X_1 \mid X_2 = a \;\sim\; \mathcal{N}\!\bigl(\mu_1 + \Sigma_{12}\Sigma_{22}^{-1}(a - \mu_2),\;\; \Sigma_{11} - \Sigma_{12}\Sigma_{22}^{-1}\Sigma_{21}\bigr)$$
+
+This is exact -- no Monte Carlo is involved.
+
+```{r mvn-conditional-closedform}
+M2 <- mvn(mu = c(0, 0), sigma = matrix(c(1, 0.8, 0.8, 1), 2, 2))
+
+# Condition on X2 = 1
+M_cond <- conditional(M2, given_indices = 2, given_values = 1)
+mean(M_cond)
+vcov(M_cond)
+```
+
+With $\rho = 0.8$, the conditional mean is $\mu_1 + \rho(1 - \mu_2) = 0 + 0.8(1 - 0) = 0.8$,
+and the conditional variance is $1 - \rho^2 = 1 - 0.64 = 0.36$.
+
+### Predicate-based MC fallback
+
+When the conditioning event is not "observe variable $j$ at value $a$" but
+an arbitrary predicate, the package falls back to Monte Carlo. This is
+accessed through the `P` argument.
+
+```{r mvn-conditional-mc}
+set.seed(42)
+M_cond_mc <- conditional(M2, P = function(x) abs(x[2] - 1) < 0.1)
+mean(M_cond_mc)
+```
+
+The MC result is approximate and depends on the tolerance in the predicate.
+Prefer the closed-form interface whenever possible.
+
+## Affine Transformations
+
+`affine_transform(x, A, b)` computes the distribution of $Y = AX + b$
+where $X \sim \text{MVN}(\mu, \Sigma)$. The result is:
+
+$$Y \sim \text{MVN}(A\mu + b,\;\; A \Sigma A^\top)$$
+
+This is a closed-form operation that returns a new MVN (or `normal` if
+the result is one-dimensional).
+
+### Portfolio example
+
+Consider two assets with expected returns and a covariance structure.
+A portfolio is a linear combination of the returns.
+
+```{r affine-portfolio}
+returns <- mvn(
+  mu = c(0.05, 0.08),
+  sigma = matrix(c(0.04, 0.01,
+                   0.01, 0.09), 2, 2)
+)
+
+# 60/40 portfolio weights
+w <- matrix(c(0.6, 0.4), nrow = 1)
+portfolio <- affine_transform(returns, A = w)
+mean(portfolio)
+vcov(portfolio)
+```
+
+The portfolio return is $0.6 \times 0.05 + 0.4 \times 0.08 = 0.062$. The
+portfolio variance is $w \Sigma w^\top$, a scalar that captures the
+diversification benefit.
+
+### Dimensionality reduction
+
+Affine transforms can also project to lower dimensions. For instance,
+computing the sum and difference of two variables.
+
+```{r affine-sumdiff}
+X <- mvn(mu = c(3, 7), sigma = matrix(c(4, 1, 1, 9), 2, 2))
+
+# A maps (X1, X2) -> (X1 + X2, X1 - X2)
+A <- matrix(c(1, 1,
+              1, -1), nrow = 2, byrow = TRUE)
+Y <- affine_transform(X, A = A)
+mean(Y)
+vcov(Y)
+```
+
+## Mixture Distribution Basics
+
+A mixture distribution is constructed from a list of component distributions
+and a vector of non-negative weights that sum to one.
+
+```{r mixture-construct}
+m <- mixture(
+  components = list(normal(-2, 1), normal(3, 0.5)),
+  weights = c(0.4, 0.6)
+)
+m
+```
+
+### Mean and variance
+
+The mixture mean is the weighted average of component means:
+$E[X] = \sum_k w_k \mu_k$.
+
+```{r mixture-mean}
+mean(m)
+```
+
+The mixture variance uses the law of total variance:
+$\text{Var}(X) = \underbrace{\sum_k w_k \sigma_k^2}_{\text{within-component}} + \underbrace{\sum_k w_k(\mu_k - \bar\mu)^2}_{\text{between-component}}$.
+
+```{r mixture-vcov}
+vcov(m)
+```
+
+The between-component term captures the spread of the component means
+around the overall mean. This is why mixtures can have much larger variance
+than any individual component.
+
+### Density and CDF
+
+`density()` and `cdf()` return callable functions, following the same
+pattern as other distributions in the package.
+
+```{r mixture-density, fig.height = 4, fig.width = 6}
+f <- density(m)
+
+x_vals <- seq(-6, 8, length.out = 200)
+y_vals <- sapply(x_vals, f)
+plot(x_vals, y_vals, type = "l", lwd = 2,
+     main = "Bimodal mixture density",
+     xlab = "x", ylab = "f(x)")
+```
+
+The bimodal shape is clearly visible, with peaks near $-2$ and $3$.
+
+```{r mixture-cdf, fig.height = 4, fig.width = 6}
+F <- cdf(m)
+F_vals <- sapply(x_vals, F)
+plot(x_vals, F_vals, type = "l", lwd = 2,
+     main = "Mixture CDF",
+     xlab = "x", ylab = "F(x)")
+```
+
+### Sampling
+
+```{r mixture-sampling, fig.height = 4, fig.width = 6}
+set.seed(123)
+s <- sampler(m)
+samples <- s(2000)
+hist(samples, breaks = 50, probability = TRUE, col = "lightblue",
+     main = "Mixture samples with true density",
+     xlab = "x")
+lines(x_vals, y_vals, col = "red", lwd = 2)
+```
+
+## Mixture Operations
+
+### Marginals of mixtures
+
+The marginal of a mixture is a mixture of marginals with the same weights.
+This follows directly from the definition:
+$p(x_I) = \sum_k w_k\, p_k(x_I)$.
+
+```{r mixture-marginal}
+m2 <- mixture(
+  list(mvn(c(0, 0), diag(2)), mvn(c(3, 3), diag(2))),
+  c(0.5, 0.5)
+)
+
+m2_x1 <- marginal(m2, 1)
+m2_x1
+mean(m2_x1)
+```
+
+The marginal mean is $0.5 \times 0 + 0.5 \times 3 = 1.5$, the weighted
+average of the component marginal means.
+
+### Conditional of mixtures (Bayesian weight update)
+
+Conditioning a mixture on observed values updates the component weights
+via Bayes' rule. Each component's weight is scaled by its marginal density
+at the observed value:
+
+$$w_k' \propto w_k \, f_k(x_{\text{obs}})$$
+
+Components whose marginal density is higher at the observed value receive
+more weight.
+
+```{r mixture-conditional}
+mc <- conditional(m2, given_indices = 2, given_values = 0)
+mc
+mean(mc)
+```
+
+Conditioning on $X_2 = 0$ shifts weight toward the first component
+(whose mean for $X_2$ is 0) and away from the second component (whose
+mean for $X_2$ is 3). The conditional mean of $X_1$ is therefore pulled
+closer to 0 than the unconditional value of 1.5.
+
+We can also condition at a value near the second component to see the
+opposite effect.
+
+```{r mixture-conditional-high}
+mc_high <- conditional(m2, given_indices = 2, given_values = 3)
+mc_high
+mean(mc_high)
+```
+
+Now the weight shifts toward the second component, and the conditional
+mean of $X_1$ is pulled toward 3.
+
+## Practical Example: Gaussian Mixture Classification
+
+Gaussian mixture models (GMMs) are widely used for soft classification.
+The idea: each component represents a class, and conditioning on observed
+features updates the class probabilities.
+
+### Setup: a two-class GMM
+
+Consider two clusters in 2D, representing two classes with equal prior
+probability.
+
+```{r gmm-setup}
+class_a <- mvn(c(-2, -1), matrix(c(1.0, 0.3, 0.3, 0.8), 2, 2))
+class_b <- mvn(c(2, 1.5), matrix(c(0.6, -0.2, -0.2, 1.2), 2, 2))
+
+gmm <- mixture(
+  components = list(class_a, class_b),
+  weights = c(0.5, 0.5)
+)
+gmm
+```
+
+### Visualise the clusters
+
+```{r gmm-scatter, fig.height = 5, fig.width = 6}
+set.seed(314)
+samp_a <- sampler(class_a)(300)
+samp_b <- sampler(class_b)(300)
+
+plot(samp_a[, 1], samp_a[, 2], col = "steelblue", pch = 16, cex = 0.6,
+     xlim = c(-6, 6), ylim = c(-5, 5),
+     xlab = expression(X[1]), ylab = expression(X[2]),
+     main = "Two-class GMM samples")
+points(samp_b[, 1], samp_b[, 2], col = "tomato", pch = 16, cex = 0.6)
+legend("topright", legend = c("Class A", "Class B"),
+       col = c("steelblue", "tomato"), pch = 16)
+```
+
+### Soft classification by conditioning
+
+Suppose we observe $X_1 = -1$. Conditioning updates the class weights
+based on how likely each component is to produce that value.
+
+```{r gmm-classify-neg}
+post_neg <- conditional(gmm, given_indices = 1, given_values = -1)
+post_neg
+```
+
+The updated weights give the posterior class probabilities. Since $X_1 = -1$
+is much more likely under Class A (centred at $-2$) than Class B
+(centred at $2$), Class A receives most of the weight.
+
+The conditional distribution of $X_2$ given $X_1 = -1$ is itself a
+mixture of the two conditional normals.
+
+```{r gmm-classify-neg-density, fig.height = 4, fig.width = 6}
+f_post <- density(post_neg)
+x2_grid <- seq(-5, 5, length.out = 200)
+y_post <- sapply(x2_grid, f_post)
+plot(x2_grid, y_post, type = "l", lwd = 2,
+     xlab = expression(X[2]),
+     ylab = expression(f(X[2] ~ "|" ~ X[1] == -1)),
+     main = "Posterior density of X2 given X1 = -1")
+```
+
+Now observe $X_1 = 2$, which sits near the centre of Class B.
+
+```{r gmm-classify-pos}
+post_pos <- conditional(gmm, given_indices = 1, given_values = 2)
+post_pos
+```
+
+As expected, the weight shifts heavily toward Class B. The conditional
+density of $X_2$ now concentrates around the Class B conditional mean.
+
+```{r gmm-classify-pos-density, fig.height = 4, fig.width = 6}
+f_post_pos <- density(post_pos)
+y_post_pos <- sapply(x2_grid, f_post_pos)
+plot(x2_grid, y_post_pos, type = "l", lwd = 2,
+     xlab = expression(X[2]),
+     ylab = expression(f(X[2] ~ "|" ~ X[1] == 2)),
+     main = "Posterior density of X2 given X1 = 2")
+```
+
+### Ambiguous observations
+
+When the observation falls between the two clusters, the weights become
+more balanced and the posterior is visibly bimodal.
+
+```{r gmm-classify-mid}
+post_mid <- conditional(gmm, given_indices = 1, given_values = 0)
+post_mid
+```
+
+```{r gmm-classify-mid-density, fig.height = 4, fig.width = 6}
+f_post_mid <- density(post_mid)
+y_post_mid <- sapply(x2_grid, f_post_mid)
+plot(x2_grid, y_post_mid, type = "l", lwd = 2,
+     xlab = expression(X[2]),
+     ylab = expression(f(X[2] ~ "|" ~ X[1] == 0)),
+     main = "Posterior density of X2 given X1 = 0 (ambiguous)")
+```
+
+At $X_1 = 0$ neither class dominates, so the posterior for $X_2$ is
+bimodal -- one mode near the Class A conditional mean, one near Class B.
+This is the hallmark of soft classification: rather than forcing a hard
+decision, the mixture posterior represents genuine uncertainty about
+the class label.

@@ -1,0 +1,432 @@
+---
+title: "Distribution Algebra with algebraic.dist"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Distribution Algebra with algebraic.dist}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r}
+library(algebraic.dist)
+```
+
+## Introduction
+
+The `algebraic.dist` package provides an **algebra over probability
+distributions**. You can combine distribution objects with standard
+arithmetic operators (`+`, `-`, `*`, `/`, `^`) and mathematical functions
+(`exp`, `log`, `sqrt`, ...), and the package will either **simplify** the
+result to a known closed-form distribution or fall back to **Monte Carlo**
+sampling when no closed form exists.
+
+This means you can write expressions like `normal(0, 1) + normal(2, 3)` and
+get back a `normal` object, without manually deriving the result. When the
+package cannot simplify, the result is an `edist` (expression distribution)
+that supports all the usual methods -- `mean`, `vcov`, `sampler`, `cdf`,
+and more -- via MC approximation.
+
+## Basic Arithmetic
+
+Arithmetic operators on `dist` objects create `edist` (expression
+distribution) objects, which are then automatically simplified when a
+closed-form rule applies. When no rule matches, the `edist` is kept as-is.
+
+```{r}
+x <- normal(0, 1)
+y <- exponential(1)
+z <- x + y
+```
+
+Since the sum of a normal and an exponential has no simple closed form,
+`z` remains an `edist`:
+
+```{r}
+is_edist(z)
+class(z)
+```
+
+The `edist` still supports all distribution methods. Moments are computed
+via Monte Carlo:
+
+```{r}
+set.seed(1)
+mean(z)
+vcov(z)
+```
+
+The theoretical mean is `0 + 1 = 1` and variance is `1 + 1 = 2`, so the
+MC estimates should be close.
+
+## Automatic Simplification
+
+The real power of the package is **automatic simplification**. When you
+compose distributions using operations that have known closed-form results,
+the package returns the simplified distribution directly -- no sampling
+needed.
+
+### Normal algebra
+
+The sum and difference of independent normals is normal. Scalar
+multiplication and location shifts are also handled.
+
+**Sum of normals:**
+
+```{r}
+z <- normal(1, 4) + normal(2, 5)
+is_normal(z)
+z
+mean(z)
+vcov(z)
+```
+
+The result is Normal(mu = 3, var = 9), since means add and variances add
+for independent normals.
+
+**Difference of normals:**
+
+```{r}
+z <- normal(1, 4) - normal(2, 5)
+z
+mean(z)
+vcov(z)
+```
+
+Normal(mu = -1, var = 9) -- means subtract, but variances still add.
+
+**Scalar multiplication:**
+
+```{r}
+z <- 3 * normal(2, 1)
+z
+mean(z)
+vcov(z)
+```
+
+If `X ~ Normal(mu, v)`, then `c * X ~ Normal(c * mu, c^2 * v)`.
+
+**Location shift:**
+
+```{r}
+z <- normal(5, 2) + 10
+z
+mean(z)
+vcov(z)
+```
+
+Adding a constant shifts the mean but preserves the variance.
+
+### Exponential and Gamma algebra
+
+Sums of independent exponentials (with the same rate) produce gamma
+distributions. Gamma distributions with the same rate also combine.
+
+**Sum of exponentials:**
+
+```{r}
+z <- exponential(2) + exponential(2)
+is_gamma_dist(z)
+z
+params(z)
+```
+
+Two independent Exp(2) variables sum to Gamma(shape = 2, rate = 2).
+
+**Gamma plus exponential:**
+
+```{r}
+z <- gamma_dist(3, 2) + exponential(2)
+z
+params(z)
+```
+
+Gamma(3, 2) + Exp(2) = Gamma(4, 2).
+
+**Sum of gammas (same rate):**
+
+```{r}
+z <- gamma_dist(3, 2) + gamma_dist(4, 2)
+z
+params(z)
+```
+
+Gamma(3, 2) + Gamma(4, 2) = Gamma(7, 2) -- shapes add when rates match.
+
+### Transform rules
+
+Certain mathematical transformations of distributions have known
+closed-form results.
+
+**Exponential of a normal is log-normal:**
+
+```{r}
+z <- exp(normal(0, 1))
+is_lognormal(z)
+z
+```
+
+**Logarithm of a log-normal is normal:**
+
+```{r}
+z <- log(lognormal(0, 1))
+is_normal(z)
+z
+```
+
+**Standard normal squared is chi-squared:**
+
+```{r}
+z <- normal(0, 1)^2
+is_chi_squared(z)
+z
+```
+
+This rule specifically applies when the normal has mean 0 and variance 1.
+
+### Other simplification rules
+
+**Chi-squared addition:**
+
+```{r}
+z <- chi_squared(3) + chi_squared(5)
+is_chi_squared(z)
+z
+params(z)
+```
+
+Degrees of freedom add: Chi-squared(3) + Chi-squared(5) = Chi-squared(8).
+
+**Poisson addition:**
+
+```{r}
+z <- poisson_dist(2) + poisson_dist(3)
+is_poisson_dist(z)
+z
+params(z)
+```
+
+Rates add: Poisson(2) + Poisson(3) = Poisson(5).
+
+**Product of log-normals:**
+
+```{r}
+z <- lognormal(0, 1) * lognormal(1, 2)
+is_lognormal(z)
+z
+params(z)
+```
+
+The product of independent log-normals is log-normal because
+`log(X * Y) = log(X) + log(Y)`, and the sum of independent normals is
+normal. So the `meanlog` values add and the `sdlog` values combine as
+`sqrt(sdlog1^2 + sdlog2^2)`.
+
+**Uniform scaling and shifting:**
+
+```{r}
+z <- 2 * uniform_dist(0, 1)
+is_uniform_dist(z)
+z
+params(z)
+```
+
+Scaling a Uniform(0, 1) by 2 gives Uniform(0, 2).
+
+```{r}
+z <- uniform_dist(0, 1) + 5
+is_uniform_dist(z)
+z
+params(z)
+```
+
+Shifting Uniform(0, 1) by 5 gives Uniform(5, 6).
+
+## When Simplification Cannot Help
+
+When no algebraic rule matches, the result remains an unsimplified `edist`.
+All distribution methods still work -- they just use Monte Carlo under the
+hood.
+
+```{r}
+z <- normal(0, 1) * exponential(1)
+is_edist(z)
+```
+
+```{r}
+set.seed(2)
+mean(z)
+```
+
+The true mean of `X * Y` where `X ~ Normal(0, 1)` and `Y ~ Exp(1)` is
+`E[X] * E[Y] = 0 * 1 = 0` (by independence), so the MC estimate should
+be near zero.
+
+## Realization and MC Fallback
+
+You can explicitly convert any distribution to an empirical distribution
+via `realize()`. This draws `n` samples and wraps them in an
+`empirical_dist` that supports exact (discrete) methods for CDF, density,
+conditional, and more.
+
+```{r}
+set.seed(3)
+z <- normal(0, 1) * exponential(1)
+rd <- realize(z, n = 10000)
+rd
+mean(rd)
+vcov(rd)
+```
+
+For `edist` objects, methods like `cdf()`, `density()`, and `inv_cdf()`
+automatically materialize samples behind the scenes (with caching, so
+repeated calls share the same sample). You do not need to call `realize()`
+manually for these:
+
+```{r}
+set.seed(4)
+z <- normal(0, 1) + exponential(1)
+Fz <- cdf(z)
+Fz(1)
+Fz(2)
+```
+
+## Min, Max, and Summary Operations
+
+The `Summary` group generic is implemented for distributions. The `sum()`
+and `prod()` generics reduce via `+` and `*`, so they benefit from all the
+simplification rules. The `min()` and `max()` generics create elementwise
+`edist` expressions.
+
+**Min of exponentials** has a special rule -- the minimum of independent
+exponentials is exponential with the sum of rates:
+
+```{r}
+z <- min(exponential(1), exponential(2))
+is_exponential(z)
+z
+params(z)
+```
+
+This is the well-known result: if `X ~ Exp(r1)` and `Y ~ Exp(r2)`, then
+`min(X, Y) ~ Exp(r1 + r2)`.
+
+**Sum reduces via the `+` operator**, so simplification rules apply:
+
+```{r}
+z <- sum(normal(0, 1), normal(2, 3), normal(-1, 2))
+is_normal(z)
+z
+mean(z)
+vcov(z)
+```
+
+Three normals sum to a single normal: mean = 0 + 2 - 1 = 1, var = 1 + 3 + 2 = 6.
+
+**Max and other combinations** that lack closed forms remain as `edist`:
+
+```{r}
+set.seed(5)
+z <- max(exponential(1), exponential(2))
+is_edist(z)
+mean(z)
+```
+
+## Limiting Distributions
+
+The package provides functions for common asymptotic results from
+probability theory.
+
+### Central Limit Theorem
+
+`clt(base_dist)` returns the limiting distribution of the standardized
+sample mean, `sqrt(n) * (Xbar_n - mu)`. For a univariate distribution
+with variance `sigma^2`, this is `Normal(0, sigma^2)`.
+
+```{r}
+z <- clt(exponential(1))
+z
+mean(z)
+vcov(z)
+```
+
+For Exp(1), the mean is 1 and the variance is 1, so the CLT limit is
+Normal(0, 1).
+
+### Law of Large Numbers
+
+`lln(base_dist)` returns the degenerate distribution at the population
+mean -- the limit of `Xbar_n` as `n -> infinity`. It is represented as a
+normal with zero variance.
+
+```{r}
+d <- lln(exponential(1))
+d
+mean(d)
+vcov(d)
+```
+
+### Delta Method
+
+`delta_clt(base_dist, g, dg)` returns the limiting distribution of
+`sqrt(n) * (g(Xbar_n) - g(mu))` under the delta method. You supply the
+function `g` and its derivative `dg`.
+
+```{r}
+z <- delta_clt(exponential(1), g = exp, dg = exp)
+z
+mean(z)
+vcov(z)
+```
+
+For `g = exp` applied to Exp(1) (mean = 1, var = 1), the delta method
+gives `Normal(0, (exp(1))^2 * 1) = Normal(0, e^2)`.
+
+### Moment-Matching Normal Approximation
+
+`normal_approx(x)` constructs a normal distribution that matches the mean
+and variance of any input distribution:
+
+```{r}
+g <- gamma_dist(5, 2)
+n <- normal_approx(g)
+n
+mean(n)
+vcov(n)
+```
+
+The Gamma(5, 2) has mean 2.5 and variance 1.25, so the normal
+approximation is Normal(2.5, 1.25).
+
+### Empirical CLT Convergence
+
+To see the CLT in action, we can draw replicated standardized sample means
+at increasing sample sizes and watch them converge to the predicted
+distribution:
+
+```{r}
+set.seed(42)
+base <- exponential(rate = 1)
+ns <- c(10, 100, 1000)
+for (n in ns) {
+  samp_means <- replicate(5000, {
+    x <- sampler(base)(n)
+    sqrt(n) * (mean(x) - mean(base))
+  })
+  cat(sprintf("n=%4d: mean=%.3f, var=%.3f\n",
+              n, mean(samp_means), var(samp_means)))
+}
+```
+
+Compare with the CLT prediction:
+
+```{r}
+z <- clt(base)
+cat(sprintf("CLT:    mean=%.3f, var=%.3f\n", mean(z), vcov(z)))
+```
+
+As `n` grows, the empirical mean converges to 0 and the empirical variance
+converges to 1, matching the CLT limit of Normal(0, 1).
