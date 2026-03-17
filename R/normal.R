@@ -97,10 +97,8 @@ is_normal <- function(x) {
 #'
 #' @param x The `normal` object to sample from
 #' @param ... Additional arguments to pass (not used)
-#' @return A function that samples from the normal distribution. As input,
-#'         it accepts a sample size `n`, a numeric `mu`, and a variance
-#'         numeric `var`. By default, `mu` and `var` are the mean and
-#'         variance of object `x`.
+#' @return A function \code{function(n = 1, ...)} that draws \code{n}
+#'   samples from the normal distribution.
 #' @examples
 #' x <- normal(0, 1)
 #' s <- sampler(x)
@@ -109,19 +107,18 @@ is_normal <- function(x) {
 #' @importFrom stats rnorm
 #' @export
 sampler.normal <- function(x, ...) {
-    function(n = 1, mu = x$mu, var = x$var, ...) {
-        rnorm(n, mean = mu, sd = sqrt(var))
+    mu <- x$mu
+    sd <- sqrt(x$var)
+    function(n = 1, ...) {
+        rnorm(n, mean = mu, sd = sd)
     }
 }
 
 #' Method for obtaining the pdf of an `normal` object.
 #' @param x The object to obtain the pdf of
 #' @param ... Additional arguments to pass (not used)
-#' @return A function that computes the pdf of the normal distribution.
-#'         It accepts as input a parameter vector `x`, a mean vector `mu`,
-#'         a variance-covariance matrix `var`, and a `log` argument
-#'         determining whether to compute the log of the pdf. By default,
-#'         `mu` and `var` are the mean and variance of object `x`.
+#' @return A function \code{function(t, log = FALSE, ...)} that computes the
+#'   pdf (or log-pdf) of the normal distribution at \code{t}.
 #' @examples
 #' x <- normal(0, 1)
 #' f <- density(x)
@@ -130,21 +127,18 @@ sampler.normal <- function(x, ...) {
 #' @importFrom stats dnorm density
 #' @export
 density.normal <- function(x, ...) {
-    function(t, mu = x$mu, var = x$var, log = FALSE, ...) {
-        dnorm(x = t, mean = mu, sd = sqrt(var), log = log, ...)
+    mu <- x$mu
+    sd <- sqrt(x$var)
+    function(t, log = FALSE, ...) {
+        dnorm(x = t, mean = mu, sd = sd, log = log)
     }
 }
 
 #' Method for obtaining the cdf of an `normal` object.
 #' @param x The object to obtain the cdf of
 #' @param ... Additional arguments to pass (not used)
-#' @return A function that computes the cdf of the normal distribution.
-#'         It accepts as input a parameter vector `q`, a mean vector `mu`,
-#'         a variance `var`, and a `log` argument
-#'         determining whether to compute the log of the cdf. By default,
-#'         `mu` and `var` are the mean and variance of object `x` and `log`
-#'         is `FALSE`. Finally, it accepts additional arguments `...` to
-#'         pass to the `pnorm` function.
+#' @return A function \code{function(q, lower.tail = TRUE, log.p = FALSE, ...)}
+#'   that computes the cdf (or log-cdf) of the normal distribution at \code{q}.
 #' @examples
 #' x <- normal(0, 1)
 #' F <- cdf(x)
@@ -153,8 +147,10 @@ density.normal <- function(x, ...) {
 #' @importFrom stats pnorm
 #' @export
 cdf.normal <- function(x, ...) {
-    function(q, mu = x$mu, var = x$var, log.p = FALSE, ...) {
-        pnorm(q = q, mean = mu, sd = sqrt(var), log.p = log.p, ...)
+    mu <- x$mu
+    sd <- sqrt(x$var)
+    function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+        pnorm(q = q, mean = mu, sd = sd, lower.tail = lower.tail, log.p = log.p)
     }
 }
 
@@ -185,7 +181,8 @@ dim.normal <- function(x) {
 #' Method for obtaining the inverse cdf of an `normal` object.
 #' @param x The object to obtain the inverse cdf of
 #' @param ... Additional arguments to pass (not used)
-#' @return A function that computes the inverse cdf of the normal distribution.
+#' @return A function \code{function(p, lower.tail = TRUE, log.p = FALSE, ...)}
+#'   that computes the inverse cdf of the normal distribution.
 #' @examples
 #' x <- normal(0, 1)
 #' q <- inv_cdf(x)
@@ -194,8 +191,10 @@ dim.normal <- function(x) {
 #' @importFrom stats qnorm
 #' @export
 inv_cdf.normal <- function(x, ...) {
-    function(p, mu = x$mu, var = x$var, log.p = FALSE, ...) {
-        qnorm(p, mu, sqrt(var), ...)
+    mu <- x$mu
+    sd <- sqrt(x$var)
+    function(p, lower.tail = TRUE, log.p = FALSE, ...) {
+        qnorm(p, mean = mu, sd = sd, lower.tail = lower.tail, log.p = log.p)
     }
 }
 

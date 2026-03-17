@@ -43,11 +43,8 @@ is_exponential <- function(x) {
 #'
 #' @param x The `exponential` object to obtain the hazard function of
 #' @param ... Additional arguments (not used)
-#' @return A function that computes the hazard function of the
-#'         exponential distribution at a given point `t` and rate `rate`.
-#'         By default, `rate` is the failure rate of object `x`
-#'         Also accepts a `log` argument that determines whether
-#'         to compute the log of the hazard function.
+#' @return A function \code{function(t, log = FALSE, ...)} that computes
+#'   the hazard rate (or log-hazard) of the exponential distribution.
 #' @examples
 #' x <- exponential(rate = 2)
 #' h <- hazard(x)
@@ -55,9 +52,8 @@ is_exponential <- function(x) {
 #' h(5)
 #' @export
 hazard.exponential <- function(x, ...) {
-  function(t, rate = x$rate, log = FALSE) {
-    stopifnot(is.numeric(rate), rate > 0)
-
+  rate <- x$rate
+  function(t, log = FALSE, ...) {
     if (log) {
       ifelse(t <= 0, -Inf, log(rate))
     } else {
@@ -70,11 +66,8 @@ hazard.exponential <- function(x, ...) {
 #'
 #' @param x The object to obtain the pdf of
 #' @param ... Additional arguments (not used)
-#' @return A function that computes the pdf of the exponential distribution
-#'         at a given point `t`. Also accepts a `rate` argument that
-#'         determines the failure rate of the exponential distribution (defaults
-#'         to the failure rate of object `x`) and a `log` argument that determines
-#'         whether to compute the log of the pdf.
+#' @return A function \code{function(t, log = FALSE, ...)} that computes
+#'   the pdf (or log-pdf) of the exponential distribution at \code{t}.
 #' @examples
 #' x <- exponential(rate = 2)
 #' f <- density(x)
@@ -83,9 +76,9 @@ hazard.exponential <- function(x, ...) {
 #' @importFrom stats dexp density
 #' @export
 density.exponential <- function(x, ...) {
-  function(t, rate = x$rate, log = FALSE, ...) {
-    stopifnot(is.numeric(rate), rate > 0)
-    dexp(x = t, rate = rate, log = log, ...)
+  rate <- x$rate
+  function(t, log = FALSE, ...) {
+    dexp(x = t, rate = rate, log = log)
   }
 }
 
@@ -93,10 +86,8 @@ density.exponential <- function(x, ...) {
 #'
 #' @param x The `exponential` object to sample from.
 #' @param ... Additional arguments to pass (not used)
-#' @return A function that allows sampling from the exponential
-#'         distribution. Accepts an argument `n` denoting sample
-#'         size and `rate` denoting the failure rate. Defaults to
-#'         the failure rate of object `x`.
+#' @return A function \code{function(n = 1, ...)} that draws \code{n}
+#'   samples from the exponential distribution.
 #' @examples
 #' x <- exponential(rate = 2)
 #' s <- sampler(x)
@@ -105,8 +96,8 @@ density.exponential <- function(x, ...) {
 #' @importFrom stats rexp
 #' @export
 sampler.exponential <- function(x, ...) {
-  function(n = 1, rate = x$rate, ...) {
-    stopifnot(is.numeric(rate), rate > 0)
+  rate <- x$rate
+  function(n = 1, ...) {
     rexp(n = n, rate = rate)
   }
 }
@@ -127,13 +118,8 @@ mean.exponential <- function(x, ...) {
 #'
 #' @param x The object to obtain the inverse cdf of
 #' @param ... Additional arguments (not used)
-#' @return A function that computes the inverse cdf of the exponential
-#'         distribution. Accepts as input a vector `p` probabilities
-#'         to compute the inverse cdf, a `rate` value denoting the
-#'         failure rate of the exponential distribution, and a logical
-#'         `log.p` indicating whether input `p` denotes probability
-#'         or log-probability. By default, `rate` is the failure rate
-#'         of object `x`.
+#' @return A function \code{function(p, lower.tail = TRUE, log.p = FALSE, ...)}
+#'   that computes the inverse cdf of the exponential distribution.
 #' @examples
 #' x <- exponential(rate = 1)
 #' q <- inv_cdf(x)
@@ -142,21 +128,18 @@ mean.exponential <- function(x, ...) {
 #' @importFrom stats qexp
 #' @export
 inv_cdf.exponential <- function(x, ...) {
-  function(p, rate = x$rate, lower.tail = TRUE, log.p = FALSE, ...) {
-      stopifnot(is.numeric(rate), rate > 0)
-      qexp(p = p, rate = rate, lower.tail = lower.tail, log.p = log.p, ...)
+  rate <- x$rate
+  function(p, lower.tail = TRUE, log.p = FALSE, ...) {
+      qexp(p = p, rate = rate, lower.tail = lower.tail, log.p = log.p)
   }
 }
 
 #' Method to obtain the cdf of an `exponential` object.
 #'
-#' @param x The object to obtain the pdf of
+#' @param x The object to obtain the cdf of
 #' @param ... Additional arguments (not used)
-#' @return A function that computes the cdf of the exponential. Accepts as
-#'         input a vector `t` at which to compute the cdf, an input `rate`
-#'         denoting the failure rate of the exponential distribution, and a
-#'         logical `log` indicating whether to compute the log of the cdf.
-#'         By default, `rate` is the failure rate of object `x`.
+#' @return A function \code{function(q, lower.tail = TRUE, log.p = FALSE, ...)}
+#'   that computes the cdf (or log-cdf) of the exponential distribution.
 #' @examples
 #' x <- exponential(rate = 1)
 #' F <- cdf(x)
@@ -165,9 +148,9 @@ inv_cdf.exponential <- function(x, ...) {
 #' @importFrom stats pexp
 #' @export
 cdf.exponential <- function(x, ...) {
-  function(t, rate = x$rate, log.p = FALSE, ...) {
-    stopifnot(rate > 0)
-    pexp(q = t, rate = rate, log.p = log.p, ...)
+  rate <- x$rate
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    pexp(q = q, rate = rate, lower.tail = lower.tail, log.p = log.p)
   }
 }
 
@@ -195,15 +178,12 @@ sup.exponential <- function(x) {
   interval$new(lower = 0, lower_closed = FALSE)
 }
 
-#' Method to obtain the cdf of an `exponential` object.
+#' Method to obtain the survival function of an `exponential` object.
 #'
-#' @param x The object to obtain the pdf of
+#' @param x The object to obtain the survival function of
 #' @param ... Additional arguments (not used)
-#' @return A function that computes the cdf of the exponential. Accepts as
-#'         input a vector `t` at which to compute the cdf, an input `rate`
-#'         denoting the failure rate of the exponential distribution, and a
-#'         logical `log` indicating whether to compute the log of the cdf.
-#'         By default, `rate` is the failure rate of object `x`.
+#' @return A function \code{function(t, log.p = FALSE, ...)} that computes
+#'   the survival function \eqn{S(t) = P(X > t)}.
 #' @examples
 #' x <- exponential(rate = 1)
 #' S <- surv(x)
@@ -212,9 +192,9 @@ sup.exponential <- function(x) {
 #' @importFrom stats pexp
 #' @export
 surv.exponential <- function(x, ...) {
-  function(t, rate = x$rate, log.p = FALSE, ...) {
-    stopifnot(is.numeric(rate), rate > 0)
-    pexp(q = t, rate = rate, log.p = log.p, lower.tail = FALSE, ...)
+  rate <- x$rate
+  function(t, log.p = FALSE, ...) {
+    pexp(q = t, rate = rate, log.p = log.p, lower.tail = FALSE)
   }
 }
 

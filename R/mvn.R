@@ -94,20 +94,7 @@ is_mvn <- function(x) {
 #' Function generator for sampling from a `mvn` (multivariate normal) object.
 #'
 #' @param x The `mvn` object to sample from
-#' @param ... Additional arguments to pass to the generated function that will
-#' be fixed during all calls.
-#' @return A function that samples from the `mvn` distribution. It accepts as
-#'         input:
-#'          - `n`: number of samples to generate. Defaults to 1.
-#'          - `mu`: a vector denoting the population mean. Defaults to the mean 
-#'            of `x` (an `mvn` object)
-#'          - `sigma`: a matrix denoting the covariance of observations. 
-#'            Defaults to the variance-covariance of `x`.
-#'          - `p`: probability region to sample from. Defaults to 1, which
-#'            corresponds to the entire distribution.
-#'            `sample_mvn_region` method. It's used when `p` is less than 1.
-#'          - `...`: any additional parameters to pass to `rmvnorm` or 
-#'            `sample_mvn_region` which can be different during each call.
+#' @param ... Additional arguments passed to \code{rmvnorm} on every call.
 #' @examples
 #' X <- mvn(c(0, 0), diag(2))
 #' s <- sampler(X)
@@ -116,35 +103,22 @@ is_mvn <- function(x) {
 #' @importFrom mvtnorm rmvnorm
 #' @export
 sampler.mvn <- function(x, ...) {
+    mu <- x$mu
+    sigma <- x$sigma
     fixed_args <- list(...)
-    function(n = 1, mu = x$mu, sigma = x$sigma, p = 1, ...) {
-        if (p < 1) {
-            do.call(sample_mvn_region, c(list(n = n, mean = mu, sigma = sigma,
-                p = p), fixed_args, list(...)))
-        } else {
-            do.call(rmvnorm, c(list(n = n, mean = mu, sigma = sigma),
-                fixed_args, list(...)))
-        }
+    function(n = 1, ...) {
+        do.call(rmvnorm, c(list(n = n, mean = mu, sigma = sigma),
+            fixed_args, list(...)))
     }
 }
 
 #' Function generator for obtaining the pdf of an `mvn` object (multivariate
 #' normal).
-#' 
+#'
 #' @param x The `mvn` (S3) object to obtain the pdf (density) of
-#' @param ... Additional arguments to pass into the generated function.
-#' @return A function that computes the pdf of the `mvn` distribution.
-#'         It accepts as input:
-#'          - `obs`: vector or matrix of quantiles. when x is a matrix, each row
-#'            is taken to be a quantile and columns correspond to the number of
-#'            dimensions, p.
-#'          - `mu`: a a vector denoting the population mean. Defaults to the
-#'            mean of `x` (an `mvn` object)
-#'          - `sigma`: a matrix denoting the variance-covariance of
-#'            observations. Defaults to the variance-covariance of `x`.
-#'          - `log`: logical, determines whether to compute the log of the pdf.
-#'            Defaults to `FALSE`.
-#'          - `...`: any additional parameters to pass to `dmvnorm`.
+#' @param ... Additional arguments passed to \code{dmvnorm} on every call.
+#' @return A function \code{function(obs, log = FALSE, ...)} that computes the
+#'   pdf (or log-pdf) of the multivariate normal distribution.
 #' @examples
 #' X <- mvn(c(0, 0), diag(2))
 #' f <- density(X)
@@ -153,8 +127,10 @@ sampler.mvn <- function(x, ...) {
 #' @importFrom mvtnorm dmvnorm
 #' @export
 density.mvn <- function(x, ...) {
+    mu <- x$mu
+    sigma <- x$sigma
     fixed_args <- list(...)
-    function(obs, mu = x$mu, sigma = x$sigma, log = FALSE, ...) {
+    function(obs, log = FALSE, ...) {
         do.call(dmvnorm, c(list(x = obs, mean = mu, sigma = sigma, log = log),
             fixed_args, list(...)))
     }
@@ -295,11 +271,14 @@ dim.mvn <- function(x) {
 #' @importFrom mvtnorm pmvnorm
 #' @export
 cdf.mvn <- function(x, ...) {
-    function(q, mu = x$mu, sigma = x$sigma, lower.tail = TRUE,
-             log.p = FALSE, ...) {
+    mu <- x$mu
+    sigma <- x$sigma
+    function(q, lower.tail = TRUE, log.p = FALSE, ...) {
         p <- pmvnorm(mean = mu, sigma = sigma, upper = q, ...)
-        if (attr(p, "error") != 0) {
-            warning(sprintf("error (%s): %s", attr(p, "error"), attr(p, "msg")))
+        abs_error <- as.numeric(attr(p, "error"))
+        if (!is.na(abs_error) && abs_error > sqrt(.Machine$double.eps)) {
+            warning(sprintf("pmvnorm integration error (%g): %s",
+                            abs_error, attr(p, "msg")))
         }
         p <- as.numeric(p)
         if (log.p) log(p) else p

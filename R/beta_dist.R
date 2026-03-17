@@ -190,8 +190,11 @@ density.beta_dist <- function(x, ...) {
 #' @importFrom stats pbeta
 #' @export
 cdf.beta_dist <- function(x, ...) {
-  function(q, log.p = FALSE, ...) {
-    pbeta(q, shape1 = x$shape1, shape2 = x$shape2, log.p = log.p)
+  shape1 <- x$shape1
+  shape2 <- x$shape2
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    pbeta(q, shape1 = shape1, shape2 = shape2,
+          lower.tail = lower.tail, log.p = log.p)
   }
 }
 

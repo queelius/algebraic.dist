@@ -10,21 +10,11 @@ normal).}
 \arguments{
 \item{x}{The \code{mvn} (S3) object to obtain the pdf (density) of}
 
-\item{...}{Additional arguments to pass into the generated function.}
+\item{...}{Additional arguments passed to \code{dmvnorm} on every call.}
 }
 \value{
-A function that computes the pdf of the \code{mvn} distribution.
-It accepts as input:
-- \code{obs}: vector or matrix of quantiles. when x is a matrix, each row
-is taken to be a quantile and columns correspond to the number of
-dimensions, p.
-- \code{mu}: a a vector denoting the population mean. Defaults to the
-mean of \code{x} (an \code{mvn} object)
-- \code{sigma}: a matrix denoting the variance-covariance of
-observations. Defaults to the variance-covariance of \code{x}.
-- \code{log}: logical, determines whether to compute the log of the pdf.
-Defaults to \code{FALSE}.
-- \code{...}: any additional parameters to pass to \code{dmvnorm}.
+A function \code{function(obs, log = FALSE, ...)} that computes the
+pdf (or log-pdf) of the multivariate normal distribution.
 }
 \description{
 Function generator for obtaining the pdf of an \code{mvn} object (multivariate

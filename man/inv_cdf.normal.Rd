@@ -12,7 +12,8 @@
 \item{...}{Additional arguments to pass (not used)}
 }
 \value{
-A function that computes the inverse cdf of the normal distribution.
+A function \code{function(p, lower.tail = TRUE, log.p = FALSE, ...)}
+that computes the inverse cdf of the normal distribution.
 }
 \description{
 Method for obtaining the inverse cdf of an \code{normal} object.

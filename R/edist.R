@@ -103,6 +103,22 @@ print.edist <- function(x, ...) {
   invisible(x)
 }
 
+#' Method for obtaining the dimension of an `edist` object.
+#'
+#' Determines the dimension by drawing a single sample and checking
+#' whether it is a matrix (multivariate) or scalar (univariate).
+#'
+#' @param x The `edist` object.
+#' @return Integer; the number of dimensions.
+#' @examples
+#' z <- normal(0, 1) * exponential(1)
+#' dim(z)
+#' @export
+dim.edist <- function(x) {
+  s <- sampler(x)(1)
+  if (is.matrix(s)) ncol(s) else 1L
+}
+
 #' Method for obtaining the sampler of an `edist` object.
 #' @param x The `edist` object to obtain the sampler of.
 #' @param ... Additional arguments to pass into each of the `sampler`

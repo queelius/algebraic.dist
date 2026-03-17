@@ -7,16 +7,13 @@
 \method{cdf}{exponential}(x, ...)
 }
 \arguments{
-\item{x}{The object to obtain the pdf of}
+\item{x}{The object to obtain the cdf of}
 
 \item{...}{Additional arguments (not used)}
 }
 \value{
-A function that computes the cdf of the exponential. Accepts as
-input a vector \code{t} at which to compute the cdf, an input \code{rate}
-denoting the failure rate of the exponential distribution, and a
-logical \code{log} indicating whether to compute the log of the cdf.
-By default, \code{rate} is the failure rate of object \code{x}.
+A function \code{function(q, lower.tail = TRUE, log.p = FALSE, ...)}
+that computes the cdf (or log-cdf) of the exponential distribution.
 }
 \description{
 Method to obtain the cdf of an \code{exponential} object.

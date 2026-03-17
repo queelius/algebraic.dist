@@ -12,10 +12,8 @@
 \item{...}{Additional arguments to pass (not used)}
 }
 \value{
-A function that samples from the normal distribution. As input,
-it accepts a sample size \code{n}, a numeric \code{mu}, and a variance
-numeric \code{var}. By default, \code{mu} and \code{var} are the mean and
-variance of object \code{x}.
+A function \code{function(n = 1, ...)} that draws \code{n}
+samples from the normal distribution.
 }
 \description{
 Method for sampling from a \code{normal} object.

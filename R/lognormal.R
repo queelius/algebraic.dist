@@ -188,8 +188,11 @@ density.lognormal <- function(x, ...) {
 #' @importFrom stats plnorm
 #' @export
 cdf.lognormal <- function(x, ...) {
-  function(q, log.p = FALSE, ...) {
-    plnorm(q, meanlog = x$meanlog, sdlog = x$sdlog, log.p = log.p)
+  meanlog <- x$meanlog
+  sdlog <- x$sdlog
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    plnorm(q, meanlog = meanlog, sdlog = sdlog,
+           lower.tail = lower.tail, log.p = log.p)
   }
 }
 
@@ -254,9 +257,11 @@ surv.lognormal <- function(x, ...) {
 #' h(2)
 #' @export
 hazard.lognormal <- function(x, ...) {
-  function(t, log = FALSE) {
-    log_f <- dlnorm(t, meanlog = x$meanlog, sdlog = x$sdlog, log = TRUE)
-    log_S <- plnorm(t, meanlog = x$meanlog, sdlog = x$sdlog,
+  meanlog <- x$meanlog
+  sdlog <- x$sdlog
+  function(t, log = FALSE, ...) {
+    log_f <- dlnorm(t, meanlog = meanlog, sdlog = sdlog, log = TRUE)
+    log_S <- plnorm(t, meanlog = meanlog, sdlog = sdlog,
                     lower.tail = FALSE, log.p = TRUE)
     log_h <- log_f - log_S
     if (log) log_h else exp(log_h)

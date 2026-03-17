@@ -1,37 +1,29 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 notes
 
-The single NOTE is:
+## Major release (v0.9.1 → v1.0.0)
 
-* checking CRAN incoming feasibility ... NOTE
-  Maintainer: 'Alexander Towell <lex@metafunctor.com>'
+API stabilization release. Key changes:
 
-  This is a version update (0.1.0 -> 0.9.1) of an existing CRAN package.
+- Fixed mvn CDF spurious warning (pmvnorm error tolerance check)
+- Added `nparams` default method for all parametric distributions
+- Added `dim.edist` for expression distributions
+- Added `hazard`/`surv` fallback methods for all continuous distributions
+- Standardized closure signatures (removed parameter overrides, added `...`)
 
-## Changes in this version
+## Coordinated submission
 
-Major feature release adding:
-- 12 new distribution types (gamma, Weibull, beta, chi-squared, uniform,
-  log-normal, Poisson, mixture, plus expression and realized distributions)
-- Distribution algebra with automatic simplification (20+ rules)
-- MVN closed-form conditioning and affine transforms
-- Mixture distributions with Bayesian conditional updates
-- Limiting distributions (CLT, LLN, delta method, normal approximation)
-- Full documentation: all 67+ exports have @return and @examples
-- 3 vignettes: Examples, Distribution Algebra, Multivariate/Mixture
+This is part of a coordinated 6-package submission. All packages are
+maintained by me. Updated versions being submitted simultaneously:
+
+- algebraic.dist 1.0.0 (this package)
+- algebraic.mle 2.0.2
+- likelihood.model 1.0.0
+- compositional.mle 2.0.0
+- flexhaz 0.5.1
+- maskedcauses 0.9.3
 
 ## Test environments
 
-* Local: Ubuntu 24.04.3 LTS, R 4.3.3
-* GitHub Actions (R-CMD-check):
-  - ubuntu-latest (R oldrel-1): success
-  - ubuntu-latest (R release): success
-  - ubuntu-latest (R devel): success
-  - windows-latest (R release): success
-  - macos-latest (R release): success
-
-## Downstream dependencies
-
-`algebraic.mle` (on CRAN) depends on this package. We have verified
-the update does not break `algebraic.mle`.
+* local Ubuntu 24.04, R 4.3.3

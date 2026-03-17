@@ -114,8 +114,10 @@ print.gamma_dist <- function(x, ...) {
 #' @importFrom stats rgamma
 #' @export
 sampler.gamma_dist <- function(x, ...) {
-  function(n = 1) {
-    rgamma(n = n, shape = x$shape, rate = x$rate)
+  shape <- x$shape
+  rate <- x$rate
+  function(n = 1, ...) {
+    rgamma(n = n, shape = shape, rate = rate)
   }
 }
 
@@ -132,8 +134,10 @@ sampler.gamma_dist <- function(x, ...) {
 #' @importFrom stats dgamma density
 #' @export
 density.gamma_dist <- function(x, ...) {
-  function(t, log = FALSE) {
-    dgamma(x = t, shape = x$shape, rate = x$rate, log = log)
+  shape <- x$shape
+  rate <- x$rate
+  function(t, log = FALSE, ...) {
+    dgamma(x = t, shape = shape, rate = rate, log = log)
   }
 }
 
@@ -150,8 +154,11 @@ density.gamma_dist <- function(x, ...) {
 #' @importFrom stats pgamma
 #' @export
 cdf.gamma_dist <- function(x, ...) {
-  function(q, log.p = FALSE) {
-    pgamma(q = q, shape = x$shape, rate = x$rate, log.p = log.p)
+  shape <- x$shape
+  rate <- x$rate
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    pgamma(q = q, shape = shape, rate = rate,
+           lower.tail = lower.tail, log.p = log.p)
   }
 }
 
@@ -169,8 +176,10 @@ cdf.gamma_dist <- function(x, ...) {
 #' @importFrom stats qgamma
 #' @export
 inv_cdf.gamma_dist <- function(x, ...) {
-  function(p, lower.tail = TRUE, log.p = FALSE) {
-    qgamma(p = p, shape = x$shape, rate = x$rate,
+  shape <- x$shape
+  rate <- x$rate
+  function(p, lower.tail = TRUE, log.p = FALSE, ...) {
+    qgamma(p = p, shape = shape, rate = rate,
            lower.tail = lower.tail, log.p = log.p)
   }
 }
@@ -197,8 +206,10 @@ sup.gamma_dist <- function(x) {
 #' S(1)
 #' @export
 surv.gamma_dist <- function(x, ...) {
-  function(t, log.p = FALSE) {
-    pgamma(q = t, shape = x$shape, rate = x$rate,
+  shape <- x$shape
+  rate <- x$rate
+  function(t, log.p = FALSE, ...) {
+    pgamma(q = t, shape = shape, rate = rate,
            lower.tail = FALSE, log.p = log.p)
   }
 }
@@ -214,9 +225,11 @@ surv.gamma_dist <- function(x, ...) {
 #' h(1)
 #' @export
 hazard.gamma_dist <- function(x, ...) {
-  function(t, log = FALSE) {
-    log_f <- dgamma(t, shape = x$shape, rate = x$rate, log = TRUE)
-    log_S <- pgamma(t, shape = x$shape, rate = x$rate,
+  shape <- x$shape
+  rate <- x$rate
+  function(t, log = FALSE, ...) {
+    log_f <- dgamma(t, shape = shape, rate = rate, log = TRUE)
+    log_S <- pgamma(t, shape = shape, rate = rate,
                     lower.tail = FALSE, log.p = TRUE)
     log_h <- log_f - log_S
     if (log) log_h else exp(log_h)

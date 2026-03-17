@@ -12,13 +12,8 @@
 \item{...}{Additional arguments (not used)}
 }
 \value{
-A function that computes the inverse cdf of the exponential
-distribution. Accepts as input a vector \code{p} probabilities
-to compute the inverse cdf, a \code{rate} value denoting the
-failure rate of the exponential distribution, and a logical
-\code{log.p} indicating whether input \code{p} denotes probability
-or log-probability. By default, \code{rate} is the failure rate
-of object \code{x}.
+A function \code{function(p, lower.tail = TRUE, log.p = FALSE, ...)}
+that computes the inverse cdf of the exponential distribution.
 }
 \description{
 Method to obtain the inverse cdf of an \code{exponential} object.

@@ -12,13 +12,8 @@
 \item{...}{Additional arguments to pass (not used)}
 }
 \value{
-A function that computes the cdf of the normal distribution.
-It accepts as input a parameter vector \code{q}, a mean vector \code{mu},
-a variance \code{var}, and a \code{log} argument
-determining whether to compute the log of the cdf. By default,
-\code{mu} and \code{var} are the mean and variance of object \code{x} and \code{log}
-is \code{FALSE}. Finally, it accepts additional arguments \code{...} to
-pass to the \code{pnorm} function.
+A function \code{function(q, lower.tail = TRUE, log.p = FALSE, ...)}
+that computes the cdf (or log-cdf) of the normal distribution at \code{q}.
 }
 \description{
 Method for obtaining the cdf of an \code{normal} object.

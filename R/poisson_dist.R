@@ -180,8 +180,9 @@ density.poisson_dist <- function(x, ...) {
 #' @importFrom stats ppois
 #' @export
 cdf.poisson_dist <- function(x, ...) {
-  function(q, log.p = FALSE, ...) {
-    ppois(q, lambda = x$lambda, log.p = log.p)
+  lambda <- x$lambda
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    ppois(q, lambda = lambda, lower.tail = lower.tail, log.p = log.p)
   }
 }
 

@@ -12,11 +12,8 @@
 \item{...}{Additional arguments (not used)}
 }
 \value{
-A function that computes the hazard function of the
-exponential distribution at a given point \code{t} and rate \code{rate}.
-By default, \code{rate} is the failure rate of object \code{x}
-Also accepts a \code{log} argument that determines whether
-to compute the log of the hazard function.
+A function \code{function(t, log = FALSE, ...)} that computes
+the hazard rate (or log-hazard) of the exponential distribution.
 }
 \description{
 Method to obtain the hazard function of an \code{exponential} object.

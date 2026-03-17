@@ -9,22 +9,7 @@
 \arguments{
 \item{x}{The \code{mvn} object to sample from}
 
-\item{...}{Additional arguments to pass to the generated function that will
-be fixed during all calls.}
-}
-\value{
-A function that samples from the \code{mvn} distribution. It accepts as
-input:
-- \code{n}: number of samples to generate. Defaults to 1.
-- \code{mu}: a vector denoting the population mean. Defaults to the mean
-of \code{x} (an \code{mvn} object)
-- \code{sigma}: a matrix denoting the covariance of observations.
-Defaults to the variance-covariance of \code{x}.
-- \code{p}: probability region to sample from. Defaults to 1, which
-corresponds to the entire distribution.
-\code{sample_mvn_region} method. It's used when \code{p} is less than 1.
-- \code{...}: any additional parameters to pass to \code{rmvnorm} or
-\code{sample_mvn_region} which can be different during each call.
+\item{...}{Additional arguments passed to \code{rmvnorm} on every call.}
 }
 \description{
 Function generator for sampling from a \code{mvn} (multivariate normal) object.

@@ -2,10 +2,13 @@
 % Please edit documentation in R/generic_dist.R
 \name{nparams}
 \alias{nparams}
+\alias{nparams.dist}
 \title{Generic method for obtaining the number of parameters of
 distribution-like object \code{x}.}
 \usage{
 nparams(x)
+
+\method{nparams}{dist}(x)
 }
 \arguments{
 \item{x}{the object to obtain the number of parameters for}
@@ -20,4 +23,6 @@ distribution-like object \code{x}.
 \examples{
 d <- empirical_dist(matrix(rnorm(30), ncol = 3))
 nparams(d)  # 0 (non-parametric)
+
+nparams(normal(0, 1))  # 2
 }

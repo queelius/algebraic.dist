@@ -112,8 +112,9 @@ print.chi_squared <- function(x, ...) {
 #' @importFrom stats rchisq
 #' @export
 sampler.chi_squared <- function(x, ...) {
-  function(n = 1) {
-    rchisq(n = n, df = x$df)
+  df <- x$df
+  function(n = 1, ...) {
+    rchisq(n = n, df = df)
   }
 }
 
@@ -130,8 +131,9 @@ sampler.chi_squared <- function(x, ...) {
 #' @importFrom stats dchisq density
 #' @export
 density.chi_squared <- function(x, ...) {
-  function(t, log = FALSE) {
-    dchisq(x = t, df = x$df, log = log)
+  df <- x$df
+  function(t, log = FALSE, ...) {
+    dchisq(x = t, df = df, log = log)
   }
 }
 
@@ -148,8 +150,9 @@ density.chi_squared <- function(x, ...) {
 #' @importFrom stats pchisq
 #' @export
 cdf.chi_squared <- function(x, ...) {
-  function(q, log.p = FALSE) {
-    pchisq(q = q, df = x$df, log.p = log.p)
+  df <- x$df
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    pchisq(q = q, df = df, lower.tail = lower.tail, log.p = log.p)
   }
 }
 
@@ -167,8 +170,9 @@ cdf.chi_squared <- function(x, ...) {
 #' @importFrom stats qchisq
 #' @export
 inv_cdf.chi_squared <- function(x, ...) {
-  function(p, lower.tail = TRUE, log.p = FALSE) {
-    qchisq(p = p, df = x$df, lower.tail = lower.tail, log.p = log.p)
+  df <- x$df
+  function(p, lower.tail = TRUE, log.p = FALSE, ...) {
+    qchisq(p = p, df = df, lower.tail = lower.tail, log.p = log.p)
   }
 }
 
@@ -194,8 +198,9 @@ sup.chi_squared <- function(x) {
 #' S(5)
 #' @export
 surv.chi_squared <- function(x, ...) {
-  function(t, log.p = FALSE) {
-    pchisq(q = t, df = x$df, lower.tail = FALSE, log.p = log.p)
+  df <- x$df
+  function(t, log.p = FALSE, ...) {
+    pchisq(q = t, df = df, lower.tail = FALSE, log.p = log.p)
   }
 }
 
@@ -210,9 +215,10 @@ surv.chi_squared <- function(x, ...) {
 #' h(5)
 #' @export
 hazard.chi_squared <- function(x, ...) {
-  function(t, log = FALSE) {
-    log_f <- dchisq(t, df = x$df, log = TRUE)
-    log_S <- pchisq(t, df = x$df, lower.tail = FALSE, log.p = TRUE)
+  df <- x$df
+  function(t, log = FALSE, ...) {
+    log_f <- dchisq(t, df = df, log = TRUE)
+    log_S <- pchisq(t, df = df, lower.tail = FALSE, log.p = TRUE)
     log_h <- log_f - log_S
     if (log) log_h else exp(log_h)
   }

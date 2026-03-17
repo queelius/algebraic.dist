@@ -12,10 +12,8 @@
 \item{...}{Additional arguments to pass (not used)}
 }
 \value{
-A function that allows sampling from the exponential
-distribution. Accepts an argument \code{n} denoting sample
-size and \code{rate} denoting the failure rate. Defaults to
-the failure rate of object \code{x}.
+A function \code{function(n = 1, ...)} that draws \code{n}
+samples from the exponential distribution.
 }
 \description{
 Method to sample from an \code{exponential} object.

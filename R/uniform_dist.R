@@ -187,8 +187,10 @@ density.uniform_dist <- function(x, ...) {
 #' @importFrom stats punif
 #' @export
 cdf.uniform_dist <- function(x, ...) {
-  function(q, log.p = FALSE, ...) {
-    punif(q, min = x$min, max = x$max, log.p = log.p)
+  mn <- x$min
+  mx <- x$max
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    punif(q, min = mn, max = mx, lower.tail = lower.tail, log.p = log.p)
   }
 }
 

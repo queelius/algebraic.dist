@@ -173,8 +173,11 @@ density.weibull_dist <- function(x, ...) {
 #' @importFrom stats pweibull
 #' @export
 cdf.weibull_dist <- function(x, ...) {
-  function(q, log.p = FALSE, ...) {
-    pweibull(q, shape = x$shape, scale = x$scale, log.p = log.p)
+  shape <- x$shape
+  scale <- x$scale
+  function(q, lower.tail = TRUE, log.p = FALSE, ...) {
+    pweibull(q, shape = shape, scale = scale,
+             lower.tail = lower.tail, log.p = log.p)
   }
 }
 
@@ -239,8 +242,10 @@ surv.weibull_dist <- function(x, ...) {
 #' h(3)
 #' @export
 hazard.weibull_dist <- function(x, ...) {
-  function(t, log = FALSE) {
-    h <- ifelse(t <= 0, 0, (x$shape / x$scale) * (t / x$scale)^(x$shape - 1))
+  shape <- x$shape
+  scale <- x$scale
+  function(t, log = FALSE, ...) {
+    h <- ifelse(t <= 0, 0, (shape / scale) * (t / scale)^(shape - 1))
     if (log) {
       ifelse(t <= 0, -Inf, log(h))
     } else {

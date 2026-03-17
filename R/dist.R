@@ -168,6 +168,50 @@ summary_dist <- function(name, mean, vcov, nobs = NULL) {
 }
 
 
+#' Default hazard function for continuous distributions.
+#'
+#' Computes \eqn{h(t) = f(t) / S(t)} from the density and survival
+#' function.
+#'
+#' @param x A \code{continuous_dist} object.
+#' @param ... Additional arguments forwarded to \code{density} and
+#'   \code{surv}.
+#' @return A function \code{function(t, ...)} returning the hazard rate.
+#' @examples
+#' x <- normal(0, 1)
+#' h <- hazard(x)
+#' h(0)
+#' @rdname hazard
+#' @export
+hazard.continuous_dist <- function(x, ...) {
+    f <- density(x)
+    S <- surv(x)
+    function(t, ...) {
+        f(t, ...) / S(t, ...)
+    }
+}
+
+#' Default survival function for continuous distributions.
+#'
+#' Computes \eqn{S(t) = 1 - F(t)} from the CDF.
+#'
+#' @param x A \code{continuous_dist} object.
+#' @param ... Additional arguments forwarded to \code{cdf}.
+#' @return A function \code{function(t, ...)} returning the survival
+#'   probability.
+#' @examples
+#' x <- beta_dist(2, 5)
+#' S <- surv(x)
+#' S(0.5)
+#' @rdname surv
+#' @export
+surv.continuous_dist <- function(x, ...) {
+    F <- cdf(x)
+    function(t, ...) {
+        1 - F(t, ...)
+    }
+}
+
 #' Sampler for non-dist objects (degenerate distributions).
 #'
 #' @param x The object to sample from

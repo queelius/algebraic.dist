@@ -115,7 +115,7 @@ params <- function(x) {
     UseMethod("params", x)
 }
 
-#' Generic method for obtaining the number of parameters of 
+#' Generic method for obtaining the number of parameters of
 #' distribution-like object `x`.
 #'
 #' @param x the object to obtain the number of parameters for
@@ -123,10 +123,16 @@ params <- function(x) {
 #' @examples
 #' d <- empirical_dist(matrix(rnorm(30), ncol = 3))
 #' nparams(d)  # 0 (non-parametric)
+#'
+#' nparams(normal(0, 1))  # 2
 #' @export
 nparams <- function(x) {
     UseMethod("nparams", x)
 }
+
+#' @rdname nparams
+#' @export
+nparams.dist <- function(x) length(params(x))
 
 #' Generic method for obtaining the expectation of `f` with respect to
 #' `x`.
